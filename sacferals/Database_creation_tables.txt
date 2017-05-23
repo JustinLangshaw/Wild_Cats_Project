@@ -1,0 +1,103 @@
+CREATE TABLE FeralInterventionForm (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary key(RecordNumber), 
+	DateAndTime varchar(200),
+	FullName varchar(200),
+	Phone1 varchar(15),
+	Phone2 varchar(15),
+	ProblemLocation varchar(200),
+	ProblemDescription varchar(200),
+	MeasuresTaken varchar(200),
+	OthersWorking boolean,
+	AdditionalComments varchar(200),
+	OthersContact varchar(200),
+	VolunteerResponding varchar(200),
+	ResponseDate varchar(15),
+	CustNeedOutcome varchar(200),
+	BeatTeamLeader varchar(200),
+	Outcome varchar(200),
+	CompletionDate varchar(200)
+);
+
+
+INSERT INTO FeralInterventionForm VALUES
+	('NULL', '11/25/2013 10:30:37', 'NA', '916-682-1883', 'NA', 'long address', 'long description', 'measures here', 'TRUE', 'additional comments', 'name and contact', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
+	
+
+CREATE TABLE ReportColonyForm (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary key(RecordNumber), 
+	DateAndTime varchar(200),
+	FullName varchar(200),
+	Email varchar(200),
+	Phone1 varchar(15),
+	Phone2 varchar(15),
+	ColonyName varchar(200),
+	ColonyAddress varchar(200),
+	City varchar(200),
+	County varchar(200),
+	ZipCode varchar(200),
+	AnyoneAttempted boolean,
+	ApproximateCats int,
+	ColonyCareGiver boolean,
+	EarTipped boolean,
+	ColonySetting varchar(200),
+	Comments varchar(200),
+	VolunteerResponding varchar(200),
+	ResponseDate varchar(15),
+	CustNeedOutcome varchar(200),
+	BeatTeamLeader varchar(200),
+	Outcome varchar(200),
+	CompletionDate varchar(200)
+);
+
+
+INSERT INTO ReportColonyForm VALUES
+	('NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'name of colony', 'long address', 'city', 'county', 'zip', 'TRUE', '5', 'TRUE', 'TRUE', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
+	
+
+CREATE TABLE VolunteerForm (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary key(RecordNumber), 
+	DateAndTime varchar(200),
+	FullName varchar(200),
+	CompleteAddress varchar(200),
+	Email varchar(200),
+	Phone1 varchar(15),
+	Phone2 varchar(15),
+	PreferedContact varchar(200),
+	TypeOfWork varchar(200),
+	OtherTasks varchar(200),
+	PastWorkExp varchar(200),
+	UnknownNameColumn varchar(200),
+	ResponseDate varchar(200),
+	EmailResponses varchar(200)
+);
+
+
+INSERT INTO VolunteerForm VALUES
+	('NULL', '11/25/2013 10:30:37', 'Some name', 'complete address', 'email2@yahoo.com', '916-613-4444', '(503) 111-2222', 'prefered method', 'list of type of work', 'written out other tasks', 'past exp', 'some type of name', 'date of response entry', 'sent to email conf with date and notes');
+	
+	
+
+
+ create table SacFeralsAdmin(adminid int not null auto_increment, 
+ primary key(adminid),
+ fname varchar(80), 
+ lname varchar(80), 
+ password varchar(30),
+ level int);
+ 
+ insert into SacFeralsAdmin values("54", "Bob", "Smith", "123", "1");
+ insert into SacFeralsAdmin values("55", "Mary", "Jones", "abc", "2");
+ 
+ 
+ create table SacFeralsUsers(userid int not null auto_increment, 
+ primary key(userid),
+ username varchar(80), 
+ email varchar(80), 
+ password varchar(30),
+ level int);
+ 
+ insert into SacFeralsUsers values("56", "Guest1", "guest1@yahoo.com", "123", "1");
+ insert into SacFeralsUsers values("57", "Guest2", "guest2@yahoo.com", "abc", "2");
