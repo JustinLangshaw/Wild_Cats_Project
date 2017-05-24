@@ -71,12 +71,12 @@
 			print "<b><u>Jobs volunteered for:</u></b>";
 			
 			print "<ul>
-					  <li>job 1 (these will populate in upcoming build</li>
+					  <li>job 1 (these will populate in upcoming build)</li>
 					  <li>job 2</li>
 					  <li>job 3</li>
 				   </ul>";
 			
-			print "<br><br><br><br>(availability table will appear in upcoming build)<br><br>";
+			print "<br><br>(availability table will appear in upcoming build)<br><br>";
 			
 			print "(job tables will appear in upcoming build)<br><br>";
 		}
