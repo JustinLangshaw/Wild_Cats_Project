@@ -46,7 +46,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	//if user passes re test
 	if($username == "" || $email == "" || $password == "" || $repassword == "")//doesn't execute? 
 	{
-		print "please fil out all fields";
+		print "error: please fil out all fields";
 	}
 	else if($password != $repassword)
 	{
@@ -54,7 +54,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	}
 	else 
 	{
-		if(true)//( preg_match($re, $username) && preg_match($reEmail, $email) )
+		if( preg_match($re, $username) && preg_match($reEmail, $email) )
 		{	//display current table
 			$querycheck = "select * from SacFeralsUsers where username='$username' or email='$email'";
 			$resultcheck = mysqli_query($link, $querycheck); //link query to database
@@ -70,12 +70,12 @@ if(isset($_POST['register'])) //this processes after user submits data.
 			else
 			{
 				
-				print "That record already exists!";
+				print "error: That account name or email already exists";
 			}
 		}
 		else
 		{
-			print "You did not fill out the form correctly!";
+			print "error: Please use no special characters when creating username";
 		}
 	}
 } 
