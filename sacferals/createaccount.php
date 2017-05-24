@@ -9,8 +9,11 @@
 
 <head>	
 	<title>Create Account</title>
-	<style>
-	label {display: block;}
+	<style type="text/css">
+    .fieldset-auto-width 
+	{
+         display: inline-block;
+    }
 	</style>
 </head>
 
@@ -18,13 +21,15 @@
 <a href="createaccount.php">Clean</a> <br>
 
 	<form method="post" action="createaccount.php">
-		<fieldset><legend>Create Account</legend>
-		<label><input type='text' name='username'>User Name</label>
-		<label><input type='password' name='password'>Password</label>
-		<label><input type='password' name='repassword'>Re-Enter Password</label>
-		<label><input type='text' name='email'>Email</label>
-		<label><input type='submit' name='register' value='Register'></label>
-		</fieldset>
+		<div>
+			<fieldset class='fieldset-auto-width'><legend>Create Account</legend>
+			<label><input type='text' name='username'>User Name</label><br>
+			<label><input type='password' name='password'>Password</label><br>
+			<label><input type='password' name='repassword'>Re-Enter Password</label><br>
+			<label><input type='text' name='email'>Email</label><br>
+			<label><input type='submit' name='register' value='Register'></label><br>
+			</fieldset>
+		</div>
 	</form>
 
 

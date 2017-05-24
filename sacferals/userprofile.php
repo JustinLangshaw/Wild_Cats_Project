@@ -11,7 +11,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>	<title>User Profile</title> </head>
+<head>	
+	<title>User Profile</title> 
+	
+	<style type="text/css">
+    .fieldset-auto-width 
+	{
+         display: inline-block;
+    }
+	</style>
+
+</head>
 
 <body>
 <?php
@@ -22,11 +32,12 @@
 		print "<a href='createaccount.php'>Create Account</a>";
 
 		print "<form method='post' action='userprofile.php'>
-		<fieldset><legend>Login</legend>
+		<div><fieldset class='fieldset-auto-width'>
+		<legend>Login</legend>
 		<label><input type='text' name='username'>User Name</label><br>
 		<label><input type='password' name='pass'>Password</label><br>
 		<label><input type='submit' name='login' value='Login'></label>
-		</fieldset>
+		</fieldset></div>
 		</form>
 		
 		<h3>Level 1 access (admin): Guest1, 123</h3>
@@ -40,9 +51,15 @@
 		
 		if($level == 1)
 		{
+			
+			
 			print "<a href='logout.php' align='right'>Log out</a><br><br>";
-			print "Welcome Master Administrator ".$Ausername."! <br><br>";
-			print "(insert hub with links here)<br><br>";
+			print "<b>Welcome Master Administrator ".$Ausername."!</b> <br><br>";
+			print "<div><fieldset class='fieldset-auto-width'>";
+			print "- <a href='search.php' align='right'>View/Edit Database</a><br>";
+			print "- <a href='changeaccounttype.php' align='right'>Change User Account Types</a><br>";
+			print "- <a href='volunteerlist.php' align='right'>View Volunteers</a><br>";
+			print "</fieldset></div>";
 		}
 		else if($level == 2)
 		{
