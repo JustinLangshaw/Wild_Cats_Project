@@ -15,8 +15,6 @@
 </head>
 
 <body>
-	<h1>Enter Details</h1>
-
 <a href="createaccount.php">Clean</a> <br>
 
 	<form method="post" action="createaccount.php">
