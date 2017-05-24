@@ -51,14 +51,15 @@
 		
 		if($level == 1)
 		{
-			
-			
 			print "<a href='logout.php' align='right'>Log out</a><br><br>";
 			print "<b>Welcome Master Administrator ".$Ausername."!</b> <br><br>";
 			print "<div><fieldset class='fieldset-auto-width'>";
 			print "- <a href='search.php' align='right'>View/Edit Database</a><br>";
 			print "- <a href='changeaccounttype.php' align='right'>Change User Account Types</a><br>";
 			print "- <a href='volunteerlist.php' align='right'>View Volunteers</a><br>";
+			
+			
+			print "<br><a href='volunteerform.php' align='right'>volunteer form</a> for testing purposes<br>";
 			print "</fieldset></div>";
 		}
 		else if($level == 2)
