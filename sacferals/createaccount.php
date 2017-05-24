@@ -44,11 +44,15 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	$reEmail = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/";
 	
 	//if user passes re test
-	if($password != $repassword)
+	if($username == "" || $email == "" || $password == "" || $repassword == "")//doesn't execute? 
+	{
+		print "please fil out all fields";
+	}
+	else if($password != $repassword)
 	{
 		print "error: passwords do not match";
 	}
-	else
+	else 
 	{
 		if(true)//( preg_match($re, $username) && preg_match($reEmail, $email) )
 		{	//display current table
