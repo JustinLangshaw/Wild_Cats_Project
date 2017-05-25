@@ -60,6 +60,7 @@
 			
 			
 			print "<br><a href='volunteerform.php' align='right'>volunteer form</a> for testing purposes<br>";
+			print "<a href='reportform.php' align='right'>report form</a> for testing purposes<br>";
 			print "</fieldset></div>";
 		}
 		else if($level == 2)

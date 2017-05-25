@@ -162,7 +162,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	//if user passes re test
 	if(preg_match($re, $fullname) )
 	{	//display current table
-		$querycheck = "select * from ReportColonyForm where fullname='$fullname'";
+		$querycheck = "select * from ReportColonyForm where colonyname='$colonyname'";
 														
 		$resultcheck = mysqli_query($link, $querycheck); //link query to database
 		
@@ -179,7 +179,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		}
 		else
 		{
-			print "That record already exists!";
+			print "'".$colonyname."' has already been reported.";
 		}
 	}
 	else
