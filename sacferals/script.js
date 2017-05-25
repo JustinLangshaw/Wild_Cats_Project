@@ -9,3 +9,15 @@ $(document).ready(function () {
 
     });
 });
+
+$(document).ready(function () {
+    $('.checkdisplay1').change(function () {
+        if (this.checked) { 
+          $('.todisplay1').fadeIn('slow'); 
+        }
+        else {
+          $('.todisplay1').fadeOut('slow'); 
+        }
+
+    });
+});
