@@ -95,7 +95,7 @@
 		<b>Comments</b><br>
 		<input type="text" name="comments"><br><br>
 		
-		<input type="submit" name="submit" value="Submit"> <!-- button itself -->
+		<input type="submit" name="submitcolony" value="Submit"> <!-- button itself -->
 	
 	</div>
 
@@ -112,8 +112,8 @@
 		<input type="text" name="measurestaken"><br><br>
 		
 		<b>Are there other people working to resolve this problem?</b><br>
-		<input type="radio" name="othersworking[]" value="othersworkingyes"> Yes<br>
-		<input type="radio" name="othersworking[]" value="othersworkingno"> No<br><br>
+		<input type="radio" name="othersworking[]" value="Yes"> Yes<br>
+		<input type="radio" name="othersworking[]" value="No"> No<br><br>
 		
 		
 		<b>If others are working to resolve this problem, please enter their names and contact information (phone/email)</b><br>
@@ -122,7 +122,7 @@
 		<b>Any additional comments?</b><br>
 		<input type="text" name="additionalcomments"><br><br>
 		
-		<input type="submit" name="submit" value="Submit"> <!-- button itself -->
+		<input type="submit" name="submitintervention" value="Submit"> <!-- button itself -->
 		
 	</div>
 	
@@ -133,7 +133,7 @@
 
 <?php
 
-if(isset($_POST['submit'])) //this processes after user submits data.
+if(isset($_POST['submitcolony'])) //this processes after user submits data.
 {
 	$firstname = $_POST['firstname'];
 	$lastname = $_POST['lastname'];
@@ -141,6 +141,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
 	$phone2 = $_POST['phone2'];
+	
 	
 	$colonyname = $_POST['colonyname'];
 	$colonystreet = $_POST['colonystreet'];
@@ -156,38 +157,115 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$comments = $_POST['comments'];
 	
 	
+	// Required field names
+	$required = array('firstname', 'email', 'colonystreet', 'city', 'county', 'zipcode');
+
+	// Loop over field names, make sure each one exists and is not empty
+	$error = false;
+	foreach($required as $field) 
+	{
+		if (empty($_POST[$field])) 
+		{
+			$error = true;
+		}
+	}
+	
 	//re's need updating for all fields. or we can use javascript (better)
 	$re = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
 	
 	//if user passes re test
-	if(preg_match($re, $fullname) )
+	if(!$error)
+	{
+		if(preg_match($re, $fullname) )
+		{	//display current table
+			$querycheck = "select * from ReportColonyForm where colonyname='$colonyname'";
+															
+			$resultcheck = mysqli_query($link, $querycheck); //link query to database
+			
+			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
+			{	//if not process the insert query
+				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
+				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
+				'No', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '')";
+				
+				//print $query;
+				
+				mysqli_query($link, $query); //link query to database
+				print "form submited!"; // print confirmation
+			}
+			else
+			{
+				print "'".$colonyname."' has already been reported.";
+			}
+		}
+		else
+		{
+			print "You did not fill out the form correctly!";
+		}
+	}
+	else
+	{
+		print "<b>ERROR!!</b> Please fill out all fields";
+	}
+	
+}
+else if(isset($_POST['submitintervention'])) //this processes after user submits data.
+{
+	$FirstName = $_POST['firstname'];
+	$LastName = $_POST['lastname'];
+	$FullName = $FirstName." ".$LastName;
+	$Phone1 = $_POST['phone1'];
+	$Phone2 = $_POST['phone2'];
+	
+	
+	$ProblemLocation = $_POST['problemlocation'];
+	$ProblemDescription = $_POST['problemdescription'];
+	$MeasuresTaken = $_POST['measurestaken'];
+	$OthersWorking = $_POST['othersworking'];
+	$OtheresContact = $_POST['resolverscontact'];
+	$AdditionalComments = $_POST['additionalcomments'];
+	
+	// Required field names
+	$required = array('problemlocation', 'problemdescription');
+
+	// Loop over field names, make sure each one exists and is not empty
+	$error = false;
+	foreach($required as $field) 
+	{
+		if (empty($_POST[$field])) 
+		{
+			$error = true;
+		}
+	}
+	
+	
+	if(!$error)
 	{	//display current table
-		$querycheck = "select * from ReportColonyForm where colonyname='$colonyname'";
+		$querycheck = "select * from FeralInterventionForm where problemlocation='$problemlocation'";
 														
 		$resultcheck = mysqli_query($link, $querycheck); //link query to database
 		
 		if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 		{	//if not process the insert query
-			$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
-			'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-			'No', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '')";
+			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Phone2', 
+			'$ProblemLocation', '$ProblemDescription ', '$MeasuresTaken ', '$OthersWorking[0]', '$AdditionalComments', '$OthersContact', 
+			'', '', '', '', '', '')";
 			
-			print $query;
+			//print $query;
 			
 			mysqli_query($link, $query); //link query to database
 			print "form submited!"; // print confirmation
 		}
 		else
 		{
-			print "'".$colonyname."' has already been reported.";
+			print "problem at '".$ProblemLocation."' has already been reported.";
 		}
 	}
 	else
 	{
-		print "You did not fill out the form correctly!";
+		print "<b>ERROR!!</b> Please fill out all fields";
 	}
 }
-
 
 ?>
 </body>
