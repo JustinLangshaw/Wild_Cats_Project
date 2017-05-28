@@ -9,17 +9,17 @@
 <head>	
 	<title>Report Colony Form</title>
 	<style type="text/css">
-    .fieldset-auto-width 
+	.fieldset-auto-width 
 	{
-         display: inline-block;
-    }
+		display: inline-block;
+	}
 	.todisplay 
 	{
-    display:none;
+		display:none;
 	}
 	.todisplay1
 	{
-    display:none;
+		display:none;
 	}
 	</style>
 	
@@ -50,6 +50,10 @@
 	
 	<!-- report colony -->
 	<div class='todisplay'>
+	
+		<b>Register as a caregiver for this colony?</b><br>
+		<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
+		<input type="radio" name="caregiver[]" value="No"> No<br><br>
 	
 		<b>Colony Name</b><br>
 		You can name your colony by the street name, your name or any name that will identify this group of cats<br>
@@ -143,6 +147,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$phone2 = $_POST['phone2'];
 	
 	
+	$caregiver = $_POST['caregiver'];
 	$colonyname = $_POST['colonyname'];
 	$colonystreet = $_POST['colonystreet'];
 	$city = $_POST['city'];
@@ -186,7 +191,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			{	//if not process the insert query
 				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-				'No', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '')";
+				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '')";
 				
 				//print $query;
 				
