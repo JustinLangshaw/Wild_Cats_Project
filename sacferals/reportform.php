@@ -97,7 +97,7 @@
 		<input type="radio" name="setting[]" value="Industrial"> Industrial<br><br>
 
 		<b>Comments</b><br>
-		<input type="text" name="comments"><br><br>
+		<textarea rows="4" cols="50" name="comments"></textarea><br><br>
 		
 		<input type="submit" name="submitcolony" value="Submit"> <!-- button itself -->
 	

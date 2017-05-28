@@ -63,13 +63,13 @@
 	<div class='todisplay'>
 		<b>Other Tasks</b><br>
 		If you checked "Other" above, please type in the type of work you would like to volunteer for.<br>
-		<input type="text" name="othertasks"><br><br>
+		<textarea rows="4" cols="50" name="othertasks"></textarea><br><br>
 	</div>
 
 
 	<b>Describe Your Experience Working with Ferals</b><br>
 	Please describe your level of experience and knowledge regarding feral cats and feral issues.<br>
-	<input type="text" name="experience"><br><br>
+	<textarea rows="4" cols="50" name="experience"></textarea><br><br>
 
 
 	<input type="submit" name="submit" value="Submit"> <!-- button itself -->
