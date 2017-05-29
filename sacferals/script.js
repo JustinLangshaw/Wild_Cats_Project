@@ -1,17 +1,22 @@
-$(document).ready(function () {
-    $('.checkdisplay').change(function () {
-        if (this.checked) { 
-          $('.todisplay').fadeIn('slow'); 
+$(document).ready(function () 
+{
+    $('.checkdisplay').change(function () 
+	{
+        if (this.checked) 
+		{ 
+          $('.todisplay').fadeIn('fast'); 
         }
-        else {
-          $('.todisplay').fadeOut('slow'); 
+        else 
+		{
+          $('.todisplay').fadeOut('fast'); 
         }
 
     });
 });
 
 
-function displayForm(c) {
+function displayForm(c) 
+{
     if (c.value == "catcolony") 
 	{    
         jQuery('#catcolony1').fadeIn('fast');

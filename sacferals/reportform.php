@@ -119,8 +119,8 @@
 		<input type="radio" name="othersworking[]" value="Yes" onClick="displayForm(this)"> Yes<br>
 		<input type="radio" name="othersworking[]" value="No" onClick="displayForm(this)"> No<br><br>
 		
-		<div style="display:none" id="othersworkingID">
-			<b>Please enter their names and contact information (phone/email)</b><br>
+		<div style="display:none; text-indent: -2em; padding-left: 2em;" id="othersworkingID">
+			<b style="text-indent: -2em; padding-left: 2em;">Please enter their names and contact information (phone/email)</b><br>
 			<input type="text" name="resolverscontact"><br><br>
 		</div>
 		

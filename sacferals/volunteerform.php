@@ -60,10 +60,10 @@
 
 
 
-	<div class='todisplay'>
-		<b>Other Tasks</b><br>
+	<div class='todisplay' style="text-indent: -2em; padding-left: 2em;">
+		<b style="text-indent: -2em; padding-left: 2em;">Other Tasks</b><br>
 		If you checked "Other" above, please type in the type of work you would like to volunteer for.<br>
-		<textarea rows="4" cols="50" name="othertasks"></textarea><br><br>
+		<textarea rows="4" cols="50" name="othertasks" style="text-indent: -2em; padding-left: 2em;"></textarea><br><br>
 	</div>
 
 
