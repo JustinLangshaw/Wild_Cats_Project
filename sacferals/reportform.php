@@ -24,7 +24,6 @@
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="script.js"></script> 
 </head>
 <body>
@@ -43,13 +42,13 @@
 	<b>Your Phone #2</b><br>
 	<input type="text" name="phone2"><br><br>
 
-	<b>Are you reporting a cat colony or another type of problem?</b><br>
-	<input type="checkbox" name="problemtype[]" value="catcolony" class='checkdisplay' > Cat Colony<br>
-	<input type="checkbox" name="problemtype[]" value="intervention" class='checkdisplay1' > Another Problem<br><br>
+	<b>Are you reporting a cat colony or another type of problem?</b><br><!-- class='checkdisplay' -->
+	<input type="radio" name="problemtype[]" value="catcolony" onClick="displayForm(this)"></input> Cat Colony<br>
+	<input type="radio" name="problemtype[]" value="intervention" onClick="displayForm(this)"></input> Another Problem<br><br>
 	
 	
 	<!-- report colony -->
-	<div class='todisplay'>
+	<div style="display:none" id="catcolony1">
 	
 		<b>Register as a caregiver for this colony?</b><br>
 		<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
@@ -104,7 +103,7 @@
 	</div>
 
 	<!-- report problem -->
-	<div class='todisplay1'>
+	<div style="display:none" id="intervention1">
 	
 		<b>Where Does the Feral Problem Exist?</b><br>
 		Please enter identifying information about where the feral problem exists. Enter information such as business or apartment name, address, cross streets, etc.<br>
