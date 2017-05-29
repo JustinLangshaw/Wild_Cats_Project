@@ -17,6 +17,10 @@
 	{
     display:none;
 	}
+	.indent
+	{
+		padding-left: 2em;
+	}
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
@@ -60,10 +64,10 @@
 
 
 
-	<div class='todisplay' style="text-indent: -2em; padding-left: 2em;">
-		<b style="text-indent: -2em; padding-left: 2em;">Other Tasks</b><br>
-		If you checked "Other" above, please type in the type of work you would like to volunteer for.<br>
-		<textarea rows="4" cols="50" name="othertasks" style="text-indent: -2em; padding-left: 2em;"></textarea><br><br>
+	<div class='todisplay indent'>
+		<b>Other Tasks</b><br>
+		Please type in the type of work you would like to volunteer for.<br>
+		<textarea rows="4" cols="50" name="othertasks"></textarea><br><br>
 	</div>
 
 
