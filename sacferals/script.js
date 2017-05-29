@@ -12,12 +12,22 @@ $(document).ready(function () {
 
 
 function displayForm(c) {
-    if (c.value == "catcolony") {    
-        jQuery('#catcolony1').toggle('show');
-        jQuery('#intervention1').hide();
+    if (c.value == "catcolony") 
+	{    
+        jQuery('#catcolony1').fadeIn('fast');
+        jQuery('#intervention1').fadeOut('fast'); 
     }
-        if (c.value == "intervention") {
-         jQuery('#intervention1').toggle('show');
-         jQuery('#catcolony1').hide();
+    if (c.value == "intervention") 
+	{
+         jQuery('#intervention1').fadeIn('fast');
+         jQuery('#catcolony1').fadeOut('fast'); 
+    }
+	if (c.value == "Yes") 
+	{
+         jQuery('#othersworkingID').fadeIn('fast');
+    }
+	if (c.value == "No") 
+	{
+         jQuery('#othersworkingID').fadeOut('fast'); 
     }
 };

@@ -24,6 +24,7 @@
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="script.js"></script> 
 </head>
 <body>
@@ -115,12 +116,13 @@
 		<input type="text" name="measurestaken"><br><br>
 		
 		<b>Are there other people working to resolve this problem?</b><br>
-		<input type="radio" name="othersworking[]" value="Yes"> Yes<br>
-		<input type="radio" name="othersworking[]" value="No"> No<br><br>
+		<input type="radio" name="othersworking[]" value="Yes" onClick="displayForm(this)"> Yes<br>
+		<input type="radio" name="othersworking[]" value="No" onClick="displayForm(this)"> No<br><br>
 		
-		
-		<b>If others are working to resolve this problem, please enter their names and contact information (phone/email)</b><br>
-		<input type="text" name="resolverscontact"><br><br>
+		<div style="display:none" id="othersworkingID">
+			<b>Please enter their names and contact information (phone/email)</b><br>
+			<input type="text" name="resolverscontact"><br><br>
+		</div>
 		
 		<b>Any additional comments?</b><br>
 		<input type="text" name="additionalcomments"><br><br>
