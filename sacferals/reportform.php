@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>	
-	<title>Report Colony Form</title>
+	<title>Report Colony/Caregiver Registration</title>
 	<style type="text/css">
 	.fieldset-auto-width 
 	{
@@ -37,6 +37,7 @@
 	<b>Last Name</b><br>
 	<input type="text" name="lastname"><br><br>
 	<b>Your Email Address</b><br>
+	(Required)<br>
 	<input type="text" name="email"><br><br>
 	<b>Your Phone #1</b><br>
 	<input type="text" name="phone1"><br><br>
@@ -49,9 +50,9 @@
 	
 	
 	<!-- report colony -->
-	<div style="display:none" id="catcolony1">
+	<div class='todisplay indent' id="catcolony1">
 	
-		<b>Register as a caregiver for this colony?</b><br>
+		<b>If you are feeding/taking care of this colony, would you like to register as a caregiver?</b><br>
 		<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
 		<input type="radio" name="caregiver[]" value="No"> No<br><br>
 	
@@ -104,7 +105,7 @@
 	</div>
 
 	<!-- report problem -->
-	<div style="display:none" id="intervention1">
+	<div class='todisplay indent' id="intervention1">
 	
 		<b>Where Does the Feral Problem Exist?</b><br>
 		Please enter identifying information about where the feral problem exists. Enter information such as business or apartment name, address, cross streets, etc.<br>
@@ -121,7 +122,7 @@
 		
 		<div class='indent todisplay' id="othersworkingID">
 			<b>Please enter their names and contact information (phone/email)</b><br>
-			<input type="text" name="resolverscontact"><br><br>
+			<textarea rows="4" cols="50" name="resolverscontact"></textarea><br><br>
 		</div>
 		
 		<b>Any additional comments?</b><br>
