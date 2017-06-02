@@ -21,11 +21,27 @@
 	{
 		padding-left: 2em;
 	}
+	#imageToShow
+	{
+		display: none;
+		position: absolute;
+	}
+	#imageToShow1
+	{
+		display: none;
+		position: absolute;
+	}
+	#imageToShow2
+	{
+		display: none;
+		position: absolute;
+	}
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="script.js"></script> 
+    <script src="script.js">
+	</script> 
 </head>
 <body>
 
@@ -76,15 +92,25 @@
 		<b>Approx # of Cats</b><br>
 		<input type="text" name="numberofcats"><br><br>
 		
-		<b>Ear Tipped?</b><br>
+		<b>Ear Tipped?</b>
+		<img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
+		<img id="imageToShow" src="images/ears_tipped.png"  alt="image to show"/><br>
+
 		<input type="radio" name="eartipped[]" value="Yes"> Yes<br>
 		<input type="radio" name="eartipped[]" value="No"> No<br><br>
 		
-		<b>Pregnant Cats?</b><br>
+		
+		<b>Pregnant Cats?</b>
+		<img id="imageToHover1" src="images/question_mark1.png" height= "18" width= "18" alt="hover me"/>
+		<img id="imageToShow1" src="images/pregnant_cats.png"  alt="image to show"/><br>
+		
 		<input type="radio" name="pregnant[]" value="Yes"> Yes<br>
 		<input type="radio" name="pregnant[]" value="No"> No<br><br>
 		
-		<b>Injured Cats?</b><br>
+		<b>Injured Cats?</b>
+		<img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
+		<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br>
+		
 		<input type="radio" name="injured[]" value="Yes"> Yes<br>
 		<input type="radio" name="injured[]" value="No"> No<br><br>
 
