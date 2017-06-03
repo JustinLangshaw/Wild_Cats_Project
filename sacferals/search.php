@@ -17,8 +17,14 @@
 	<style type="text/css">
     .fieldset-auto-width 
 	{
-         display: inline-block;
+        display: inline-block;
     }
+	.scroll 
+	{
+		width: 1000px;
+		height: 300px;
+		overflow: scroll;
+	}
 	</style>
 
 </head>
@@ -67,7 +73,9 @@
 			// print table (happens first before input)
 
 				// first print row of links/headers that sort
-				print "<table border='1'> 
+				print "<div class='scroll'>
+				
+				<table border='1'> 
 					<tr>
 					<th><a href='search.php?sort=RecordNumber'>Record_Number</a></th>
 					<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
@@ -97,6 +105,7 @@
 					</tr>";
 					
 				//while the next row (set by query) exists?
+				
 			while($row = mysqli_fetch_row($result))
 			{
 				list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
@@ -104,7 +113,8 @@
 				$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 				$Outcome, $CompletionDate) = $row; // variables are set to current row
 																// then printed in one table row
-				print "<tr>
+				print "
+				<tr>
 				<td>$RecordNumber</td>
 				<td>$DateAndTime</td>
 				<td>$FullName</td>
@@ -131,11 +141,10 @@
 				<td>$Outcome</td>
 				<td>$CompletionDate</td>
 				
-				</tr>";
+				</tr>
+				";
 			}
-
-			print "</table>";
-				
+			print "</table></div>";	
 				
 		}
 		else if($level == 2)
