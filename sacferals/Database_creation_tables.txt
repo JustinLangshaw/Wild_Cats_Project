@@ -94,6 +94,48 @@ INSERT INTO VolunteerForm VALUES
 	('NULL', '11/25/2013 10:30:37', 'Some name', 'complete address', 'email2@yahoo.com', '916-613-4444', '(503) 111-2222', 'prefered method', TRUE, TRUE, FALSE, 'list of type of work', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 'written out other tasks', 'past exp', 'some type of name', 'date of response entry', 'sent to email conf with date and notes');
 	
 
+CREATE TABLE SundaySSPCA (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary key(RecordNumber), 
+	DateAndTime varchar(200),
+	FullName varchar(200),
+	Phone1 varchar(15),
+	Phone2 varchar(15),
+	Email varchar(200),
+	CoonyName varchar(200),
+	StreetAddress varchar(200),
+	City varchar(200),
+	Zip varchar(200),
+	Trapping varchar(200),
+	AreYou varchar(200),
+	ClinicDates varchar(200),
+	ApproximateCats varchar(200),
+	AdditionalComments varchar(200),
+	VolunteerFollowUp varchar(200),
+	SundayClinicPeople varchar(200)
+);
+
+INSERT INTO SundaySSPCA VALUES
+	('NULL', '11/25/2013 10:30:37', 'Some name', '916-613-4444', '(503) 111-2222', 'email2@yahoo.com', 'nameOfColony', 'street address', 'sac', '12345', 'yes', 'yes', 'clinic date 1 and 2', '3', 'additional comments', 'triage volunteer: folow up', 'sunday clinick ppl (sspca or)');
+
+
+CREATE TABLE EmergencyC4CCVouchers (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary key(RecordNumber), 
+	VoucherNumber varchar(200),
+	DateAndTime varchar(200),
+	IssuedBy varchar(200),
+	IssuedTo varchar(200),
+	Phone varchar(200),
+	Colony varchar(200),
+	Street varchar(200),
+	City varchar(200),
+	Zip varchar(200),
+	EmergencyGiven varchar(200)
+);
+
+INSERT INTO EmergencyC4CCVouchers VALUES
+	('NULL', 'SF 001', '11/25/2013 10:30:37', 'Some name', 'some name 2', '916-613-4444', 'colony name1', 'colony street', 'city1', '12345', 'pregnant mama');
 
 
  create table SacFeralsAdmin(adminid int not null auto_increment, 
