@@ -68,4 +68,6 @@ window.onload = function() // always wrap jfiddle functions in this.....
 	{
 	   document.getElementById('imageToShow2').style.display = 'none';   
 	}
+	
 };
+
