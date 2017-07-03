@@ -9,5 +9,21 @@ window.onload = function() // always wrap jfiddle functions in this.....
 	});
 }
 
+$(document).ready(function () 
+{
+    $('.checkdisplay').change(function () 
+	{
+        if (this.checked) 
+		{ 
+          $('.todisplay').fadeIn('fast'); 
+        }
+        else 
+		{
+          $('.todisplay').fadeOut('fast'); 
+        }
+
+    });
+});
+
 
 	

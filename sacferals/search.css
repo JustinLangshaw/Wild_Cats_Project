@@ -1,4 +1,8 @@
 /*search.css*/
+.todisplay 
+{
+	display:none;
+}
 .fieldset-auto-width 
 {
 	display: inline-block;

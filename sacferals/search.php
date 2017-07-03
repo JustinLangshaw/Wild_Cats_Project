@@ -272,9 +272,18 @@
 			$query = "select * from ReportColonyForm order by $sort";
 			$result = mysqli_query($link, $query);
 			
+			print "Select which tables you would like to view: <br>
+			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm <br>
+			<input type='checkbox' name='searchtables[]' value='FeralInterventionForm' class='checkdisplay1' > FeralInterventionForm <br>
+			<input type='checkbox' name='searchtables[]' value='VolunteerForm' class='checkdisplay2' > VolunteerForm <br>
+			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA <br>
+			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers <br>
+
+			
+			<div class='todisplay'>";
 			
 			// print table (happens first before input)
-
+			
 				// first print row of links/headers that sort
 				print "
 				<br><b>Report A Feral Cat Colony</b><br><br>
@@ -360,8 +369,28 @@
 					}
 					print "
 					</tbody>
-				</table>";	
+				</table>
+			</div>";	
+			
+			print "
+			<div class='todisplay1'>
+			</div>";	
 				
+			print "
+			<div class='todisplay2'>
+			</div>";		
+			
+			print "
+			<div class='todisplay3'>
+			</div>";	
+			
+			print "
+			<div class='todisplay4'>
+			</div>";	
+			
+
+
+			
 				
 		}
 		else if($level == 2)
