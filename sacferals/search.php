@@ -15,59 +15,12 @@
 <head>	
 	<title>Record Search</title> 
 	
+	<link rel="stylesheet" type="text/css" href="search.css"  />
 	
-	
-	<style type="text/css">
-    .fieldset-auto-width 
-	{
-        display: inline-block;
-    }
-	html 
-	{
-		font-family: verdana;
-		font-size: 10pt;
-		line-height: 25px;
-	}
-	table 
-	{
-		border-collapse: collapse;
-		width: 1000px;
-		overflow-x: scroll;
-		display: block;
-	}
-	thead 
-	{
-		background-color: #EFEFEF;
-	}
-	thead, tbody 
-	{
-		display: block;
-	}
-	tbody 
-	{
-		overflow-y: scroll;
-		overflow-x: hidden;
-		height: 140px;
-	}
-	.editBody
-	{
-		height: 50px;
-	}
-	td, th 
-	{
-		min-width: 220px;
-		height: 25px;
-		border: dashed 1px lightblue;
-	}
-	table.big td th
-	{
-		width: 200px;
-	}
-	</style>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="searchScript.js">
-	</script> 
+    <script src="searchScript.js"></script>
+	 
 	
 </head>
 
