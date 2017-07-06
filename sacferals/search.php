@@ -59,6 +59,7 @@
 			//print "</fieldset></div>";
 					
 			
+			/* this doesn't work with edit yet
 			
 			print "<b>Select which tables you would like to view: </b><br>
 			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm 
@@ -68,7 +69,7 @@
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
 
 			
-			<div class='todisplay'>";
+			<div class='todisplay'>"; */
 			
 			///////////////////////////////////////////////////////////////////////////////////////////
 			//edit detector
@@ -415,6 +416,8 @@
 				</table>";
 				
 			}
+			
+			/* this doesn't work with edit yet
 			print "
 			</div>";	
 			
@@ -433,7 +436,7 @@
 			print "
 			<div class='todisplay4'>
 			</div>";	
-			
+			*/
 
 
 			
