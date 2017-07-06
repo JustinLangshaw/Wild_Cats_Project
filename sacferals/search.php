@@ -60,15 +60,7 @@
 					
 			
 			
-			print "<b>Select which tables you would like to view: </b><br>
-			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm 
-			<input type='checkbox' name='searchtables[]' value='FeralInterventionForm' class='checkdisplay1' > FeralInterventionForm 
-			<input type='checkbox' name='searchtables[]' value='VolunteerForm' class='checkdisplay2' > VolunteerForm 
-			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA 
-			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
-
 			
-			<div class='todisplay'>";
 			
 			///////////////////////////////////////////////////////////////////////////////////////////
 			//edit detector
@@ -91,7 +83,7 @@
 					$sort = "RecordNumber";
 				}
 
-				$query = "select * from ReportColonyForm order by $sort";
+				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1." order by $sort";
 				$result = mysqli_query($link, $query);
 				
 				
@@ -101,8 +93,6 @@
 					print "
 					<form method='post' action='search.php'>
 					
-					<br><b>Report A Feral Cat Colony</b><br><br>
-				
 					<table>
 						<thead>
 							<tr>
@@ -135,7 +125,7 @@
 							</tr>
 						</thead>
 						
-						<tbody >"; 
+						<tbody class='editBody'>";
 						
 						//while the next row (set by query) exists?
 						
@@ -150,81 +140,44 @@
 							$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 							$Outcome, $CompletionDate) = $row; // variables are set to current row
 																			// then printed in one table row
-																			
-							if($RecordNumber1==$RecordNumber)
-							{
-								print "
-								<tr>
-									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
-										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>
-									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
-									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
-									<td><input type='text' name='FullName' value='$FullName'></td>
-									<td><input type='text' name='Email' value='$Email'></td>
-									<td><input type='text' name='Phone1' value='$Phone1'></td>
-									<td><input type='text' name='Phone2' value='$Phone2'></td>
-									<td><input type='text' name='ColonyName' value='$ColonyName'></td>
-									<td><input type='text' name='ColonyAddress' value='$ColonyAddress'></td>
-									<td><input type='text' name='City' value='$City'></td>
-									<td><input type='text' name='County' value='$County'></td>
-									<td><input type='text' name='ZipCode' value='$ZipCode'></td>
-									<td>";
-									AnyoneAttempteddd($AnyoneAttempted);
-									print" </td>
-									<td><input type='text' name='ApproximateCats' value='$ApproximateCats'></td>
-									<td><input type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
-									<td><input type='text' name='EarTipped' value='$EarTipped'></td>
-									<td><input type='text' name='Pregnant' value='$Pregnant'></td>
-									<td><input type='text' name='Injured' value='$Injured'></td>
-									<td><input type='text' name='ColonySetting' value='$ColonySetting'></td>
-									<td><textarea name='Comments'>$Comments</textarea></td>
-									<td><input type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
-									<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
-									<td><input type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
-									<td><input type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
-									<td><input type='text' name='Outcome' value='$Outcome'></td>
-									<td><input type='text' name='CompletionDate' value='$CompletionDate'></td>
-								</tr>
-								";
-							}
-							else
-							{
-								print "
-								<tr>
-									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> </td>
-									<td>$RecordNumber </td>
-									<td>$DateAndTime</td>
-									<td>$FullName</td>
-									<td>$Email</td>
-									<td>$Phone1</td>
-									<td>$Phone2</td>
-									<td>$ColonyName</td>
-									<td>$ColonyAddress</td>
-									<td>$City</td>
-									<td>$County</td>
-									<td>$ZipCode</td>
-									<td>$AnyoneAttempted</td>
-									<td>$ApproximateCats</td>
-									<td>$ColonyCareGiver</td>
-									<td>$EarTipped</td>
-									<td>$Pregnant</td>
-									<td>$Injured</td>
-									<td>$ColonySetting</td>
-									<td>$Comments</td>
-									<td>$VolunteerResponding</td>
-									<td>$ResponseDate</td>
-									<td>$CustNeedOutcome</td>
-									<td>$BeatTeamLeader</td>
-									<td>$Outcome</td>
-									<td>$CompletionDate</td>
-								</tr>
-								";
-							}
+							print "
+							<tr>
+								<td> Make Changes Here ---></td>
+								<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
+								<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
+								<td><input type='text' name='FullName' value='$FullName'></td>
+								<td><input type='text' name='Email' value='$Email'></td>
+								<td><input type='text' name='Phone1' value='$Phone1'></td>
+								<td><input type='text' name='Phone2' value='$Phone2'></td>
+								<td><input type='text' name='ColonyName' value='$ColonyName'></td>
+								<td><input type='text' name='ColonyAddress' value='$ColonyAddress'></td>
+								<td><input type='text' name='City' value='$City'></td>
+								<td><input type='text' name='County' value='$County'></td>
+								<td><input type='text' name='ZipCode' value='$ZipCode'></td>
+								<td>";
+								AnyoneAttempteddd($AnyoneAttempted);
+								print" </td>
+								<td><input type='text' name='ApproximateCats' value='$ApproximateCats'></td>
+								<td><input type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
+								<td><input type='text' name='EarTipped' value='$EarTipped'></td>
+								<td><input type='text' name='Pregnant' value='$Pregnant'></td>
+								<td><input type='text' name='Injured' value='$Injured'></td>
+								<td><input type='text' name='ColonySetting' value='$ColonySetting'></td>
+								<td><textarea name='Comments'>$Comments</textarea></td>
+								<td><input type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
+								<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
+								<td><input type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
+								<td><input type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
+								<td><input type='text' name='Outcome' value='$Outcome'></td>
+								<td><input type='text' name='CompletionDate' value='$CompletionDate'></td>
+							</tr>
+							";
 						}
 						print "
 						</tbody></div>
 					</table>
-					
+					<label><input type='submit' name='recordEdit' value='Submit Edit'></label>
+					<label><input type='submit' name='cancel' value='Cancel Edit'></label>
 					
 					
 
@@ -319,11 +272,15 @@
 			$query = "select * from ReportColonyForm order by $sort";
 			$result = mysqli_query($link, $query);
 			
+			print "Select which tables you would like to view: <br>
+			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm <br>
+			<input type='checkbox' name='searchtables[]' value='FeralInterventionForm' class='checkdisplay1' > FeralInterventionForm <br>
+			<input type='checkbox' name='searchtables[]' value='VolunteerForm' class='checkdisplay2' > VolunteerForm <br>
+			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA <br>
+			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers <br>
+
 			
-			
-			if(!isset($_GET['editrow']))
-			{
-			//if edit is not set
+			<div class='todisplay'>";
 			
 			// print table (happens first before input)
 			
@@ -412,10 +369,7 @@
 					}
 					print "
 					</tbody>
-				</table>";
-				
-			}
-			print "
+				</table>
 			</div>";	
 			
 			print "
