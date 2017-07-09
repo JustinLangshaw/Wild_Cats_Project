@@ -90,7 +90,7 @@
 		<input type="radio" name="trapattempt[]" value="No"> No<br><br>
 		
 		<b>Approx # of Cats</b><br>
-		<input type="text" name="numberofcats"><br><br>
+		<input type="number" name="numberofcats" min="1" max="99"><br><br>
 		
 		<b>Ear Tipped?</b>
 		<img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
@@ -240,6 +240,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	{
 		print "<b>ERROR!!</b> Please fill out all fields";
 	}
+
 	
 }
 else if(isset($_POST['submitintervention'])) //this processes after user submits data.
