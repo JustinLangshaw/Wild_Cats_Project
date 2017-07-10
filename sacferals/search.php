@@ -57,19 +57,113 @@
 			//print "<div><fieldset class='fieldset-auto-width'>";
 			print "- <a href='userprofile.php' align='right'>Back to Admin Hub</a><br><br>";
 			//print "</fieldset></div>";
-					
+				
+		
+			print "
+				
+			
+			<div style='color:red'>Note: Hold down ctrl or shift to select multiple columns</div>
+			
+			<form id='form1' name='form1' method='get' action='search.php'>
+			 
+				<select name='select2[]' size='7' multiple='multiple' tabindex='1'>
+					<option value='RecordNumber'>Record Number</option>
+					<option value='DateAndTime'>Date And Time</option>
+					<option value='FullName'>Full Name</option>
+					<option value='Email'>Email</option>
+					<option value='Phone1'>Phone1</option>
+					<option value='Phone2'>Phone2</option>
+					<option value='ColonyName'>Colony Name</option>
+					<option value='ColonyAddress'>Colony Address</option>
+					<option value='City'>City</option>
+					<option value='County'>County</option>
+					<option value='ZipCode'>ZipCode</option>
+					<option value='AnyoneAttempted'>Anyone Attempted</option>
+					<option value='ApproximateCats'>Approximate Cats</option>
+					<option value='ColonyCareGiver'>Colony Caregiver</option>
+					<option value='EarTipped'>Ear Tipped</option>
+					<option value='Pregnant'>Pregnant</option>
+					<option value='Injured'>Injured</option>
+					<option value='ColonySetting'>Colony Setting</option>
+					<option value='Comments'>Comments</option>
+					<option value='VolunteerResponding'>Volunteer Responding</option>
+					<option value='ResponseDate'>Response Date</option>
+					<option value='CustNeedOutcome'>Customer Need Outcome</option>
+					<option value='BeatTeamLeader'>Beat Team Leader</option>
+					<option value='Outcome'>Outcome</option>
+					<option value='CompletionDate'>Completion Date</option>
+				  </select>
+				 <br>
+				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
+			
+			</form>
+			";
+			
+			$thString="";
+			$tdString="";
+			$thEditString="";
+			$tdEditString="";
+			foreach ($_GET['select2'] as $selectedOption)
+			{
+				$thEditString.="<th><a>".$selectedOption."</a></th>";
+								
+				//echo $selectedOption."\n";
+			}
+			
+			//<td>$Comments</td>
+			foreach ($_GET['select2'] as $selectedOption)
+			{
+				//$tdString.="<td>$".$selectedOption."</td>";
+					$tdString.=" ";			
+				//echo $selectedOption."\n";
+			}
+			
+			//print $tdString;
+			// how to do this correctly
+			//				<th><a href='search.php?select2%5B%5D=Phone1&Submit=Submit&sort=RecordNumber'>Record_Number</a></th>
+			foreach ($_GET['select2'] as $selectedOption)
+			{
+				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$selectedOption."</a></th>";
+								
+				//echo $selectedOption."\n";
+			}
+			
+			foreach ($_GET['select2'] as $selectedOption)
+			{
+				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
+					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
+				else
+					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
+									
+				//echo $selectedOption."\n";
+			}
+			
+			/*
+			print"<table><thead><tr>";
+			print $thString;
+			print"</tr></thead>";
+			
+			
+			print"<tbody><tr>";
+			print $tdString;
+			print"</tr></tbody></table>";
+			
+			print"<tbody><tr>";
+			print $tdEditString;
+			print"</tr></tbody></table>";
+			*/
+			
 			
 			/* this doesn't work with edit yet
-			
 			print "<b>Select which tables you would like to view: </b><br>
 			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm 
 			<input type='checkbox' name='searchtables[]' value='FeralInterventionForm' class='checkdisplay1' > FeralInterventionForm 
 			<input type='checkbox' name='searchtables[]' value='VolunteerForm' class='checkdisplay2' > VolunteerForm 
 			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA 
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
-
-			
 			<div class='todisplay'>"; */
+			
+			
 			
 			///////////////////////////////////////////////////////////////////////////////////////////
 			//edit detector
@@ -107,7 +201,17 @@
 					<table>
 						<thead>
 							<tr>
-								<th> </th>
+								<th> </th>";
+							
+							if($thString != '')
+							{
+								print $thString;
+								print"</tr></thead>";
+								print"(getEditRow is set header)";
+							}
+							else
+							{
+								print "
 								<th><a>Record_Number</a></th>
 								<th><a>Date_And_Time</a></th>
 								<th><a>Full_Name</a></th>
@@ -135,8 +239,10 @@
 								<th><a>Completion_Date</a></th>
 							</tr>
 						</thead>
+						";
+							}
 						
-						<tbody >"; 
+						print "<tbody>"; 
 						
 						//while the next row (set by query) exists?
 						
@@ -157,7 +263,17 @@
 								print "
 								<tr>
 									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
-										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>
+										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
+										 
+								if($tdEditString != '')
+								{
+									print $tdEditString;
+									print"</tr>";
+									//print"(editable geteditRow is set Body)";
+								}
+								else
+								{
+									print "
 									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
 									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
 									<td><input type='text' name='FullName' value='$FullName'></td>
@@ -169,9 +285,7 @@
 									<td><input type='text' name='City' value='$City'></td>
 									<td><input type='text' name='County' value='$County'></td>
 									<td><input type='text' name='ZipCode' value='$ZipCode'></td>
-									<td>";
-									AnyoneAttempteddd($AnyoneAttempted);
-									print" </td>
+									<td><input type='text' name='AnyoneAttempted' value='$AnyoneAttempted'></td>
 									<td><input type='text' name='ApproximateCats' value='$ApproximateCats'></td>
 									<td><input type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
 									<td><input type='text' name='EarTipped' value='$EarTipped'></td>
@@ -187,12 +301,25 @@
 									<td><input type='text' name='CompletionDate' value='$CompletionDate'></td>
 								</tr>
 								";
+								}
 							}
 							else
 							{
 								print "
 								<tr>
 									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> </td>
+								";
+							
+								if($tdString != '')
+								{
+									print $tdString;
+									print"</tr>";
+									//print"(un editable getEditRow is set Body )";
+								}
+								else
+								{
+									print "
+
 									<td>$RecordNumber </td>
 									<td>$DateAndTime</td>
 									<td>$FullName</td>
@@ -220,6 +347,7 @@
 									<td>$CompletionDate</td>
 								</tr>
 								";
+								}
 							}
 						}
 						print "
@@ -335,7 +463,18 @@
 				<table>
 					<thead>
 						<tr>
-							<th>  </th>
+							<th>  </th>";
+							
+							if($thString != '')
+								{
+									print $thString;
+									print"</tr>";
+									//print"(editRow not set header)";
+								}
+								else
+								{
+									print "
+
 							<th><a href='search.php?sort=RecordNumber'>Record_Number</a></th>
 							<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
 							<th><a href='search.php?sort=FullName'>Full_Name</a></th>
@@ -362,17 +501,16 @@
 							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
 							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>
 							
-						</tr>
+						</tr>";
+								}
+					print"
 					</thead>
 					
 					<tbody>";
 					
 					//while the next row (set by query) exists?
 					
-					//$query = "select * from ReportColonyForm";
-					//$result = mysqli_query($link, $query);
-					//$row = mysqli_fetch_row($result);
-					
+					$k=0;
 					while($row = mysqli_fetch_row($result))
 					{
 						list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
@@ -380,9 +518,92 @@
 						$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row; // variables are set to current row
 																		// then printed in one table row
+						
+						
+						$myArray[0]=$RecordNumber;
+						$myArray[1]=$DateAndTime;
+						$myArray[2]=$FullName;
+						$myArray[3]=$Email;
+						$myArray[4]=$Phone1;
+						$myArray[5]=$Phone2;
+						$myArray[6]=$ColonyName;
+						$myArray[7]=$ColonyAddress;
+						$myArray[8]=$City;
+						$myArray[9]=$County;
+						$myArray[10]=$ZipCode;
+						$myArray[11]=$AnyoneAttempted;
+						$myArray[12]=$ApproximateCats;
+						$myArray[13]=$ColonyCareGiver;
+						$myArray[14]=$EarTipped;
+						$myArray[15]=$Pregnant;
+						$myArray[16]=$Injured;
+						$myArray[17]=$ColonySetting;
+						$myArray[18]=$Comments;
+						$myArray[19]=$VolunteerResponding;
+						$myArray[20]=$ResponseDate;
+						$myArray[21]=$CustNeedOutcome;
+						$myArray[22]=$BeatTeamLeader;
+						$myArray[23]=$Outcome;
+						$myArray[24]=$CompletionDate;
+						
+						$myArray1[0]="RecordNumber";
+						$myArray1[1]="DateAndTime";
+						$myArray1[2]="FullName";
+						$myArray1[3]="Email";
+						$myArray1[4]="Phone1";
+						$myArray1[5]="Phone2";
+						$myArray1[6]="ColonyName";
+						$myArray1[7]="ColonyAddress";
+						$myArray1[8]="City";
+						$myArray1[9]="County";
+						$myArray1[10]="ZipCode";
+						$myArray1[11]="AnyoneAttempted";
+						$myArray1[12]="ApproximateCats";
+						$myArray1[13]="ColonyCareGiver";
+						$myArray1[14]="EarTipped";
+						$myArray1[15]="Pregnant";
+						$myArray1[16]="Injured";
+						$myArray1[17]="ColonySetting";
+						$myArray1[18]="Comments";
+						$myArray1[19]="VolunteerResponding";
+						$myArray1[20]="ResponseDate";
+						$myArray1[21]="CustNeedOutcome";
+						$myArray1[22]="BeatTeamLeader";
+						$myArray1[23]="Outcome";
+						$myArray1[24]="CompletionDate";
+						
+						
 						print "
 						<tr>
 							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> </td>
+							";
+							
+							//$_GET['select2'] as RecordNumber
+							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number
+							{
+								for ($i = 0; $i<25; $i++) 
+								{
+									//if recordNumber == recordNumber
+									if ($myArray1[$i] == $selectedOption) 
+									{
+										$tdString.="<td>$myArray[$i]</td>";
+										break;
+									}
+								}
+									
+							}
+							
+							if($tdString != '')
+							{
+								print $tdString;
+								print"</tr>";
+								$tdString=" ";
+								//print"(editRow not set Body)";
+							}
+							else
+							{
+								print "
+									
 							<td>$RecordNumber </td>
 							<td>$DateAndTime</td>
 							<td>$FullName</td>
@@ -410,6 +631,8 @@
 							<td>$CompletionDate</td>
 						</tr>
 						";
+								}
+								$k++;
 					}
 					print "
 					</tbody>
