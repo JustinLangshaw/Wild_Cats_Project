@@ -95,37 +95,43 @@
 				  </select>
 				 <br>
 				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
-			
+				 <input type='submit' name='Select All' value='Reset'/>
 			</form>
 			";
+			//
 			
 			$thString="";
 			$tdString="";
 			$thEditString="";
 			$tdEditString="";
+			
+			
+			if(count($_SESSION['selectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
+			{
+				$_GET['select2'] = $_SESSION['selectedColumns'];
+			}
+			
+			if(count($_GET['select2']) >= 0)
+			{
+				$_SESSION['selectedColumns'] = $_GET['select2'];
+			}
+			
+			
+			
+			
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				$thEditString.="<th><a>".$selectedOption."</a></th>";
-								
-				//echo $selectedOption."\n";
 			}
 			
-			//<td>$Comments</td>
 			foreach ($_GET['select2'] as $selectedOption)
 			{
-				//$tdString.="<td>$".$selectedOption."</td>";
-					$tdString.=" ";			
-				//echo $selectedOption."\n";
+				$tdString.="<td>$".$selectedOption."</td>";
 			}
 			
-			//print $tdString;
-			// how to do this correctly
-			//				<th><a href='search.php?select2%5B%5D=Phone1&Submit=Submit&sort=RecordNumber'>Record_Number</a></th>
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$selectedOption."</a></th>";
-								
-				//echo $selectedOption."\n";
 			}
 			
 			foreach ($_GET['select2'] as $selectedOption)
@@ -135,7 +141,6 @@
 				else
 					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
 									
-				//echo $selectedOption."\n";
 			}
 			
 			/*
@@ -165,12 +170,17 @@
 			
 			
 			
+			if(isset($_GET['Reset']))
+			{
+				unset($_SESSION['selectedColumns']);
+			}
+			
 			///////////////////////////////////////////////////////////////////////////////////////////
 			//edit detector
 			if(isset($_GET['editrow']))
 			{
 				$RecordNumber1 = $_GET['RecordNumber'];
-				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1.""; //
+				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1.""; 
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
 				list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
@@ -178,17 +188,16 @@
 						$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row;
 
-
-						
-				$sort = $_GET['sort']; //'sort' is magic sorting variable
-				if(!isset($sort))
-				{
-					$sort = "RecordNumber";
-				}
-
-				$query = "select * from ReportColonyForm order by $sort";
-				$result = mysqli_query($link, $query);
 				
+					$sort = $_GET['sort']; //'sort' is magic sorting variable
+					if(!isset($sort))
+					{
+						$sort = "RecordNumber";
+					}
+
+					$query = "select * from ReportColonyForm order by $sort";
+					$result = mysqli_query($link, $query);
+					
 				
 				// print table (happens first before input)
 
@@ -207,7 +216,7 @@
 							{
 								print $thString;
 								print"</tr></thead>";
-								print"(getEditRow is set header)";
+								//print"(getEditRow is set header)";
 							}
 							else
 							{
@@ -246,9 +255,7 @@
 						
 						//while the next row (set by query) exists?
 						
-						//$query = "select * from ReportColonyForm";
-						//$result = mysqli_query($link, $query);
-						//$row = mysqli_fetch_row($result);
+						
 						
 						while($row = mysqli_fetch_row($result))
 						{
@@ -257,16 +264,49 @@
 							$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 							$Outcome, $CompletionDate) = $row; // variables are set to current row
 																			// then printed in one table row
-																			
+							
 							if($RecordNumber1==$RecordNumber)
 							{
+								
 								print "
 								<tr>
 									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
-										 
+										
+										
 								if($tdEditString != '')
 								{
+									$tdEditString = '';
+									
+									/*
+									if(in_array($RecordNumber, $_GET['select2']))
+									{
+										echo "howdy";
+										$tdEditString.="<td><input name='RecordNumber' value='".$RecordNumber1."' readonly></td>";
+									}*/
+									
+									
+									
+									foreach ($_GET['select2'] as $selectedOption)
+									{
+										if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
+										{
+											$tdEditString.="<td>".$$selectedOption."</td>";
+										}
+										else
+										{
+											$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$$selectedOption."'></td>";
+										}				
+										//echo $selectedOption."\n";
+									}
+									
+									
+									if(!in_array($RecordNumber, $_GET['select2']))
+									{
+										
+										$tdEditString.="<input type='hidden' name='RecordNumber' value='".$RecordNumber1."' readonly>";
+									}
+									
 									print $tdEditString;
 									print"</tr>";
 									//print"(editable geteditRow is set Body)";
@@ -312,8 +352,15 @@
 							
 								if($tdString != '')
 								{
+									$tdString = "";
+									foreach ($_GET['select2'] as $selectedOption)
+									{
+										$tdString.="<td>".$$selectedOption."</td>";
+										//echo $selectedOption."\n";
+									}
 									print $tdString;
 									print"</tr>";
+									//$tdString = " ";
 									//print"(un editable getEditRow is set Body )";
 								}
 								else
@@ -365,6 +412,7 @@
 			}
 			if(isset($_POST['recordEdit']))
 			{
+				//echo "In the recordEdit IF loop!!";
 				$FullName = $_POST['FullName'];
 				$RecordNumber1 = $_POST['RecordNumber'];
 				$DateAndTime = $_POST['DateAndTime'];
@@ -390,34 +438,87 @@
 				$BeatTeamLeader = $_POST['BeatTeamLeader'];
 				$Outcome = $_POST['Outcome'];
 				$CompletionDate = $_POST['CompletionDate'];
+				
+				//echo $_POST['RecordNumber'];
+				//echo $RecordNumber1;
 
 				$reName = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
-				if($AnyoneAttempted != "") //preg_match($reName, $FullName) && 
+				
+				if(true) //preg_match($reName, $FullName) && 
 				{
-					//$query = "select * from ReportColonyForm";
-					//$result = mysqli_query($link, $query);
-					$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1' and FullName='$FullName' and Email='$Email' 
-							and Phone1='$Phone1' and Phone2='$Phone2' and ColonyName='$ColonyName' and ColonyAddress='$ColonyAddress' 
-							and City='$City' and County='$County' and ZipCode='$ZipCode' and AnyoneAttempted='$AnyoneAttempted'
-							and ApproximateCats='$ApproximateCats' and ColonyCareGiver='$ColonyCareGiver' and EarTipped='$EarTipped' 
-							and Pregnant='$Pregnant' and Injured='$Injured' and ColonySetting='$ColonySetting' and Comments='$Comments'
-							and VolunteerResponding='$VolunteerResponding' and ResponseDate='$ResponseDate' and CustNeedOutcome='$CustNeedOutcome'
-							and BeatTeamLeader='$BeatTeamLeader' and Outcome='$Outcome' and CompletionDate='$CompletionDate'";
-							
-					$result = mysqli_query($link, $query);
+					//print  "count is : ".count($_GET['select2']);
+					//print_r($_GET['select2']);
 					
-					if(mysqli_num_rows($result) == 0)//if query does nothing, then update
+					if(count($_GET['select2']) !=0 )
 					{
-						$queryupdate = "update ReportColonyForm set FullName='$FullName',  Email='$Email' ,
-							 Phone1='$Phone1',  Phone2='$Phone2',  ColonyName='$ColonyName' , ColonyAddress='$ColonyAddress' ,
-							 City='$City',  County='$County',  ZipCode='$ZipCode',  AnyoneAttempted='$AnyoneAttempted',
-							 ApproximateCats='$ApproximateCats' , ColonyCareGiver='$ColonyCareGiver',  EarTipped='$EarTipped' ,
-							 Pregnant='$Pregnant',  Injured='$Injured',  ColonySetting='$ColonySetting',  Comments='$Comments',
-							 VolunteerResponding='$VolunteerResponding',  ResponseDate='$ResponseDate',  CustNeedOutcome='$CustNeedOutcome',
-							 BeatTeamLeader='$BeatTeamLeader',  Outcome='$Outcome' , CompletionDate='$CompletionDate' where RecordNumber='$RecordNumber1'";
+						/* Build $query*/
+						
+						$query = "select * from ReportColonyForm where ";
 							
-						mysqli_query($link, $queryupdate);
-						print "<h2>Record was updated</h2>";
+						foreach($_GET['select2'] as $selectedItem)
+						{
+							$query.=$selectedItem." ='".$$selectedItem."'";
+							$query.=" and ";
+						}
+						
+						$query=rtrim($query," and ");
+					
+						//print $query;
+					
+						$result = mysqli_query($link, $query);
+						
+						if(mysqli_num_rows($result) == 0)
+						{
+							$queryupdate = " update ReportColonyForm set ";
+							
+							if(count($_GET['select2'] == 0))
+							{
+								//print "hi?";
+							}
+							
+							foreach($_GET['select2'] as $selectedItem)
+							{
+								if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
+								{
+									continue;
+								}
+								
+								$queryupdate.=$selectedItem."='".$$selectedItem."'";
+								$queryupdate.=", ";
+							}
+							$queryupdate=rtrim($queryupdate,", ");
+					
+							
+							$queryupdate.=" where RecordNumber='$RecordNumber1'";
+							
+							//print $queryupdate;
+							
+							mysqli_query($link, $queryupdate);
+							
+						}
+					}
+					else
+					{
+					
+					
+						$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1'"; 
+						$result = mysqli_query($link, $query);
+						
+						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
+						{
+							$queryupdate = "update ReportColonyForm set FullName='$FullName', Email='$Email',
+								 Phone1='$Phone1', Phone2='$Phone2', ColonyName='$ColonyName', ColonyAddress='$ColonyAddress',
+								 City='$City', County='$County', ZipCode='$ZipCode', AnyoneAttempted='$AnyoneAttempted',
+								 ApproximateCats='$ApproximateCats', ColonyCareGiver='$ColonyCareGiver', EarTipped='$EarTipped',
+								 Pregnant='$Pregnant', Injured='$Injured', ColonySetting='$ColonySetting', Comments='$Comments',
+								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
+								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate' where RecordNumber='$RecordNumber1'";
+								
+							//echo $queryupdate;
+							mysqli_query($link, $queryupdate);
+							print "<h2>Record was updated</h2>";
+						}
+						
 					}
 				}
 				else
@@ -510,7 +611,6 @@
 					
 					//while the next row (set by query) exists?
 					
-					$k=0;
 					while($row = mysqli_fetch_row($result))
 					{
 						list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
@@ -595,6 +695,12 @@
 							
 							if($tdString != '')
 							{
+								$tdString = "";
+									foreach ($_GET['select2'] as $selectedOption)
+									{
+										$tdString.="<td>".$$selectedOption."</td>";
+										//echo $selectedOption."\n";
+									}
 								print $tdString;
 								print"</tr>";
 								$tdString=" ";
@@ -632,7 +738,7 @@
 						</tr>
 						";
 								}
-								$k++;
+								
 					}
 					print "
 					</tbody>
