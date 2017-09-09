@@ -41,7 +41,7 @@
 		</form>
 		
 		<h3>Level 1 access (admin): Guest1, 123</h3>
-		<h3>Level 2 access (pleb): Guest2, abc</h3>";
+		<h3>Level 2 access (pleb): VeryLeetName2, 123</h3>";
 	}
 	//once you're logged in, show menu/options
 	else 
@@ -71,11 +71,33 @@
 			
 			print "<b><u>Jobs volunteered for:</u></b>";
 			
-			print "<ul>
-					  <li>job 1 (these will populate in upcoming build)</li>
-					  <li>job 2</li>
-					  <li>job 3</li>
-				   </ul>";
+			$query = "select email from SacFeralsUsers where username = '".$Ausername."'";
+			$result = mysqli_query($link, $query);
+			$row = mysqli_fetch_row($result);
+			list($email) = $row;
+		
+			$query = "select transporting, helptrap, helpeducate, usingphone, helpingclinic, OtherTasks from VolunteerForm where email = '".$email."'";
+			$result = mysqli_query($link, $query);
+			$row = mysqli_fetch_row($result);
+			list($transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $OtherTasks) = $row;
+			//print $transporting." ".$helptrap." ".$helpeducate." ".$usingphone." ".$helpingclinic." ".$OtherTasks;
+			
+			
+			print "<ul>";
+				if($transporting==1)
+						print " <li>Transporting </li>";
+				if($helptrap==1)
+						print " <li>Help Trapping </li>";
+				if($helpeducate==1)
+					print " <li>Help Educate </li>";
+				if($usingphone==1)
+					print " <li>Using Phone </li>";
+				if($helpingclinic==1)
+					print " <li>Helping Clinic </li>";
+				if($OtherTasks!="")
+					print " <li>".$OtherTasks." </li>";
+			print "</ul>";
+			
 			
 			print "<br><br>(availability table will appear in upcoming build)<br><br>";
 			
