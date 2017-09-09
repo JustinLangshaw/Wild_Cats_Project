@@ -15,7 +15,6 @@
 <head>	
 	<title>Record Search</title> 
 	
-	<link rel="stylesheet" type="text/css" href="search.css"  />
 	
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -62,7 +61,7 @@
 			print "
 				
 			
-			<div style='color:red'>Note: Hold down ctrl or shift to select multiple columns</div>
+			<div style='color:red' style='float: right;' >Note: Hold down ctrl or shift to select multiple columns</div>
 			
 			<form id='form1' name='form1' method='get' action='search.php'>
 			 
@@ -199,6 +198,7 @@
 					$result = mysqli_query($link, $query);
 					
 				
+				//////////////////////////////////////////////////////////////////////////////////////
 				// print table (happens first before input)
 
 					// first print row of links/headers that sort
