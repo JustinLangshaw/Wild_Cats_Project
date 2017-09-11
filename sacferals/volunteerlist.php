@@ -114,7 +114,7 @@
 								  <li>job 1</li>
 								  <li>job 2</li>
 								</ul>
-							<td><a href='volunteerlist.php'>Add_Job</a><br><a href='volunteerlist.php'>Delete_Job</a><br>(links do nothing now)</td>
+							<td><a href='volunteerlist.php'>Add_Job</a><br><a href='volunteerlist.php'>Delete_Job</a></td>
 						</tr>
 						";
 					}

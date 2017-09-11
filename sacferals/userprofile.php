@@ -17,12 +17,6 @@
 	<link rel="stylesheet" type="text/css" href="userprofile.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="userprofile.js"></script>
-	<!--<style type="text/css">
-    .fieldset-auto-width 
-	{
-         display: inline-block;
-    }
-	</style>-->
 
 </head>
 
@@ -266,8 +260,6 @@
 				  </tr>
 				</table>
 			<?php
-			
-			print "<br><br>(availability table will appear in upcoming build)<br><br>";
 			
 			print "(job tables will appear in upcoming build)<br><br>";
 		}
