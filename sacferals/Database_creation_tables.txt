@@ -168,7 +168,7 @@ CREATE TABLE TransporterJob (
 	
 	ColonyName varchar(200),
 	
-	CatsTransported varchar(200),
+	CatsTransported int,
 	
 	Location varchar(200),
 	
