@@ -4,6 +4,31 @@
 	$link = connectdb($host, $user, $pass, $db);
 ?>
 
+<script type="text/javascript">
+
+function formatPhone(phoneId) {
+	var startCursor = $("#"+phoneId).get(0).selectionStart,
+		endCursor = $("#"+phoneId).get(0).selectionEnd;
+	
+	var output;	
+    var input = $("#"+phoneId).val();
+	input = input.replace(/[^0-9]/g, '');
+	var area = input.substr(0, 3);
+    var pre = input.substr(3, 3);
+    var tel = input.substr(6, 4);
+	
+	if (input.length >= 10){
+		output = input.replace(/^(\d{3})(\d{3})(\d{4})+$/, "($1)$2-$3");
+		
+	} else {
+		output = input;
+	}
+	$("#"+phoneId).val(output);
+	$("#"+phoneId).get(0).setSelectionRange(startCursor, endCursor);
+}
+
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>	
@@ -41,9 +66,9 @@
 	<b>Your Email</b><br>
 	<input type="text" name="email"><br><br>
 	<b>Your Phone #1</b><br>
-	<input type="text" name="phone1"><br><br>
+	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
 	<b>Your Phone #2</b><br>
-	<input type="text" name="phone2"><br><br>
+	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
 
 	<b>Prefered Method Of Contact?</b><br>
 	Check one or all<br>

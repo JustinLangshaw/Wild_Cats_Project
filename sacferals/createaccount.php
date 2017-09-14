@@ -32,6 +32,7 @@
 		</div>
 	</form>
 
+	<h4>Please use the same email you used when submitting the volunteer form, otherwise we will have to manually add the jobs you selected.</h4>
 
 <?php	
 
@@ -67,6 +68,8 @@ if(isset($_POST['register'])) //this processes after user submits data.
 				$query = "insert into SacFeralsUsers values('', '$username', '$email', '$password', '2')";
 				mysqli_query($link, $query); //link query to database
 				print "Account Created"; // print confirmation	
+				
+			
 			}
 			else
 			{
@@ -82,8 +85,6 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	
 ?>
 	
-	
-	<br>
 	<a href="userprofile.php">Back to login</a>
 
 </body>

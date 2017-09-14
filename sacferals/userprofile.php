@@ -14,12 +14,9 @@
 <head>	
 	<title>User Profile</title> 
 	
-	<style type="text/css">
-    .fieldset-auto-width 
-	{
-         display: inline-block;
-    }
-	</style>
+	<link rel="stylesheet" type="text/css" href="userprofile.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="userprofile.js"></script>
 
 </head>
 
@@ -41,7 +38,7 @@
 		</form>
 		
 		<h3>Level 1 access (admin): Guest1, 123</h3>
-		<h3>Level 2 access (pleb): Guest2, abc</h3>";
+		<h3>Level 2 access (pleb): VeryLeetName2, 123</h3>";
 	}
 	//once you're logged in, show menu/options
 	else 
@@ -71,13 +68,198 @@
 			
 			print "<b><u>Jobs volunteered for:</u></b>";
 			
-			print "<ul>
-					  <li>job 1 (these will populate in upcoming build)</li>
-					  <li>job 2</li>
-					  <li>job 3</li>
-				   </ul>";
+			$query = "select email from SacFeralsUsers where username = '".$Ausername."'";
+			$result = mysqli_query($link, $query);
+			$row = mysqli_fetch_row($result);
+			list($email) = $row;
+		
+			$query = "select transporting, helptrap, helpeducate, usingphone, helpingclinic, OtherTasks from VolunteerForm where email = '".$email."'";
+			$result = mysqli_query($link, $query);
+			$row = mysqli_fetch_row($result);
+			list($transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $OtherTasks) = $row;
+			//print $transporting." ".$helptrap." ".$helpeducate." ".$usingphone." ".$helpingclinic." ".$OtherTasks;
 			
-			print "<br><br>(availability table will appear in upcoming build)<br><br>";
+			
+			print "<ul>";
+				if($transporting==1)
+						print " <li>Transporting </li>";
+				if($helptrap==1)
+						print " <li>Help Trapping </li>";
+				if($helpeducate==1)
+					print " <li>Help Educate </li>";
+				if($usingphone==1)
+					print " <li>Using Phone </li>";
+				if($helpingclinic==1)
+					print " <li>Helping Clinic </li>";
+				if($OtherTasks!="")
+					print " <li>".$OtherTasks." </li>";
+			print "</ul>";
+			
+			print "<b>Availability</b> (toggle a cell you are available on to turn it green)<br><br>";
+			?>
+			  <table id="sales-list">
+				  <tr>
+					<td class="white"></td>
+					<td class="white">Sunday</td>
+					<td class="white">Monday</td>
+					<td class="white">Tuesday</td>
+					<td class="white">Wednesday</td>
+					<td class="white">Thursday</td>
+					<td class="white">Friday</td>
+					<td class="white">Saturday</td>
+				  </tr>
+				  <tr>
+					 <td class="white">7:00am</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">8:00am</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">9:00am</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">10:00am</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">11:00am</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">12:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">1:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">2:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">3:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">4:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">5:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">6:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">7:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">8:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				  <tr>
+					 <td class="white">9:00pm</td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+					 <td class="white"> </td>
+				  </tr>
+				</table>
+			<?php
 			
 			print "(job tables will appear in upcoming build)<br><br>";
 		}

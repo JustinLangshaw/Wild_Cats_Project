@@ -71,33 +71,53 @@
 				<table>
 					<thead>
 						<tr>
-							<th><a href='search.php?sort=RecordNumber'>Record_Number</a></th>
-							<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
-							<th><a href='search.php?sort=FullName'>Full_Name</a></th>
-							<th><a href='search.php?sort=CompleteAddress'>Complete_Address</a></th>
-							<th colspan='2'><a href='search.php?sort=Email'>Email</a></th>
-							<th><a href='search.php?sort=Phone1'>Phone_1</a></th>
-							<th><a href='search.php?sort=Phone2'>Phone_2</a></th>
-							<th><a href='search.php?sort=PreferedContact'>Prefered_Contact</a></th>
+							<th><a href='volunteerlist.php?sort=RecordNumber'>Record_Number</a></th>
+							<th><a href='volunteerlist.php?sort=DateAndTime'>Date_And_Time</a></th>
+							<th><a href='volunteerlist.php?sort=FullName'>Full_Name</a></th>
+							<th><a href='volunteerlist.php?sort=CompleteAddress'>Complete_Address</a></th>
+							<th><a href='volunteerlist.php?sort=Email'>Email</a></th>
+							<th><a href='volunteerlist.php?sort=Phone1'>Phone_1</a></th>
+							<th><a href='volunteerlist.php?sort=Phone2'>Phone_2</a></th>
+							<th><a href='volunteerlist.php?sort=PreferedContact'>Prefered_Contact</a></th>
+							<th><a href='volunteerlist.php?sort=TypeOfWork'>Type_Of_Work</a></th>
+							<th><a href='volunteerlist.php?sort=OtherTasks'>Other_Tasks</a></th>
+							<th><a href='volunteerlist.php?sort=PastWorkExp'>Past_Work_Experience</a></th>
+							<th>Volunteer Job Status</th> 
+							<th> </th>
+
 						</tr>
 					</thead>
 					
 					<tbody>";
 					
+					//figure out how to make colspan="2" work on the last column with the current css table settings
+					
+					
 					//while the next row (set by query) exists?
 					while($row = mysqli_fetch_row($result))
 					{
-						list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $PreferedContact) = $row; // variables are set to current row
+						list($RecordNumber, $DateAndTime, $FullName, $CompleteAddress, $Email, $Phone1, $Phone2, $PreferedContact, $contactEmail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $Other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponses) = $row; // variables are set to current row
+
 																		// then printed in one table row
 						print "
 						<tr>
 							<td>$RecordNumber</td>
 							<td>$DateAndTime</td>
 							<td>$FullName</td>
-							<td colspan='2'>$Email</td>
+							<td>$CompleteAddress</td>
+							<td>$Email</td>
 							<td>$Phone1</td>
 							<td>$Phone2</td>
 							<td>$PreferedContact</td>
+							<td>$TypeOfWork</td>
+							<td>$OtherTasks</td>
+							<td>$PastWorkExp</td>
+							<td> <ul style='list-style-type:disc'>
+								  <li>job 1</li>
+								  <li>job 2</li>
+								</ul>
+							<td><a href='volunteerlist.php'>Add_Job</a><br><a href='volunteerlist.php'>Delete_Job</a></td>
+
 						</tr>
 						";
 					}

@@ -4,6 +4,52 @@
 	$link = connectdb($host, $user, $pass, $db);
 ?>
 
+<script type="text/javascript">
+
+/*
+function formatPhone(phoneId){
+	var output;	
+    var input = $("#"+phoneId).val();
+    input = input.replace(/[^0-9]/g, '');
+    var area = input.substr(0, 3);
+    var pre = input.substr(3, 3);
+    var tel = input.substr(6, 4);
+    if ((area.length > 2) && (area.length < 3)) {
+        output = "(" + area;
+	}else if (area.length <= 2){
+		output = area;	
+    } else if (area.length == 3 && pre.length < 3) {
+        output = "(" + area + ")" + " " + pre;
+    } else if (area.length == 3 && pre.length == 3) {
+        output = "(" + area + ")" + " " + pre + "-" + tel;  
+	}		
+    $("#"+phoneId).val(output);
+}*/
+
+function formatPhone(phoneId) {
+	var startCursor = $("#"+phoneId).get(0).selectionStart,
+		endCursor = $("#"+phoneId).get(0).selectionEnd;
+	
+	var output;	
+    var input = $("#"+phoneId).val();
+	input = input.replace(/[^0-9]/g, '');
+	var area = input.substr(0, 3);
+    var pre = input.substr(3, 3);
+    var tel = input.substr(6, 4);
+	
+	if (input.length >= 10){
+		output = input.replace(/^(\d{3})(\d{3})(\d{4})+$/, "($1)$2-$3");
+		
+	} else {
+		output = input;
+	}
+	
+	$("#"+phoneId).val(output);
+	$("#"+phoneId).get(0).setSelectionRange(startCursor, endCursor);
+}
+
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>	
@@ -56,9 +102,9 @@
 	(Required)<br>
 	<input type="text" name="email"><br><br>
 	<b>Your Phone #1</b><br>
-	<input type="text" name="phone1"><br><br>
+	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
 	<b>Your Phone #2</b><br>
-	<input type="text" name="phone2"><br><br>
+	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
 
 	<b>Are you reporting a cat colony or another type of problem?</b><br><!-- class='checkdisplay' -->
 	<input type="radio" name="problemtype[]" value="catcolony" onClick="displayForm(this)"></input> Cat Colony<br>
@@ -90,7 +136,7 @@
 		<input type="radio" name="trapattempt[]" value="No"> No<br><br>
 		
 		<b>Approx # of Cats</b><br>
-		<input type="text" name="numberofcats"><br><br>
+		<input type="number" name="numberofcats" min="1" max="99"><br><br>
 		
 		<b>Ear Tipped?</b>
 		<img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
@@ -240,6 +286,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	{
 		print "<b>ERROR!!</b> Please fill out all fields";
 	}
+
 	
 }
 else if(isset($_POST['submitintervention'])) //this processes after user submits data.
