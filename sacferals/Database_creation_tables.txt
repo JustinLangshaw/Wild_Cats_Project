@@ -159,3 +159,28 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  
  insert into SacFeralsUsers values("56", "Guest1", "guest1@yahoo.com", "123", "1");
  insert into SacFeralsUsers values("57", "Guest2", "guest2@yahoo.com", "abc", "2");
+
+CREATE TABLE TransporterJob (
+	
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	
+	primary key(RecordNumber), 
+	
+	ColonyName varchar(200),
+	
+	CatsTransported varchar(200),
+	
+	Location varchar(200),
+	
+	TransportResolved tinyint,
+	
+	Comments varchar(200)
+
+);
+insert into TransporterJob values ('NULL', "Rancho Colony", 2, "1234 Street Way, Rancho Cordova, CA 92821", 0, 'NULL')
+
+
+
+
+
+
