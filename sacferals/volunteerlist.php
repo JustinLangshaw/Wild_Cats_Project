@@ -84,6 +84,7 @@
 							<th><a href='volunteerlist.php?sort=PastWorkExp'>Past_Work_Experience</a></th>
 							<th>Volunteer Job Status</th> 
 							<th> </th>
+
 						</tr>
 					</thead>
 					
@@ -96,6 +97,7 @@
 					while($row = mysqli_fetch_row($result))
 					{
 						list($RecordNumber, $DateAndTime, $FullName, $CompleteAddress, $Email, $Phone1, $Phone2, $PreferedContact, $contactEmail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $Other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponses) = $row; // variables are set to current row
+
 																		// then printed in one table row
 						print "
 						<tr>
@@ -115,6 +117,7 @@
 								  <li>job 2</li>
 								</ul>
 							<td><a href='volunteerlist.php'>Add_Job</a><br><a href='volunteerlist.php'>Delete_Job</a></td>
+
 						</tr>
 						";
 					}
