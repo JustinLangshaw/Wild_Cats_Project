@@ -126,7 +126,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	
 	$preferedcontact= $contact[0].", ".$contact[1].", ".$contact[2];
 	$typeofworkstring = $typeofwork[0].", ".$typeofwork[1].", ".$typeofwork[2].", ".$typeofwork[3].", ".$typeofwork[4].", ".$typeofwork[5];
-	
+
 	
 	if($contact[0]!='')
 		$contactemail=1;

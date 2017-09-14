@@ -161,8 +161,6 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  insert into SacFeralsUsers values("57", "Guest2", "guest2@yahoo.com", "abc", "2");
 
 
-insert into TransporterJob values ('NULL', "Rancho Colony", 2, "1234 Street Way, Rancho Cordova, CA 92821", 0, 'NULL')
-
 
 
 
