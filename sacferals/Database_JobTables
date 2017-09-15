@@ -1,0 +1,30 @@
+CREATE TABLE Transporter (
+	RecordNumber int NOT NULL AUTO_INCREMENT,	
+	primary key(RecordNumber), 	
+	ColonyName varchar(200),	
+	CatsTransported int,	
+	Location varchar(200),	
+	TransportResolved tinyint,	
+	Comments varchar(200)
+);
+
+CREATE TABLE Trapper (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary_key(RecordNumber),
+	ColonyName varchar(200),
+	CatsTrapped int,
+	Location varchar(200),
+	TrapResolved boolean,
+	Comments varchar(200)
+);
+
+CREATE TABLE Educator (
+
+);
+
+CREATE TABLE SpayNeuterHelper (
+
+);
+
+insert into Transporter values ('NULL', "Rancho Colony", 2, "1234 Street Way, Rancho Cordova, CA 92821", 0, 'NULL')
+
