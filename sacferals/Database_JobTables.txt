@@ -1,5 +1,11 @@
 CREATE TABLE Transporter (
-
+	RecordNumber int NOT NULL AUTO_INCREMENT,	
+	primary key(RecordNumber), 	
+	ColonyName varchar(200),	
+	CatsTransported int,	
+	Location varchar(200),	
+	TransportResolved tinyint,	
+	Comments varchar(200)
 );
 
 CREATE TABLE Trapper (
