@@ -25,3 +25,6 @@ CREATE TABLE Educator (
 CREATE TABLE SpayNeuterHelper (
 
 );
+
+insert into Transporter values ('NULL', "Rancho Colony", 2, "1234 Street Way, Rancho Cordova, CA 92821", 0, 'NULL')
+
