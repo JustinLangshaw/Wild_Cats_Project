@@ -1,0 +1,21 @@
+CREATE TABLE Transporter (
+
+);
+
+CREATE TABLE Trapper (
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary_key(RecordNumber),
+	ColonyName varchar(200),
+	CatsTrapped int,
+	Location varchar(200),
+	TrapResolved boolean,
+	Comments varchar(200)
+);
+
+CREATE TABLE Educator (
+
+);
+
+CREATE TABLE SpayNeuterHelper (
+
+);
