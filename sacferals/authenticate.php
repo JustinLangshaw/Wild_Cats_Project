@@ -18,7 +18,7 @@ function authenticateUser()
 	//$email = $_POST['email'];
 	$pass = $_POST['pass'];
 	
-	$query = "select * from SacFeralsUsers where username='$username' and password='$pass'";
+	$query = "select * from SacFeralsUsers where (username='$username' or email='$username') and password='$pass'";
 	$result = mysqli_query($link, $query);
 
 	if(mysqli_num_rows($result) == 0)
