@@ -19,7 +19,13 @@ CREATE TABLE Trapper (
 );
 
 CREATE TABLE Educator (
-
+	RecordNumber int NOT NULL AUTO_INCREMENT,
+	primary_key(RecordNumber),
+	Problems varchar(200),
+	Location varchar(200),
+	InsertDate TIMESTAMP,
+	EducationResolved boolean,
+	Comments varchar(200)
 );
 
 CREATE TABLE SpayNeuterHelper (
