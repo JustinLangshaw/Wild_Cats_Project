@@ -36,9 +36,9 @@
 		<label><input type='submit' name='login' value='Login'></label>
 		</fieldset></div>
 		</form>
-		
+		<!--
 		<h3>Level 1 access (admin): Guest1, 123</h3>
-		<h3>Level 2 access (pleb): VeryLeetName2, 123</h3>";
+		<h3>Level 2 access (pleb): VeryLeetName2, 123</h3> -->";
 	}
 	//once you're logged in, show menu/options
 	else 
