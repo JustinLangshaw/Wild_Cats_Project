@@ -20,7 +20,7 @@
 
 </head>
 
-<body>
+<body class="main_body">
 <?php
 
 	//if no ones logged in, print login screen
@@ -28,17 +28,36 @@
 	{ 
 		print "<a href='createaccount.php'>Create Account</a>";
 
-		print "<form method='post' action='userprofile.php'>
-		<div><fieldset class='fieldset-auto-width'>
-		<legend>Login</legend>
-		<label><input type='text' name='username'>User Name</label><br>
-		<label><input type='password' name='pass'>Password</label><br>
-		<label><input type='submit' name='login' value='Login'></label>
-		</fieldset></div>
-		</form>
-		<!--
-		<h3>Level 1 access (admin): Guest1, 123</h3>
-		<h3>Level 2 access (pleb): VeryLeetName2, 123</h3> -->";
+		print "<div class='main_login' style='margin-top:20px'>
+				<div class='page-wrap'>
+					<div class='main'>
+         				<div class='main_container'>
+            				<h1 class='main_heading'>Log in</h1>
+							<form class='form' role='form' method='post' action='userprofile.php'>
+								<fieldset class='form_field'>
+    								<label class='form_label required'>Username</label>
+									<input type='username' class='form_input' placeholder='Enter your username or email' 
+														required='required' name='username' value=''>
+								</fieldset>
+
+  								<fieldset class='form_field'>
+  									<label class='form_label required'>Password</label>
+  										<input type='password' class='form_input' name='pass' id='password_field' 
+  														required='required' placeholder='Enter your password'>
+  								</fieldset>
+
+  								<button type='submit' class='button' name='login' style='background-color: #BE1D2C'>
+    				 				<div class='button_label'>Log in</div>
+  								</button>
+
+  								<div class='main_heading-2'>
+    								<a href='createaccount.html'>Create Account</a>
+  								</div>
+							</form>
+          				</div>
+        			</div>
+    			</div>
+			</div>";
 	}
 	//once you're logged in, show menu/options
 	else 
