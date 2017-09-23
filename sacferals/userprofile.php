@@ -26,8 +26,6 @@
 	//if no ones logged in, print login screen
 	if($_SESSION['authenticate234252432341'] != 'validuser09821')
 	{ 
-		print "<a href='createaccount.php'>Create Account</a>";
-
 		print "<div class='main_login' style='margin-top:20px'>
 				<div class='page-wrap'>
 					<div class='main'>
@@ -51,7 +49,7 @@
   								</button>
 
   								<div class='main_heading-2'>
-    								<a href='createaccount.html'>Create Account</a>
+    								<a href='createaccount.php'>Create Account</a>
   								</div>
 							</form>
           				</div>
