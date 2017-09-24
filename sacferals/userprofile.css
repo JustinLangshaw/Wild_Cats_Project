@@ -46,15 +46,6 @@ h1, html, label{
 	display:block;
 	height:85px
 }
-.v2-default-layout .page-wrap{
-	min-height:100%;
-	margin-bottom:-213px
-}
-.v2-default-layout .page-wrap:after{
-	content:"";
-	display:block;
-	height:213px
-}
 
 body,html{height:100%}
 body{font-family:Open Sans,Arial,Helvetica,sans-serif;background:none transparent}
