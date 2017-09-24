@@ -8,10 +8,14 @@ session_destroy();
 <head>	
 	<title>Testing Login</title>
 	<style>
+	body 
+	{
+		background-color: #5ab1c5;
+	}
 	label {display: block;}
 	</style>
 </head>
-<body>
+<body background: #5ab1c5>
 <h1>You are logged out</h1>
 <a href="userprofile.php">BACK</a>
 
