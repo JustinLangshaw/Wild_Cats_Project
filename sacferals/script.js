@@ -35,6 +35,15 @@ function displayForm(c)
 	{
          jQuery('#othersworkingID').fadeOut('fast'); 
     }
+
+	if (c.value == "Yes") 
+	{
+         jQuery('#recentlyinjuredID').fadeIn('fast');
+    }
+	if (c.value == "No") 
+	{
+         jQuery('#recentlyinjuredID').fadeOut('fast'); 
+    }
 };
 
 window.onload = function() // always wrap jfiddle functions in this.....
