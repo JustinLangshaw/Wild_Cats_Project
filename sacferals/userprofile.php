@@ -51,7 +51,7 @@
   								</button>
 
   								<div class='main_heading-2'>
-    								<a href='createaccount.html'>Create Account</a>
+    								<a href='createaccount.php'>Create Account</a>
   								</div>
 							</form>
           				</div>
