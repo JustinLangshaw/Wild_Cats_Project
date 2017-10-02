@@ -56,6 +56,7 @@ CREATE TABLE ReportColonyForm (
 INSERT INTO ReportColonyForm VALUES
 	('NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'name of colony', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'Yes', 'Yes', 'Yes', 'Yes', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
 
+ALTER TABLE ReportColonyForm ADD InjuryDescription varchar(200);
 
 	
 CREATE TABLE VolunteerForm (
