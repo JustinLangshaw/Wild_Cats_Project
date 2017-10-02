@@ -34,6 +34,35 @@ function formatPhone(phoneId) {
 <head>	
 	<title>Volunteer Form</title>
 	<style type="text/css">
+	body 
+	{
+		background-color: powderblue;
+	}
+	form
+	{
+		margin: auto;
+		background-color: white;
+		padding: 1em;    
+		border-color: #0b61a4;
+		border-style: solid;
+		border-width: 1px;
+		min-width: 724px;
+		width: 70%;
+	}
+	h2
+	{
+		margin: auto;
+		margin-top: 0px;
+		margin-bottom: 10px;
+		color: white;
+		background-color: #0b61a4;
+		margin-bottom: 0;
+		padding: 14;    
+		border-color: #0b61a4;
+		border-style: solid;
+		border-width: 3px;
+		min-width: 724px;
+		width: 70%;
     .fieldset-auto-width 
 	{
          display: inline-block;
@@ -54,6 +83,7 @@ function formatPhone(phoneId) {
 </head>
 <body>
 
+<h2> Volunteer </h2>
 <form method="post" action="volunteerform.php">
 
 

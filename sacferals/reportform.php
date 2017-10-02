@@ -52,6 +52,36 @@ function validateReportCatColony(){
 <head>	
 	<title>Report Colony/Caregiver Registration</title>
 	<style type="text/css">
+	body 
+	{
+		background-color: powderblue;
+	}
+	form
+	{
+		margin: auto;
+		background-color: white;
+		padding: 1em;    
+		border-color: #0b61a4;
+		border-style: solid;
+		border-width: 1px;
+		min-width: 724px;
+		width: 70%;
+	}
+	h2
+	{
+		margin: auto;
+		margin-top: 0px;
+		margin-bottom: 10px;
+		color: white;
+		background-color: #0b61a4;
+		margin-bottom: 0;
+		padding: 14;    
+		border-color: #0b61a4;
+		border-style: solid;
+		border-width: 3px;
+		min-width: 724px;
+		width: 70%;
+	}
 	.fieldset-auto-width 
 	{
 		display: inline-block;
@@ -88,6 +118,7 @@ function validateReportCatColony(){
 </head>
 <body>
 
+	<h2> Report a Feral Cat Colony & Get TNR Assistance </h2>
 <form method="post" action="reportform.php" id='reportform'>
 
 	<b><small><font color="red">* Required Fields</font></small></b><br><br>
