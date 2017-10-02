@@ -203,6 +203,29 @@ a{color:rgba(0,0,0,.54)}
 	text-align:center
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: gray;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 12px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
 
 .green { background: green; color: white; }
 .white { background: white; color: black; }

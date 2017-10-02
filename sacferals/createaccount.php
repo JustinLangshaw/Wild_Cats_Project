@@ -15,10 +15,13 @@
          display: inline-block;
     }
 	</style>
+
+	<link rel="stylesheet" type="text/css" href="userprofile.css" />
+	
 </head>
 
-<body>
-<a href="createaccount.php">Clean</a> <br>
+<body class="main_body">
+<!-- <a href="createaccount.php">Clean</a> <br>
 
 	<form method="post" action="createaccount.php">
 		<div>
@@ -33,6 +36,45 @@
 	</form>
 
 	<h4>Please use the same email you used when submitting the volunteer form, otherwise we will have to manually add the jobs you selected.</h4>
+ -->
+ 	<div class='main_login' style='margin-top:20px'>
+		<div class='page-wrap'>
+			<div class='main'>
+				<div class='main_container'>
+					<h1 class='main_heading'>Create Account</h1>
+					<form class='form' role='form' method='post' action='createaccount.php'>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Username</label>
+							<input type='username' class='form_input' placeholder='Enter your username or email' required='required' name='username' value=''>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Password</label>
+								<input type='password' class='form_input' name='password' id='password_field' required='required' placeholder='Enter your password'>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Re-Enter Password</label>
+								<input type='password' class='form_input' name='repassword' id='password_field' required='required' placeholder='Re-Enter your password'>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Email
+								<i class="tooltip"><img src="https://shots.jotform.com/kade/Screenshots/blue_question_mark.png" height="13px"/>
+									<span class="tooltiptext">Please use the same email used during submitting the volunteer form.</span>
+								</i>
+							</label>
+								<input type='text' class='form_input' name='email' id='email_field' required='required' placeholder='Enter your email'>
+						</fieldset>
+						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
+		 					<div class='button_label'>Register</div>
+						</button>
+
+						<div class='main_heading-2'>
+							<a href='userprofile.php'>Back to login</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <?php	
 
