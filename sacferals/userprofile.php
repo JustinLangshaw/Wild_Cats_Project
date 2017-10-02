@@ -75,8 +75,8 @@
 			print "- <a href='volunteerlist.php' align='right'>View Volunteers</a><br>";
 			
 			
-			print "<br><a href='volunteerform.php' align='right'>volunteer form</a> for testing purposes<br>";
-			print "<a href='reportform.php' align='right'>report form</a> for testing purposes<br>";
+			print "<br><a href='volunteerform.php' align='right' target='blank'>volunteer form</a> for testing purposes<br>";
+			print "<a href='reportform.php' align='right' target='blank1'>report form</a> for testing purposes<br>";
 			print "</fieldset></div>";
 		}
 		else if($level == 2)

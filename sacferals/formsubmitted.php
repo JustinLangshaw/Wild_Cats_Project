@@ -31,7 +31,8 @@
 	}
 	else
 	{
-		print "<a href='userprofile.php'>Back to Profile</a>";
+		print "You can close this window now."
+		//print "<a href='userprofile.php'>Back to Profile</a>";
 	}
 ?>
 

@@ -64,7 +64,7 @@ function validateReportCatColony(){
 		border-color: #0b61a4;
 		border-style: solid;
 		border-width: 1px;
-		min-width: 724px;
+		min-width: 580px;
 		width: 70%;
 	}
 	h2
@@ -79,7 +79,7 @@ function validateReportCatColony(){
 		border-color: #0b61a4;
 		border-style: solid;
 		border-width: 3px;
-		min-width: 724px;
+		min-width: 580px;
 		width: 70%;
 	}
 	.fieldset-auto-width 

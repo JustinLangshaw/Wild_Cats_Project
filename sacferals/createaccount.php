@@ -127,7 +127,6 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	
 ?>
 	
-	<a href="userprofile.php">Back to login</a>
 
 </body>
 
