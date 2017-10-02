@@ -47,6 +47,153 @@ function validateReportCatColony(){
 
 </script>
 
+<?php
+
+if(isset($_POST['submitcolony'])) //this processes after user submits data.
+{
+	$firstname = $_POST['firstname'];
+	$lastname = $_POST['lastname'];
+	$fullname = $firstname." ".$lastname;
+	$email = $_POST['email'];
+	$phone1 = $_POST['phone1'];
+	$phone2 = $_POST['phone2'];	
+	
+	$caregiver = $_POST['caregiver'];
+	$colonyname = $_POST['colonyname'];
+	$colonystreet = $_POST['colonystreet'];
+	$city = $_POST['city'];
+	$county = $_POST['county'];
+	$zipcode = $_POST['zipcode'];
+	$trapattempt = $_POST['trapattempt'];
+	$numberofcats = $_POST['numberofcats'];
+	$eartipped = $_REQUEST['eartipped'];
+	$pregnant = $_POST['pregnant'];
+	$injured = $_POST['injured'];
+	$injurydescription = $_POST['injurydescription'];
+	$setting = $_POST['setting'];
+	$comments = $_POST['comments'];
+	
+	
+	// Required field names
+	$required = array('firstname', 'email','zipcode');
+
+	// Loop over field names, make sure each one exists and is not empty
+	$error = false;
+	foreach($required as $field) 
+	{
+		if (empty($_POST[$field])) 
+		{
+			$error = true;
+		}
+	}
+	
+	//re's need updating for all fields. or we can use javascript (better)
+	$re = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
+	
+	//if user passes re test
+	if(!$error)
+	{
+		if(preg_match($re, $firstname) )
+		{	//display current table
+			$querycheck = "select * from ReportColonyForm where colonyname='$colonyname' && colonyname<>''" ;
+															
+			$resultcheck = mysqli_query($link, $querycheck); //link query to database
+			
+			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
+			{	//if not process the insert query
+				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
+				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
+				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '', '$injurydescription')";
+				
+				//print $query;
+				
+				mysqli_query($link, $query); //link query to database
+				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+			}
+			else
+			{
+				//print "'".$colonyname."' has already been reported.";
+				$result='<div style="padding-bottom:10px">
+							<div class="alert">
+								<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+								Colony name "'.$colonyname.'" has already been reported.</div></div>';
+			}
+		}
+		else
+		{
+			//print "You did not fill out the form correctly!";
+			$result='<div style="padding-bottom:10px">
+						<div class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+							"'.$fullname.'" is not a valid name.</div></div>';
+		}
+	}
+	else
+	{
+		print "<b>ERROR!!</b> Please fill out all fields";
+	}
+
+	
+}
+else if(isset($_POST['submitintervention'])) //this processes after user submits data.
+{
+	$FirstName = $_POST['firstname'];
+	$LastName = $_POST['lastname'];
+	$FullName = $FirstName." ".$LastName;
+	$Phone1 = $_POST['phone1'];
+	$Phone2 = $_POST['phone2'];	
+	
+	$ProblemLocation = $_POST['problemlocation'];
+	$ProblemDescription = $_POST['problemdescription'];
+	$MeasuresTaken = $_POST['measurestaken'];
+	$OthersWorking = $_POST['othersworking'];
+	$OtheresContact = $_POST['resolverscontact'];
+	$AdditionalComments = $_POST['additionalcomments'];
+	
+	// Required field names
+	$required = array('problemlocation', 'problemdescription');
+
+	// Loop over field names, make sure each one exists and is not empty
+	$error = false;
+	foreach($required as $field) 
+	{
+		if (empty($_POST[$field])) 
+		{
+			$error = true;
+		}
+	}
+	
+	
+	if(!$error)
+	{	//display current table
+		$querycheck = "select * from FeralInterventionForm where problemlocation='$problemlocation'";
+														
+		$resultcheck = mysqli_query($link, $querycheck); //link query to database
+		
+		if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
+		{	//if not process the insert query
+			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Phone2', 
+			'$ProblemLocation', '$ProblemDescription ', '$MeasuresTaken ', '$OthersWorking[0]', '$AdditionalComments', '$OthersContact', 
+			'', '', '', '', '', '')";
+			
+			//print $query;
+			
+			mysqli_query($link, $query); //link query to database
+			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+		}
+		else
+		{
+			print "problem at '".$ProblemLocation."' has already been reported.";
+		}
+	}
+	else
+	{
+		print "<b>ERROR!!</b> Please fill out all fields";
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>	
@@ -109,6 +256,27 @@ function validateReportCatColony(){
 		display: none;
 		position: absolute;
 	}
+
+	/*error msg*/
+	.alert {
+	    padding: 20px;
+	    background-color: #f44336; /* Red */
+	    color: white;
+	    margin-bottom: 15px;
+	}
+	.closebtn {
+	    margin-left: 15px;
+	    color: white;
+	    font-weight: bold;
+	    float: right;
+	    font-size: 22px;
+	    line-height: 20px;
+	    cursor: pointer;
+	    transition: 0.3s;
+	}
+	.closebtn:hover {
+	    color: black;
+	}
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
@@ -118,8 +286,10 @@ function validateReportCatColony(){
 </head>
 <body>
 
+	<?php echo $result; ?>
+
 	<h2> Report a Feral Cat Colony & Get TNR Assistance </h2>
-<form method="post" action="reportform.php" id='reportform'>
+	<form method="post" action="reportform.php" id='reportform'>
 
 	<b><small><font color="red">* Required Fields</font></small></b><br><br>
 	<b>*First Name</b><br>
@@ -241,144 +411,5 @@ function validateReportCatColony(){
 </form>
 <br>
 
-
-<?php
-
-if(isset($_POST['submitcolony'])) //this processes after user submits data.
-{
-	$firstname = $_POST['firstname'];
-	$lastname = $_POST['lastname'];
-	$fullname = $firstname." ".$lastname;
-	$email = $_POST['email'];
-	$phone1 = $_POST['phone1'];
-	$phone2 = $_POST['phone2'];	
-	
-	$caregiver = $_POST['caregiver'];
-	$colonyname = $_POST['colonyname'];
-	$colonystreet = $_POST['colonystreet'];
-	$city = $_POST['city'];
-	$county = $_POST['county'];
-	$zipcode = $_POST['zipcode'];
-	$trapattempt = $_POST['trapattempt'];
-	$numberofcats = $_POST['numberofcats'];
-	$eartipped = $_REQUEST['eartipped'];
-	$pregnant = $_POST['pregnant'];
-	$injured = $_POST['injured'];
-	$injurydescription = $_POST['injurydescription'];
-	$setting = $_POST['setting'];
-	$comments = $_POST['comments'];
-	
-	
-	// Required field names
-	$required = array('firstname', 'email','zipcode');
-
-	// Loop over field names, make sure each one exists and is not empty
-	$error = false;
-	foreach($required as $field) 
-	{
-		if (empty($_POST[$field])) 
-		{
-			$error = true;
-		}
-	}
-	
-	//re's need updating for all fields. or we can use javascript (better)
-	$re = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
-	
-	//if user passes re test
-	if(!$error)
-	{
-		if(preg_match($re, $firstname) )
-		{	//display current table
-			$querycheck = "select * from ReportColonyForm where colonyname='$colonyname' && colonyname<>''" ;
-															
-			$resultcheck = mysqli_query($link, $querycheck); //link query to database
-			
-			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
-			{	//if not process the insert query
-				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
-				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '', '$injurydescription')";
-				
-				//print $query;
-				
-				mysqli_query($link, $query); //link query to database
-				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
-			}
-			else
-			{
-				print "'".$colonyname."' has already been reported.";
-			}
-		}
-		else
-		{
-			print "You did not fill out the form correctly!";
-		}
-	}
-	else
-	{
-		print "<b>ERROR!!</b> Please fill out all fields";
-	}
-
-	
-}
-else if(isset($_POST['submitintervention'])) //this processes after user submits data.
-{
-	$FirstName = $_POST['firstname'];
-	$LastName = $_POST['lastname'];
-	$FullName = $FirstName." ".$LastName;
-	$Phone1 = $_POST['phone1'];
-	$Phone2 = $_POST['phone2'];	
-	
-	$ProblemLocation = $_POST['problemlocation'];
-	$ProblemDescription = $_POST['problemdescription'];
-	$MeasuresTaken = $_POST['measurestaken'];
-	$OthersWorking = $_POST['othersworking'];
-	$OtheresContact = $_POST['resolverscontact'];
-	$AdditionalComments = $_POST['additionalcomments'];
-	
-	// Required field names
-	$required = array('problemlocation', 'problemdescription');
-
-	// Loop over field names, make sure each one exists and is not empty
-	$error = false;
-	foreach($required as $field) 
-	{
-		if (empty($_POST[$field])) 
-		{
-			$error = true;
-		}
-	}
-	
-	
-	if(!$error)
-	{	//display current table
-		$querycheck = "select * from FeralInterventionForm where problemlocation='$problemlocation'";
-														
-		$resultcheck = mysqli_query($link, $querycheck); //link query to database
-		
-		if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
-		{	//if not process the insert query
-			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Phone2', 
-			'$ProblemLocation', '$ProblemDescription ', '$MeasuresTaken ', '$OthersWorking[0]', '$AdditionalComments', '$OthersContact', 
-			'', '', '', '', '', '')";
-			
-			//print $query;
-			
-			mysqli_query($link, $query); //link query to database
-			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
-		}
-		else
-		{
-			print "problem at '".$ProblemLocation."' has already been reported.";
-		}
-	}
-	else
-	{
-		print "<b>ERROR!!</b> Please fill out all fields";
-	}
-}
-
-?>
 </body>
 </html>
