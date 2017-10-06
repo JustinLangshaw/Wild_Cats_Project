@@ -82,6 +82,16 @@ function formatPhone(phoneId) {
 		display: none;
 		position: absolute;
 	}
+    #imageToShow3
+    {
+        display: none;
+        position: absolute;
+    }
+    #imageToShow4
+    {
+        display: none;
+        position: absolute;
+    }
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
@@ -118,8 +128,9 @@ function formatPhone(phoneId) {
 		<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
 		<input type="radio" name="caregiver[]" value="No"> No<br><br>
 	
-		<b>Colony Name</b><br>
-		You can name your colony by the street name, your name or any name that will identify this group of cats<br>
+		<b>Colony Name</b>
+        <img id="imageToHover3" src="images/question_mark3.png" height="18" width="18" alt="Hover me"/>
+        <img id="imageToShow3" src="images/colony_name_tooltip.png"  alt="image to show"/><br>
 		<input type="text" name="colonyname"><br><br>
 		
 		<b>Colony Street</b><br>
@@ -179,8 +190,9 @@ function formatPhone(phoneId) {
 	<!-- report problem -->
 	<div class='todisplay indent' id="intervention1">
 	
-		<b>Where Does the Feral Problem Exist?</b><br>
-		Please enter identifying information about where the feral problem exists. Enter information such as business or apartment name, address, cross streets, etc.<br>
+		<b>Where Does the Feral Problem Exist?</b>
+        <img id="imageToHover4" src="images/question_mark4.png" height="18" width="18" alt="Hover me"/>
+        <img id="imageToShow4" src="images/issue_location_tooltip.png"  alt="image to show"/><br>
 		<input type="text" name="problemlocation"><br><br>
 		
 		<b>Describe the problem that is occuring.</b><br>

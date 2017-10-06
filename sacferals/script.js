@@ -68,6 +68,25 @@ window.onload = function() // always wrap jfiddle functions in this.....
 	{
 	   document.getElementById('imageToShow2').style.display = 'none';   
 	}
-	
+
+    document.getElementById('imageToHover3').onmouseover = function()
+    {
+        document.getElementById('imageToShow3').style.display = 'inline-block';
+    }
+
+    document.getElementById('imageToHover3').onmouseout = function()
+    {
+        document.getElementById('imageToShow3').style.display = 'none';
+    }
+
+    document.getElementById('imageToHover4').onmouseover = function()
+    {
+        document.getElementById('imageToShow4').style.display = 'inline-block';
+    }
+
+    document.getElementById('imageToHover4').onmouseout = function()
+    {
+        document.getElementById('imageToShow4').style.display = 'none';
+    }
 };
 
