@@ -46,7 +46,7 @@ function displayForm(c)
     }
 };
 
-window.onload = function() // always wrap jfiddle functions in this.....
+/*window.onload = function() // always wrap jfiddle functions in this.....
 { 
 	document.getElementById('imageToHover').onmouseover = function() 
 	{
@@ -78,5 +78,5 @@ window.onload = function() // always wrap jfiddle functions in this.....
 	   document.getElementById('imageToShow2').style.display = 'none';   
 	}
 	
-};
+};*/
 
