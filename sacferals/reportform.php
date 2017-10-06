@@ -290,6 +290,13 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 
 	<h2> Report a Feral Cat Colony & Get TNR Assistance </h2>
 	<form method="post" action="reportform.php" id='reportform'>
+	<p>Thank you for providing information about a feral cat colony 
+	   (a "colony" is a term used to describe a group of cats living together.)</p>
+	<p>Please answer the questions below to the best of your ability.  The more 
+	   information you provide, the more help we will be able to provide.  It's 
+	   important that we are able to get in contact with you regarding this request.  
+	   Without your name and contact information, it is unlikely we will be able to 
+	   assist the colony you are reporting.</p>
 
 	<b><small><font color="red">* Required Fields</font></small></b><br><br>
 	<b>*First Name</b><br>
