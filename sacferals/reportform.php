@@ -277,6 +277,31 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	.closebtn:hover {
 	    color: black;
 	}
+
+	.tooltip {
+	    position: relative;
+	    display: inline-block;
+	}
+	.tooltip .tooltiptext {
+	    visibility: hidden;
+	    width: auto;
+	    white-space: nowrap;
+	    background-color: #0b61a4;
+	    color: #fff;
+	    text-align: left;
+	    border-radius: 5px;
+	    padding: 10px 15px;
+	    font-size: 14px;
+	    
+	    /* Position the tooltip */
+	    position: absolute;
+	    z-index: 1;
+	    top: -5px;
+	    left: 150%;
+	}
+	.tooltip:hover .tooltiptext {
+	    visibility: visible;
+	}
 	</style>
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
@@ -322,8 +347,11 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
 		<input type="radio" name="caregiver[]" value="No"> No<br><br>
 	
-		<b>Colony Name</b><br>
-		You can name your colony by the street name, your name or any name that will identify this group of cats<br>
+		<b>Colony Name</b>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">You can name your colony by the street name, your name <br>
+				or any name that will identify this group of cats</span>
+		</i><br>
 		<input type="text" name="colonyname" id="colonyname"><br><br>
 		
 		<b>Address</b><br>
@@ -343,22 +371,33 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<input type="number" name="numberofcats" min="1" max="99" id="numberofcats"><br><br>
 		
 		<b>Ear Tipped?</b>
-		<img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
-		<img id="imageToShow" src="images/ears_tipped.png"  alt="image to show"/><br>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this <br>means this
+				cat has already been trapped and is altered. <br>Release this cat immediately.</span>
+		</i><br>
+		<!-- <img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
+		<img id="imageToShow" src="images/ears_tipped.png"  alt="image to show"/><br> -->
 
 		<input type="radio" name="eartipped[]" value="Yes" id="eartippedyes"> Yes<br>
 		<input type="radio" name="eartipped[]" value="No" id="eartippedno"> No<br><br>
 		
 		<b>Pregnant Cats?</b>
-		<img id="imageToHover1" src="images/question_mark1.png" height= "18" width= "18" alt="hover me"/>
-		<img id="imageToShow1" src="images/pregnant_cats.png"  alt="image to show"/><br>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">Signs of a pregnant cat can include nesting <br> activities, vomiting,
+				and an enlarged abdomen.</span>
+		</i><br>
+		<!-- <img id="imageToHover1" src="images/question_mark1.png" height= "18" width= "18" alt="hover me"/>
+		<img id="imageToShow1" src="images/pregnant_cats.png"  alt="image to show"/><br> -->
 		
 		<input type="radio" name="pregnant[]" value="Yes" id="pregnantyes"> Yes<br>
 		<input type="radio" name="pregnant[]" value="No" id="pregnantno"> No<br><br>
 		
 		<b>Injured Cats?</b>
-		<img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
-		<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">The can has injuries...</span>
+		</i><br>
+		<!-- <img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
+		<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br> -->
 					
 		<input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes<br>
 		<input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No<br><br>
@@ -387,8 +426,11 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	<!-- report problem -->
 	<div class='todisplay indent' id="intervention1">
 	
-		<b>*Where Does the Feral Problem Exist?</b><br>
-		Please enter identifying information about where the feral problem exists. Enter information such as business or apartment name, address, cross streets, etc.<br>
+		<b>*Where Does the Feral Problem Exist?</b>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">Enter identifying information <br> such as business or 
+				apartment name, <br>address, cross streets, etc.</span>
+		</i><br>
 		<input type="text" name="problemlocation" id="problemlocation"><br><br>
 		
 		<b>*Describe the problem that is occuring.</b><br>

@@ -213,15 +213,15 @@ a{color:rgba(0,0,0,.54)}
     background-color: gray;
     color: #fff;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    font-size: 12px;
+    border-radius: 5px;
+    padding: 5px 10;
+    font-size: 13px;
     
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
     top: -5px;
-    left: 105%;
+    left: 150%;
 }
 .tooltip:hover .tooltiptext {
     visibility: visible;
