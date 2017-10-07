@@ -56,9 +56,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$fullname = $firstname." ".$lastname;
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
-	if (isset($_POST['textok1'])) $textok1=1 else $textok1=0;
-	$phone2 = $_POST['phone2'];	
-	if (isset($_POST['textok2'])) $textok2=1 else $textok2=0;
+	$phone2 = $_POST['phone2'];
 	
 	$caregiver = $_POST['caregiver'];
 	$colonyname = $_POST['colonyname'];
@@ -102,7 +100,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$textok1', '$phone2', '$textok2',
+				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2',
 				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
 				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '', '$injurydescription')";
 				
@@ -142,9 +140,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	$LastName = $_POST['lastname'];
 	$FullName = $FirstName." ".$LastName;
 	$Phone1 = $_POST['phone1'];
-	if (isset($_POST['textok1'])) $Textok1=1 else $Textok1=0;
-	$Phone2 = $_POST['phone2'];	
-	if (isset($_POST['textok2'])) $Textok2=1 else $Textok2=0;
+	$Phone2 = $_POST['phone2'];
 	
 	$ProblemLocation = $_POST['problemlocation'];
 	$ProblemDescription = $_POST['problemdescription'];
@@ -175,7 +171,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		
 		if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 		{	//if not process the insert query
-			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Textok1', '$Phone2', '$Textok2',
+			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Phone2',
 			'$ProblemLocation', '$ProblemDescription ', '$MeasuresTaken ', '$OthersWorking[0]', '$AdditionalComments', '$OthersContact', 
 			'', '', '', '', '', '')";
 			
@@ -336,11 +332,9 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	<b>*Email Address</b><br>
 	<input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required><br><br>
 	<b>Primary Phone</b><br>
-	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
-	<input type="checkbox" name="textok1" id="textok1" value="textok1"> Text OK<br><br>
+	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
 	<b>Secondary Phone</b><br>
-	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
-	<input type="checkbox" name="textok2" id="textok2" value="textok2"> Text OK<br><br>
+	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
 
 	<b>*Report Type</b><br><!-- class='checkdisplay' -->
 	<input type="radio" name="problemtype[]" value="catcolony" id="catcolonyradio" onClick="displayForm(this); validateReportCatColony();"></input> Cat Colony<br>

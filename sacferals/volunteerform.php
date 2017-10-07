@@ -38,9 +38,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$completeaddress = $_POST['completeaddress'];
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
-	if (isset($_POST['textok1'])) $textok1=1 else $textok1=0;
 	$phone2 = $_POST['phone2'];
-	if (isset($_POST['textok2'])) $textok2=1 else $textok2=0;
 
 	//arrays of checkboxes
 	$contact = $_POST['contact'];
@@ -122,7 +120,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		if (isset($_POST['typeofwork'])) {
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into VolunteerForm values('', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$textok1,' '$phone2', '$textok2', '$preferedcontact',
+				$query = "insert into VolunteerForm values('', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$phone2', '$preferedcontact',
 				'$contactemail', '$contactphone1', '$contactphone2', '$typeofworkstring', '$transporting', '$helptrap', '$helpeducate', '$usingphone', '$helpingclinic',
 				'$other', '$othertasks', '$experience', '', '', '' )";
 
@@ -287,11 +285,9 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	<input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required><br><br>
 
 	<b>Your Phone #1</b><br>
-	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
-	<input type="checkbox" name="textok1" id="textok1" value="textok1"> Text OK<br><br>
+	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
 	<b>Your Phone #2</b><br>
-	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
-	<input type="checkbox" name="textok2" id="textok2" value="textok2"> Text OK<br><br>
+	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
 
 	<b>Prefered Method Of Contact?</b><br>
 	Check one or all<br>
