@@ -56,7 +56,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$fullname = $firstname." ".$lastname;
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
-	$phone2 = $_POST['phone2'];
+	$phone2 = $_POST['phone2'];	
 	
 	$caregiver = $_POST['caregiver'];
 	$colonyname = $_POST['colonyname'];
@@ -72,7 +72,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$injurydescription = $_POST['injurydescription'];
 	$setting = $_POST['setting'];
 	$comments = $_POST['comments'];
-
+	
+	
 	// Required field names
 	$required = array('firstname', 'email','zipcode');
 
@@ -100,7 +101,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2',
+				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
 				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '', '$injurydescription')";
 				
@@ -140,7 +141,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	$LastName = $_POST['lastname'];
 	$FullName = $FirstName." ".$LastName;
 	$Phone1 = $_POST['phone1'];
-	$Phone2 = $_POST['phone2'];
+	$Phone2 = $_POST['phone2'];	
 	
 	$ProblemLocation = $_POST['problemlocation'];
 	$ProblemDescription = $_POST['problemdescription'];
@@ -148,7 +149,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	$OthersWorking = $_POST['othersworking'];
 	$OtheresContact = $_POST['resolverscontact'];
 	$AdditionalComments = $_POST['additionalcomments'];
-
+	
 	// Required field names
 	$required = array('problemlocation', 'problemdescription');
 
@@ -171,7 +172,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		
 		if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 		{	//if not process the insert query
-			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Phone2',
+			$query = "insert into FeralInterventionForm values('', Now(), '$FullName', '$Phone1', '$Phone2', 
 			'$ProblemLocation', '$ProblemDescription ', '$MeasuresTaken ', '$OthersWorking[0]', '$AdditionalComments', '$OthersContact', 
 			'', '', '', '', '', '')";
 			
