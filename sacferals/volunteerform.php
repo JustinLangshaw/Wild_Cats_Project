@@ -63,6 +63,7 @@ function formatPhone(phoneId) {
 		border-width: 3px;
 		min-width: 580px;
 		width: 70%;
+		font-family: Arial,sans-serif;
 	}
     .fieldset-auto-width 
 	{

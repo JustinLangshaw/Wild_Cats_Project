@@ -226,8 +226,10 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		border-color: #0b61a4;
 		border-style: solid;
 		border-width: 3px;
+		
 		min-width: 580px;
 		width: 70%;
+		font-family: Arial,sans-serif;
 	}
 	.fieldset-auto-width 
 	{
