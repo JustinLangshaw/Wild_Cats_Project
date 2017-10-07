@@ -396,7 +396,8 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		
 		<b>Injured Cats?</b>
 		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">The can has injuries...</span>
+			<span class="tooltiptext">Signs of injured cats can include inflammation/swelling, <br>limping, 
+				Rapid breathing or other signs of stress, and blood.</span>
 		</i><br>
 		<!-- <img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
 		<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br> -->
