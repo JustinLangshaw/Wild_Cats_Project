@@ -38,7 +38,9 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$completeaddress = $_POST['completeaddress'];
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
+	$textok1 = $_POST['textok1'];
 	$phone2 = $_POST['phone2'];
+	$textok2 = $_POST['textok2'];
 
 	//arrays of checkboxes
 	$contact = $_POST['contact'];
@@ -120,7 +122,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		if (isset($_POST['typeofwork'])) {
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into VolunteerForm values('', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$phone2', '$preferedcontact',
+				$query = "insert into VolunteerForm values('', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$textok1,' '$phone2', '$textok2', '$preferedcontact',
 				'$contactemail', '$contactphone1', '$contactphone2', '$typeofworkstring', '$transporting', '$helptrap', '$helpeducate', '$usingphone', '$helpingclinic',
 				'$other', '$othertasks', '$experience', '', '', '' )";
 
