@@ -38,9 +38,9 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$completeaddress = $_POST['completeaddress'];
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
-	$textok1 = $_POST['textok1'];
+	if (isset($_POST['textok1'])) $textok1=1 else $textok1=0;
 	$phone2 = $_POST['phone2'];
-	$textok2 = $_POST['textok2'];
+	if (isset($_POST['textok2'])) $textok2=1 else $textok2=0;
 
 	//arrays of checkboxes
 	$contact = $_POST['contact'];

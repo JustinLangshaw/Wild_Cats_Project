@@ -56,9 +56,9 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$fullname = $firstname." ".$lastname;
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
-	$textok1 = $_POST['textok1'];
+	if (isset($_POST['textok1'])) $textok1=1 else $textok1=0;
 	$phone2 = $_POST['phone2'];	
-	$textok2 = $_POST['textok2'];
+	if (isset($_POST['textok2'])) $textok2=1 else $textok2=0;
 	
 	$caregiver = $_POST['caregiver'];
 	$colonyname = $_POST['colonyname'];
@@ -142,9 +142,9 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	$LastName = $_POST['lastname'];
 	$FullName = $FirstName." ".$LastName;
 	$Phone1 = $_POST['phone1'];
-	$Textok1 = $_POST['textok1'];
+	if (isset($_POST['textok1'])) $Textok1=1 else $Textok1=0;
 	$Phone2 = $_POST['phone2'];	
-	$Textok2 = $_POST['textok2'];
+	if (isset($_POST['textok2'])) $Textok2=1 else $Textok2=0;
 	
 	$ProblemLocation = $_POST['problemlocation'];
 	$ProblemDescription = $_POST['problemdescription'];
