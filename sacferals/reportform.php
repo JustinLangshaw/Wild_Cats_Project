@@ -68,7 +68,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$numberofcats = $_POST['numberofcats'];
 	$eartipped = $_REQUEST['eartipped'];
 	$pregnant = $_POST['pregnant'];
-	$injured = $_POST['injured'];
+	$injured = $_POST['recentlyinjured'];
 	$injurydescription = $_POST['injurydescription'];
 	$setting = $_POST['setting'];
 	$comments = $_POST['comments'];
@@ -101,9 +101,9 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
+				$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '', '$injurydescription')";
+				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
 				
 				//print $query;
 				
