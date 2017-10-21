@@ -10,6 +10,7 @@
 	}
 ?>
 
+
 <?php
 	//if no ones logged in, print login screen
 	if($_SESSION['authenticate234252432341'] != 'validuser09821')
@@ -35,7 +36,18 @@
 		
 		if($level == 1)
 		{
-			print "<a href='logout.php' align='right'>Log out</a><br><br>";
+			 print "<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+					</ul>
+				</div>
+			</div>";
+
 			print "<b>Logged in as ".$Ausername."</b> <br><br>";
 			
 			//print "<div><fieldset class='fieldset-auto-width'>";

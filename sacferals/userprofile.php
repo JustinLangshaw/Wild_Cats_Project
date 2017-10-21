@@ -15,7 +15,9 @@
 	<title>User Profile</title> 
 	
 	<link rel="stylesheet" type="text/css" href="userprofile.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="userprofile.js"></script>
 
 </head>
@@ -64,22 +66,35 @@
 	{
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
-		
-		if($level == 1)
-		{
-			print "<a href='logout.php' align='right'>Log out</a><br><br>";
-			print "<b>Welcome Master Administrator ".$Ausername."!</b> <br><br>";
-			print "<div><fieldset class='fieldset-auto-width'>";
-			print "- <a href='search.php' align='right'>View/Edit Database</a><br>";
-			print "- <a href='changeaccounttype.php' align='right'>Change User Account Types</a><br>";
-			print "- <a href='volunteerlist.php' align='right'>View Volunteers</a><br>";
-			
-			
-			print "<br><a href='volunteerform.php' align='right' target='blank' >volunteer form</a> for testing purposes<br>";
-			print "<a href='reportform.php' align='right' target='blank1' >report form</a> for testing purposes<br>";
-			print "</fieldset></div>";
-		}
-		else if($level == 2)
+
+        if($level == 1)
+        {
+            print "<div style='float:left'><b>Welcome Master Administrator ".$Ausername."!</b> <br><br>";
+
+            print "<div><fieldset class='fieldset-auto-width'>";
+            print "- <a href='search.php' align='right'>View/Edit Database</a><br>";
+            print "- <a href='changeaccounttype.php' align='right'>Change User Account Types</a><br>";
+            print "- <a href='volunteerlist.php' align='right'>View Volunteers</a><br>";
+
+
+            print "<br><a href='volunteerform.php' align='right' target='blank' >volunteer form</a> for testing purposes<br>";
+            print "<a href='reportform.php' align='right' target='blank1' >report form</a> for testing purposes<br>";
+            print "</fieldset></div></div>";
+
+            print "<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+					</ul>
+				</div>
+			</div>";
+        }
+
+        else if($level == 2)
 		{
 			print "<h3 align='right'>Logged in as $Ausername </h3>";
 			
