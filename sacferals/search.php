@@ -10,23 +10,8 @@
 	}
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>	
-	<title>Record Search</title> 
-	
-	<link rel="stylesheet" type="text/css" href="search.css" />
-	
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="searchScript.js"></script>
-	 
-	
-</head>
 
-<body>
 <?php
-
 	//if no ones logged in, print login screen
 	if($_SESSION['authenticate234252432341'] != 'validuser09821')
 	{ 
@@ -51,17 +36,26 @@
 		
 		if($level == 1)
 		{
-			print "<a href='logout.php' align='right'>Log out</a><br><br>";
+			 print "<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+					</ul>
+				</div>
+			</div>";
+
 			print "<b>Logged in as ".$Ausername."</b> <br><br>";
 			
 			//print "<div><fieldset class='fieldset-auto-width'>";
 			print "- <a href='userprofile.php' align='right'>Back to Admin Hub</a><br><br>";
 			//print "</fieldset></div>";
 				
-		
 			print "
-				
-			
+
 			<div style='color:red' style='float: right;' >Note: Hold down ctrl or shift to select multiple columns</div>
 			
 			<form id='form1' name='form1' method='get' action='search.php'>
@@ -100,15 +94,18 @@
 				 <br>
 				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
 				 <input type='submit' name='Select All' value='Reset'/>
+				 <div >
+					<br><label style='float: left'><b>Clustered Hot Spot</b></label>
+					<br><button id='clusterAddrBtn' type='button'>Cluster Locations</button>
+				</div>	
+
 			</form>
 			";
-			//
-			
+	
 			$thString="";
 			$tdString="";
 			$thEditString="";
 			$tdEditString="";
-			
 			
 			if(count($_SESSION['selectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
 			{
@@ -119,10 +116,7 @@
 			{
 				$_SESSION['selectedColumns'] = $_GET['select2'];
 			}
-			
-			
-			
-			
+
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				$thEditString.="<th><a>".$selectedOption."</a></th>";
@@ -143,16 +137,14 @@
 				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
 				else
-					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
-									
+					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";					
 			}
 			
 			/*
 			print"<table><thead><tr>";
 			print $thString;
 			print"</tr></thead>";
-			
-			
+
 			print"<tbody><tr>";
 			print $tdString;
 			print"</tr></tbody></table>";
@@ -161,8 +153,7 @@
 			print $tdEditString;
 			print"</tr></tbody></table>";
 			*/
-			
-			
+
 			/* this doesn't work with edit yet
 			print "<b>Select which tables you would like to view: </b><br>
 			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm 
@@ -171,9 +162,7 @@
 			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA 
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
 			<div class='todisplay'>"; */
-			
-			
-			
+
 			if(isset($_GET['Reset']))
 			{
 				unset($_SESSION['selectedColumns']);
@@ -212,8 +201,8 @@
 					
 					<br><b>Report A Feral Cat Colony</b><br><br>
 				
-					<table>
-						<thead>
+					<table id='reportTable'>
+						<thead style='width: 6594px;'>
 							<tr>
 								<th> </th>";
 							
@@ -236,7 +225,7 @@
 								<th><a>Phone_1</a></th>
 								<th><a>Phone_2</a></th>
 								<th><a>Colony_Name</a></th>
-								<th><a>ColonyAddress</a></th>
+								<th id='addressHead'><a>ColonyAddress</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
 								<th><a>Zip_Code</a></th>
@@ -260,7 +249,7 @@
 						";
 							}
 						
-						print "<tbody>"; 
+						print "<tbody style='width: 6594px;'>"; 
 						
 						//while the next row (set by query) exists?
 						
@@ -389,10 +378,10 @@
 									<td>$Phone1</td>
 									<td>$Phone2</td>
 									<td>$ColonyName</td>
-									<td>$ColonyAddress</td>
-									<td>$City</td>
+									<td id='addressCol'>$ColonyAddress</td>
+									<td id='cityCol'>$City</td>
 									<td>$County</td>
-									<td>$ZipCode</td>
+									<td id='zipCodeCol'>$ZipCode</td>
 									<td>$AnyoneAttempted</td>
 									<td>$ApproximateCats</td>
 									<td>$ColonyCareGiver</td>
@@ -582,8 +571,8 @@
 				print "
 				<br><b>Report A Feral Cat Colony</b><br><br>
 				
-				<table>
-					<thead>
+				<table id='reportTable'>
+					<thead style='width: 6594px;'>
 						<tr>
 							<th>  </th>";
 							
@@ -632,7 +621,7 @@
 					print"
 					</thead>
 					
-					<tbody>";
+					<tbody style='width: 6594px;'>";
 					
 					//while the next row (set by query) exists?
 					
@@ -722,8 +711,7 @@
 										$tdString.="<td>$myArray[$i]</td>";
 										break;
 									}
-								}
-									
+								}									
 							}
 							
 							if($tdString != '')
@@ -731,7 +719,13 @@
 								$tdString = "";
 									foreach ($_GET['select2'] as $selectedOption)
 									{
-										$tdString.="<td>".$$selectedOption."</td>";
+										switch($selectedOption){
+											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
+											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
+											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
+											default: $tdString.="<td>".$$selectedOption."</td>";
+													
+										}																								
 										//echo $selectedOption."\n";
 									}
 								print $tdString;
@@ -753,10 +747,10 @@
 							<td>$Phone1</td>
 							<td>$Phone2</td>
 							<td>$ColonyName</td>
-							<td>$ColonyAddress</td>
-							<td>$City</td>
+							<td id='addressCol'>$ColonyAddress</td>
+							<td id='cityCol'>$City</td>
 							<td>$County</td>
-							<td>$ZipCode</td>
+							<td id='zipCodeCol'>$ZipCode</td>
 							<td>$AnyoneAttempted</td>
 							<td>$ApproximateCats</td>
 							<td>$ColonyCareGiver</td>
@@ -779,8 +773,7 @@
 					}
 					print "
 					</tbody>
-				</table>";
-				
+				</table>";				
 			}
 			
 			/* this doesn't work with edit yet
@@ -802,20 +795,139 @@
 			print "
 			<div class='todisplay4'>
 			</div>";	
-			*/
-
-
-			
-				
+			*/	
 		}
 		else if($level == 2)
 		{
 			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
 		}
-
-		
 	}
 ?>
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style type="text/css">
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 500px; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0); /* transparent */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>	
+
+	<title>Record Search</title> 
+	
+	<link rel="stylesheet" type="text/css" href="search.css" />	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="searchScript.js"></script>
+</head>
+
+<body>
+<div id="clusterAddrPopup" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+	<center>
+    <label>Cluster Locations</label>
+	<div>
+		<textarea id='clusterAddrTextarea' rows='20' cols='50'placeholder="No addresses found. Check your query." style="resize:none"readonly></textarea>
+	</div>
+	<div>
+		<button type=button onclick=copyAddr()>Copy</button>
+	</div>
+	</center>
+  </div>
+</div>	
 </body>
+
 </html>
+
+
+<script type="text/javascript">
+// Get the modal
+var modal = document.getElementById('clusterAddrPopup');
+
+// Get the button that opens the modal
+var clusterAddrBtn = document.getElementById('clusterAddrBtn');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+
+// When the user clicks the button, open the modal and display addresses
+clusterAddrBtn.onclick = function() {
+    modal.style.display = "block";	
+	var address = null;
+	var city = null;
+	var zipcode = null;	
+	var search = [];
+	var table  = document.getElementById('reportTable');
+	var addrIndex = document.getElementById('addressCol').cellIndex;
+	var cityIndex = document.getElementById('cityCol').cellIndex;
+	var zipIndex = document.getElementById('zipCodeCol').cellIndex;
+	var display = document.getElementById('clusterAddrTextarea');
+
+	for (var r = 1; r < table.rows.length; r++) {
+		address = table.rows[r].cells[addrIndex].innerHTML;
+		city = table.rows[r].cells[cityIndex].innerHTML;
+		zipcode = table.rows[r].cells[zipIndex].innerHTML;
+		search[r] = address+" "+city+" " +zipcode+"\n";
+    }
+	for(var i=1; i<search.length; i++){
+		display.value += search[i];
+	}
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+	document.getElementById('clusterAddrTextarea').value = "";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Copy addresses to clipboard
+function copyAddr(){
+	var addr = document.getElementById('clusterAddrTextarea').select();
+	document.execCommand('copy');
+}
+
+</script>
