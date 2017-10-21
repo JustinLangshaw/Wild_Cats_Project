@@ -16,9 +16,10 @@
 	<title>Record Search</title> 
 	
 	<link rel="stylesheet" type="text/css" href="search.css" />
-	
-	
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+	
     <script src="searchScript.js"></script>
 	 
 	
@@ -51,7 +52,18 @@
 		
 		if($level == 1)
 		{
-			print "<a href='logout.php' align='right'>Log out</a><br><br>";
+			 print "<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+					</ul>
+				</div>
+			</div>";
+
 			print "<b>Logged in as ".$Ausername."</b> <br><br>";
 			
 			//print "<div><fieldset class='fieldset-auto-width'>";
