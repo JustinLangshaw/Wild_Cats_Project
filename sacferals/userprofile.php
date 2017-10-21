@@ -16,6 +16,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="userprofile.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="userprofile.js"></script>
 
 </head>
@@ -67,6 +68,11 @@
 		
 		if($level == 1)
 		{
+			print "<div align='right'><div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='menu_icon.png' width='20' height='20'><span class='caret'></span></button><ul class='dropdown-menu dropdown-menu-right'><li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li><li><a href='#'>Update Profile</a></li><li><a href='./logout.php'>Sign Out</a></li></ul></div></div>";
+
+
+
+
 			print "<a href='logout.php' align='right'>Log out</a><br><br>";
 			print "<b>Welcome Master Administrator ".$Ausername."!</b> <br><br>";
 			print "<div><fieldset class='fieldset-auto-width'>";
