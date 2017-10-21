@@ -25,6 +25,9 @@ INSERT INTO FeralInterventionForm VALUES
 	
 	
 CREATE TABLE ReportColonyForm (
+	Comments1 varchar(200),
+	Responder varchar(200),
+	Status varchar(200),
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
 	DateAndTime varchar(200),
@@ -43,6 +46,7 @@ CREATE TABLE ReportColonyForm (
 	EarTipped varchar(15),
 	Pregnant varchar(15),
 	Injured varchar(15),
+	InjuryDescription varchar(200),
 	ColonySetting varchar(200),
 	Comments varchar(200),
 	VolunteerResponding varchar(200),
@@ -53,10 +57,9 @@ CREATE TABLE ReportColonyForm (
 	CompletionDate varchar(200)
 );
 
-INSERT INTO ReportColonyForm VALUES
-	('NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'name of colony', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'Yes', 'Yes', 'Yes', 'Yes', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
 
-ALTER TABLE ReportColonyForm ADD InjuryDescription varchar(200);
+INSERT INTO ReportColonyForm VALUES
+	('', '', '', 'NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'name of colony', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'Yes', 'Yes', 'Yes', 'Yes', 'descrpition of injury', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
 
 	
 CREATE TABLE VolunteerForm (
