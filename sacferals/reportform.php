@@ -68,7 +68,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$numberofcats = $_POST['numberofcats'];
 	$eartipped = $_REQUEST['eartipped'];
 	$pregnant = $_POST['pregnant'];
-	$injured = $_POST['injured'];
+	$injured = $_POST['recentlyinjured'];
 	$injurydescription = $_POST['injurydescription'];
 	$setting = $_POST['setting'];
 	$comments = $_POST['comments'];
@@ -101,9 +101,9 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into ReportColonyForm values('', Now(), '$fullname', '$email', '$phone1', '$phone2', 
+				$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$setting[0]', '$comments', '', '', '', '', '', '', '$injurydescription')";
+				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
 				
 				//print $query;
 				
@@ -226,8 +226,10 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		border-color: #0b61a4;
 		border-style: solid;
 		border-width: 3px;
+		
 		min-width: 580px;
 		width: 70%;
+		font-family: Arial,sans-serif;
 	}
 	.fieldset-auto-width 
 	{
@@ -394,8 +396,8 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		
 		<b>Injured Cats?</b>
 		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">Please exercise caution when checking if the cats are injured; injured cats will
-            often bite or scratch defensively when approached.</span>
+			<span class="tooltiptext">Signs of injured cats can include inflammation/swelling, <br>limping, 
+				rapid breathing or other signs of stress, and blood.</span>
 		</i><br>
 		<!-- <img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
 		<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br> -->

@@ -67,6 +67,9 @@
 			<form id='form1' name='form1' method='get' action='search.php'>
 			 
 				<select name='select2[]' size='7' multiple='multiple' tabindex='1'>
+					<option value='Comments1'>Comments</option>
+					<option value='Responder'>Responder</option>
+					<option value='Status'>Status</option>
 					<option value='RecordNumber'>Record Number</option>
 					<option value='DateAndTime'>Date And Time</option>
 					<option value='FullName'>Full Name</option>
@@ -84,6 +87,7 @@
 					<option value='EarTipped'>Ear Tipped</option>
 					<option value='Pregnant'>Pregnant</option>
 					<option value='Injured'>Injured</option>
+					<option value='InjuryDescription'>Injury Description</option>
 					<option value='ColonySetting'>Colony Setting</option>
 					<option value='Comments'>Comments</option>
 					<option value='VolunteerResponding'>Volunteer Responding</option>
@@ -183,9 +187,9 @@
 				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1.""; 
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
-				list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
+				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $EarTipped, $Pregnant, 
-						$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
+						$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row;
 
 				
@@ -222,6 +226,9 @@
 							else
 							{
 								print "
+								<th><a>Comments1</a></th>
+								<th><a>Responder</a></th>
+								<th><a>Status</a></th> 
 								<th><a>Record_Number</a></th>
 								<th><a>Date_And_Time</a></th>
 								<th><a>Full_Name</a></th>
@@ -239,6 +246,7 @@
 								<th><a>Ear_Tipped</a></th>
 								<th><a>Pregnant</a></th>
 								<th><a>Injured</a></th>
+								<th><a>Injury_Description</a></th>
 								<th><a>Colony_Setting</a></th>
 								<th><a>Comments</a></th>
 								<th><a>Volunteer_Responding</a></th>
@@ -260,9 +268,9 @@
 						
 						while($row = mysqli_fetch_row($result))
 						{
-							list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
+							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
 							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $EarTipped, $Pregnant, 
-							$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
+							$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 							$Outcome, $CompletionDate) = $row; // variables are set to current row
 																			// then printed in one table row
 							
@@ -315,6 +323,9 @@
 								else
 								{
 									print "
+									<td><input type='text' name='Comments1' value='$Comments1'></td>
+									<td><input type='text' name='Responder' value='$Responder'></td>
+									<td><input type='text' name='Status' value='$Status'></td>
 									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
 									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
 									<td><input type='text' name='FullName' value='$FullName'></td>
@@ -332,6 +343,7 @@
 									<td><input type='text' name='EarTipped' value='$EarTipped'></td>
 									<td><input type='text' name='Pregnant' value='$Pregnant'></td>
 									<td><input type='text' name='Injured' value='$Injured'></td>
+									<td><input type='text' name='InjuryDescription' value='$InjuryDescription'></td>
 									<td><input type='text' name='ColonySetting' value='$ColonySetting'></td>
 									<td><textarea name='Comments'>$Comments</textarea></td>
 									<td><input type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
@@ -367,8 +379,10 @@
 								else
 								{
 									print "
-
-									<td>$RecordNumber </td>
+									<td>$Comments1</td>
+									<td>$Responder</td>
+									<td>$Status</td> 
+									<td>$RecordNumber</td>
 									<td>$DateAndTime</td>
 									<td>$FullName</td>
 									<td>$Email</td>
@@ -385,6 +399,7 @@
 									<td>$EarTipped</td>
 									<td>$Pregnant</td>
 									<td>$Injured</td>
+									<td>$InjuryDescription</td>
 									<td>$ColonySetting</td>
 									<td>$Comments</td>
 									<td>$VolunteerResponding</td>
@@ -414,6 +429,9 @@
 			if(isset($_POST['recordEdit']))
 			{
 				//echo "In the recordEdit IF loop!!";
+				$Coments1 = $_POST['Coments1'];
+				$Responder = $_POST['Responder'];
+				$Status = $_POST['Status'];
 				$FullName = $_POST['FullName'];
 				$RecordNumber1 = $_POST['RecordNumber'];
 				$DateAndTime = $_POST['DateAndTime'];
@@ -431,6 +449,7 @@
 				$EarTipped = $_POST['EarTipped'];
 				$Pregnant = $_POST['Pregnant'];
 				$Injured = $_POST['Injured'];
+				$InjuryDescription = $_POST['InjuryDescription'];
 				$ColonySetting = $_POST['ColonySetting'];
 				$Comments = $_POST['Comments'];
 				$VolunteerResponding = $_POST['VolunteerResponding'];
@@ -507,11 +526,12 @@
 						
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
 						{
-							$queryupdate = "update ReportColonyForm set FullName='$FullName', Email='$Email',
+							$queryupdate = "update ReportColonyForm set Comments1='$Comments1', Responder='$Responder', Status='$Status', 
+								 FullName='$FullName', Email='$Email',
 								 Phone1='$Phone1', Phone2='$Phone2', ColonyName='$ColonyName', ColonyAddress='$ColonyAddress',
 								 City='$City', County='$County', ZipCode='$ZipCode', AnyoneAttempted='$AnyoneAttempted',
 								 ApproximateCats='$ApproximateCats', ColonyCareGiver='$ColonyCareGiver', EarTipped='$EarTipped',
-								 Pregnant='$Pregnant', Injured='$Injured', ColonySetting='$ColonySetting', Comments='$Comments',
+								 Pregnant='$Pregnant', Injured='$Injured', InjuryDescription='$InjuryDescription', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
 								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate' where RecordNumber='$RecordNumber1'";
 								
@@ -536,7 +556,7 @@
 				$RecordNumber = $_GET['RecordNumber'];
 				$query = "delete from ReportColonyForm where RecordNumber='$RecordNumber'";
 				mysqli_query($link, $query);
-				print $query;
+				//print $query;
 				print "<h2>Record Deleted</h2>";
 				//showReportColony();
 			}
@@ -577,6 +597,9 @@
 								{
 									print "
 
+							<th><a href='search.php?sort=Comments1'>Comments</a></th>
+							<th><a href='search.php?sort=Responder'>Responder</a></th>
+							<th><a href='search.php?sort=Status'>Status</a></th>
 							<th><a href='search.php?sort=RecordNumber'>Record_Number</a></th>
 							<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
 							<th><a href='search.php?sort=FullName'>Full_Name</a></th>
@@ -594,6 +617,7 @@
 							<th><a href='search.php?sort=EarTipped'>Ear_Tipped</a></th>
 							<th><a href='search.php?sort=Pregnant'>Pregnant</a></th>
 							<th><a href='search.php?sort=Injured'>Injured</a></th>
+							<th><a href='search.php?sort=InjuryDescription'>InjuryDescription</a></th>
 							<th><a href='search.php?sort=ColonySetting'>Colony_Setting</a></th>
 							<th><a href='search.php?sort=Comments'>Comments</a></th>
 							<th><a href='search.php?sort=VolunteerResponding'>Volunteer_Responding</a></th>
@@ -614,65 +638,73 @@
 					
 					while($row = mysqli_fetch_row($result))
 					{
-						list($RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
+						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $EarTipped, $Pregnant, 
-						$Injured, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
+						$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row; // variables are set to current row
 																		// then printed in one table row
 						
 						
-						$myArray[0]=$RecordNumber;
-						$myArray[1]=$DateAndTime;
-						$myArray[2]=$FullName;
-						$myArray[3]=$Email;
-						$myArray[4]=$Phone1;
-						$myArray[5]=$Phone2;
-						$myArray[6]=$ColonyName;
-						$myArray[7]=$ColonyAddress;
-						$myArray[8]=$City;
-						$myArray[9]=$County;
-						$myArray[10]=$ZipCode;
-						$myArray[11]=$AnyoneAttempted;
-						$myArray[12]=$ApproximateCats;
-						$myArray[13]=$ColonyCareGiver;
-						$myArray[14]=$EarTipped;
-						$myArray[15]=$Pregnant;
-						$myArray[16]=$Injured;
-						$myArray[17]=$ColonySetting;
-						$myArray[18]=$Comments;
-						$myArray[19]=$VolunteerResponding;
-						$myArray[20]=$ResponseDate;
-						$myArray[21]=$CustNeedOutcome;
-						$myArray[22]=$BeatTeamLeader;
-						$myArray[23]=$Outcome;
-						$myArray[24]=$CompletionDate;
-						
-						$myArray1[0]="RecordNumber";
-						$myArray1[1]="DateAndTime";
-						$myArray1[2]="FullName";
-						$myArray1[3]="Email";
-						$myArray1[4]="Phone1";
-						$myArray1[5]="Phone2";
-						$myArray1[6]="ColonyName";
-						$myArray1[7]="ColonyAddress";
-						$myArray1[8]="City";
-						$myArray1[9]="County";
-						$myArray1[10]="ZipCode";
-						$myArray1[11]="AnyoneAttempted";
-						$myArray1[12]="ApproximateCats";
-						$myArray1[13]="ColonyCareGiver";
-						$myArray1[14]="EarTipped";
-						$myArray1[15]="Pregnant";
-						$myArray1[16]="Injured";
-						$myArray1[17]="ColonySetting";
-						$myArray1[18]="Comments";
-						$myArray1[19]="VolunteerResponding";
-						$myArray1[20]="ResponseDate";
-						$myArray1[21]="CustNeedOutcome";
-						$myArray1[22]="BeatTeamLeader";
-						$myArray1[23]="Outcome";
-						$myArray1[24]="CompletionDate";
-						
+						$myArray[0]=$Comments1;
+						$myArray[1]=$Responder;
+						$myArray[2]=$Status;
+						$myArray[3]=$RecordNumber;
+						$myArray[4]=$DateAndTime;
+						$myArray[5]=$FullName;
+						$myArray[6]=$Email;
+						$myArray[7]=$Phone1;
+						$myArray[8]=$Phone2;
+						$myArray[9]=$ColonyName;
+						$myArray[10]=$ColonyAddress;
+						$myArray[11]=$City;
+						$myArray[12]=$County;
+						$myArray[13]=$ZipCode;
+						$myArray[14]=$AnyoneAttempted;
+						$myArray[15]=$ApproximateCats;
+						$myArray[16]=$ColonyCareGiver;
+						$myArray[17]=$EarTipped;
+						$myArray[18]=$Pregnant;
+						$myArray[19]=$Injured;
+						$myArray[20]=$InjuryDescription;
+						$myArray[21]=$ColonySetting;
+						$myArray[22]=$Comments;
+						$myArray[23]=$VolunteerResponding;
+						$myArray[24]=$ResponseDate;
+						$myArray[25]=$CustNeedOutcome;
+						$myArray[26]=$BeatTeamLeader;
+						$myArray[27]=$Outcome;
+						$myArray[28]=$CompletionDate;
+					
+						$myArray1[0]="Comments1";
+						$myArray1[1]="Responder";
+						$myArray1[2]="Status";
+						$myArray1[3]="RecordNumber";
+						$myArray1[4]="DateAndTime";
+						$myArray1[5]="FullName";
+						$myArray1[6]="Email";
+						$myArray1[7]="Phone1";
+						$myArray1[8]="Phone2";
+						$myArray1[9]="ColonyName";
+						$myArray1[10]="ColonyAddress";
+						$myArray1[11]="City";
+						$myArray1[12]="County";
+						$myArray1[13]="ZipCode";
+						$myArray1[14]="AnyoneAttempted";
+						$myArray1[15]="ApproximateCats";
+						$myArray1[16]="ColonyCareGiver";
+						$myArray1[17]="EarTipped";
+						$myArray1[18]="Pregnant";
+						$myArray1[19]="Injured";
+						$myArray1[20]="InjuryDescription";
+						$myArray1[21]="ColonySetting";
+						$myArray1[22]="Comments";
+						$myArray1[23]="VolunteerResponding";
+						$myArray1[24]="ResponseDate";
+						$myArray1[25]="CustNeedOutcome";
+						$myArray1[26]="BeatTeamLeader";
+						$myArray1[27]="Outcome";
+						$myArray1[28]="CompletionDate";
+					
 						
 						print "
 						<tr>
@@ -682,7 +714,7 @@
 							//$_GET['select2'] as RecordNumber
 							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number
 							{
-								for ($i = 0; $i<25; $i++) 
+								for ($i = 0; $i<29; $i++) 
 								{
 									//if recordNumber == recordNumber
 									if ($myArray1[$i] == $selectedOption) 
@@ -710,7 +742,10 @@
 							else
 							{
 								print "
-									
+							
+							<td>$Comments1 </td>
+							<td>$Responder </td>
+							<td>$Status </td>
 							<td>$RecordNumber </td>
 							<td>$DateAndTime</td>
 							<td>$FullName</td>
@@ -728,6 +763,7 @@
 							<td>$EarTipped</td>
 							<td>$Pregnant</td>
 							<td>$Injured</td>
+							<td>$InjuryDescription</td>
 							<td>$ColonySetting</td>
 							<td>$Comments</td>
 							<td>$VolunteerResponding</td>
