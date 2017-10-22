@@ -95,8 +95,8 @@
 				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
 				 <input type='submit' name='Select All' value='Reset'/>
 				 <div >
-					<br><label style='float: left'><b>Clustered Hot Spot</b></label>
-					<br><button id='clusterAddrBtn' type='button'>Cluster Locations</button>
+					<br><label style='float: left'><b>Clustered Hot Spot</b></label></br>
+					<br><button id='clusterAddrBtn' type='button' style='float: left'>Cluster Locations</button></br>
 				</div>	
 
 			</form>
@@ -808,6 +808,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>Record Search</title> 
+	
+	<link rel="stylesheet" type="text/css" href="search.css" />	
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="searchScript.js"></script>
 <style type="text/css">
 /* The Modal (background) */
 .modal {
@@ -849,11 +856,7 @@
 }
 </style>	
 
-	<title>Record Search</title> 
 	
-	<link rel="stylesheet" type="text/css" href="search.css" />	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="searchScript.js"></script>
 </head>
 
 <body>
