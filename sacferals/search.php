@@ -10,23 +10,8 @@
 	}
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>	
-	<title>Record Search</title> 
-	
-	<link rel="stylesheet" type="text/css" href="search.css" />
-	
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="searchScript.js"></script>
-	 
-	
-</head>
 
-<body>
 <?php
-
 	//if no ones logged in, print login screen
 	if($_SESSION['authenticate234252432341'] != 'validuser09821')
 	{ 
@@ -51,17 +36,26 @@
 		
 		if($level == 1)
 		{
-			print "<a href='logout.php' align='right'>Log out</a><br><br>";
+			 print "<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+					</ul>
+				</div>
+			</div>";
+
 			print "<b>Logged in as ".$Ausername."</b> <br><br>";
 			
 			//print "<div><fieldset class='fieldset-auto-width'>";
 			print "- <a href='userprofile.php' align='right'>Back to Admin Hub</a><br><br>";
 			//print "</fieldset></div>";
 				
-		
 			print "
-				
-			
+
 			<div style='color:red' style='float: right;' >Note: Hold down ctrl or shift to select multiple columns</div>
 			
 			<form id='form1' name='form1' method='get' action='search.php'>
@@ -100,15 +94,16 @@
 				 <br>
 				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
 				 <input type='submit' name='Select All' value='Reset'/>
+				 
+
 			</form>
 			";
-			//
 			
+	
 			$thString="";
 			$tdString="";
 			$thEditString="";
 			$tdEditString="";
-			
 			
 			if(count($_SESSION['selectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
 			{
@@ -119,10 +114,7 @@
 			{
 				$_SESSION['selectedColumns'] = $_GET['select2'];
 			}
-			
-			
-			
-			
+
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				$thEditString.="<th><a>".$selectedOption."</a></th>";
@@ -143,16 +135,14 @@
 				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
 				else
-					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
-									
+					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";					
 			}
 			
 			/*
 			print"<table><thead><tr>";
 			print $thString;
 			print"</tr></thead>";
-			
-			
+
 			print"<tbody><tr>";
 			print $tdString;
 			print"</tr></tbody></table>";
@@ -161,8 +151,7 @@
 			print $tdEditString;
 			print"</tr></tbody></table>";
 			*/
-			
-			
+
 			/* this doesn't work with edit yet
 			print "<b>Select which tables you would like to view: </b><br>
 			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm 
@@ -171,9 +160,7 @@
 			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA 
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
 			<div class='todisplay'>"; */
-			
-			
-			
+
 			if(isset($_GET['Reset']))
 			{
 				unset($_SESSION['selectedColumns']);
@@ -212,8 +199,8 @@
 					
 					<br><b>Report A Feral Cat Colony</b><br><br>
 				
-					<table>
-						<thead>
+					<table id='reportTable'>
+						<thead style='width: 6594px;'>
 							<tr>
 								<th> </th>";
 							
@@ -236,7 +223,7 @@
 								<th><a>Phone_1</a></th>
 								<th><a>Phone_2</a></th>
 								<th><a>Colony_Name</a></th>
-								<th><a>ColonyAddress</a></th>
+								<th id='addressHead'><a>ColonyAddress</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
 								<th><a>Zip_Code</a></th>
@@ -260,7 +247,7 @@
 						";
 							}
 						
-						print "<tbody>"; 
+						print "<tbody style='width: 6594px;'>"; 
 						
 						//while the next row (set by query) exists?
 						
@@ -389,10 +376,10 @@
 									<td>$Phone1</td>
 									<td>$Phone2</td>
 									<td>$ColonyName</td>
-									<td>$ColonyAddress</td>
-									<td>$City</td>
+									<td id='addressCol'>$ColonyAddress</td>
+									<td id='cityCol'>$City</td>
 									<td>$County</td>
-									<td>$ZipCode</td>
+									<td id='zipCodeCol'>$ZipCode</td>
 									<td>$AnyoneAttempted</td>
 									<td>$ApproximateCats</td>
 									<td>$ColonyCareGiver</td>
@@ -582,8 +569,8 @@
 				print "
 				<br><b>Report A Feral Cat Colony</b><br><br>
 				
-				<table>
-					<thead>
+				<table id='reportTable'>
+					<thead style='width: 6594px;'>
 						<tr>
 							<th>  </th>";
 							
@@ -632,7 +619,7 @@
 					print"
 					</thead>
 					
-					<tbody>";
+					<tbody style='width: 6594px;'>";
 					
 					//while the next row (set by query) exists?
 					
@@ -704,7 +691,6 @@
 						$myArray1[26]="BeatTeamLeader";
 						$myArray1[27]="Outcome";
 						$myArray1[28]="CompletionDate";
-					
 						
 						print "
 						<tr>
@@ -722,8 +708,7 @@
 										$tdString.="<td>$myArray[$i]</td>";
 										break;
 									}
-								}
-									
+								}									
 							}
 							
 							if($tdString != '')
@@ -731,7 +716,13 @@
 								$tdString = "";
 									foreach ($_GET['select2'] as $selectedOption)
 									{
-										$tdString.="<td>".$$selectedOption."</td>";
+										switch($selectedOption){
+											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
+											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
+											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
+											default: $tdString.="<td>".$$selectedOption."</td>";
+													
+										}																								
 										//echo $selectedOption."\n";
 									}
 								print $tdString;
@@ -753,10 +744,10 @@
 							<td>$Phone1</td>
 							<td>$Phone2</td>
 							<td>$ColonyName</td>
-							<td>$ColonyAddress</td>
-							<td>$City</td>
+							<td id='addressCol'>$ColonyAddress</td>
+							<td id='cityCol'>$City</td>
 							<td>$County</td>
-							<td>$ZipCode</td>
+							<td id='zipCodeCol'>$ZipCode</td>
 							<td>$AnyoneAttempted</td>
 							<td>$ApproximateCats</td>
 							<td>$ColonyCareGiver</td>
@@ -779,8 +770,7 @@
 					}
 					print "
 					</tbody>
-				</table>";
-				
+				</table>";				
 			}
 			
 			/* this doesn't work with edit yet
@@ -802,20 +792,42 @@
 			print "
 			<div class='todisplay4'>
 			</div>";	
-			*/
-
-
-			
-				
+			*/	
 		}
 		else if($level == 2)
 		{
 			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
 		}
-
-		
 	}
 ?>
 
-</body>
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Record Search</title>
+      <link rel="stylesheet" type="text/css" href="search.css" />
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+      <script src="searchScript.js"></script>
+      <style>
+         #map {
+         height: 400px;
+         width: 100%;
+         }
+      </style>
+   </head>
+      
+   <body onload="initialize()">
+      <div>
+         <br><label><b>Clustered Hot Spot</b></label>
+         <br><button id='clusterAddrBtn' type='button' onclick='mapQuery()'>Map Query</button>
+		 <button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
+         <div id="map-canvas" style="height:90%;top:30px"></div>
+      </div>
+
+      <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+      <script type="text/javascript" src="clustermapScript.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </body>
 </html>

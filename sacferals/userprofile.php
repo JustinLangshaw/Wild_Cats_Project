@@ -86,7 +86,8 @@
 					<span class='caret'></span></button>
 					<ul class='dropdown-menu dropdown-menu-right'>
 						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
-						<li><a href='#'>Update Profile</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
 						<li><a href='./logout.php'>Sign Out</a></li>
 					</ul>
 				</div>
