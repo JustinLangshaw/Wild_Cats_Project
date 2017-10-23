@@ -94,13 +94,11 @@
 				 <br>
 				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
 				 <input type='submit' name='Select All' value='Reset'/>
-				 <div >
-					<br><label style='float: left'><b>Clustered Hot Spot</b></label></br>
-					<br><button id='clusterAddrBtn' type='button' style='float: left'>Cluster Locations</button></br>
-				</div>	
+				 
 
 			</form>
 			";
+			
 	
 			$thString="";
 			$tdString="";
@@ -693,7 +691,6 @@
 						$myArray1[26]="BeatTeamLeader";
 						$myArray1[27]="Outcome";
 						$myArray1[28]="CompletionDate";
-					
 						
 						print "
 						<tr>
@@ -804,133 +801,33 @@
 	}
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Record Search</title> 
-	
-	<link rel="stylesheet" type="text/css" href="search.css" />	
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="searchScript.js"></script>
-<style type="text/css">
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 500px; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0); /* transparent */
-}
+   <head>
+      <title>Record Search</title>
+      <link rel="stylesheet" type="text/css" href="search.css" />
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+      <script src="searchScript.js"></script>
+      <style>
+         #map {
+         height: 400px;
+         width: 100%;
+         }
+      </style>
+   </head>
+      
+   <body onload="initialize()">
+      <div>
+         <br><label><b>Clustered Hot Spot</b></label>
+         <br><button id='clusterAddrBtn' type='button' onclick='mapQuery()'>Map Query</button>
+		 <button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
+         <div id="map-canvas" style="height:90%;top:30px"></div>
+      </div>
 
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-</style>	
-
-	
-</head>
-
-<body>
-<div id="clusterAddrPopup" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-	<center>
-    <label>Cluster Locations</label>
-	<div>
-		<textarea id='clusterAddrTextarea' rows='20' cols='50'placeholder="No addresses found. Check your query." style="resize:none"readonly></textarea>
-	</div>
-	<div>
-		<button type=button onclick=copyAddr()>Copy</button>
-	</div>
-	</center>
-  </div>
-</div>	
-</body>
-
+      <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+      <script type="text/javascript" src="clustermapScript.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </body>
 </html>
-
-
-<script type="text/javascript">
-// Get the modal
-var modal = document.getElementById('clusterAddrPopup');
-
-// Get the button that opens the modal
-var clusterAddrBtn = document.getElementById('clusterAddrBtn');
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-
-// When the user clicks the button, open the modal and display addresses
-clusterAddrBtn.onclick = function() {
-    modal.style.display = "block";	
-	var address = null;
-	var city = null;
-	var zipcode = null;	
-	var search = [];
-	var table  = document.getElementById('reportTable');
-	var addrIndex = document.getElementById('addressCol').cellIndex;
-	var cityIndex = document.getElementById('cityCol').cellIndex;
-	var zipIndex = document.getElementById('zipCodeCol').cellIndex;
-	var display = document.getElementById('clusterAddrTextarea');
-
-	for (var r = 1; r < table.rows.length; r++) {
-		address = table.rows[r].cells[addrIndex].innerHTML;
-		city = table.rows[r].cells[cityIndex].innerHTML;
-		zipcode = table.rows[r].cells[zipIndex].innerHTML;
-		search[r] = address+" "+city+" " +zipcode+"\n";
-    }
-	for(var i=1; i<search.length; i++){
-		display.value += search[i];
-	}
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-	document.getElementById('clusterAddrTextarea').value = "";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-// Copy addresses to clipboard
-function copyAddr(){
-	var addr = document.getElementById('clusterAddrTextarea').select();
-	document.execCommand('copy');
-}
-
-</script>
