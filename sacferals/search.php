@@ -368,9 +368,9 @@
 									print "
 									<td>$Comments1</td>
 									<td>$Responder</td>
-									<td>$Status</td> 
+									<td id='statusCol'>$Status</td> 
 									<td>$RecordNumber</td>
-									<td>$DateAndTime</td>
+									<td id='dateTimeCol'>$DateAndTime</td>
 									<td>$FullName</td>
 									<td>$Email</td>
 									<td>$Phone1</td>
@@ -717,6 +717,8 @@
 									foreach ($_GET['select2'] as $selectedOption)
 									{
 										switch($selectedOption){
+											case 'Status': $tdString.="<td = id='statusCol'>".$$selectedOption."</td>"; break;																						
+											case 'DateAndTime': $tdString.="<td = id='dateTimeCol'>".$$selectedOption."</td>"; break;											
 											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
 											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
 											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
@@ -736,9 +738,9 @@
 							
 							<td>$Comments1 </td>
 							<td>$Responder </td>
-							<td>$Status </td>
+							<td id='statusCol'>$Status </td>
 							<td>$RecordNumber </td>
-							<td>$DateAndTime</td>
+							<td id='dateTimeCol'>$DateAndTime</td>
 							<td>$FullName</td>
 							<td>$Email</td>
 							<td>$Phone1</td>
@@ -819,7 +821,7 @@
    <body onload="initialize()">
       <div>
          <br><label><b>Clustered Hot Spot</b></label>
-         <br><button id='clusterAddrBtn' type='button' onclick='mapQuery()'>Map Query</button>
+         <br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
 		 <button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
          <div id="map-canvas" style="height:90%;top:30px"></div>
       </div>
