@@ -358,12 +358,12 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		
 		<b>Address</b><br>
 		<input type="text" name="colonystreet" id="colonystreet"><br><br>
-		<b>City</b><br>
-		<input type="text" name="city" id="city"><br><br>
-		<b>County</b><br>
-		<input type="text" name="county" id="county"><br><br>
 		<b>*Zip Code</b><br>
 		<input type="text" name="zipcode"  id="zipcode"><br><br>
+		<b>City</b><br>
+		<div id="city_wrap"><input type="text" name="city" id="city"></div><br><br>
+		<b>County</b><br>
+		<input type="text" name="county" id="county"><br><br>
 		
 		<b>Has anyone atempted to trap this colony?</b><br>
 		<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
@@ -459,9 +459,55 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		
 	</div>
 	
-	
 </form>
 <br>
+
+<script>
+//when user clicks off of the zip field:
+$(document).ready(function(){
+	$('#zipcode').keyup(function(){
+		if($(this).val().length==5){
+			var zip = $(this).val();
+			var city = '';
+			var county = '';
+			
+			//make a request to the google geocode api
+			$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
+					+zip+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response){
+				//find the city and county
+				var address_components = response.results[0].address_components;
+				$.each(address_components, function(index, component){
+					var types = component.types;
+					$.each(types, function(index, type){
+						if(type == 'locality') city = component.long_name;
+						if(type == 'administrative_area_level_2') county = component.long_name;
+					});
+				});
+				
+				//pre-fill the city and state
+				var cities = response.results[0].postcode_localities;
+				if(cities){
+					//turn city into a dropdown if necessary
+					var $select = $(document.createElement('select'));
+					console.log(cities);
+					$.each(cities, function(index,locality){
+						var $option = $(document.createElement('option'));
+						$option.html(locality);
+						$option.attr('value',locality);
+						if(city == locality) $option.attr('selected','selected');
+						$select.append($option);
+					});
+					$select.attr('id','city');
+					$select.attr('name','city');
+					$('#city_wrap').html($select);
+				}
+				else $('#city').val(city);
+				$('#county').val(county);
+			});
+		}
+	});
+});
+</script>
 
 </body>
 </html>
