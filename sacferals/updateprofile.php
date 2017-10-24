@@ -10,12 +10,37 @@
 	
 ?>
 
+<script type="text/javascript"> //phone validation
+
+function formatPhone(phoneId) {
+	var startCursor = $("#"+phoneId).get(0).selectionStart,
+		endCursor = $("#"+phoneId).get(0).selectionEnd;
+
+	var output;
+    var input = $("#"+phoneId).val();
+	input = input.replace(/[^0-9]/g, '');
+	var area = input.substr(0, 3);
+    var pre = input.substr(3, 3);
+    var tel = input.substr(6, 4);
+
+	if (input.length >= 10){
+		output = input.replace(/^(\d{3})(\d{3})(\d{4})+$/, "($1)$2-$3");
+
+	} else {
+		output = input;
+	}
+	$("#"+phoneId).val(output);
+	$("#"+phoneId).get(0).setSelectionRange(startCursor, endCursor);
+}
+
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-	<title>Volunteer Form</title>
+	<title>Edit Profile</title>
 	<style type="text/css">
 	body 
 	{
@@ -117,6 +142,135 @@
 </head>
 <body>
 <?php
+
+	if(isset($_POST['submit'])){ //this processes after user submits data.
+		//for users table
+		$username = $_POST['username'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$repassword = $_POST['repassword'];
+		
+		$re = "/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/";
+		$reEmail = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/";
+		
+		//for report form
+		$fullname = $_POST['fullname'];
+		$completeaddress = $_POST['completeaddress'];
+		//$email = $_POST['email']; //get from Users table instead
+		$phone1 = $_POST['phone1'];
+		$phone2 = $_POST['phone2'];
+
+		//arrays of checkboxes
+		$contact = $_POST['contact'];
+		$typeofwork = $_POST['typeofwork'];
+
+		$contactemail;
+		$contactphone1;
+		$contactphone2;
+
+		//put in loop like typeofworkstring
+		$preferedcontact= $contact[0].", ".$contact[1].", ".$contact[2];
+		//$typeofworkstring = $typeofwork[0].", ".$typeofwork[1].", ".$typeofwork[2].", ".$typeofwork[3].", ".$typeofwork[4].", ".$typeofwork[5];
+		$typeofworkstring='';
+		if (count($typeofwork)!=0){
+			$typeofworkstring = $typeofwork[0];
+			for ($i=1; $i<count($typeofwork); $i++){
+				$typeofworkstring = $typeofworkstring.",".$typeofwork[$i];
+			}
+		}
+
+		if($contact[0]!='') $contactemail=1; else $contactemail=0;
+		if($contact[1]!='') $contactphone1=1; else $contactphone1=0;
+		if($contact[2]!='') $contactphone2=1; else $contactphone2=0;
+		
+		if($typeofwork[0]!='') $transporting=1; else $transporting=0;
+		if($typeofwork[1]!='') $helptrap=1; else $helptrap=0;
+		if($typeofwork[2]!='') $helpeducate=1; else $helpeducate=0;
+		if($typeofwork[3]!='') $usingphone=1; else $usingphone=0;
+		if($typeofwork[4]!='') $helpingclinic=1; else $helpingclinic=0;
+		if($typeofwork[5]!='') $other=1; else $other=0;
+
+		$othertasks = $_POST['othertasks'];
+		$experience = $_POST['experience'];
+
+		//re's need updating for all fields. or we can use javascript (better)
+		$re2 = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
+		
+		if($username == "" || $email == "" || $password == "" || $repassword == ""){//doesn't execute? 
+			print "error: please fill out all fields";
+		}
+		else if($password != $repassword){
+			echo '<div style="padding-bottom:10px">
+						<div class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+							error: passwords do not match</div></div>';
+			//print "error: passwords do not match";
+			$passerror = "style='border:1px solid #d66'";
+		}
+		else {
+			//if user passes re test
+			if( preg_match($re, $username) && preg_match($reEmail, $email) ){
+				//if user passes re2 test
+				if(preg_match($re2, $fullname) ) {	//display current table
+					if (isset($_POST['typeofwork'])) {
+						//display current table
+						$querycheck = "select * from SacFeralsUsers where username='".$username."' or email='".$email."'";
+						$resultcheck = mysqli_query($link, $querycheck); //link query to database
+						
+						$querycheck2 = "select * from VolunteerForm where Fullname='".$fullname."' AND Email='".$email."';";
+						$resultcheck2 = mysqli_query($link, $querycheck); //link query to database
+						
+						if(mysqli_num_rows($resultcheck)!= 0) {// test if found a match
+							if(mysqli_num_rows($resultcheck2) != 0) {
+								//if so, process the insert query
+								$row = mysqli_fetch_array($resultcheck);
+								$level = $row['level'];
+								$query = "update SacFeralsUsers set username='".$username."',email='".$email."',password='".$password."'
+									where username='".$username."';";
+								mysqli_query($link, $query); //link query to database
+								
+								$query2 = "update VolunteerForm set FullName='".$fullname."',CompleteAddress='".$completeaddress."',Email='".$email."',Phone1='".$phone1."'
+									,Phone2='".$phone2."',PreferedContact='".$preferedcontact."',contactemail=".$contactemail.",contactphone1=".$contactphone1.",
+									contactphone2=".$contactphone2.",TypeOfWork='".$typeofworkstring."',transporting=".$transporting.",helptrap=".$helptrap.",
+									helpeducate=".$helpeducate.",usingphone=".$usingphone.",helpingclinic=".$helpingclinic.",other=".$other.",OtherTasks='".$othertasks."'
+									where Fullname='".$fullname."';";
+								mysqli_query($link, $query2); //link query to database
+								
+								echo "<h3>Profile Successfully Updated!</h3>";
+								header('Refresh: .8; url=userprofile.php');
+								//echo "<script type='text/javascript'> document.location = 'userprofile.php'; </script>";
+							}
+							else {
+								echo '<div style="padding-bottom:10px">
+									<div class="alert">
+										<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+										That record already exists.</div></div>';
+							}
+						}
+						else{
+							print "error: That account name or email doesn't exists";
+						}
+					}
+					else {
+						echo '<div style="padding-bottom:10px">
+									<div class="alert">
+										<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+										Must select at least one type of work to volunteer for.</div></div>';
+					}
+				}
+				else {
+					echo '<div style="padding-bottom:10px">
+									<div class="alert">
+										<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+										You did not fill out the form correctly!</div></div>';
+				}
+			}
+			else{
+				print "error: Please use no special characters when creating username and make sure your email is valid.";
+			}
+		}
+	}
+
 	//not logged in
 	if($_SESSION['authenticate234252432341'] != 'validuser09821'){
 		print "<h1>you aren't supposed to be here.. STOP SNEAKING AROUND</h1><br><br>";
@@ -125,42 +279,43 @@
 	//logged in
 	else {
 		$Ausername = $_SESSION['Ausername'];
-		$query = "select * from VolunteerForm where FullName='".$Ausername."';";
-		$result = mysqli_query($link, $query);
-		//$row = mysql_fetch_assoc($result);
-		if (mysqli_num_rows($result)==0){ 
-			print "<h4>Failed to pull your info from VolunteerForm table</h4>";
-		}
-		else{
-			$row = mysqli_fetch_array($result);
-			$fullname = $row['FullName'];
-			$email = $row['Email'];
-			$address = $row['CompleteAddress'];
-			$phone1 = $row['Phone1'];
-			$phone2 = $row['Phone2'];
-			$contactemail = $row['contactemail'];
-			$contactphone1 = $row['contactphone1'];
-			$contactphone2 = $row['contactphone2'];
-			$transporting = $row['transporting'];
-			$helptrap = $row['helptrap'];
-			$helpeducate = $row['helpeducate'];
-			$usingphone = $row['usingphone'];
-			$helpingclinic = $row['helpingclinic'];
-			$other = $row['other'];
-			$othertasks = $row['OtherTasks'];
-			//list($RecordNumber,$DateAndTime,$FullName,$CompleteAddress,$Email,$Phone1,$Text1,$Phone2,$Text2,
-				//$PreferedContact,$contactemail,$contactphone1,$contactphone2,$TypeOfWork,$transporting)=$row;
-		}
-		
 		$query2 = "select * from SacFeralsUsers where username='".$Ausername."';";
 		$result2 = mysqli_query($link, $query2);
 		if (mysqli_num_rows($result2)==0){ 
-			print "<h4>Failed to pull your info from SacFeralsUsers table</h4>";
+			print "<h4 style='color: RED'>Failed to pull your info from SacFeralsUsers table</h4>";
 		}
 		else{
 			$row2 = mysqli_fetch_array($result2);
+			$email = $row2['email'];
 			$password = $row2['password'];
+		
+			$query = "select * from VolunteerForm where email='".$email."';";
+			$result = mysqli_query($link, $query);
+			//$row = mysql_fetch_assoc($result);
+			if (mysqli_num_rows($result)==0){ 
+				print "<h4 style='color: RED'>Failed to pull your info from VolunteerForm table</h4>";
+			}
+			else{
+				$row = mysqli_fetch_array($result);
+				$fullname = $row['FullName'];
+				$address = $row['CompleteAddress'];
+				$phone1 = $row['Phone1'];
+				$phone2 = $row['Phone2'];
+				$contactemail = $row['contactemail'];
+				$contactphone1 = $row['contactphone1'];
+				$contactphone2 = $row['contactphone2'];
+				$transporting = $row['transporting'];
+				$helptrap = $row['helptrap'];
+				$helpeducate = $row['helpeducate'];
+				$usingphone = $row['usingphone'];
+				$helpingclinic = $row['helpingclinic'];
+				$other = $row['other'];
+				$othertasks = $row['OtherTasks'];
+				//list($RecordNumber,$DateAndTime,$FullName,$CompleteAddress,$Email,$Phone1,$Text1,$Phone2,$Text2,
+					//$PreferedContact,$contactemail,$contactphone1,$contactphone2,$TypeOfWork,$transporting)=$row;
+			}
 		}
+		
 ?>
 	<h2> Update Profile </h2>
 	<form method="post" action="updateprofile.php">
@@ -170,20 +325,20 @@
 		<table id="info">
 			<tr>
 				<td>Username:</td>
-				<td><input type="text" name="username" required value="<?php echo $Ausername?>" disabled></td>
+				<td><input type="text" name="username" required value="<?php echo $Ausername?>" readonly></td>
 			</tr>
 			<tr>
 				<td>Email:</td>
 				<td><input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" 
-						placeholder="email@domain.com" required value="<?php echo $email?>"></td>
+						placeholder="email@domain.com" required value="<?php echo $email?>" readonly></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><input type="text" size="40" name="password" required value="<?php echo $password?>"></td>
+				<td><input type="text" size="40" name="password" required value="<?php echo $password?>" <?php echo $passerror?>></td>
 			</tr>
 			<tr>
 				<td>Re-enter Password:</td>
-				<td><input type="text" name="repassword" required value="<?php echo $password?>"></td>
+				<td><input type="text" name="repassword" required value="<?php echo $password?>" <?php echo $passerror?>></td>
 			</tr>
 		</table>
 		</div>
@@ -264,6 +419,10 @@
 
 </body>
 </html>
+
+<?php
+
+?>
 
 <script> //script.js include later
 	$(document).ready(function () 
