@@ -359,11 +359,13 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<b>Address</b><br>
 		<input type="text" name="colonystreet" id="colonystreet"><br><br>
 		<b>*Zip Code</b><br>
-		<input type="text" name="zipcode"  id="zipcode"><br><br>
+		<input type="text" name="zipcode" id="zipcode" maxlength="5"><span id="ziperror"></span><br><br>
 		<b>City</b><br>
-		<div id="city_wrap"><input type="text" name="city" id="city"></div><br>
+		<span id="city_wrap"><input type="text" name="city" id="city"></span><br><br>
 		<b>County</b><br>
 		<input type="text" name="county" id="county"><br><br>
+		<b>State</b><br>
+		<input type="text" value="CA" readonly><br><br>
 		
 		<b>Has anyone atempted to trap this colony?</b><br>
 		<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
@@ -470,6 +472,7 @@ $(document).ready(function(){
 			var zip = $(this).val();
 			var city = '';
 			var county = '';
+			var state = '';
 			
 			//make a request to the google geocode api
 			$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
@@ -481,28 +484,39 @@ $(document).ready(function(){
 					$.each(types, function(index, type){
 						if(type == 'locality') city = component.long_name;
 						if(type == 'administrative_area_level_2') county = component.long_name;
+						if(type == 'administrative_area_level_1') state = component.short_name;
 					});
 				});
-				
-				//pre-fill the city and state
-				var cities = response.results[0].postcode_localities;
-				if(cities){
-					//turn city into a dropdown if necessary
-					var $select = $(document.createElement('select'));
-					console.log(cities);
-					$.each(cities, function(index,locality){
-						var $option = $(document.createElement('option'));
-						$option.html(locality);
-						$option.attr('value',locality);
-						if(city == locality) $option.attr('selected','selected');
-						$select.append($option);
-					});
-					$select.attr('id','city');
-					$select.attr('name','city');
-					$('#city_wrap').html($select);
+				if(state=='CA'){
+					$('#zipcode').attr('style','');
+					$('#ziperror').html('');
+					//pre-fill the city and state
+					var cities = response.results[0].postcode_localities;
+					if(cities){
+						//turn city into a dropdown if necessary
+						var $select = $(document.createElement('select'));
+						console.log(cities);
+						$.each(cities, function(index,locality){
+							var $option = $(document.createElement('option'));
+							$option.html(locality);
+							$option.attr('value',locality);
+							if(city == locality) $option.attr('selected','selected');
+							$select.append($option);
+						});
+						$select.attr('id','city');
+						$select.attr('name','city');
+						$('#city_wrap').html($select);
+					}
+					else $('#city').val(city);
+					$('#county').val(county);
 				}
-				else $('#city').val(city);
-				$('#county').val(county);
+				else{
+					$('#zipcode').attr('style','border: 1px solid #d66');
+					$('#ziperror').attr('style','color: RED');
+					$('#ziperror').html(' Must be in California');
+					$('#city').val('');
+					$('#county').val('');
+				}
 			});
 		}
 	});
