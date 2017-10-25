@@ -15,18 +15,8 @@
 	//if no ones logged in, print login screen
 	if($_SESSION['authenticate234252432341'] != 'validuser09821')
 	{ 
-		
-		print "<form method='post' action='search.php'>
-		<div><fieldset class='fieldset-auto-width'>
-		<legend>Login</legend>
-		<label><input type='text' name='username'>User Name</label><br>
-		<label><input type='password' name='pass'>Password</label><br>
-		<label><input type='submit' name='login' value='Login'></label>
-		</fieldset></div>
-		</form>
-		
-		<h3>Level 1 access (admin): Guest1, 123</h3>
-		<h3>Level 2 access (pleb): Guest2, abc</h3>";
+		header("Location: userprofile.php"); 
+		exit();
 	}
 	//once you're logged in, show menu/options
 	else 
