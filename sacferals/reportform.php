@@ -507,7 +507,10 @@ $(document).ready(function(){
 						$select.attr('name','city');
 						$('#city_wrap').html($select);
 					}
-					else $('#city').val(city);
+					else {
+						$('#city_wrap').html('<input type="text" name="city" id="city">');
+						$('#city').val(city);
+					}
 					$('#county').val(county);
 				}
 				else{
