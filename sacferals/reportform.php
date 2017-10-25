@@ -361,7 +361,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<b>*Zip Code</b><br>
 		<input type="text" name="zipcode"  id="zipcode"><br><br>
 		<b>City</b><br>
-		<div id="city_wrap"><input type="text" name="city" id="city"></div><br><br>
+		<div id="city_wrap"><input type="text" name="city" id="city"></div><br>
 		<b>County</b><br>
 		<input type="text" name="county" id="county"><br><br>
 		
