@@ -359,7 +359,7 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<b>Address</b><br>
 		<input type="text" name="colonystreet" id="colonystreet"><br><br>
 		<b>*Zip Code</b><br>
-		<input type="text" name="zipcode" d="zipcode" maxlength="5"><span id="ziperror"><br><br>
+		<input type="text" name="zipcode" id="zipcode" maxlength="5"><span id="ziperror"></span><br><br>
 		<b>City</b><br>
 		<span id="city_wrap"><input type="text" name="city" id="city"></span><br><br>
 		<b>County</b><br>
