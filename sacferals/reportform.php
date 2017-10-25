@@ -507,11 +507,7 @@ $(document).ready(function(){
 						$select.attr('name','city');
 						$('#city_wrap').html($select);
 					}
-					else {
-						//remove dropdown if was previously selected
-						$('#city_wrap').html('<input type="text" name="city" id="city"></span>');
-						$('#city').val(city);
-					}
+					else $('#city').val(city);
 					$('#county').val(county);
 				}
 				else{
