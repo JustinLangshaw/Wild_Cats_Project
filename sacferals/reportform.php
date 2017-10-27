@@ -338,7 +338,10 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<input type="text" name="firstname" id="firstname" required><br><br>
 		<b>Last Name</b><br>
 		<input type="text" name="lastname" id="lastname"><br><br>
-		<b>*Email Address</b><br>
+		<b>*Email Address</b>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">This is our preferred method of contact.</span>
+		</i><br>
 		<input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required><br><br>
 		<b>Primary Phone</b><br>
 		<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
