@@ -5,6 +5,12 @@
 ?>
 
 <script type="text/javascript">
+function displayformdiv(){
+	var formdiv = document.getElementById("formdiv");
+	var formstatus = formdiv.style.display;
+	if(formstatus=="none") formdiv.style.display="block";
+	else formdiv.style.display="none";
+}
 
 function formatPhone(phoneId) {
 	var startCursor = $("#"+phoneId).get(0).selectionStart;
@@ -44,7 +50,6 @@ function validateReportCatColony(){
 		document.getElementById("problemdescription").required = true;
 	}
 }
-
 </script>
 
 <?php
@@ -325,140 +330,144 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 	   Without your name and contact information, it is unlikely we will be able to 
 	   assist the colony you are reporting.</p>
 
-	<b><small><font color="red">* Required Fields</font></small></b><br><br>
-	<b>*First Name</b><br>
-	<input type="text" name="firstname" id="firstname" required><br><br>
-	<b>Last Name</b><br>
-	<input type="text" name="lastname" id="lastname"><br><br>
-	<b>*Email Address</b><br>
-	<input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required><br><br>
-	<b>Primary Phone</b><br>
-	<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
-	<b>Secondary Phone</b><br>
-	<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
+	<input type="checkbox" onclick="displayformdiv()"> I have read all the information required for filling out this form.</input><br>
+	
+	<div id="formdiv" style="display: none">
+		<br><b><small><font color="red">* Required Fields</font></small></b><br><br>
+		<b>*First Name</b><br>
+		<input type="text" name="firstname" id="firstname" required><br><br>
+		<b>Last Name</b><br>
+		<input type="text" name="lastname" id="lastname"><br><br>
+		<b>*Email Address</b><br>
+		<input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required><br><br>
+		<b>Primary Phone</b><br>
+		<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
+		<b>Secondary Phone</b><br>
+		<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
 
-	<b>*Report Type</b><br><!-- class='checkdisplay' -->
-	<input type="radio" name="problemtype[]" value="catcolony" id="catcolonyradio" onClick="displayForm(this); validateReportCatColony();"></input> Cat Colony<br>
-	<input type="radio" name="problemtype[]" value="intervention" id="interventionradio" onClick="displayForm(this); validateReportCatColony();"></input> Other Issues<br><br>
-	
-	
-	<!-- report colony -->
-	<div class='todisplay indent' id="catcolony1">
-	
-		<b>Register as Caregiver?</b><br>	
-		<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
-		<input type="radio" name="caregiver[]" value="No"> No<br><br>
-	
-		<b>Colony Name</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">You can name your colony by the street name, your name <br>
-				or any name that will identify this group of cats</span>
-		</i><br>
-		<input type="text" name="colonyname" id="colonyname"><br><br>
+		<b>*Report Type</b><br><!-- class='checkdisplay' -->
+		<input type="radio" name="problemtype[]" value="catcolony" id="catcolonyradio" onClick="displayForm(this); validateReportCatColony();"></input> Cat Colony<br>
+		<input type="radio" name="problemtype[]" value="intervention" id="interventionradio" onClick="displayForm(this); validateReportCatColony();"></input> Other Issues<br><br>
 		
-		<b>Address</b><br>
-		<input type="text" name="colonystreet" id="colonystreet"><br><br>
-		<b>*Zip Code</b><br>
-		<input type="text" name="zipcode" id="zipcode" maxlength="5"><span id="ziperror"></span><br><br>
-		<b>City</b><br>
-		<span id="city_wrap"><input type="text" name="city" id="city"></span><br><br>
-		<b>County</b><br>
-		<input type="text" name="county" id="county"><br><br>
-		<b>State</b><br>
-		<input type="text" value="CA" readonly><br><br>
 		
-		<b>Has anyone atempted to trap this colony?</b><br>
-		<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
-		<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
+		<!-- report colony -->
+		<div class='todisplay indent' id="catcolony1">
 		
-		<b>*Approx # of Cats</b><br>
-		<input type="number" name="numberofcats" min="1" max="99" id="numberofcats"><br><br>
+			<b>Register as Caregiver?</b><br>	
+			<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
+			<input type="radio" name="caregiver[]" value="No"> No<br><br>
 		
-		<b>Ear Tipped?</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this <br>means this
-				cat has already been trapped and is altered. <br>Release this cat immediately.</span>
-		</i><br>
-		<!-- <img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
-		<img id="imageToShow" src="images/ears_tipped.png"  alt="image to show"/><br> -->
+			<b>Colony Name</b>
+			<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+				<span class="tooltiptext">You can name your colony by the street name, your name <br>
+					or any name that will identify this group of cats</span>
+			</i><br>
+			<input type="text" name="colonyname" id="colonyname"><br><br>
+			
+			<b>Address</b><br>
+			<input type="text" name="colonystreet" id="colonystreet"><br><br>
+			<b>*Zip Code</b><br>
+			<input type="text" name="zipcode" id="zipcode" maxlength="5"><span id="ziperror"></span><br><br>
+			<b>City</b><br>
+			<span id="city_wrap"><input type="text" name="city" id="city"></span><br><br>
+			<b>County</b><br>
+			<input type="text" name="county" id="county"><br><br>
+			<b>State</b><br>
+			<input type="text" value="CA" readonly><br><br>
+			
+			<b>Has anyone atempted to trap this colony?</b><br>
+			<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
+			<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
+			
+			<b>*Approx # of Cats</b><br>
+			<input type="number" name="numberofcats" min="1" max="99" id="numberofcats"><br><br>
+			
+			<b>Ear Tipped?</b>
+			<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+				<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this <br>means this
+					cat has already been trapped and is altered. <br>Release this cat immediately.</span>
+			</i><br>
+			<!-- <img id="imageToHover" src="images/question_mark.png" height= "18" width= "18" alt="hover me"/>
+			<img id="imageToShow" src="images/ears_tipped.png"  alt="image to show"/><br> -->
 
-		<input type="radio" name="eartipped[]" value="Yes" id="eartippedyes"> Yes<br>
-		<input type="radio" name="eartipped[]" value="No" id="eartippedno"> No<br><br>
-		
-		<b>Pregnant Cats?</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">Signs of a pregnant cat can include nesting <br> activities, vomiting,
-				and an enlarged abdomen.</span>
-		</i><br>
-		<!-- <img id="imageToHover1" src="images/question_mark1.png" height= "18" width= "18" alt="hover me"/>
-		<img id="imageToShow1" src="images/pregnant_cats.png"  alt="image to show"/><br> -->
-		
-		<input type="radio" name="pregnant[]" value="Yes" id="pregnantyes"> Yes<br>
-		<input type="radio" name="pregnant[]" value="No" id="pregnantno"> No<br><br>
-		
-		<b>Injured Cats?</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">Signs of injured cats can include inflammation/swelling, <br>limping, 
-				rapid breathing or other signs of stress, and blood.</span>
-		</i><br>
-		<!-- <img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
-		<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br> -->
+			<input type="radio" name="eartipped[]" value="Yes" id="eartippedyes"> Yes<br>
+			<input type="radio" name="eartipped[]" value="No" id="eartippedno"> No<br><br>
+			
+			<b>Pregnant Cats?</b>
+			<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+				<span class="tooltiptext">Signs of a pregnant cat can include nesting <br> activities, vomiting,
+					and an enlarged abdomen.</span>
+			</i><br>
+			<!-- <img id="imageToHover1" src="images/question_mark1.png" height= "18" width= "18" alt="hover me"/>
+			<img id="imageToShow1" src="images/pregnant_cats.png"  alt="image to show"/><br> -->
+			
+			<input type="radio" name="pregnant[]" value="Yes" id="pregnantyes"> Yes<br>
+			<input type="radio" name="pregnant[]" value="No" id="pregnantno"> No<br><br>
+			
+			<b>Injured Cats?</b>
+			<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+				<span class="tooltiptext">Signs of injured cats can include inflammation/swelling, <br>limping, 
+					rapid breathing or other signs of stress, and blood.</span>
+			</i><br>
+			<!-- <img id="imageToHover2" src="images/question_mark2.png" height= "18" width= "18" alt="hover me"/>
+			<img id="imageToShow2" src="images/injured_cats.png"  alt="image to show"/><br> -->
+						
+			<input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes<br>
+			<input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No<br><br>
 					
-		<input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes<br>
-		<input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No<br><br>
-				
-		<div class='indent todisplay' id="recentlyinjuredID">
-			<b>Describe Injury/Condition</b><br>
-			<textarea rows="4" cols="50" name="injurydescription"></textarea><br><br>
+			<div class='indent todisplay' id="recentlyinjuredID">
+				<b>Describe Injury/Condition</b><br>
+				<textarea rows="4" cols="50" name="injurydescription"></textarea><br><br>
+			</div>
+			
+			<b>What is the setting of this colony?</b><br>
+			<input type="radio" name="setting[]" value="Rural" id="rualsetting"> Rural<br>
+			<input type="radio" name="setting[]" value="Suburban" id="suburbansetting"> Suburban<br>
+			<input type="radio" name="setting[]" value="Wilderness" id="wildernesssetting"> Wilderness<br>
+			<input type="radio" name="setting[]" value="Urban" id="urbansetting"> Urban<br>
+			<input type="radio" name="setting[]" value="Residential" id="residentialsetting"> Residential<br>
+			<input type="radio" name="setting[]" value="Commercial" id="commercialsetting"> Commercial<br>
+			<input type="radio" name="setting[]" value="Industrial"id="industrialsetting"> Industrial<br><br>
+
+			<b>Additional Comments</b><br>
+			<textarea rows="4" cols="50" name="comments"></textarea><br><br>
+			
+			<input type="submit" name="submitcolony" value="Submit"  > <!-- button itself -->
+		
 		</div>
-		
-		<b>What is the setting of this colony?</b><br>
-		<input type="radio" name="setting[]" value="Rural" id="rualsetting"> Rural<br>
-		<input type="radio" name="setting[]" value="Suburban" id="suburbansetting"> Suburban<br>
-		<input type="radio" name="setting[]" value="Wilderness" id="wildernesssetting"> Wilderness<br>
-		<input type="radio" name="setting[]" value="Urban" id="urbansetting"> Urban<br>
-		<input type="radio" name="setting[]" value="Residential" id="residentialsetting"> Residential<br>
-		<input type="radio" name="setting[]" value="Commercial" id="commercialsetting"> Commercial<br>
-		<input type="radio" name="setting[]" value="Industrial"id="industrialsetting"> Industrial<br><br>
 
-		<b>Additional Comments</b><br>
-		<textarea rows="4" cols="50" name="comments"></textarea><br><br>
+		<!-- report problem -->
+		<div class='todisplay indent' id="intervention1">
 		
-		<input type="submit" name="submitcolony" value="Submit"  > <!-- button itself -->
-	
-	</div>
+			<b>*Where Does the Feral Problem Exist?</b>
+			<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+				<span class="tooltiptext">Enter identifying information <br> such as business or 
+					apartment name, <br>address, cross streets, etc.</span>
+			</i><br>
+			<input type="text" name="problemlocation" id="problemlocation"><br><br>
+			
+			<b>*Describe the problem that is occuring.</b><br>
+			<textarea rows="4" cols="50" name="problemdescription" id="problemdescription"></textarea><br><br>
 
-	<!-- report problem -->
-	<div class='todisplay indent' id="intervention1">
-	
-		<b>*Where Does the Feral Problem Exist?</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">Enter identifying information <br> such as business or 
-				apartment name, <br>address, cross streets, etc.</span>
-		</i><br>
-		<input type="text" name="problemlocation" id="problemlocation"><br><br>
-		
-		<b>*Describe the problem that is occuring.</b><br>
-		<textarea rows="4" cols="50" name="problemdescription" id="problemdescription"></textarea><br><br>
+			<b>Describe the measures you have taken to fix the problem. (if any)</b><br>
+			<textarea rows="4" cols="50" name="measurestaken" id="measurestaken"></textarea><br><br>
 
-		<b>Describe the measures you have taken to fix the problem. (if any)</b><br>
-		<textarea rows="4" cols="50" name="measurestaken" id="measurestaken"></textarea><br><br>
-
-		
-		<b>Are there other people working to resolve this problem?</b><br>
-		<input type="radio" name="othersworking[]" value="Yes" onClick="displayForm(this)"> Yes<br>
-		<input type="radio" name="othersworking[]" value="No" onClick="displayForm(this)"> No<br><br>
-		
-		<div class='indent todisplay' id="othersworkingID">
-			<b>Please enter their names and contact information (phone/email)</b><br>
-			<textarea rows="4" cols="50" name="resolverscontact"></textarea><br><br>
+			
+			<b>Are there other people working to resolve this problem?</b><br>
+			<input type="radio" name="othersworking[]" value="Yes" onClick="displayForm(this)"> Yes<br>
+			<input type="radio" name="othersworking[]" value="No" onClick="displayForm(this)"> No<br><br>
+			
+			<div class='indent todisplay' id="othersworkingID">
+				<b>Please enter their names and contact information (phone/email)</b><br>
+				<textarea rows="4" cols="50" name="resolverscontact"></textarea><br><br>
+			</div>
+			
+			<b>Additional Comments</b><br>
+			<textarea rows="4" cols="50" name="additionalcomments"></textarea><br><br>
+			
+			<input type="submit" name="submitintervention" value="Submit"> <!-- button itself -->
+			
 		</div>
-		
-		<b>Additional Comments</b><br>
-		<textarea rows="4" cols="50" name="additionalcomments"></textarea><br><br>
-		
-		<input type="submit" name="submitintervention" value="Submit"> <!-- button itself -->
-		
 	</div>
 	
 </form>
