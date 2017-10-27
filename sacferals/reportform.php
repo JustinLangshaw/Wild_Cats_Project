@@ -367,8 +367,8 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 			</i><br>
 			<input type="text" name="colonyname" id="colonyname"><br><br>
 			
-			<b>Address</b><br>
-			<input type="text" name="colonystreet" id="colonystreet"><br><br>
+			<b>*Address of Cat Colony</b><br>
+			<input type="text" name="colonystreet" id="colonystreet" required><br><br>
 			<b>*Zip Code</b><br>
 			<input type="text" name="zipcode" id="zipcode" maxlength="5"><span id="ziperror"></span><br><br>
 			<b>City</b><br>
@@ -378,11 +378,11 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 			<b>State</b><br>
 			<input type="text" value="CA" readonly><br><br>
 			
-			<b>Has anyone atempted to trap this colony?</b><br>
+			<b>Has anyone attempted to trap this colony?</b><br>
 			<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
 			<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
 			
-			<b>*Approx # of Cats</b><br>
+			<b>*Approx # of Cats (including Kittens)</b><br>
 			<input type="number" name="numberofcats" min="1" max="99" id="numberofcats"><br><br>
 			
 			<b>Ear Tipped?</b>
@@ -424,10 +424,6 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 			</div>
 			
 			<b>What is the setting of this colony?</b><br>
-			<input type="radio" name="setting[]" value="Rural" id="rualsetting"> Rural<br>
-			<input type="radio" name="setting[]" value="Suburban" id="suburbansetting"> Suburban<br>
-			<input type="radio" name="setting[]" value="Wilderness" id="wildernesssetting"> Wilderness<br>
-			<input type="radio" name="setting[]" value="Urban" id="urbansetting"> Urban<br>
 			<input type="radio" name="setting[]" value="Residential" id="residentialsetting"> Residential<br>
 			<input type="radio" name="setting[]" value="Commercial" id="commercialsetting"> Commercial<br>
 			<input type="radio" name="setting[]" value="Industrial"id="industrialsetting"> Industrial<br><br>
