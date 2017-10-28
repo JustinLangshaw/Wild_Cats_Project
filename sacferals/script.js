@@ -27,56 +27,23 @@ function displayForm(c)
          jQuery('#intervention1').fadeIn('fast');
          jQuery('#catcolony1').fadeOut('fast'); 
     }
-	if (c.value == "Yes") 
-	{
-         jQuery('#othersworkingID').fadeIn('fast');
-    }
-	if (c.value == "No") 
-	{
-         jQuery('#othersworkingID').fadeOut('fast'); 
-    }
 
 	if (c.value == "Yes") 
 	{
-         jQuery('#recentlyinjuredID').fadeIn('fast');
+		if(c.name == "caregiver[]")
+			$("#feederID").fadeOut('fast');
+		if(c.name == "recentlyinjured[]")
+			jQuery('#recentlyinjuredID').fadeIn('fast');
+		if(c.name == "othersworking[]")
+			jQuery('#othersworkingID').fadeIn('fast');
     }
 	if (c.value == "No") 
-	{
-         jQuery('#recentlyinjuredID').fadeOut('fast'); 
+	{	
+		if(c.name == "caregiver[]")
+			$("#feederID").fadeIn('fast');
+		if(c.name == "recentlyinjured[]")
+			jQuery('#recentlyinjuredID').fadeOut('fast');
+		if(c.name == "othersworking[]")
+			jQuery('#othersworkingID').fadeOut('fast'); 
     }
 };
-
-/*window.onload = function() // always wrap jfiddle functions in this.....
-{ 
-	document.getElementById('imageToHover').onmouseover = function() 
-	{
-		document.getElementById('imageToShow').style.display = 'inline-block';   
-	}
-
-	document.getElementById('imageToHover').onmouseout = function() 
-	{
-	   document.getElementById('imageToShow').style.display = 'none';   
-	}
-	
-	document.getElementById('imageToHover1').onmouseover = function() 
-	{
-		document.getElementById('imageToShow1').style.display = 'inline-block';   
-	}
-
-	document.getElementById('imageToHover1').onmouseout = function() 
-	{
-	   document.getElementById('imageToShow1').style.display = 'none';   
-	}
-	
-	document.getElementById('imageToHover2').onmouseover = function() 
-	{
-		document.getElementById('imageToShow2').style.display = 'inline-block';   
-	}
-
-	document.getElementById('imageToHover2').onmouseout = function() 
-	{
-	   document.getElementById('imageToShow2').style.display = 'none';   
-	}
-	
-};*/
-
