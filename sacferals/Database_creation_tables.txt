@@ -35,7 +35,6 @@ CREATE TABLE ReportColonyForm (
 	Email varchar(200),
 	Phone1 varchar(15),
 	Phone2 varchar(15),
-	ColonyName varchar(200),
 	ColonyAddress varchar(200),
 	City varchar(200),
 	County varchar(200),
@@ -59,7 +58,7 @@ CREATE TABLE ReportColonyForm (
 
 
 INSERT INTO ReportColonyForm VALUES
-	('', '', '', 'NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'name of colony', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'Yes', 'Yes', 'Yes', 'Yes', 'descrpition of injury', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
+	('', '', '', 'NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'Yes', 'Yes', 'Yes', 'descrpition of injury', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
 
 	
 CREATE TABLE VolunteerForm (

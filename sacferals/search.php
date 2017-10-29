@@ -60,7 +60,6 @@
 					<option value='Email'>Email</option>
 					<option value='Phone1'>Phone1</option>
 					<option value='Phone2'>Phone2</option>
-					<option value='ColonyName'>Colony Name</option>
 					<option value='ColonyAddress'>Colony Address</option>
 					<option value='City'>City</option>
 					<option value='County'>County</option>
@@ -68,7 +67,6 @@
 					<option value='AnyoneAttempted'>Anyone Attempted</option>
 					<option value='ApproximateCats'>Approximate Cats</option>
 					<option value='ColonyCareGiver'>Colony Caregiver</option>
-					<option value='EarTipped'>Ear Tipped</option>
 					<option value='Pregnant'>Pregnant</option>
 					<option value='Injured'>Injured</option>
 					<option value='InjuryDescription'>Injury Description</option>
@@ -164,8 +162,8 @@
 				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1.""; 
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
-				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
-						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $EarTipped, $Pregnant, 
+				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, 
+						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $Pregnant, 
 						$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row;
 
@@ -212,7 +210,6 @@
 								<th><a>Email</a></th>
 								<th><a>Phone_1</a></th>
 								<th><a>Phone_2</a></th>
-								<th><a>Colony_Name</a></th>
 								<th id='addressHead'><a>ColonyAddress</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
@@ -220,7 +217,6 @@
 								<th><a>Anyone_Attempted</a></th>
 								<th><a>Approximate_Cats</a></th>
 								<th><a>Colony_Caregiver</a></th>
-								<th><a>Ear_Tipped</a></th>
 								<th><a>Pregnant</a></th>
 								<th><a>Injured</a></th>
 								<th><a>Injury_Description</a></th>
@@ -245,8 +241,8 @@
 						
 						while($row = mysqli_fetch_row($result))
 						{
-							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
-							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $EarTipped, $Pregnant, 
+							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, 
+							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $Pregnant, 
 							$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 							$Outcome, $CompletionDate) = $row; // variables are set to current row
 																			// then printed in one table row
@@ -309,7 +305,6 @@
 									<td><input type='text' name='Email' value='$Email'></td>
 									<td><input type='text' name='Phone1' value='$Phone1'></td>
 									<td><input type='text' name='Phone2' value='$Phone2'></td>
-									<td><input type='text' name='ColonyName' value='$ColonyName'></td>
 									<td><input type='text' name='ColonyAddress' value='$ColonyAddress'></td>
 									<td><input type='text' name='City' value='$City'></td>
 									<td><input type='text' name='County' value='$County'></td>
@@ -317,7 +312,6 @@
 									<td><input type='text' name='AnyoneAttempted' value='$AnyoneAttempted'></td>
 									<td><input type='text' name='ApproximateCats' value='$ApproximateCats'></td>
 									<td><input type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
-									<td><input type='text' name='EarTipped' value='$EarTipped'></td>
 									<td><input type='text' name='Pregnant' value='$Pregnant'></td>
 									<td><input type='text' name='Injured' value='$Injured'></td>
 									<td><input type='text' name='InjuryDescription' value='$InjuryDescription'></td>
@@ -365,7 +359,6 @@
 									<td>$Email</td>
 									<td>$Phone1</td>
 									<td>$Phone2</td>
-									<td>$ColonyName</td>
 									<td id='addressCol'>$ColonyAddress</td>
 									<td id='cityCol'>$City</td>
 									<td>$County</td>
@@ -373,7 +366,6 @@
 									<td>$AnyoneAttempted</td>
 									<td>$ApproximateCats</td>
 									<td>$ColonyCareGiver</td>
-									<td>$EarTipped</td>
 									<td>$Pregnant</td>
 									<td>$Injured</td>
 									<td>$InjuryDescription</td>
@@ -415,7 +407,6 @@
 				$Email = $_POST['Email'];
 				$Phone1 = $_POST['Phone1'];
 				$Phone2 = $_POST['Phone2'];
-				$ColonyName = $_POST['ColonyName'];
 				$ColonyAddress = $_POST['ColonyAddress'];
 				$City = $_POST['City'];
 				$County = $_POST['County'];
@@ -423,7 +414,6 @@
 				$AnyoneAttempted = $_POST['AnyoneAttempted'];
 				$ApproximateCats = $_POST['ApproximateCats'];
 				$ColonyCareGiver = $_POST['ColonyCareGiver'];
-				$EarTipped = $_POST['EarTipped'];
 				$Pregnant = $_POST['Pregnant'];
 				$Injured = $_POST['Injured'];
 				$InjuryDescription = $_POST['InjuryDescription'];
@@ -505,9 +495,9 @@
 						{
 							$queryupdate = "update ReportColonyForm set Comments1='$Comments1', Responder='$Responder', Status='$Status', 
 								 FullName='$FullName', Email='$Email',
-								 Phone1='$Phone1', Phone2='$Phone2', ColonyName='$ColonyName', ColonyAddress='$ColonyAddress',
+								 Phone1='$Phone1', Phone2='$Phone2', ColonyAddress='$ColonyAddress',
 								 City='$City', County='$County', ZipCode='$ZipCode', AnyoneAttempted='$AnyoneAttempted',
-								 ApproximateCats='$ApproximateCats', ColonyCareGiver='$ColonyCareGiver', EarTipped='$EarTipped',
+								 ApproximateCats='$ApproximateCats', ColonyCareGiver='$ColonyCareGiver',
 								 Pregnant='$Pregnant', Injured='$Injured', InjuryDescription='$InjuryDescription', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
 								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate' where RecordNumber='$RecordNumber1'";
@@ -583,7 +573,6 @@
 							<th><a href='search.php?sort=Email'>Email</a></th>
 							<th><a href='search.php?sort=Phone1'>Phone_1</a></th>
 							<th><a href='search.php?sort=Phone2'>Phone_2</a></th>
-							<th><a href='search.php?sort=ColonyName'>Colony_Name</a></th>
 							<th><a href='search.php?sort=ColonyAddress'>ColonyAddress</a></th>
 							<th><a href='search.php?sort=City'>City</a></th>
 							<th><a href='search.php?sort=County'>County</a></th>
@@ -591,7 +580,6 @@
 							<th><a href='search.php?sort=AnyoneAttempted'>Anyone_Attempted</a></th>
 							<th><a href='search.php?sort=ApproximateCats'>Approximate_Cats</a></th>
 							<th><a href='search.php?sort=ColonyCareGiver'>Colony_Caregiver</a></th>
-							<th><a href='search.php?sort=EarTipped'>Ear_Tipped</a></th>
 							<th><a href='search.php?sort=Pregnant'>Pregnant</a></th>
 							<th><a href='search.php?sort=Injured'>Injured</a></th>
 							<th><a href='search.php?sort=InjuryDescription'>InjuryDescription</a></th>
@@ -615,8 +603,8 @@
 					
 					while($row = mysqli_fetch_row($result))
 					{
-						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyName, $ColonyAddress, 
-						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $EarTipped, $Pregnant, 
+						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, 
+						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $Pregnant, 
 						$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row; // variables are set to current row
 																		// then printed in one table row
@@ -631,26 +619,24 @@
 						$myArray[6]=$Email;
 						$myArray[7]=$Phone1;
 						$myArray[8]=$Phone2;
-						$myArray[9]=$ColonyName;
-						$myArray[10]=$ColonyAddress;
-						$myArray[11]=$City;
-						$myArray[12]=$County;
-						$myArray[13]=$ZipCode;
-						$myArray[14]=$AnyoneAttempted;
-						$myArray[15]=$ApproximateCats;
-						$myArray[16]=$ColonyCareGiver;
-						$myArray[17]=$EarTipped;
-						$myArray[18]=$Pregnant;
-						$myArray[19]=$Injured;
-						$myArray[20]=$InjuryDescription;
-						$myArray[21]=$ColonySetting;
-						$myArray[22]=$Comments;
-						$myArray[23]=$VolunteerResponding;
-						$myArray[24]=$ResponseDate;
-						$myArray[25]=$CustNeedOutcome;
-						$myArray[26]=$BeatTeamLeader;
-						$myArray[27]=$Outcome;
-						$myArray[28]=$CompletionDate;
+						$myArray[9]=$ColonyAddress;
+						$myArray[10]=$City;
+						$myArray[11]=$County;
+						$myArray[12]=$ZipCode;
+						$myArray[13]=$AnyoneAttempted;
+						$myArray[14]=$ApproximateCats;
+						$myArray[15]=$ColonyCareGiver;
+						$myArray[16]=$Pregnant;
+						$myArray[17]=$Injured;
+						$myArray[18]=$InjuryDescription;
+						$myArray[19]=$ColonySetting;
+						$myArray[20]=$Comments;
+						$myArray[21]=$VolunteerResponding;
+						$myArray[22]=$ResponseDate;
+						$myArray[23]=$CustNeedOutcome;
+						$myArray[24]=$BeatTeamLeader;
+						$myArray[25]=$Outcome;
+						$myArray[26]=$CompletionDate;
 					
 						$myArray1[0]="Comments1";
 						$myArray1[1]="Responder";
@@ -661,26 +647,24 @@
 						$myArray1[6]="Email";
 						$myArray1[7]="Phone1";
 						$myArray1[8]="Phone2";
-						$myArray1[9]="ColonyName";
-						$myArray1[10]="ColonyAddress";
-						$myArray1[11]="City";
-						$myArray1[12]="County";
-						$myArray1[13]="ZipCode";
-						$myArray1[14]="AnyoneAttempted";
-						$myArray1[15]="ApproximateCats";
-						$myArray1[16]="ColonyCareGiver";
-						$myArray1[17]="EarTipped";
-						$myArray1[18]="Pregnant";
-						$myArray1[19]="Injured";
-						$myArray1[20]="InjuryDescription";
-						$myArray1[21]="ColonySetting";
-						$myArray1[22]="Comments";
-						$myArray1[23]="VolunteerResponding";
-						$myArray1[24]="ResponseDate";
-						$myArray1[25]="CustNeedOutcome";
-						$myArray1[26]="BeatTeamLeader";
-						$myArray1[27]="Outcome";
-						$myArray1[28]="CompletionDate";
+						$myArray1[9]="ColonyAddress";
+						$myArray1[10]="City";
+						$myArray1[11]="County";
+						$myArray1[12]="ZipCode";
+						$myArray1[13]="AnyoneAttempted";
+						$myArray1[14]="ApproximateCats";
+						$myArray1[15]="ColonyCareGiver";
+						$myArray1[16]="Pregnant";
+						$myArray1[17]="Injured";
+						$myArray1[18]="InjuryDescription";
+						$myArray1[19]="ColonySetting";
+						$myArray1[20]="Comments";
+						$myArray1[21]="VolunteerResponding";
+						$myArray1[22]="ResponseDate";
+						$myArray1[23]="CustNeedOutcome";
+						$myArray1[24]="BeatTeamLeader";
+						$myArray1[25]="Outcome";
+						$myArray1[26]="CompletionDate";
 						
 						print "
 						<tr>
@@ -735,7 +719,6 @@
 							<td>$Email</td>
 							<td>$Phone1</td>
 							<td>$Phone2</td>
-							<td>$ColonyName</td>
 							<td id='addressCol'>$ColonyAddress</td>
 							<td id='cityCol'>$City</td>
 							<td>$County</td>
@@ -743,7 +726,6 @@
 							<td>$AnyoneAttempted</td>
 							<td>$ApproximateCats</td>
 							<td>$ColonyCareGiver</td>
-							<td>$EarTipped</td>
 							<td>$Pregnant</td>
 							<td>$Injured</td>
 							<td>$InjuryDescription</td>

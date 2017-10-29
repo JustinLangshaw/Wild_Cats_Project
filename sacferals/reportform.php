@@ -46,14 +46,12 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$phone2 = $_POST['phone2'];	
 	
 	$caregiver = $_POST['caregiver'];
-	$colonyname = $_POST['colonyname'];
 	$colonystreet = $_POST['colonystreet'];
 	$city = $_POST['city'];
 	$county = $_POST['county'];
 	$zipcode = $_POST['zipcode'];
 	$trapattempt = $_POST['trapattempt'];
 	$numberofcats = $_POST['numberofcats'];
-	$eartipped = $_REQUEST['eartipped'];
 	$pregnant = $_POST['pregnant'];
 	$injured = $_POST['recentlyinjured'];
 	$injurydescription = $_POST['injurydescription'];
@@ -88,8 +86,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
 				$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
-				'$colonyname', '$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-				'$caregiver[0]', '$eartipped[0]', '$pregnant[0]', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
+				'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
+				'$caregiver[0]', '$pregnant[0]', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
 				
 				//print $query;
 				
@@ -262,13 +260,6 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			<b>Please clarify who is feeding it.</b><br>
 			<textarea rows="4" cols="50" name="feederdescription"></textarea><br><br>
 		</div>
-	
-		<b>Colony Name</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">You can name your colony by the street name, your name <br>
-				or any name that will identify this group of cats</span>
-		</i><br>
-		<input type="text" name="colonyname" id="colonyname"><br><br>
 		
 		<b>*Address of Cat Colony</b><br>
 		<input type="text" name="colonystreet" id="colonystreet" required><br><br>
@@ -281,20 +272,12 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		<b>State</b><br>
 		<input type="text" value="CA" readonly><br><br>
 		
-		<b>Has anyone attempted to trap this colony?</b><br>
+		<b>Has trapping been attempted, are any of the cats' ears tipped?</b><br>
 		<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
 		<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
 		
 		<b>*Approx # of Cats (including Kittens)</b><br>
 		<input type="number" name="numberofcats" min="1" max="99" id="numberofcats" required><br><br>
-		
-		<b>Ear Tipped?</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this <br>means this
-				cat has already been trapped and is altered. <br>Release this cat immediately.</span>
-		</i><br>
-		<input type="radio" name="eartipped[]" value="Yes" id="eartippedyes"> Yes<br>
-		<input type="radio" name="eartipped[]" value="No" id="eartippedno"> No<br><br>
 		
 		<b>Pregnant Cats?</b>
 		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
