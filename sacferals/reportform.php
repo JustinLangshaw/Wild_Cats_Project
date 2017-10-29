@@ -356,9 +356,13 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 		<!-- report colony -->
 		<div class='todisplay indent' id="catcolony1">
 		
-			<b>Register as Caregiver?</b><br>	
-			<input type="radio" name="caregiver[]" value="Yes"> Yes<br>
-			<input type="radio" name="caregiver[]" value="No"> No<br><br>
+			<b>Are you the primary caregiver/feeder?</b><br>	
+			<input type="radio" name="caregiver[]" value="Yes" onclick="displayForm(this)"> Yes<br>
+			<input type="radio" name="caregiver[]" value="No" onclick="displayForm(this)"> No<br><br>
+			<div class='indent todisplay' id="feederID">
+				<b>Please clarify who is feeding it.</b><br>
+				<textarea rows="4" cols="50" name="feederdescription"></textarea><br><br>
+			</div>
 		
 			<b>Colony Name</b>
 			<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
@@ -371,10 +375,10 @@ else if(isset($_POST['submitintervention'])) //this processes after user submits
 			<input type="text" name="colonystreet" id="colonystreet" required><br><br>
 			<b>*Zip Code</b><br>
 			<input type="text" name="zipcode" id="zipcode" maxlength="5"><span id="ziperror"></span><br><br>
-			<b>City</b><br>
-			<span id="city_wrap"><input type="text" name="city" id="city"></span><br><br>
+			<b>*City</b><br>
+			<span id="city_wrap"><input type="text" name="city" id="city" required></span><br><br>
 			<b>County</b><br>
-			<input type="text" name="county" id="county"><br><br>
+			<input type="text" name="county" id="county" readonly><br><br>
 			<b>State</b><br>
 			<input type="text" value="CA" readonly><br><br>
 			
