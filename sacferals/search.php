@@ -25,7 +25,7 @@
 		$level = $_SESSION['level'];
 		
 		if($level == 1)
-		{
+		{					
 			 print "<div style='float:right'>
 				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
 					<span class='caret'></span></button>
@@ -37,7 +37,7 @@
 					</ul>
 				</div>
 			</div>";
-
+			
 			print "<b>Logged in as ".$Ausername."</b> <br><br>";
 			
 			//print "<div><fieldset class='fieldset-auto-width'>";
@@ -799,27 +799,54 @@
       <title>Record Search</title>
       <link rel="stylesheet" type="text/css" href="search.css" />
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-      <script src="searchScript.js"></script>
-      <style>
-         #map {
-         height: 400px;
-         width: 100%;
-         }
+		<style type="text/css">
+		/* google map*/
+		#map {
+			height: 400px;
+			width: 100%;
+		}
+			 
+		/*error msg*/
+		.alert {
+			padding: 20px;
+			background-color: #f44336; /* Red */
+			color: white;
+			margin-bottom: 15px;
+		}
+		.closebtn {
+			margin-left: 15px;
+			color: white;
+			font-weight: bold;
+			float: right;
+			font-size: 22px;
+			line-height: 20px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+		.closebtn:hover {
+			color: black;
+		}
       </style>
    </head>
       
    <body onload="initialize()">
-      <div>
-         <br><label><b>Clustered Hot Spot</b></label>
-         <br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
-		 <button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
-         <div id="map-canvas" style="height:90%;top:30px"></div>
+   <div>
+      <br><label><b>Clustered Hot Spot</b></label>
+      <br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
+      <button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
+      <div style='padding-bottom:10px'>
+         <div class='alert' id='alert' style='display:none'>
+            <span class='closebtn' onclick=this.parentElement.style.display='none';>&times</span>
+            <label id='errorMsg'></label>
+         </div>
       </div>
-
-      <script async defer
-         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-      <script type="text/javascript" src="clustermapScript.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   </body>
+      <div id="map-canvas" style="height:90%;top:30px"></div>
+   </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   <script src="searchScript.js"></script>
+   <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+   <script type="text/javascript" src="clustermapScript.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
 </html>
