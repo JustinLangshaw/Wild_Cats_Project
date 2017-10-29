@@ -42,7 +42,6 @@ CREATE TABLE ReportColonyForm (
 	AnyoneAttempted varchar(15),
 	ApproximateCats int,
 	ColonyCareGiver varchar(15),
-	EarTipped varchar(15),
 	Pregnant varchar(15),
 	Injured varchar(15),
 	InjuryDescription varchar(200),
