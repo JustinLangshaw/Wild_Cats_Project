@@ -59,7 +59,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$comments = $_POST['comments'];
 	
 	// Required field names
-	$required = array('firstname', 'email','zipcode');
+	// this line should be used, since the 'required' attribute isn't supported in all web browsers
+	$required = array('firstname','email','colonystreet','zipcode','city','numberofcats','county');
 
 	// Loop over field names, make sure each one exists and is not empty
 	$error = false;
@@ -97,7 +98,10 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	}
 	else
 	{
-		print "<b>ERROR!!</b> Please fill out all fields";
+		$result='<div style="padding-bottom:10px">
+					<div class="alert">
+						<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+						<b>ERROR!!</b> Please fill out all fields</div></div>';
 	}
 }
 ?>
