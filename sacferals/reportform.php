@@ -46,21 +46,20 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$phone2 = $_POST['phone2'];	
 	
 	$caregiver = $_POST['caregiver'];
-	$feederdescription = $_POST['feederdescription'];
 	$colonystreet = $_POST['colonystreet'];
 	$city = $_POST['city'];
 	$county = $_POST['county'];
 	$zipcode = $_POST['zipcode'];
 	$trapattempt = $_POST['trapattempt'];
 	$numberofcats = $_POST['numberofcats'];
+	$pregnant = $_POST['pregnant'];
 	$injured = $_POST['recentlyinjured'];
 	$injurydescription = $_POST['injurydescription'];
 	$setting = $_POST['setting'];
 	$comments = $_POST['comments'];
 	
 	// Required field names
-	// this line should be used, since the 'required' attribute isn't supported in all web browsers
-	$required = array('firstname','email','colonystreet','zipcode','city','numberofcats','county');
+	$required = array('firstname', 'email','zipcode');
 
 	// Loop over field names, make sure each one exists and is not empty
 	$error = false;
@@ -79,13 +78,30 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	if(!$error)
 	{
 		if(preg_match($re, $firstname) )
-		{	//no need to check for duplicates
-			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
-			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
-			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
-	
-			mysqli_query($link, $query); //link query to database
-			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+		{	//display current table
+			$querycheck = "select * from ReportColonyForm where colonyname='$colonyname' && colonyname<>''" ;
+															
+			$resultcheck = mysqli_query($link, $querycheck); //link query to database
+			
+			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
+			{	//if not process the insert query
+				$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
+				'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
+				'$caregiver[0]', '$pregnant[0]', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
+				
+				//print $query;
+				
+				mysqli_query($link, $query); //link query to database
+				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+			}
+			else
+			{
+				//print "'".$colonyname."' has already been reported.";
+				$result='<div style="padding-bottom:10px">
+							<div class="alert">
+								<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
+								Colony name "'.$colonyname.'" has already been reported.</div></div>';
+			}
 		}
 		else
 		{
@@ -98,10 +114,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	}
 	else
 	{
-		$result='<div style="padding-bottom:10px">
-					<div class="alert">
-						<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
-						<b>ERROR!!</b> Please fill out all fields</div></div>';
+		print "<b>ERROR!!</b> Please fill out all fields";
 	}
 }
 ?>
@@ -259,28 +272,30 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		<b>State</b><br>
 		<input type="text" value="CA" readonly><br><br>
 		
-		<b>Has trapping been attempted or are any of the cats' ears tipped?</b>
-		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
-			<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this <br>means this
-				cat has already been trapped and is altered. <br>Release this cat immediately.</span>
-		</i><br>
+		<b>Has trapping been attempted, are any of the cats' ears tipped?</b><br>
 		<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
 		<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
 		
 		<b>*Approx # of Cats (including Kittens)</b><br>
 		<input type="number" name="numberofcats" min="1" max="99" id="numberofcats" required><br><br>
 		
-		<b>Injured or Pregnant Cats?</b>
+		<b>Pregnant Cats?</b>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">Signs of a pregnant cat can include nesting <br> activities, vomiting,
+				and an enlarged abdomen.</span>
+		</i><br>
+		<input type="radio" name="pregnant[]" value="Yes" id="pregnantyes"> Yes<br>
+		<input type="radio" name="pregnant[]" value="No" id="pregnantno"> No<br><br>
+		
+		<b>Injured Cats?</b>
 		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
 			<span class="tooltiptext">Signs of injured cats can include inflammation/swelling, <br>limping, 
-				rapid breathing or other signs of stress, and blood.<br>
-				Signs of a pregnant cat can include nesting <br> activities, vomiting,
-				and an enlarged abdomen.</span>
+				rapid breathing or other signs of stress, and blood.</span>
 		</i><br>
 		<input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes<br>
 		<input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No<br><br>
 		<div class='indent todisplay' id="recentlyinjuredID">
-			<b>Describe Condition</b><br>
+			<b>Describe Injury/Condition</b><br>
 			<textarea rows="4" cols="50" name="injurydescription"></textarea><br><br>
 		</div>
 		
