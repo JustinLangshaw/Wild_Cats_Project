@@ -42,7 +42,7 @@ CREATE TABLE ReportColonyForm (
 	AnyoneAttempted varchar(15),
 	ApproximateCats int,
 	ColonyCareGiver varchar(15),
-	Pregnant varchar(15),
+	FeederDescription varchar(200),
 	Injured varchar(15),
 	InjuryDescription varchar(200),
 	ColonySetting varchar(200),
@@ -57,7 +57,7 @@ CREATE TABLE ReportColonyForm (
 
 
 INSERT INTO ReportColonyForm VALUES
-	('', '', '', 'NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'Yes', 'Yes', 'Yes', 'descrpition of injury', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
+	('', '', '', 'NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'No', 'neighbor', 'Yes', 'descrpition of injury', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
 
 	
 CREATE TABLE VolunteerForm (
