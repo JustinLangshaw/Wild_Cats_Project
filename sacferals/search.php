@@ -604,7 +604,7 @@
 					while($row = mysqli_fetch_row($result))
 					{
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, 
-						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver,
+						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $ColonyCareGiver, $FeederDescription,
 						$Injured, $InjuryDescription, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row; // variables are set to current row
 																		// then printed in one table row
