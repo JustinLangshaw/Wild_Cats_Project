@@ -76,8 +76,8 @@ function mapQuery() {
 //Iterate through addresses and call geocode()
 function plotMap(search, searchDetails) {
     geocoder = new google.maps.Geocoder();
-
-    for (i = 1; i < search.length; i++) {
+    
+	for (i = 1; i < search.length; i++) {
         geocoder.geocode({
             'address': search[i]
         }, geocodeEncapsulation(i, searchDetails[i]));
@@ -90,7 +90,9 @@ var markerList = [];
 var error = 0;
 function geocodeEncapsulation(i, searchDetails) {
     return (function(results, status) {
-        if ((status == google.maps.GeocoderStatus.OK) && (results[0].geometry.location_type == 'ROOFTOP') && (results[0].partial_match != true)) {
+        if ((status == google.maps.GeocoderStatus.OK) && (results[0].geometry.location_type == 'ROOFTOP') 
+			&& (results[0].partial_match != true) && (results.length == 1)) {
+
             map.setCenter(results[0].geometry.location);
             var infowindow = new google.maps.InfoWindow({
                 content: searchDetails
