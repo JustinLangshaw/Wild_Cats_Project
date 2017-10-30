@@ -56,6 +56,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$kittens = $_POST['kittens'];
 	$injured = $_POST['recentlyinjured'];
 	$injurydescription = $_POST['injurydescription'];
+	$friendlypet = $_POST['friendlypet'];
 	$setting = $_POST['setting'];
 	$comments = $_POST['comments'];
 	
@@ -83,7 +84,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		{	//no need to check for duplicates
 			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
-			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
+			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '', '', '', '', '', '')";
 	
 			mysqli_query($link, $query); //link query to database
 			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
@@ -291,6 +292,10 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			<b>Describe Condition</b><br>
 			<textarea rows="4" cols="50" name="injurydescription"></textarea><br><br>
 		</div>
+		
+		<b>Is the cat friendly or a pet?</b><br>
+		<input type="radio" name="friendlypet[]" value="Yes" id="friendlypetyes"> Yes<br>
+		<input type="radio" name="friendlypet[]" value="No" id="friendlypetno"> No<br><br>
 		
 		<b>What is the setting of this colony?</b><br>
 		<input type="radio" name="setting[]" value="Residential" id="residentialsetting"> Residential<br>
