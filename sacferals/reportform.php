@@ -53,6 +53,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$zipcode = $_POST['zipcode'];
 	$trapattempt = $_POST['trapattempt'];
 	$numberofcats = $_POST['numberofcats'];
+	$kittens = $_POST['kittens'];
 	$injured = $_POST['recentlyinjured'];
 	$injurydescription = $_POST['injurydescription'];
 	$setting = $_POST['setting'];
@@ -81,7 +82,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		if(preg_match($re, $firstname) )
 		{	//no need to check for duplicates
 			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
-			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', 
+			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
 			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$setting[0]', '$comments', '', '', '', '', '', '')";
 	
 			mysqli_query($link, $query); //link query to database
@@ -269,6 +270,13 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		
 		<b>*Approx # of Cats (including Kittens)</b><br>
 		<input type="number" name="numberofcats" min="1" max="99" id="numberofcats" required><br><br>
+		<b>If there are kittens, are they under 8 weeks old and nursing?</b>
+		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
+			<span class="tooltiptext">Kitten Description<br>
+			Will be provided by SacFerals later.</span>
+		</i><br>
+		<input type="radio" name="kittens[]" value="Yes" id="kittensyes"> Yes<br>
+		<input type="radio" name="kittens[]" value="No" id="kittensno"> No<br><br>
 		
 		<b>Injured or Pregnant Cats?</b>
 		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
