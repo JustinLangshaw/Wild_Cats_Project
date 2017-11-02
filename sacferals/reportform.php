@@ -38,9 +38,7 @@ function formatPhone(phoneId) {
 
 if(isset($_POST['submitcolony'])) //this processes after user submits data.
 {
-	$firstname = $_POST['firstname'];
-	$lastname = $_POST['lastname'];
-	$fullname = $firstname." ".$lastname;
+	$fullname = $_POST['fullname'];
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
 	$phone2 = $_POST['phone2'];	
@@ -76,11 +74,12 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	
 	//re's need updating for all fields. or we can use javascript (better)
 	$re = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
+	list($first, $last) = split(" ", $fullname, 2);
 	
 	//if user passes re test
 	if(!$error)
 	{
-		if(preg_match($re, $firstname) )
+		if(preg_match($re, $first) && preg_match($re, $last))
 		{	//no need to check for duplicates
 			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
@@ -228,10 +227,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 
 	<div id="formdiv" style="display: none; padding: 0 4vw">
 		<br><b><small><font color="red">* Required Fields</font></small></b><br><br>
-		<b>*First Name</b><br>
-		<input type="text" name="firstname" id="firstname" required><br><br>
-		<b>Last Name</b><br>
-		<input type="text" name="lastname" id="lastname"><br><br>
+		<b>*Full Name</b><br>
+		<input type="text" name="fullname" id="fullname" required><br><br>
 		<b>*Email Address</b>
 		<i class="tooltip"><img src="images/blue_question_mark.png" height="13px"/>
 			<span class="tooltiptext">This is our preferred method of contact.</span>
