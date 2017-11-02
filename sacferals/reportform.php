@@ -60,7 +60,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
-	$required = array('firstname','email','colonystreet','zipcode','city','numberofcats','county');
+	$required = array('fullname','email','colonystreet','zipcode','city','numberofcats','county');
 
 	// Loop over field names, make sure each one exists and is not empty
 	$error = false;
