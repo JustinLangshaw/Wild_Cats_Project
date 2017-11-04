@@ -20,10 +20,7 @@
 	}
 	//once you're logged in, show menu/options
 	else 
-	{ 	//print out errors:
-		//error_reporting(-1);
-		//ini_set('display_errors', 'On');
-		
+	{
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
 		
@@ -88,7 +85,7 @@
 			</form>
 		</div>
 		<div class="col-md-8">
-			<form id="queryform" method='get' action='search.php'>
+			<form id="queryform" method='post'> <!--action='search.php'-->
 			<!-- Custom Query -->
 			<div class="row"> <b>Custom Query</b> </div>
 			<div class="row" style="padding: 10px 0">
@@ -141,19 +138,12 @@
 		</div>
 	</div>
 	</div>
-	
-	<form id="resettable" method='get' action='search.php'>
-		<input type="submit" value="Refresh Table" name="RefreshTable" style="float:right"/>
-	</form>
 <?php		
 			$thString="";
 			$tdString="";
 			$thEditString="";
 			$tdEditString="";
 			
-			//change selected columns only if unset
-			//if(!isset($_SESSION['selectedColumns'])){ 
-
 			if(count($_SESSION['selectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
 			{
 				$_GET['select2'] = $_SESSION['selectedColumns'];
@@ -210,34 +200,9 @@
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
 			<div class='todisplay'>"; */
 			
-			//custom query builder search
-			if(isset($_GET['submitquery'])){
-				unset($_SESSION['querysearch']); //refresh variable
-				//mysql: contains == like
-					// column like '%value%'
-				$value = $_GET['queryvalue'];
-				if($value!=NULL) {
-					$column = $_GET['query'];
-					$condition = $_GET['condition'];
-					if($condition[0]=='contains'){
-						$condition[0]=" like ";
-						$value="%".$value."%";
-					}
-					
-					$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
-					$r = mysqli_query($link, $search);
-					if(mysqli_num_rows($r)==0)
-						echo "<h3 style='color:RED'> EMPTY QUERY </h3>";
-					else $_SESSION['querysearch'] = $search;
-				}
-			}
-			
 			if(isset($_GET['Reset']))
 			{
 				unset($_SESSION['selectedColumns']);
-			}
-			if(isset($_GET['RefreshTable'])){ //nullify the query
-				unset($_SESSION['querysearch']);
 			}
 			
 			///////////////////////////////////////////////////////////////////////////////////////////
@@ -252,23 +217,39 @@
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
 						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader, 
 						$Outcome, $CompletionDate) = $row;
+
 				
-				$sort = $_GET['sort']; //'sort' is magic sorting variable
-				if(!isset($sort))
-				{
-					$sort = "RecordNumber";
-				}
-		
-				if(isset($_SESSION['querysearch'])){
-					//query search
-					$s = mysqli_query($link, $_SESSION['querysearch']);
-					if (mysqli_num_rows($s)!=0) $result = $s;
-				}
-				else{
-					//regular search
-					$query = "select * from ReportColonyForm order by $sort";
-					$result = mysqli_query($link, $query);
-				}
+					$sort = $_GET['sort']; //'sort' is magic sorting variable
+					if(!isset($sort))
+					{
+						$sort = "RecordNumber";
+					}
+			
+					//query search //change to $_GET when done
+					if(isset($_POST['submitquery'])){
+						//mysql: contains == like
+							// column like '%value%'
+						$value = $_POST['queryvalue'];
+						if($value!=NULL) {
+							$column = $_POST['query'];
+							$condition = $_POST['condition'];
+							if($condition[0]=='contains'){
+								$condition[0]=" like ";
+								$value="%".$value."%";
+							}
+							
+							$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."' order by $sort";
+							$r = mysqli_query($link, $search);
+							if(mysqli_num_rows($r)==0)
+								echo "<h3 style='color:RED'> EMPTY QUERY </h3>";
+						}
+					}
+					if(mysqli_num_rows($r)==0){
+						$query = "select * from ReportColonyForm order by $sort";
+						$result = mysqli_query($link, $query);
+					}
+					else $result = $r;
+					
 				
 				//////////////////////////////////////////////////////////////////////////////////////
 				// print table (happens first before input)
@@ -634,17 +615,30 @@
 				$sort = "RecordNumber";
 			}
 
-			if(isset($_SESSION['querysearch'])){
-				//query search
-				$s = mysqli_query($link, $_SESSION['querysearch']);
-				if (mysqli_num_rows($s)!=0)
-					$result = $s;
+			//query search //change to $_GET when done
+			if(isset($_POST['submitquery'])){
+				//mysql: contains == like
+					// column like '%value%'
+				$value = $_POST['queryvalue'];
+				if($value!=NULL) {
+					$column = $_POST['query'];
+					$condition = $_POST['condition'];
+					if($condition[0]=='contains'){
+						$condition[0]=" like ";
+						$value="%".$value."%";
+					}
+					
+					$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."' order by $sort";
+					$r = mysqli_query($link, $search);
+					if(mysqli_num_rows($r)==0)
+						echo "<h3 style='color:RED'> EMPTY QUERY </h3>";
+				}
 			}
-			else{
-				//regular search
+			if(mysqli_num_rows($r)==0){
 				$query = "select * from ReportColonyForm order by $sort";
 				$result = mysqli_query($link, $query);
 			}
+			else $result = $r;
 			
 			if(!isset($_GET['editrow']))
 			{
