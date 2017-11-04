@@ -504,7 +504,7 @@
 			if(isset($_POST['recordEdit']))
 			{
 				//echo "In the recordEdit IF loop!!";
-				$Coments1 = $_POST['Coments1'];
+				$Comments1 = $_POST['Comments1'];
 				$Responder = $_POST['Responder'];
 				$Status = $_POST['Status'];
 				$FullName = $_POST['FullName'];
