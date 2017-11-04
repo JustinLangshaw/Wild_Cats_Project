@@ -26,30 +26,28 @@
 		
 		if($level == 1)
 		{					
-			 print "<div style='float:right'>
-				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
-					<span class='caret'></span></button>
-					<ul class='dropdown-menu dropdown-menu-right'>
-						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
-						<li class='divider'></li>
-						<li><a href='./updateprofile.php'>Update Profile</a></li>
-						<li><a href='./logout.php'>Sign Out</a></li>
-					</ul>
-				</div>
-			</div>";
-			
-			print "<b>Logged in as ".$Ausername."</b> <br><br>";
-			
-			//print "<div><fieldset class='fieldset-auto-width'>";
-			print "- <a href='userprofile.php' align='right'>Back to Admin Hub</a><br><br>";
-			//print "</fieldset></div>";
-				
-			print "
+?>
+	<div style='float:right'>
+		<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+			<span class='caret'></span></button>
+			<ul class='dropdown-menu dropdown-menu-right'>
+				<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+				<li class='divider'></li>
+				<li><a href='./updateprofile.php'>Update Profile</a></li>
+				<li><a href='./logout.php'>Sign Out</a></li>
+			</ul>
+		</div>
+	</div>
 
-			<div style='color:red' style='float: right;' >Note: Hold down ctrl or shift to select multiple columns</div>
+	<b>Logged in as <?php echo $Ausername ?></b> <br><br>
 			
+	- <a href='userprofile.php' align='right'>Back to Admin Hub</a><br><br>
+		
+	<div class="container" style="margin: 0 0">
+	<div class="row">
+		<div class="col-md-4">
+			<div style='color:red' >Note: Hold down ctrl or shift to select multiple columns</div>
 			<form id='form1' name='form1' method='get' action='search.php'>
-			 
 				<select name='select2[]' size='7' multiple='multiple' tabindex='1'>
 					<option value='Comments1'>Comments</option>
 					<option value='Responder'>Responder</option>
@@ -84,12 +82,63 @@
 				 <br>
 				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
 				 <input type='submit' name='Select All' value='Reset'/>
-				 
-
 			</form>
-			";
-			
-	
+		</div>
+		<div class="col-md-8">
+			<form id="queryform" method='post'> <!--action='search.php'-->
+			<!-- Custom Query -->
+			<div class="row"> <b>Custom Query</b> </div>
+			<div class="row" style="padding: 10px 0">
+				<select name="query[]" tabindex='3'>
+					<option value='Comments1'>Comments</option>
+					<option value='Responder'>Responder</option>
+					<option value='Status'>Status</option>
+					<option value='RecordNumber'>Record Number</option>
+					<option value='DateAndTime'>Date And Time</option>
+					<option value='FullName'>Full Name</option>
+					<option value='Email'>Email</option>
+					<option value='Phone1'>Phone1</option>
+					<option value='Phone2'>Phone2</option>
+					<option value='ColonyAddress'>Colony Address</option>
+					<option value='City'>City</option>
+					<option value='County'>County</option>
+					<option value='ZipCode'>ZipCode</option>
+					<option value='AnyoneAttempted'>Anyone Attempted</option>
+					<option value='ApproximateCats'>Approximate Cats</option>
+					<option value='Kittens'>Kittens</option>
+					<option value='ColonyCareGiver'>Colony Caregiver</option>
+					<option value='FeederDescription'>Feeder Description</option>
+					<option value='Injured'>Injured/Pregnant</option>
+					<option value='InjuryDescription'>Injury Description</option>
+					<option value='FriendlyPet'>Friendly/Pet</option>
+					<option value='ColonySetting'>Colony Setting</option>
+					<option value='Comments'>Comments</option>
+					<option value='VolunteerResponding'>Volunteer Responding</option>
+					<option value='ResponseDate'>Response Date</option>
+					<option value='CustNeedOutcome'>Customer Need Outcome</option>
+					<option value='BeatTeamLeader'>Beat Team Leader</option>
+					<option value='Outcome'>Outcome</option>
+					<option value='CompletionDate'>Completion Date</option>
+				</select>
+
+				<select name="condition[]" tabindex='4'>
+					<option value='='>=</option>
+					<option value='!='>!=</option>
+					<option value='<'><</option>
+					<option value='>'>></option>
+					<option value='<='><=</option>
+					<option value='>='>>=</option>
+					<option value='contains'>contains</option>
+				</select>
+				
+				<input type="text" name="queryvalue" placeholder="By value" tabindex='5'/>
+				<input type="submit" name="submitquery" value="Search" tabindex='5'/>
+			</div>
+			</form>
+		</div>
+	</div>
+	</div>
+<?php		
 			$thString="";
 			$tdString="";
 			$thEditString="";
@@ -150,7 +199,7 @@
 			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA 
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers 
 			<div class='todisplay'>"; */
-
+			
 			if(isset($_GET['Reset']))
 			{
 				unset($_SESSION['selectedColumns']);
@@ -175,9 +224,31 @@
 					{
 						$sort = "RecordNumber";
 					}
-
-					$query = "select * from ReportColonyForm order by $sort";
-					$result = mysqli_query($link, $query);
+			
+					//query search //change to $_GET when done
+					if(isset($_POST['submitquery'])){
+						//mysql: contains == like
+							// column like '%value%'
+						$value = $_POST['queryvalue'];
+						if($value!=NULL) {
+							$column = $_POST['query'];
+							$condition = $_POST['condition'];
+							if($condition[0]=='contains'){
+								$condition[0]=" like ";
+								$value="%".$value."%";
+							}
+							
+							$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."' order by $sort";
+							$r = mysqli_query($link, $search);
+							if(mysqli_num_rows($r)==0)
+								echo "<h3 style='color:RED'> EMPTY QUERY </h3>";
+						}
+					}
+					if(mysqli_num_rows($r)==0){
+						$query = "select * from ReportColonyForm order by $sort";
+						$result = mysqli_query($link, $query);
+					}
+					else $result = $r;
 					
 				
 				//////////////////////////////////////////////////////////////////////////////////////
@@ -544,10 +615,30 @@
 				$sort = "RecordNumber";
 			}
 
-			$query = "select * from ReportColonyForm order by $sort";
-			$result = mysqli_query($link, $query);
-			
-			
+			//query search //change to $_GET when done
+			if(isset($_POST['submitquery'])){
+				//mysql: contains == like
+					// column like '%value%'
+				$value = $_POST['queryvalue'];
+				if($value!=NULL) {
+					$column = $_POST['query'];
+					$condition = $_POST['condition'];
+					if($condition[0]=='contains'){
+						$condition[0]=" like ";
+						$value="%".$value."%";
+					}
+					
+					$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."' order by $sort";
+					$r = mysqli_query($link, $search);
+					if(mysqli_num_rows($r)==0)
+						echo "<h3 style='color:RED'> EMPTY QUERY </h3>";
+				}
+			}
+			if(mysqli_num_rows($r)==0){
+				$query = "select * from ReportColonyForm order by $sort";
+				$result = mysqli_query($link, $query);
+			}
+			else $result = $r;
 			
 			if(!isset($_GET['editrow']))
 			{
