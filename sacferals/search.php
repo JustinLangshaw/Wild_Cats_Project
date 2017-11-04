@@ -922,11 +922,11 @@
 		}
       </style>
    </head>
+   <body onload="initialize()">
    <br>
    <form id="resettable" method='get' action='search.php'>
 	<input type="submit" value="Refresh Table" name="RefreshTable" style="float:right"/>
    </form>
-   <body onload="initialize()">
    <div>
       <br><label><b>Clustered Hot Spot</b></label>
       <br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
