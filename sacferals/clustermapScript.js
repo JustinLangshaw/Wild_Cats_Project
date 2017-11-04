@@ -6,11 +6,11 @@ var clusterAddrBtn = document.getElementById('clusterAddrBtn');
 var geocoder;
 var map;
 
-function initialize() {
+function initMap() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(38.6041169, -121.4182844);
     var mapOptions = {
-        zoom: 15,
+        zoom: 10,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -76,8 +76,8 @@ function mapQuery() {
 //Iterate through addresses and call geocode()
 function plotMap(search, searchDetails) {
     geocoder = new google.maps.Geocoder();
-
-    for (i = 0; i < search.length; i++) {
+    
+	for (i = 1; i < search.length; i++) {
         geocoder.geocode({
             'address': search[i]
         }, geocodeEncapsulation(i, searchDetails[i]));
@@ -88,25 +88,23 @@ function plotMap(search, searchDetails) {
 //Add details to the plot markers about location
 var markerList = [];
 var error = 0;
-
 function geocodeEncapsulation(i, searchDetails) {
     return (function(results, status) {
-        if ((status == google.maps.GeocoderStatus.OK) && (results[0].geometry.location_type == 'ROOFTOP')) {
-            map.setCenter(results[0].geometry.location);
+        if ((status == google.maps.GeocoderStatus.OK) && (results[0].geometry.location_type == 'ROOFTOP') 
+			&& (results[0].partial_match != true) && (results.length == 1)) {
 
+            map.setCenter(results[0].geometry.location);
             var infowindow = new google.maps.InfoWindow({
                 content: searchDetails
             });
-
             var marker = new google.maps.Marker({
                 map: map,
                 title: results[0].formatted_address,
                 position: results[0].geometry.location,
             });
-
             google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(map, marker);
-            });
+            });			
             markerList.push(marker);
         } else {
             error++;
@@ -123,6 +121,20 @@ function clearMap() {
 
 //Show how many addresses Google cannot locate for Map Query
 function unfoundAddrCount() {
-    alert('Map Query: ' + error + ' cannot be located.');
-    error = 0;
+	var redBanner = document.getElementById('alert');
+	var errorMsg = document.getElementById('errorMsg');
+	
+	if(error>0){
+		errorMsg.innerHTML = error + " address cannot be found.";
+		redBanner.style.display = "block";
+		error = 0;
+	}else if(error>1){
+		errorMsg.innerHTML = error + " addresses cannot be found.";
+		redBanner.style.display = "block";
+		error = 0;
+	}	
 }
+
+
+
+
