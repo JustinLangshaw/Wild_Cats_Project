@@ -141,10 +141,7 @@
 		</div>
 	</div>
 	</div>
-	
-	<form id="resettable" method='get' action='search.php'>
-		<input type="submit" value="Refresh Table" name="RefreshTable" style="float:right"/>
-	</form>
+
 <?php		
 			$thString="";
 			$tdString="";
@@ -925,7 +922,10 @@
 		}
       </style>
    </head>
-      
+   <br>
+   <form id="resettable" method='get' action='search.php'>
+	<input type="submit" value="Refresh Table" name="RefreshTable" style="float:right"/>
+   </form>
    <body onload="initialize()">
    <div>
       <br><label><b>Clustered Hot Spot</b></label>
