@@ -899,61 +899,61 @@
 
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title>Record Search</title>
-      <link rel="stylesheet" type="text/css" href="search.css" />
-      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+   	<head>
+		<title>Record Search</title>
+	    <link rel="stylesheet" type="text/css" href="search.css" />
+	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 		<style type="text/css">
-		/* google map*/
-		#map {
-			height: 400px;
-			width: 100%;
-		}
+			/* google map*/
+			#map {
+				height: 400px;
+				width: 100%;
+			}
 
-		/*error msg*/
-		.alert {
-			padding: 20px;
-			background-color: #f44336; /* Red */
-			color: white;
-			margin-bottom: 15px;
-		}
-		.closebtn {
-			margin-left: 15px;
-			color: white;
-			font-weight: bold;
-			float: right;
-			font-size: 22px;
-			line-height: 20px;
-			cursor: pointer;
-			transition: 0.3s;
-		}
-		.closebtn:hover {
-			color: black;
-		}
-      </style>
-   </head>
-   <body onload="initialize()">
-   <br>
-   <form id="resettable" method='get' action='search.php'>
-	<input type="submit" value="Refresh Table" name="RefreshTable" style="float:right"/>
-   </form>
-   <div>
-      <br><label><b>Clustered Hot Spot</b></label>
-      <br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
-      <button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
-      <div style='padding-bottom:10px'>
-         <div class='alert' id='alert' style='display:none'>
-            <span class='closebtn' onclick=this.parentElement.style.display='none';>&times</span>
-            <label id='errorMsg'></label>
-         </div>
-      </div>
-      <div id="map-canvas" style="height:90%;top:30px"></div>
-   </div>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-   <script src="searchScript.js"></script>
-   <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-   <script type="text/javascript" src="clustermapScript.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</body>
+			/*error msg*/
+			.alert {
+				padding: 20px;
+				background-color: #f44336; /* Red */
+				color: white;
+				margin-bottom: 15px;
+			}
+			.closebtn {
+				margin-left: 15px;
+				color: white;
+				font-weight: bold;
+				float: right;
+				font-size: 22px;
+				line-height: 20px;
+				cursor: pointer;
+				transition: 0.3s;
+			}
+			.closebtn:hover {
+				color: black;
+			}
+	    </style>
+  	</head>
+   	<body onload="initialize()">
+   		<br>
+   		<form id="resettable" method='get' action='search.php'>
+			<input type="submit" value="Refresh Table" name="RefreshTable"/>
+   		</form>
+   		<div>
+      		<br><label><b>Clustered Hot Spot</b></label>
+      		<br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
+      		<button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
+      		<div style='padding-bottom:10px'>
+         		<div class='alert' id='alert' style='display:none'>
+            		<span class='closebtn' onclick=this.parentElement.style.display='none';>&times</span>
+            		<label id='errorMsg'></label>
+         		</div>
+      		</div>
+     		<div id="map-canvas" style="height:90%;top:30px"></div>
+   		</div>
+   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   		<script src="searchScript.js"></script>
+   		<script async defer
+      		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+   		<script type="text/javascript" src="clustermapScript.js"></script>
+   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
 </html>
