@@ -19,6 +19,7 @@ table
 	width: 1000px;
 	overflow-x: scroll;
 	display: block;
+	height: 545px;
 }
 thead 
 {
@@ -32,7 +33,6 @@ tbody
 {
 	overflow-y: scroll;
 	overflow-x: hidden;
-	height: 140px;
 }
 td, th 
 {
@@ -50,4 +50,31 @@ ul
 	padding-top: 0;
 	padding-bottom: 0;
 	padding-left: 20px;
+}
+
+/* google map*/
+#map {
+	height: 400px;
+	width: 100%;
+}
+
+/*error msg*/
+.alert {
+	padding: 20px;
+	background-color: #f44336; /* Red */
+	color: white;
+	margin-bottom: 15px;
+}
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.closebtn:hover {
+	color: black;
 }
