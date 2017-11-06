@@ -230,7 +230,7 @@ $(document).ready(function(){
 			var state = '';
 			
 			//make a request to the google geocode api
-			$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?components=country:US&address='
+			$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
 					+zip+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response){
 				//find the city and county
 				var address_components = response.results[0].address_components;
@@ -268,7 +268,7 @@ $(document).ready(function(){
 						$('#city').val(city);
 					}
 					if(county == '') {
-						$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?components=country:US&address='
+						$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
 							+city+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(res){
 							var address_components2 = res.results[0].address_components;
 							$.each(address_components2, function(indx, compnt){
