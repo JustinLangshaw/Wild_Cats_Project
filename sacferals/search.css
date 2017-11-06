@@ -19,6 +19,7 @@ table
 	width: 1000px;
 	overflow-x: scroll;
 	display: block;
+	height: 545px;
 }
 thead 
 {
@@ -32,7 +33,6 @@ tbody
 {
 	overflow-y: scroll;
 	overflow-x: hidden;
-	height: 550px;
 }
 td, th 
 {
