@@ -901,8 +901,9 @@
 <html lang="en">
    	<head>
 		<title>Record Search</title>
+		<link rel="stylesheet" type="text/css" href="search.css" />
 	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	    <link rel="stylesheet" type="text/css" href="search.css" />
+	    
   	</head>
    	<body onload="initialize()">
    		<br>
