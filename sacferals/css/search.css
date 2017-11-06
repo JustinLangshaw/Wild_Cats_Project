@@ -7,49 +7,13 @@
 {
 	display: inline-block;
 }
-html 
-{
+body{
 	font-family: verdana;
 	font-size: 10pt;
-	line-height: 25px;
+	margin: 20px;
 }
-table 
-{
-	border-collapse: collapse;
-	width: 1000px;
-	overflow-x: scroll;
-	display: block;
-	height: 545px;
-}
-thead 
-{
-	background-color: #EFEFEF;
-}
-thead, tbody 
-{
-	display: block;
-}
-tbody 
-{
-	overflow-y: scroll;
-	overflow-x: hidden;
-}
-td, th 
-{
-	min-width: 220px;
-	height: 25px;
-	border: dashed 1px lightblue;
-}
-table.big td th
-{
-	width: 200px;
-}
-ul
-{
-	margin: 0;
-	padding-top: 0;
-	padding-bottom: 0;
-	padding-left: 20px;
+.row{
+	padding: 10px;
 }
 
 /* google map*/
@@ -57,8 +21,11 @@ ul
 	height: 400px;
 	width: 100%;
 }
+#map-canvas {
+	height: 90%;
+}
 
-/*error msg*/
+/*map error msg*/
 .alert {
 	padding: 20px;
 	background-color: #f44336; /* Red */
@@ -77,4 +44,31 @@ ul
 }
 .closebtn:hover {
 	color: black;
+}
+
+/*table*/
+table {
+	display: block;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	height: 400px;
+	font-size: 10pt;
+}
+table tbody {
+	overflow-y: auto;
+}
+#container {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.btn-outline{
+	background-color: transparent;
+	color: inherit;
+	transition: all .2s;
+}
+.btn-primary.btn-outline{
+	color: #428bca;
+}
+.btn-primary.btn-outline:hover{
+	color: #fff;
 }
