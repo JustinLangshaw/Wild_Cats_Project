@@ -982,7 +982,7 @@
 					<span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
 					<label id='errorMsg'></label>
 				</div>
-				<div onload="initMap()" id="map"><div id="map-canvas"></div></div>
+				<div id="map"><div id="map-canvas"></div></div>
 			</div>
 		</div>
 	</body>
