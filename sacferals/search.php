@@ -46,10 +46,7 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>	
 		
-		<script type="text/javascript" src="clustermapScript.js"></script>
-		<script async defer
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-  	</head>
+	</head>
 	<body>
 	<div class="row">
 		<div class="col-sm-6">
@@ -985,5 +982,9 @@
 				<div onload="initMap()" id="map"><div id="map-canvas"></div></div>
 			</div>
 		</div>
+		
+		<script type="text/javascript" src="clustermapScript.js"></script>
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
 	</body>
 </html>
