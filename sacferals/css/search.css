@@ -17,12 +17,14 @@ body{
 }
 
 /* google map*/
-#map {
-	height: 400px;
+#map { 
+	height: 800px; 
 	width: 100%;
 }
 #map-canvas {
-	height: 90%;
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
 }
 
 /*map error msg*/
@@ -44,6 +46,12 @@ body{
 }
 .closebtn:hover {
 	color: black;
+}
+
+/*query*/
+#emptyquerymsg {
+	color: RED;
+	text-align: center;
 }
 
 /*table*/
