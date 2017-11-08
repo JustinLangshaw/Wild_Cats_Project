@@ -45,7 +45,11 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>	
+
+        <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+		
+		<script src="exportExcel.js?version=1.5"></script>		
+
 		
   	</head>
 	<body>
@@ -984,6 +988,9 @@
 
    		<form id="resettable" method='get' action='search.php'>
 			<input class="btn" type="submit" value="Refresh Table" name="RefreshTable"/>
+
+			<input class="btn btn-primar" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export Table" />
+
    		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
@@ -991,7 +998,8 @@
    		<div class="row">
 			<div class="col-sm-12">
 				<b>Clustered Hot Spot</b><br><br>
-				<button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
+				<button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(errorCheck, 1000);'>Map Query</button>
+
 				<button class="btn" id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
 				<br><br>
 				<div class="alert" id='alert' style='display:none'>
@@ -1002,10 +1010,10 @@
 			</div>
 		</div>
 		
-		<script type="text/javascript" src="clustermapScript.js"></script>
+		<script src="clustermapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-		
+
 		<!-- custom query js -->
 		<script type="text/javascript">
 			$(document).ready(function(){
