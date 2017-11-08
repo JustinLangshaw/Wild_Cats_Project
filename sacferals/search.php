@@ -31,32 +31,36 @@
 		if($level == 1)
 		{
 ?>
-	<div style='float:right'>
-		<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
-			<span class='caret'></span></button>
-			<ul class='dropdown-menu dropdown-menu-right'>
-				<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
-				<li class='divider'></li>
-				<li><a href='./updateprofile.php'>Update Profile</a></li>
-				<li><a href='./logout.php'>Sign Out</a></li>
-			</ul>
+	<div class="row">
+		<div class="col-sm-6">
+			<b>Logged in as <?php echo $Ausername ?></b> <br><br>
+			
+			- <a href='userprofile.php' align='right'>Back to Admin Hub</a>
+		</div>
+		<div class="col-sm-6">
+			<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<b>Logged in as <?php echo $Ausername ?></b> <br><br>
-
-	- <a href='userprofile.php' align='right'>Back to Admin Hub</a><br><br>
-
-	<div class="container" style="margin: 0 0">
+	<hr>
 	<div class="row">
 		<div class="col-md-4">
 			<div style='color:red' >Note: Hold down ctrl or shift to select multiple columns</div>
 			<form id='form1' name='form1' method='get' action='search.php'>
 				<select name='select2[]' size='7' multiple='multiple' tabindex='1'>
+					<option value='RecordNumber'>ID</option>
 					<option value='Comments1'>Comments</option>
 					<option value='Responder'>Responder</option>
 					<option value='Status'>Status</option>
-					<option value='RecordNumber'>Record Number</option>
 					<option value='DateAndTime'>Date And Time</option>
 					<option value='FullName'>Full Name</option>
 					<option value='Email'>Email</option>
@@ -84,20 +88,20 @@
 					<option value='CompletionDate'>Completion Date</option>
 				  </select>
 				 <br>
-				 <input type='submit' name='Submit' value='Submit' tabindex='2' />
-				 <input type='submit' name='Select All' value='Reset'/>
+				 <input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
+				 <input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
 		</div>
 		<div class="col-md-8">
 			<form id="queryform" method='get' action='search.php'>
 			<!-- Custom Query -->
-			<div class="row"> <b>Custom Query</b> </div>
-			<div class="row" style="padding: 10px 0">
+			<b>Custom Query</b>
+			<div class="row">
 				<select name="query[]" tabindex='3'>
+					<option value='RecordNumber'>ID</option>
 					<option value='Comments1'>Comments</option>
 					<option value='Responder'>Responder</option>
 					<option value='Status'>Status</option>
-					<option value='RecordNumber'>Record Number</option>
 					<option value='DateAndTime'>Date And Time</option>
 					<option value='FullName'>Full Name</option>
 					<option value='Email'>Email</option>
@@ -136,8 +140,9 @@
 				</select>
 
 				<input type="text" name="queryvalue" placeholder="By value" tabindex='5'/>
-				<input type="submit" name="submitquery" value="Search" tabindex='5'/>
+				<input class="btn btn-primary btn-outline" type="button" name="addquery" value="+" tabindex='6'/>
 			</div>
+			<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
 			</form>
 		</div>
 	</div>
@@ -174,13 +179,33 @@
 
 			foreach ($_GET['select2'] as $selectedOption)
 			{
-				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$selectedOption."</a></th>";
+				if($selectedOption=="RecordNumber") $printvalue = "ID";
+				else $printvalue = $selectedOption;
+				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
 			}
 
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
+				else if($selectedOption=="Status"){
+					if($Status=='') $selected='';
+					else if($Status=="Open") $selectedOpen='selected';
+					else if($Status=="Closed") $selectedClosed='selected';
+					else if($Status=="Critical") $selectedCritical='selected';
+					else if($Status=="Kittens") $selectedKittens='selected';
+			
+					$tdEditString.="<td><div style='text-align:Center'>
+						<form id='form1' name='form1' method='get' action='search.php'>
+						<select name='Status'>
+							<option value=''>Empty</option>
+							<option value='Open'".$selectedOpen.">Open</option>
+							<option value='Closed'".$selectedClosed.">Closed</option>
+							<option value='Critical'".$selectedCritical.">Critical</option>
+							<option value='Kittens'".$selectedKittens.">Kittens!</option>
+						</select><br>
+						</form></div></td>";
+				}
 				else
 					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
 			}
@@ -272,12 +297,14 @@
 
 					// first print row of links/headers that sort
 					print "
+					<div class='row'>
+					<div class='col-sm-12'>
 					<form method='post' action='search.php'>
 
-					<br><b>Report A Feral Cat Colony</b><br><br>
+					<b>Report A Feral Cat Colony</b><br><br>
 
-					<table id='reportTable'>
-						<thead style='width: 6594px;'>
+					<table id='reportTable' class='table table-striped table-bordered table-condensed'>
+						<thead>
 							<tr>
 								<th> </th>";
 
@@ -289,17 +316,17 @@
 							}
 							else
 							{
-								print "
+								print "								
+								<th><a>IDs</a></th>
 								<th><a>Comments1</a></th>
 								<th><a>Responder</a></th>
 								<th><a>Status</a></th>
-								<th><a>Record_Number</a></th>
 								<th><a>Date_And_Time</a></th>
 								<th><a>Full_Name</a></th>
 								<th><a>Email</a></th>
 								<th><a>Phone_1</a></th>
 								<th><a>Phone_2</a></th>
-								<th id='addressHead'><a>ColonyAddress</a></th>
+								<th ><a>ColonyAddress</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
 								<th><a>Zip_Code</a></th>
@@ -324,7 +351,7 @@
 						";
 							}
 
-						print "<tbody style='width: 6594px;'>";
+						print "<tbody>";
 
 						//while the next row (set by query) exists?
 
@@ -361,10 +388,28 @@
 
 
 									foreach ($_GET['select2'] as $selectedOption)
-									{
+									{ 
 										if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 										{
 											$tdEditString.="<td>".$$selectedOption."</td>";
+										}
+										else if($selectedOption=="Status"){
+											if($Status=='') $selected='';
+											else if($Status=="Open") $selectedOpen='selected';
+											else if($Status=="Closed") $selectedClosed='selected';
+											else if($Status=="Critical") $selectedCritical='selected';
+											else if($Status=="Kittens") $selectedKittens='selected';
+									
+											$tdEditString.="<td><div style='text-align:Center'>
+												<form id='form1' name='form1' method='get' action='search.php'>
+												<select name='Status'>
+													<option value=''>Empty</option>
+													<option value='Open'".$selectedOpen.">Open</option>
+													<option value='Closed'".$selectedClosed.">Closed</option>
+													<option value='Critical'".$selectedCritical.">Critical</option>
+													<option value='Kittens'".$selectedKittens.">Kittens!</option>
+												</select><br>
+												</form></div></td>";
 										}
 										else
 										{
@@ -386,22 +431,29 @@
 								}
 								else
 								{
+									if($Status=='') $selected='';
+									else if($Status=="Open") $selectedOpen='selected';
+									else if($Status=="Closed") $selectedClosed='selected';
+									else if($Status=="Critical") $selectedCritical='selected';
+									else if($Status=="Kittens") $selectedKittens='selected';
+									
 									print "
+									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
 									<td><input type='text' name='Comments1' value='$Comments1'></td>
 									<td><input type='text' name='Responder' value='$Responder'></td>
-									<td><div style='text-align:Center'>Current Status: ' $Status '
-									<div style='text-align:Center'><div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Change Report Status<span class='caret'></span></button>
-										<ul class='dropdown-menu dropdown-menu-center'>
-											<li><div style='text-align:Center'>Changes Applied when Submit Edit is clicked</li>
-											<li><div style='text-align:Center'><form id='form1' name='form1' method='get' action='search.php' width: 400px>
-												<select name='Status' size='4' abindex='1' style='width:150px'>
-													<option value='Open'>Open</option>
-													<option value='Closed'>Closed</option>
-													<option value='Critical'>Critical</option>
-													<option value='Kittens'>Kittens!</option>
+									<td>"//<div style='text-align:Center;'>Current Status: ' $Status '
+									."<div style='text-align:Center'>" //<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Change Report Status<span class='caret'></span></button>
+										//<ul class='dropdown-menu dropdown-menu-center'>
+											//<li><div style='text-align:Center'>Changes Applied when Submit Edit is clicked</li>
+											/*<li><div style='text-align:Center'>*/."<form id='form1' name='form1' method='get' action='search.php' width: 400px>
+												<select name='Status'>
+													<option value=''>Empty</option>
+													<option value='Open'".$selectedOpen.">Open</option>
+													<option value='Closed'".$selectedClosed.">Closed</option>
+													<option value='Critical'".$selectedCritical.">Critical</option>
+													<option value='Kittens'".$selectedKittens.">Kittens!</option>
 												</select><br>
-									</form></li></ul></div></div></div></td>
-									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
+									</form>"./*</li></ul></div></div>*/"</div></td>
 									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
 									<td><input type='text' name='FullName' value='$FullName'></td>
 									<td><input type='text' name='Email' value='$Email'></td>
@@ -435,7 +487,7 @@
 							{
 								print "
 								<tr>
-									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form View </a> </td>
+									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form_View</a> </td>
 								";
 
 								if($tdString != '')
@@ -454,10 +506,10 @@
 								else
 								{
 									print "
+									<td>$RecordNumber</td>
 									<td>$Comments1</td>
 									<td>$Responder</td>
 									<td id='statusCol'>$Status</td>
-									<td>$RecordNumber</td>
 									<td id='dateTimeCol'>$DateAndTime</td>
 									<td>$FullName</td>
 									<td>$Email</td>
@@ -491,10 +543,6 @@
 						print "
 						</tbody></div>
 					</table>
-
-
-
-
 				</form>";
 			}
 			if(isset($_POST['cancel']))
@@ -504,7 +552,7 @@
 			if(isset($_POST['recordEdit']))
 			{
 				//echo "In the recordEdit IF loop!!";
-				$Coments1 = $_POST['Coments1'];
+				$Comments1 = $_POST['Comments1'];
 				$Responder = $_POST['Responder'];
 				$Status = $_POST['Status'];
 				$FullName = $_POST['FullName'];
@@ -661,10 +709,12 @@
 
 				// first print row of links/headers that sort
 				print "
-				<br><b>Report A Feral Cat Colony</b><br><br>
-
-				<table id='reportTable'>
-					<thead style='width: 6594px;'>
+				<div class='row'>
+				<div class='col-sm-12'>
+				<b>Report A Feral Cat Colony</b><br><br>
+				
+				<table id='reportTable' class='table table-striped table-bordered table-condensed'>
+					<thead>
 						<tr>
 							<th>  </th>";
 
@@ -677,13 +727,12 @@
 								else
 								{
 									print "
-
+							<th><a href='search.php?sort=RecordNumber'>ID</a></th>
 							<th><a href='search.php?sort=Comments1'>Comments</a></th>
 							<th><a href='search.php?sort=Responder'>Responder</a></th>
 							<th><a href='search.php?sort=Status'>Status</a></th>
-							<th><a href='search.php?sort=RecordNumber'>Record_Number</a></th>
 							<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
-							<th><a href='search.php?sort=FullName'>Full_Name</a></th>
+							<th><a href='search.php?sort=FullName'>FullName</a></th>
 							<th><a href='search.php?sort=Email'>Email</a></th>
 							<th><a href='search.php?sort=Phone1'>Phone_1</a></th>
 							<th><a href='search.php?sort=Phone2'>Phone_2</a></th>
@@ -706,8 +755,7 @@
 							<th><a href='search.php?sort=CustNeedOutcome'>Customer_Needed_Outcome</a></th>
 							<th><a href='search.php?sort=BeatTeamLeader'>Beat_Team_Leader</a></th>
 							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
-							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>
-
+							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>							
 						</tr>";
 								}
 					print"
@@ -725,11 +773,10 @@
 						$Outcome, $CompletionDate) = $row; // variables are set to current row
 																		// then printed in one table row
 
-
-						$myArray[0]=$Comments1;
-						$myArray[1]=$Responder;
-						$myArray[2]=$Status;
-						$myArray[3]=$RecordNumber;
+						$myArray[0]=$RecordNumber;
+						$myArray[1]=$Comments1;
+						$myArray[2]=$Responder;
+						$myArray[3]=$Status;
 						$myArray[4]=$DateAndTime;
 						$myArray[5]=$FullName;
 						$myArray[6]=$Email;
@@ -756,10 +803,10 @@
 						$myArray[27]=$Outcome;
 						$myArray[28]=$CompletionDate;
 
-						$myArray1[0]="Comments1";
-						$myArray1[1]="Responder";
-						$myArray1[2]="Status";
-						$myArray1[3]="RecordNumber";
+						$myArray1[0]="RecordNumber";
+						$myArray1[1]="Comments1";
+						$myArray1[2]="Responder";
+						$myArray1[3]="Status";
 						$myArray1[4]="DateAndTime";
 						$myArray1[5]="FullName";
 						$myArray1[6]="Email";
@@ -788,7 +835,7 @@
 
 						print "
 						<tr>
-							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form View </a> </td>
+							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form_View </a> </td>
 							";
 
 							//$_GET['select2'] as RecordNumber
@@ -830,10 +877,10 @@
 							{
 								print "
 
+							<td>$RecordNumber </td>
 							<td>$Comments1 </td>
 							<td>$Responder </td>
 							<td id='statusCol'>$Status </td>
-							<td>$RecordNumber </td>
 							<td id='dateTimeCol'>$DateAndTime</td>
 							<td>$FullName</td>
 							<td>$Email</td>
@@ -899,61 +946,55 @@
 
 <!DOCTYPE html>
 <html lang="en">
-   	<head>
-		<title>Record Search</title>
-	    <link rel="stylesheet" type="text/css" href="search.css" />
-	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-		<style type="text/css">
-			/* google map*/
-			#map {
-				height: 400px;
-				width: 100%;
-			}
 
-			/*error msg*/
-			.alert {
-				padding: 20px;
-				background-color: #f44336; /* Red */
-				color: white;
-				margin-bottom: 15px;
-			}
-			.closebtn {
-				margin-left: 15px;
-				color: white;
-				font-weight: bold;
-				float: right;
-				font-size: 22px;
-				line-height: 20px;
-				cursor: pointer;
-				transition: 0.3s;
-			}
-			.closebtn:hover {
-				color: black;
-			}
-	    </style>
-  	</head>
-   	<body onload="initialize()">
-   		<br>
-   		<form id="resettable" method='get' action='search.php'>
-			<input type="submit" value="Refresh Table" name="RefreshTable"/>
-   		</form>
-   		<div>
-      		<br><label><b>Clustered Hot Spot</b></label>
-      		<br><button id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(unfoundAddrCount, 1000);'>Map Query</button>
-      		<button id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
-      		<div style='padding-bottom:10px'>
-         		<div class='alert' id='alert' style='display:none'>
-            		<span class='closebtn' onclick=this.parentElement.style.display='none';>&times</span>
-            		<label id='errorMsg'></label>
-         		</div>
-      		</div>
-     		<div id="map-canvas" style="height:90%;top:30px"></div>
-   		</div>
-   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-   		<script src="searchScript.js"></script>
-   		<script async defer
-      		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-   		<script type="text/javascript" src="clustermapScript.js"></script>
-   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</body>
+<head>
+    <title>Record Search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <link rel="stylesheet" href="css/search.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+    
+	<script src="clustermapScript.js?version=1.1"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+
+    <script src="searchScript.js"></script>    
+    <script src="exportExcel.js?version=1.5"></script>
+</head>
+
+<body onload="initialize()">
+    <form id="resettable" method='get' action='search.php'>
+        <input class="btn" type="submit" value="Refresh Table" name="RefreshTable" />
+        <input class="btn btn-primar" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export Table" />
+
+    </form>
+    </div>
+    <!-- end div class='col-sm'12' -->
+    </div>
+    <!-- end div class='row' -->
+    <hr>
+    <div class="row">
+        <div class="col-sm-12">
+            <b>Clustered Hot Spot</b>
+            <br>
+            <br>
+            <button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(errorCheck, 1000);'>Map Query</button>
+            <button class="btn" id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
+            <br>
+            <br>
+            <div class="alert" id='alert' style='display:none'>
+                <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+                <label id='errorMsg'></label>
+            </div>
+            <div id="map-canvas"></div>
+        </div>
+    </div>
+
+</body>
 </html>

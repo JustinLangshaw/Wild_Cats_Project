@@ -1,11 +1,11 @@
 /*Contains code that deals with things related to Google Maps*/
+
 //Map Query button
 var clusterAddrBtn = document.getElementById('clusterAddrBtn');
 
 //Initialize the Google Map display
 var geocoder;
 var map;
-
 function initMap() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(38.6041169, -121.4182844);
@@ -18,6 +18,7 @@ function initMap() {
 }
 
 //Grabs ColonyAddress, City, and ZipCode and other report details 
+var invalidCols = false;
 function mapQuery() {
     var search = [];
     var searchDetails = [];
@@ -47,7 +48,8 @@ function mapQuery() {
 
     //If any address info columns cannot be found, do not proceed
     if ((addrIndex == null) || (cityIndex == null) || (zipIndex == null)) {
-        alert("Cannot proceed to plot addresses. Need ColonyAddress, City, and ZipCode in Report table.");
+		invalidCols = true;
+			
         return;
     } else {
         addrIndex = addrIndex.cellIndex;
@@ -108,6 +110,7 @@ function geocodeEncapsulation(i, searchDetails) {
             markerList.push(marker);
         } else {
             error++;
+			toggleRedBanner = true;
         }
     });
 }
@@ -119,22 +122,28 @@ function clearMap() {
     }
 }
 
-//Show how many addresses Google cannot locate for Map Query
-function unfoundAddrCount() {
-	var redBanner = document.getElementById('alert');
-	var errorMsg = document.getElementById('errorMsg');
-	
-	if(error>0){
-		errorMsg.innerHTML = error + " address cannot be found.";
-		redBanner.style.display = "block";
-		error = 0;
-	}else if(error>1){
-		errorMsg.innerHTML = error + " addresses cannot be found.";
-		redBanner.style.display = "block";
-		error = 0;
-	}	
-}
+function errorCheck() {
+    var redBanner = document.getElementById('alert');
+    var errorMsg = document.getElementById('errorMsg');
+    
+	//Show how many addresses Google cannot locate for Map Query
+    if (error > 0) {
+        errorMsg.innerHTML = error + " address cannot be found.";
+        redBanner.style.display = "block";
+        error = 0;
+    } else if (error > 1) {
+        errorMsg.innerHTML = error + " addresses cannot be found.";
+        redBanner.style.display = "block";
+        error = 0;
+    }
 
+	//Warn user that they are missing columns for mapping
+    if (invalidCols == true) {
+        errorMsg.innerHTML = "Must have at least address, city, and zip code included in query.";
+        redBanner.style.display = "block";
+        invalidCols = false;
+    }
+}
 
 
 
