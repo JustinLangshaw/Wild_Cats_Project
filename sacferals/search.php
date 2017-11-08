@@ -30,6 +30,7 @@
 		if($level == 1)
 		{
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
    	<head>
@@ -46,7 +47,7 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>	
 		
-	</head>
+  	</head>
 	<body>
 	<div class="row">
 		<div class="col-sm-6">
@@ -71,9 +72,9 @@
 	<hr>
 	<div class="row">
 		<div class="col-md-4">
-			<div style='color:red' >Note: Hold down ctrl or shift to select multiple columns</div>
+			<div id="columnselect">Note: Hold down ctrl or shift to select multiple columns</div>
 			<form id='form1' name='form1' method='get' action='search.php'>
-				<select name='select2[]' size='7' multiple='multiple' tabindex='1'>
+				<select class="input-sm" name='select2[]' size='7' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
 					<option value='Comments1'>Comments</option>
 					<option value='Responder'>Responder</option>
@@ -112,54 +113,61 @@
 		<div class="col-md-8">
 			<form id="queryform" method='get' action='search.php'>
 			<!-- Custom Query -->
-			<b>Custom Query</b>
 			<div class="row">
-				<select name="query[]" tabindex='3'>
-					<option value='RecordNumber'>ID</option>
-					<option value='Comments1'>Comments</option>
-					<option value='Responder'>Responder</option>
-					<option value='Status'>Status</option>
-					<option value='DateAndTime'>Date And Time</option>
-					<option value='FullName'>Full Name</option>
-					<option value='Email'>Email</option>
-					<option value='Phone1'>Phone1</option>
-					<option value='Phone2'>Phone2</option>
-					<option value='ColonyAddress'>Colony Address</option>
-					<option value='City'>City</option>
-					<option value='County'>County</option>
-					<option value='ZipCode'>ZipCode</option>
-					<option value='AnyoneAttempted'>Anyone Attempted</option>
-					<option value='ApproximateCats'>Approximate Cats</option>
-					<option value='Kittens'>Kittens</option>
-					<option value='ColonyCareGiver'>Colony Caregiver</option>
-					<option value='FeederDescription'>Feeder Description</option>
-					<option value='Injured'>Injured/Pregnant</option>
-					<option value='InjuryDescription'>Injury Description</option>
-					<option value='FriendlyPet'>Friendly/Pet</option>
-					<option value='ColonySetting'>Colony Setting</option>
-					<option value='Comments'>Comments</option>
-					<option value='VolunteerResponding'>Volunteer Responding</option>
-					<option value='ResponseDate'>Response Date</option>
-					<option value='CustNeedOutcome'>Customer Need Outcome</option>
-					<option value='BeatTeamLeader'>Beat Team Leader</option>
-					<option value='Outcome'>Outcome</option>
-					<option value='CompletionDate'>Completion Date</option>
-				</select>
-
-				<select name="condition[]" tabindex='4'>
-					<option value='='>=</option>
-					<option value='!='>!=</option>
-					<option value='<'><</option>
-					<option value='>'>></option>
-					<option value='<='><=</option>
-					<option value='>='>>=</option>
-					<option value='contains'>contains</option>
-				</select>
-
-				<input type="text" name="queryvalue" placeholder="By value" tabindex='5'/>
-				<input class="btn btn-primary btn-outline" type="button" name="addquery" value="+" tabindex='6'/>
+				<b>Custom Query</b>
 			</div>
-			<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
+			<div class="row" id="cqrow">
+				<div id="blueprint">
+					<select class="input-sm" id="query" name="query[]" tabindex='3'>
+						<option value='RecordNumber'>ID</option>
+						<option value='Comments1'>Comments</option>
+						<option value='Responder'>Responder</option>
+						<option value='Status'>Status</option>
+						<option value='DateAndTime'>Date And Time</option>
+						<option value='FullName'>Full Name</option>
+						<option value='Email'>Email</option>
+						<option value='Phone1'>Phone1</option>
+						<option value='Phone2'>Phone2</option>
+						<option value='ColonyAddress'>Colony Address</option>
+						<option value='City'>City</option>
+						<option value='County'>County</option>
+						<option value='ZipCode'>ZipCode</option>
+						<option value='AnyoneAttempted'>Anyone Attempted</option>
+						<option value='ApproximateCats'>Approximate Cats</option>
+						<option value='Kittens'>Kittens</option>
+						<option value='ColonyCareGiver'>Colony Caregiver</option>
+						<option value='FeederDescription'>Feeder Description</option>
+						<option value='Injured'>Injured/Pregnant</option>
+						<option value='InjuryDescription'>Injury Description</option>
+						<option value='FriendlyPet'>Friendly/Pet</option>
+						<option value='ColonySetting'>Colony Setting</option>
+						<option value='Comments'>Comments</option>
+						<option value='VolunteerResponding'>Volunteer Responding</option>
+						<option value='ResponseDate'>Response Date</option>
+						<option value='CustNeedOutcome'>Customer Need Outcome</option>
+						<option value='BeatTeamLeader'>Beat Team Leader</option>
+						<option value='Outcome'>Outcome</option>
+						<option value='CompletionDate'>Completion Date</option>
+					</select>
+
+					<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
+						<option value='='>=</option>
+						<option value='!='>!=</option>
+						<option value='<'><</option>
+						<option value='>'>></option>
+						<option value='<='><=</option>
+						<option value='>='>>=</option>
+						<option value='contains'>contains</option>
+					</select>
+
+					<input class="form-control" type="text" id="queryvalue" name="queryvalue[]" placeholder="By value" tabindex='5'/>
+					<input class="btn btn-primary btn-outline" type="button" id="cqaddbtn" name="addquery" value="+"/>
+				</div>
+			</div>
+			<div class="row">
+				
+				<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
+			</div>
 			</form>
 		</div>
 	</div>
@@ -255,16 +263,24 @@
 				unset($_SESSION['querysearch']); //refresh variable
 				//mysql: contains == like
 					// column like '%value%'
-				$value = $_GET['queryvalue'];
+				$value = $_GET['queryvalue'][0];
 				if($value!=NULL) {
-					$column = $_GET['query'];
-					$condition = $_GET['condition'];
-					if($condition[0]=='contains'){
-						$condition[0]=" like ";
-						$value="%".$value."%";
+					$search = "select * from ReportColonyForm where ";
+					$andor="";
+					$i=0;
+					foreach($_GET['queryvalue'] as $value){
+						$column = $_GET['query'][$i];
+						$condition = $_GET['condition'][$i];
+						if($condition=='contains'){
+							$condition=" like ";
+							$value="%".$value."%";
+						}
+						
+						$search = $search." ".$andor." (".$column." ".$condition." '".$value."')";
+						//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
+						$andor = $_GET['andor'][$i];
+						$i++;
 					}
-					
-					$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
 					$r = mysqli_query($link, $search);
 					if(mysqli_num_rows($r)==0)
 						echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
@@ -311,9 +327,10 @@
 				
 				//////////////////////////////////////////////////////////////////////////////////////
 				// print table (happens first before input)
-
+					if(isset($_SESSION['querysearch'])) $q="QUERY: ";
 					// first print row of links/headers that sort
 					print "
+					<span id='querymsg'><h5>".$q.$_SESSION['querysearch']."</h5></span>
 					<div class='row'>
 					<div class='col-sm-12'>
 					<form method='post' action='search.php'>
@@ -677,7 +694,7 @@
 
 							//echo $queryupdate;
 							mysqli_query($link, $queryupdate);
-							print "<h2>Record was updated</h2>";
+							print "<span id='recupdate'><h2>Record was updated</h2></span>";
 						}
 
 					}
@@ -724,8 +741,10 @@
 
 			// print table (happens first before input)
 
+				if(isset($_SESSION['querysearch'])) $q="QUERY: ";
 				// first print row of links/headers that sort
 				print "
+				<span id='querymsg'><h5>".$q.$_SESSION['querysearch']."</h5></span>
 				<div class='row'>
 				<div class='col-sm-12'>
 				<b>Report A Feral Cat Colony</b><br><br>
@@ -986,5 +1005,24 @@
 		<script type="text/javascript" src="clustermapScript.js"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+		
+		<!-- custom query js -->
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var ctr=1;
+				$('#cqaddbtn').on('click', function(){
+					var clone = $('#blueprint').clone();
+					clone.find('[id]').each(function() {this.id+=ctr;});
+					clone.find('#cqaddbtn'+ctr).remove();
+					clone.find('#queryvalue'+ctr).val("");
+					$('#cqrow').append(clone);
+					clone.prepend("<select class='input-sm' id='andor' name='andor[]'>"+
+							"<option value='AND'>AND</option>"+
+							"<option value='OR'>OR</option>"+
+						"</select>");
+					ctr++;
+				});
+			});
+		</script>
 	</body>
 </html>
