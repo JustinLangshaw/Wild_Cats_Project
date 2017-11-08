@@ -107,7 +107,7 @@ function geocodeEncapsulation(i, searchDetails) {
             google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(map, marker);
             });			
-            markerList.push(marker);
+            markerList.push(marker);			
         } else {
             error++;
 			toggleRedBanner = true;
