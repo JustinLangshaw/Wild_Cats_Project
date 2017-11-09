@@ -31,6 +31,7 @@ img {
 	height: 14;
 }
 #formdiv {
+	display: none;
 	padding: 0px 4vw;
 }
 .fieldset-auto-width {

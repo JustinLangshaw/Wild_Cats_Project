@@ -5,11 +5,10 @@
 ?>
 
 <script type="text/javascript">
-function displayformdiv(){
-	var formdiv = document.getElementById("formdiv");
-	var formstatus = formdiv.style.display;
-	if(formstatus=="none") formdiv.style.display="block";
-	else formdiv.style.display="none";
+function displayformdiv(){ 
+	var check = document.getElementById('maincheckbox');
+	if(check.checked) document.getElementById('formdiv').style.display="block";
+	else document.getElementById('formdiv').style.display="none";
 }
 
 function formatPhone(phoneId) {
@@ -57,6 +56,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$friendlypet = $_POST['friendlypet'];
 	$setting = $_POST['setting'];
 	$comments = $_POST['comments'];
+	$feedifreturned = $_POST['feedifreturned'];
+	$reqassistance = $_POST['reqassistance'];
 	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
@@ -83,7 +84,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		{	//no need to check for duplicates
 			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
-			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '', '', '', '', '', '')";
+			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '', '', '', '', '', '',
+			'$feedifreturned[0]', '$reqassistance')";
 	
 			mysqli_query($link, $query); //link query to database
 			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
@@ -133,10 +135,14 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		   Without your name and contact information, it is unlikely we will be able to 
 		   assist the colony you are reporting.</p>
 
-		<input type="checkbox" onclick="displayformdiv()"> I have read all the information required for filling out this form.</input><br>
+		<input type="checkbox" id="maincheckbox" onclick="displayformdiv()"> I have read all the information required for filling out this form.</input><br>
 
-		<div id="formdiv" style="display: none;">
+		<div id="formdiv">
 			<br><b><small><font color="red">* Required Fields</font></small></b><br><br>
+			<b>Will anyone feed the cats if they are altered and returned?</b><br>
+			<input type="radio" name="feedifreturned[]" value="Yes" id="feedifreturnedyes"> Yes<br>
+			<input type="radio" name="feedifreturned[]" value="No" id="feedifreturnedno"> No<br><br>
+			
 			<b>*Full Name</b><br>
 			<input type="text" name="fullname" id="fullname" pattern="[a-zA-Z]{3,}\s[a-zA-Z]{3,}" title="Enter first and last name" placeholder="First Last" required><br><br>
 			<b>*Email Address</b>
@@ -215,6 +221,9 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 
 			<b>Additional Comments</b><br>
 			<textarea rows="4" cols="50" name="comments"></textarea><br><br>
+			
+			<b>Physical Limitations</b><br>
+			<input type="checkbox" name="reqassistance" value="Yes"> Due to physical limitations, I require assistance with trapping.</input><br><br>
 			
 			<input type="submit" name="submitcolony" value="Submit"  > <!-- button itself -->
 		</div>
