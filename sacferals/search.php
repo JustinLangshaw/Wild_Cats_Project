@@ -1013,11 +1013,7 @@
 		<script src="clustermapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> becfb32b67c2639c258d86668e77799209aa0975
 		<!-- custom query js -->
 		<script type="text/javascript">
 			$(document).ready(function(){
