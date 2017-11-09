@@ -115,6 +115,9 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="script.js"></script> 
     <link rel="stylesheet" href="css/reportform.css">
+	<!--
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>-->
 </head>
 <body>
 
@@ -150,7 +153,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			<input type="radio" name="caregiver[]" value="Yes" onclick="displayForm(this)"> Yes<br>
 			<input type="radio" name="caregiver[]" value="No" onclick="displayForm(this)"> No<br><br>
 			<div class='indent todisplay' id="feederID">
-				<b>Please clarify who is feeding it.</b><br>
+				<b>Does anyone feed the cats?</b><br>
 				<textarea rows="4" cols="50" name="feederdescription"></textarea><br><br>
 			</div>
 			
@@ -201,7 +204,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 				<textarea rows="4" cols="50" name="injurydescription"></textarea><br><br>
 			</div>
 			
-			<b>Is the cat friendly or a pet?</b><br>
+			<b>Are any of the cats friendly or pets?</b><br>
 			<input type="radio" name="friendlypet[]" value="Yes" id="friendlypetyes"> Yes<br>
 			<input type="radio" name="friendlypet[]" value="No" id="friendlypetno"> No<br><br>
 			
