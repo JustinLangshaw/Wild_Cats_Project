@@ -1,0 +1,103 @@
+body {
+	background-color: powderblue;
+}
+form {
+	margin: auto;
+	background-color: white;
+	padding: 1em;    
+	border-color: #0b61a4;
+	border-style: solid;
+	border-width: 1px;
+	min-width: 580px;
+	width: 70%;
+}
+h2 {
+	margin: auto;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	color: white;
+	background-color: #0b61a4;
+	margin-bottom: 0;
+	padding: 14;    
+	border-color: #0b61a4;
+	border-style: solid;
+	border-width: 3px;
+	
+	min-width: 580px;
+	width: 70%;
+	font-family: Arial,sans-serif;
+}
+img {
+	height: 14;
+}
+#formdiv {
+	display: none;
+	padding: 0px 4vw;
+}
+.fieldset-auto-width {
+	display: inline-block;
+}
+.todisplay {
+	display:none;
+}
+.indent {
+	padding-left: 2em;
+}
+
+/*error msg*/
+.alert {
+	padding: 20px;
+	background-color: #f44336; /* Red */
+	color: white;
+	margin-bottom: 15px;
+}
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.closebtn:hover {
+	color: black;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+	margin: 0;
+}
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 160px;
+	/*white-space: nowrap;*/
+	background-color: gainsboro; /*very light gray*/
+	text-align: left;
+	border-radius: 5px;
+	padding: 10px 15px;
+	font-size: 13px;
+	font-family: verdana;
+	
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+	top: -50%;
+	left: 155%;
+	
+}
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 8px;
+	right: 100%; 
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent gainsboro transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
