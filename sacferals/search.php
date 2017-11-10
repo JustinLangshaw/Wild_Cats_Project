@@ -532,7 +532,7 @@
 							{
 								print "
 								<tr>
-									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form_View</a> </td>
+									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View</a> </td>
 								";
 
 								if($tdString != '')
@@ -894,7 +894,7 @@
 
 						print "
 						<tr>
-							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form_View </a> </td>
+							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> </td>
 							";
 
 							//$_GET['select2'] as RecordNumber
