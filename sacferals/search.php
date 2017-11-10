@@ -47,7 +47,7 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
        	
-       	<script src="exportExcel.js?version=1.5"></script>
+       	<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
   	</head>
 	<body>
@@ -108,8 +108,11 @@
 					<option value='BeatTeamLeader'>Beat Team Leader</option>
 					<option value='Outcome'>Outcome</option>
 					<option value='CompletionDate'>Completion Date</option>
+					<option value='Lat'>Latitude</option>
+					<option value='Lng'>Longitude</option>
 				  </select>
 				 <br>
+
 				 <input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
 				 <input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
@@ -154,6 +157,8 @@
 						<option value='BeatTeamLeader'>Beat Team Leader</option>
 						<option value='Outcome'>Outcome</option>
 						<option value='CompletionDate'>Completion Date</option>
+						<option value='Lat'>Latitude</option>
+						<option value='Lng'>Longitude</option>
 					</select>
 
 					<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
@@ -179,6 +184,7 @@
 	</div>
 
 <?php		
+
 			$thString="";
 			$tdString="";
 			$thEditString="";
@@ -313,8 +319,8 @@
 				$row = mysqli_fetch_row($result);
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate) = $row;
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row;
 
 					$sort = $_GET['sort']; //'sort' is magic sorting variable
 					if(!isset($sort))
@@ -368,7 +374,7 @@
 								<th><a>Email</a></th>
 								<th><a>Phone_1</a></th>
 								<th><a>Phone_2</a></th>
-								<th id='addressHead'><a>ColonyAddress</a></th>
+								<th><a>ColonyAddress</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
 								<th><a>Zip_Code</a></th>
@@ -389,6 +395,8 @@
 								<th><a>Beat_Team_Leader</a></th>
 								<th><a>Outcome</a></th>
 								<th><a>Completion_Date</a></th>
+								<th><a>Latitude</a></th>
+								<th><a>Longitude</a></th>
 							</tr>
 						</thead>
 						";
@@ -404,8 +412,8 @@
 						{
 							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-							$Outcome, $CompletionDate) = $row; // variables are set to current row
+							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+							$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
 							if($RecordNumber1==$RecordNumber)
@@ -524,6 +532,8 @@
 									<td><input type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
 									<td><input type='text' name='Outcome' value='$Outcome'></td>
 									<td><input type='text' name='CompletionDate' value='$CompletionDate'></td>
+									<td><input type='text' name='Lat' value='$Lat'></td>
+									<td><input type='text' name='Lng' value='$Lng'></td>
 								</tr>
 								";
 								}
@@ -582,6 +592,8 @@
 									<td>$BeatTeamLeader</td>
 									<td>$Outcome</td>
 									<td>$CompletionDate</td>
+									<td id='latCol'>$Lat</td>
+									<td id='lngCol'>$Lng</td>
 								</tr>
 								";
 								}
@@ -630,6 +642,8 @@
 				$BeatTeamLeader = $_POST['BeatTeamLeader'];
 				$Outcome = $_POST['Outcome'];
 				$CompletionDate = $_POST['CompletionDate'];
+				$Lat = $_POST['Lat'];
+				$Lng = $_POST['Lng'];
 
 				//echo $_POST['RecordNumber'];
 				//echo $RecordNumber1;
@@ -705,7 +719,8 @@
 								 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
 								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance' where RecordNumber='$RecordNumber1'";
+								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssitance='$ReqAssitance', 
+								 Lat='$Lat', Lng='$Lng', where RecordNumber='$RecordNumber1'";
 
 							//echo $queryupdate;
 							mysqli_query($link, $queryupdate);
@@ -810,6 +825,8 @@
 							<th><a href='search.php?sort=BeatTeamLeader'>Beat_Team_Leader</a></th>
 							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
 							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>
+							<th><a href='search.php?sort=Lat'>Latitude</a></th>
+							<th><a href='search.php?sort=Lng'>Longitude</a></th>
 
 						</tr>";
 								}
@@ -825,7 +842,7 @@
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
 						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssistance) = $row; // variables are set to current row
+						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 
 						$myArray[0]=$RecordNumber;
@@ -859,6 +876,8 @@
 						$myArray[28]=$BeatTeamLeader;
 						$myArray[29]=$Outcome;
 						$myArray[30]=$CompletionDate;
+						$myArray[31]="Lat";
+						$myArray[32]="Lng";
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="Comments1";
@@ -891,7 +910,9 @@
 						$myArray1[28]="BeatTeamLeader";
 						$myArray1[29]="Outcome";
 						$myArray1[30]="CompletionDate";
-
+						$myArray1[31]="Lat";
+						$myArray1[32]="Lng";
+						
 						print "
 						<tr>
 							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> </td>
@@ -922,6 +943,8 @@
 											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
 											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
 											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
+											case 'Lat': $tdString.="<td = id='latCol'>".$$selectedOption."</td>"; break;
+											case 'Lng': $tdString.="<td = id='lngCol'>".$$selectedOption."</td>"; break;											
 											default: $tdString.="<td>".$$selectedOption."</td>";
 
 										}
@@ -967,6 +990,8 @@
 							<td>$BeatTeamLeader</td>
 							<td>$Outcome</td>
 							<td>$CompletionDate</td>
+							<td id='latCol'>$Lat</td>
+							<td id='lngCol'>$Lng</td>
 						</tr>
 						";
 								}
@@ -1015,7 +1040,7 @@
    		<div class="row">
 			<div class="col-sm-12">
 				<b>Clustered Hot Spot</b><br><br>
-				<button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(errorCheck, 1000);'>Map Query</button>
+				<button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='setTimeout(errorCheck, 500);'>Map Query</button>
 				<button class="btn" id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
 				<br><br>
 				<div class="alert" id='alert' style='display:none'>
@@ -1026,8 +1051,9 @@
 			</div>
 		</div>
 		
-		<script src="clustermapScript.js?version=1.5"></script>
+		<script src="plotMapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
 	</body>
 </html>
+
