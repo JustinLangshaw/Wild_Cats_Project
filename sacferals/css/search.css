@@ -92,6 +92,10 @@ table tbody {
 .btn-primary.btn-outline{
 	color: #428bca;
 }
-.btn-primary.btn-outline:hover{
+.btn-danger.btn-outline{
+	color: #d9534f;
+}
+.btn-primary.btn-outline:hover,
+.btn-danger.btn-outline:hover{
 	color: #fff;
 }
