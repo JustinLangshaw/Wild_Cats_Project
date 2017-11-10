@@ -45,10 +45,12 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
-       	
-       	<script src="exportExcel.js?version=1.5"></script>
-		<script src="js/customquery.js"></script> 
+		
+		<script src="exportExcelScript.js?version=1.5"></script>		
+
+		
   	</head>
 	<body>
 	<div class="row">
@@ -82,7 +84,6 @@
 					<option value='Responder'>Responder</option>
 					<option value='Status'>Status</option>
 					<option value='DateAndTime'>Date And Time</option>
-					<option value='FeedIfReturned'>Feed If Returned</option>
 					<option value='FullName'>Full Name</option>
 					<option value='Email'>Email</option>
 					<option value='Phone1'>Phone1</option>
@@ -100,14 +101,15 @@
 					<option value='InjuryDescription'>Injury Description</option>
 					<option value='FriendlyPet'>Friendly/Pet</option>
 					<option value='ColonySetting'>Colony Setting</option>
-					<option value='Comments'>Additional Comments</option>
-					<option value='ReqAssitance'>Require Assitance</option>
+					<option value='Comments'>Comments</option>
 					<option value='VolunteerResponding'>Volunteer Responding</option>
 					<option value='ResponseDate'>Response Date</option>
 					<option value='CustNeedOutcome'>Customer Need Outcome</option>
 					<option value='BeatTeamLeader'>Beat Team Leader</option>
 					<option value='Outcome'>Outcome</option>
 					<option value='CompletionDate'>Completion Date</option>
+					<option value='Lat'>Latitude</option>
+					<option value='Lng'>Longitude</option>
 				  </select>
 				 <br>
 				 <input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
@@ -128,7 +130,6 @@
 						<option value='Responder'>Responder</option>
 						<option value='Status'>Status</option>
 						<option value='DateAndTime'>Date And Time</option>
-						<option value='FeedIfReturned'>Feed If Returned</option>
 						<option value='FullName'>Full Name</option>
 						<option value='Email'>Email</option>
 						<option value='Phone1'>Phone1</option>
@@ -146,23 +147,24 @@
 						<option value='InjuryDescription'>Injury Description</option>
 						<option value='FriendlyPet'>Friendly/Pet</option>
 						<option value='ColonySetting'>Colony Setting</option>
-						<option value='Comments'>Additional Comments</option>
-						<option value='ReqAssitance'>Require Assistance</option>
+						<option value='Comments'>Comments</option>
 						<option value='VolunteerResponding'>Volunteer Responding</option>
 						<option value='ResponseDate'>Response Date</option>
 						<option value='CustNeedOutcome'>Customer Need Outcome</option>
 						<option value='BeatTeamLeader'>Beat Team Leader</option>
 						<option value='Outcome'>Outcome</option>
 						<option value='CompletionDate'>Completion Date</option>
+						<option value='Lat'>Latitude</option>
+						<option value='Lng'>Longitude</option>
 					</select>
 
 					<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
 						<option value='='>=</option>
-						<option value='!='>&ne;</option>
-						<option value='<'>&lt;</option>
-						<option value='>'>&gt;</option>
-						<option value='<='>&le;</option>
-						<option value='>='>&ge;</option>
+						<option value='!='>!=</option>
+						<option value='<'><</option>
+						<option value='>'>></option>
+						<option value='<='><=</option>
+						<option value='>='>>=</option>
 						<option value='contains'>contains</option>
 					</select>
 
@@ -171,6 +173,7 @@
 				</div>
 			</div>
 			<div class="row">
+				
 				<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
 			</div>
 			</form>
@@ -274,17 +277,15 @@
 					$andor="";
 					$i=0;
 					foreach($_GET['queryvalue'] as $value){
-						if($value!=NULL){
-							$column = $_GET['query'][$i];
-							$condition = $_GET['condition'][$i];
-							if($condition=='contains'){
-								$condition=" like ";
-								$value="%".$value."%";
-							}
-							
-							$search = $search." ".$andor." (".$column." ".$condition." '".$value."')";
-							//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
+						$column = $_GET['query'][$i];
+						$condition = $_GET['condition'][$i];
+						if($condition=='contains'){
+							$condition=" like ";
+							$value="%".$value."%";
 						}
+						
+						$search = $search." ".$andor." (".$column." ".$condition." '".$value."')";
+						//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
 						$andor = $_GET['andor'][$i];
 						$i++;
 					}
@@ -314,7 +315,7 @@
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
 						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance) = $row;
+						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
 
 					$sort = $_GET['sort']; //'sort' is magic sorting variable
 					if(!isset($sort))
@@ -363,7 +364,6 @@
 								<th><a>Responder</a></th>
 								<th><a>Status</a></th>
 								<th><a>Date_And_Time</a></th>
-								<th><a>Feed_If_Returned</a></th>
 								<th><a>Full_Name</a></th>
 								<th><a>Email</a></th>
 								<th><a>Phone_1</a></th>
@@ -381,14 +381,15 @@
 								<th><a>Injury_Description</a></th>
 								<th><a>Friendly/Pet</a></th>
 								<th><a>Colony_Setting</a></th>
-								<th><a>Additional_Comments</a></th>
-								<th><a>Require_Assistance</a></th>
+								<th><a>Comments</a></th>
 								<th><a>Volunteer_Responding</a></th>
 								<th><a>Response_Date</a></th>
 								<th><a>Customer_Needed_Outcome</a></th>
 								<th><a>Beat_Team_Leader</a></th>
 								<th><a>Outcome</a></th>
 								<th><a>Completion_Date</a></th>
+								<th><a>Latitude</a></th>
+								<th><a>Longitude</a></th>
 							</tr>
 						</thead>
 						";
@@ -405,7 +406,7 @@
 							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
 							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-							$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance) = $row; // variables are set to current row
+							$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
 							if($RecordNumber1==$RecordNumber)
@@ -498,7 +499,6 @@
 												</select><br>
 									</form>"./*</li></ul></div></div>*/"</div></td>
 									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
-									<td><input type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
 									<td><input type='text' name='FullName' value='$FullName'></td>
 									<td><input type='text' name='Email' value='$Email'></td>
 									<td><input type='text' name='Phone1' value='$Phone1'></td>
@@ -517,13 +517,14 @@
 									<td><input type='text' name='FriendlyPet' value='$FriendlyPet'></td>
 									<td><input type='text' name='ColonySetting' value='$ColonySetting'></td>
 									<td><textarea name='Comments'>$Comments</textarea></td>
-									<td><input type='text' name='ReqAssitance' value='$ReqAssitance'></td>
 									<td><input type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
 									<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
 									<td><input type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
 									<td><input type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
 									<td><input type='text' name='Outcome' value='$Outcome'></td>
 									<td><input type='text' name='CompletionDate' value='$CompletionDate'></td>
+									<td><input type='text' name='Lat' value='$Lat'></td>
+									<td><input type='text' name='Lng' value='$Lng'></td>
 								</tr>
 								";
 								}
@@ -556,7 +557,6 @@
 									<td>$Responder</td>
 									<td id='statusCol'>$Status</td>
 									<td id='dateTimeCol'>$DateAndTime</td>
-									<td>$FeedIfReturned</td>
 									<td>$FullName</td>
 									<td>$Email</td>
 									<td>$Phone1</td>
@@ -575,13 +575,14 @@
 									<td>$FriendlyPet</td>
 									<td>$ColonySetting</td>
 									<td>$Comments</td>
-									<td>$ReqAssitance</td>
 									<td>$VolunteerResponding</td>
 									<td>$ResponseDate</td>
 									<td>$CustNeedOutcome</td>
 									<td>$BeatTeamLeader</td>
 									<td>$Outcome</td>
 									<td>$CompletionDate</td>
+									<td id='latCol'>$Lat</td>
+									<td id='lngCol'>$Lng</td>
 								</tr>
 								";
 								}
@@ -602,7 +603,6 @@
 				$Comments1 = $_POST['Comments1'];
 				$Responder = $_POST['Responder'];
 				$Status = $_POST['Status'];
-				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$FullName = $_POST['FullName'];
 				$RecordNumber1 = $_POST['RecordNumber'];
 				$DateAndTime = $_POST['DateAndTime'];
@@ -623,13 +623,14 @@
 				$FriendlyPet = $_POST['FriendlyPet'];
 				$ColonySetting = $_POST['ColonySetting'];
 				$Comments = $_POST['Comments'];
-				$ReqAssitance = $_POST['ReqAssitance'];
 				$VolunteerResponding = $_POST['VolunteerResponding'];
 				$ResponseDate = $_POST['ResponseDate'];
 				$CustNeedOutcome = $_POST['CustNeedOutcome'];
 				$BeatTeamLeader = $_POST['BeatTeamLeader'];
 				$Outcome = $_POST['Outcome'];
 				$CompletionDate = $_POST['CompletionDate'];
+				$Lat = $_POST['Lat'];
+				$Lng = $_POST['Lng'];
 
 				//echo $_POST['RecordNumber'];
 				//echo $RecordNumber1;
@@ -705,7 +706,8 @@
 								 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
 								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssitance='$ReqAssitance' where RecordNumber='$RecordNumber1'";
+								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate',Lat='$Lat', Lng='$Lng',  
+								 where RecordNumber='$RecordNumber1'";
 
 							//echo $queryupdate;
 							mysqli_query($link, $queryupdate);
@@ -784,7 +786,6 @@
 							<th><a href='search.php?sort=Responder'>Responder</a></th>
 							<th><a href='search.php?sort=Status'>Status</a></th>
 							<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
-							<th><a href='search.php?sort=FeedIfReturned'>Feed_If_Returned</a></th>
 							<th><a href='search.php?sort=FullName'>Full_Name</a></th>
 							<th><a href='search.php?sort=Email'>Email</a></th>
 							<th><a href='search.php?sort=Phone1'>Phone_1</a></th>
@@ -802,14 +803,15 @@
 							<th><a href='search.php?sort=InjuryDescription'>InjuryDescription</a></th>
 							<th><a href='search.php?sort=FriendlyPet'>Friendly/Pet</a></th>
 							<th><a href='search.php?sort=ColonySetting'>Colony_Setting</a></th>
-							<th><a href='search.php?sort=Comments'>Additional_Comments</a></th>
-							<th><a href='search.php?sort=ReqAssitance'>Require_Assistance</a></th>
+							<th><a href='search.php?sort=Comments'>Comments</a></th>
 							<th><a href='search.php?sort=VolunteerResponding'>Volunteer_Responding</a></th>
 							<th><a href='search.php?sort=ResponseDate'>Response_Date</a></th>
 							<th><a href='search.php?sort=CustNeedOutcome'>Customer_Needed_Outcome</a></th>
 							<th><a href='search.php?sort=BeatTeamLeader'>Beat_Team_Leader</a></th>
 							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
 							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>
+							<th><a href='search.php?sort=Lat'>Latitude</a></th>
+							<th><a href='search.php?sort=Lng'>Longitude</a></th>
 
 						</tr>";
 								}
@@ -825,7 +827,7 @@
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
 						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance) = $row; // variables are set to current row
+						$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 
 						$myArray[0]=$RecordNumber;
@@ -833,64 +835,64 @@
 						$myArray[2]=$Responder;
 						$myArray[3]=$Status;
 						$myArray[4]=$DateAndTime;
-						$myArray[5]=$FeedIfReturned;
-						$myArray[6]=$FullName;
-						$myArray[7]=$Email;
-						$myArray[8]=$Phone1;
-						$myArray[9]=$Phone2;
-						$myArray[10]=$ColonyAddress;
-						$myArray[11]=$City;
-						$myArray[12]=$County;
-						$myArray[13]=$ZipCode;
-						$myArray[14]=$AnyoneAttempted;
-						$myArray[15]=$ApproximateCats;
-						$myArray[16]=$Kittens;
-						$myArray[17]=$ColonyCareGiver;
-						$myArray[18]=$FeederDescription;
-						$myArray[19]=$Injured;
-						$myArray[20]=$InjuryDescription;
-						$myArray[21]=$FriendlyPet;
-						$myArray[22]=$ColonySetting;
-						$myArray[23]=$Comments;
-						$myArray[24]=$ReqAssitance;
-						$myArray[25]=$VolunteerResponding;
-						$myArray[26]=$ResponseDate;
-						$myArray[27]=$CustNeedOutcome;
-						$myArray[28]=$BeatTeamLeader;
-						$myArray[29]=$Outcome;
-						$myArray[30]=$CompletionDate;
+						$myArray[5]=$FullName;
+						$myArray[6]=$Email;
+						$myArray[7]=$Phone1;
+						$myArray[8]=$Phone2;
+						$myArray[9]=$ColonyAddress;
+						$myArray[10]=$City;
+						$myArray[11]=$County;
+						$myArray[12]=$ZipCode;
+						$myArray[13]=$AnyoneAttempted;
+						$myArray[14]=$ApproximateCats;
+						$myArray[15]=$Kittens;
+						$myArray[16]=$ColonyCareGiver;
+						$myArray[17]=$FeederDescription;
+						$myArray[18]=$Injured;
+						$myArray[19]=$InjuryDescription;
+						$myArray[20]=$FriendlyPet;
+						$myArray[21]=$ColonySetting;
+						$myArray[22]=$Comments;
+						$myArray[23]=$VolunteerResponding;
+						$myArray[24]=$ResponseDate;
+						$myArray[25]=$CustNeedOutcome;
+						$myArray[26]=$BeatTeamLeader;
+						$myArray[27]=$Outcome;
+						$myArray[28]=$CompletionDate;
+						$myArray1[29]=$Lat;
+						$myArray1[30]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="Comments1";
 						$myArray1[2]="Responder";
 						$myArray1[3]="Status";
 						$myArray1[4]="DateAndTime";
-						$myArray1[5]="FeedIfReturned";
-						$myArray1[6]="FullName";
-						$myArray1[7]="Email";
-						$myArray1[8]="Phone1";
-						$myArray1[9]="Phone2";
-						$myArray1[10]="ColonyAddress";
-						$myArray1[11]="City";
-						$myArray1[12]="County";
-						$myArray1[13]="ZipCode";
-						$myArray1[14]="AnyoneAttempted";
-						$myArray1[15]="ApproximateCats";
-						$myArray1[16]="Kittens";
-						$myArray1[17]="ColonyCareGiver";
-						$myArray1[18]="FeederDescription";
-						$myArray1[19]="Injured";
-						$myArray1[20]="InjuryDescription";
-						$myArray1[21]="FriendlyPet";
-						$myArray1[22]="ColonySetting";
-						$myArray1[23]="Comments";
-						$myArray1[24]="ReqAssitance";
-						$myArray1[25]="VolunteerResponding";
-						$myArray1[26]="ResponseDate";
-						$myArray1[27]="CustNeedOutcome";
-						$myArray1[28]="BeatTeamLeader";
-						$myArray1[29]="Outcome";
-						$myArray1[30]="CompletionDate";
+						$myArray1[5]="FullName";
+						$myArray1[6]="Email";
+						$myArray1[7]="Phone1";
+						$myArray1[8]="Phone2";
+						$myArray1[9]="ColonyAddress";
+						$myArray1[10]="City";
+						$myArray1[11]="County";
+						$myArray1[12]="ZipCode";
+						$myArray1[13]="AnyoneAttempted";
+						$myArray1[14]="ApproximateCats";
+						$myArray1[15]="Kittens";
+						$myArray1[16]="ColonyCareGiver";
+						$myArray1[17]="FeederDescription";
+						$myArray1[18]="Injured";
+						$myArray1[19]="InjuryDescription";
+						$myArray1[20]="FriendlyPet";
+						$myArray1[21]="ColonySetting";
+						$myArray1[22]="Comments";
+						$myArray1[23]="VolunteerResponding";
+						$myArray1[24]="ResponseDate";
+						$myArray1[25]="CustNeedOutcome";
+						$myArray1[26]="BeatTeamLeader";
+						$myArray1[27]="Outcome";
+						$myArray1[28]="CompletionDate";
+						$myArray1[29]="Lat";
+						$myArray1[30]="Lng";
 
 						print "
 						<tr>
@@ -922,6 +924,8 @@
 											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
 											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
 											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
+											case 'Lat': $tdString.="<td = id='latCol'>".$$selectedOption."</td>"; break;
+											case 'Lng': $tdString.="<td = id='lngCol'>".$$selectedOption."</td>"; break;
 											default: $tdString.="<td>".$$selectedOption."</td>";
 
 										}
@@ -941,7 +945,6 @@
 							<td>$Responder </td>
 							<td id='statusCol'>$Status </td>
 							<td id='dateTimeCol'>$DateAndTime</td>
-							<td>$FeedIfReturned</td>
 							<td>$FullName</td>
 							<td>$Email</td>
 							<td>$Phone1</td>
@@ -960,13 +963,14 @@
 							<td>$FriendlyPet</td>
 							<td>$ColonySetting</td>
 							<td>$Comments</td>
-							<td>$ReqAssitance</td>
 							<td>$VolunteerResponding</td>
 							<td>$ResponseDate</td>
 							<td>$CustNeedOutcome</td>
 							<td>$BeatTeamLeader</td>
 							<td>$Outcome</td>
 							<td>$CompletionDate</td>
+							<td id='latCol'>$Lat</td>
+							<td id='lngCol'>$Lng</td>
 						</tr>
 						";
 								}
@@ -1007,7 +1011,9 @@
 
    		<form id="resettable" method='get' action='search.php'>
 			<input class="btn" type="submit" value="Refresh Table" name="RefreshTable"/>
-   			<input class="btn btn-primary" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export Table" />
+
+			<input class="btn btn-primar" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export Table" />
+
    		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
@@ -1015,19 +1021,39 @@
    		<div class="row">
 			<div class="col-sm-12">
 				<b>Clustered Hot Spot</b><br><br>
-				<button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='mapQuery(); setTimeout(errorCheck, 1000);'>Map Query</button>
+				<button class="btn btn-primary" id='clusterAddrBtn' type='button' onclick='setTimeout(errorCheck, 500)'>Map Query</button>
+
 				<button class="btn" id='clusterAddrClearBtn' type='button' onclick='clearMap()'>Clear Map</button>
 				<br><br>
 				<div class="alert" id='alert' style='display:none'>
 					<span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
 					<label id='errorMsg'></label>
 				</div>
-				<div onload="initMap()" id="map"><div id="map-canvas"></div></div>
+				<div onload="initMap()" id="map"><div id="map-canvas" style="height: 800px; width: 100%"></div></div>
 			</div>
 		</div>
 		
-		<script src="clustermapScript.js?version=1.5"></script>
+		<script src="plotMapScript.js?version=1.8"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
+
+		<!-- custom query js -->
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var ctr=1;
+				$('#cqaddbtn').on('click', function(){
+					var clone = $('#blueprint').clone();
+					clone.find('[id]').each(function() {this.id+=ctr;});
+					clone.find('#cqaddbtn'+ctr).remove();
+					clone.find('#queryvalue'+ctr).val("");
+					$('#cqrow').append(clone);
+					clone.prepend("<select class='input-sm' id='andor' name='andor[]'>"+
+							"<option value='AND'>AND</option>"+
+							"<option value='OR'>OR</option>"+
+						"</select>");
+					ctr++;
+				});
+			});
+		</script>
 	</body>
 </html>
