@@ -1,3 +1,5 @@
+//Code for exporting html table as an Excel file
+
 var tableToExcel = (function() {
   //General formatting for Excel sheet
   var uri = 'data:application/vnd.ms-excel;base64,'
