@@ -48,20 +48,13 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$contactphone1;
 	$contactphone2;
 
-	//$preferedcontact= $contact[0].", ".$contact[1].", ".$contact[2];
-	$preferedcontact='';
-	if (count($contact)!=0){
-		$preferedcontact = $contact[0];
-		for ($i=1; $i<count($contact); $i++){
-			$preferedcontact = $preferedcontact.", ".$contact[$i];
-		}
-	}
+	$preferedcontact= $contact[0].", ".$contact[1].", ".$contact[2];
 	//$typeofworkstring = $typeofwork[0].", ".$typeofwork[1].", ".$typeofwork[2].", ".$typeofwork[3].", ".$typeofwork[4].", ".$typeofwork[5];
 	$typeofworkstring='';
 	if (count($typeofwork)!=0){
 		$typeofworkstring = $typeofwork[0];
 		for ($i=1; $i<count($typeofwork); $i++){
-			$typeofworkstring = $typeofworkstring.", ".$typeofwork[$i];
+			$typeofworkstring = $typeofworkstring.",".$typeofwork[$i];
 		}
 	}
 
