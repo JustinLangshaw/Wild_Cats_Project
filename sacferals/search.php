@@ -319,8 +319,8 @@
 				$row = mysqli_fetch_row($result);
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row;
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
 
 					$sort = $_GET['sort']; //'sort' is magic sorting variable
 					if(!isset($sort))
@@ -412,8 +412,8 @@
 						{
 							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-							$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row; // variables are set to current row
+							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+							$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
 							if($RecordNumber1==$RecordNumber)
@@ -719,7 +719,7 @@
 								 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
 								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssitance='$ReqAssitance', 
+								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance', 
 								 Lat='$Lat', Lng='$Lng', where RecordNumber='$RecordNumber1'";
 
 							//echo $queryupdate;
@@ -839,10 +839,10 @@
 
 					while($row = mysqli_fetch_row($result))
 					{
-						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
+						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row; // variables are set to current row
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 
 						$myArray[0]=$RecordNumber;

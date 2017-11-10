@@ -31,7 +31,7 @@ CREATE TABLE ReportColonyForm (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
 	DateAndTime varchar(200),
-	FeedIfReturned varchar(15),
+	FeedIfReturned tinyint,
 	FullName varchar(200),
 	Email varchar(200),
 	Phone1 varchar(15),
@@ -57,7 +57,6 @@ CREATE TABLE ReportColonyForm (
 	BeatTeamLeader varchar(200),
 	Outcome varchar(200),
 	CompletionDate varchar(200),
-	FeedIfReturned tinyint,
 	ReqAssistance tinyint,
 	Lat decimal(10,8),
 	Lng decimal(11,8)
