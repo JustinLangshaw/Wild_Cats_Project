@@ -63,7 +63,7 @@ CREATE TABLE ReportColonyForm (
 
 
 INSERT INTO ReportColonyForm VALUES
-	('', '', '', 'NULL', '11/25/2013 10:30:37', 'no', 'full name', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'No', 'No', 'neighbor', 'Yes', 'descrpition of injury', 'Yes', 'setting of colony', 'comments', 'no', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date', 1, 1, 38.50689300, -121.54801400);
+	('', '', '', 'NULL', '11/25/2013 10:30:37', 'no', 'full name', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'No', 'No', 'neighbor', 'Yes', 'descrpition of injury', 'Yes', 'setting of colony', 'comments', 'no', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date', 38.50689300, -121.54801400);
 
 	
 CREATE TABLE VolunteerForm (
