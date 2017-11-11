@@ -61,6 +61,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$lat = $_POST['lat'];
 	$lng = $_POST['lng'];
 	
+	
+	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
 	$required = array('fullname','email','colonystreet','zipcode','city','numberofcats','county');
@@ -87,7 +89,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$feedifreturned[0]', '$fullname', '$email', '$phone1', '$phone2', 
 			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
 			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '$reqassistance', '', '', '', '', '', '',
-			'$lat', '$lng')";
+			 '$lat', '$lng')";
 	
 			mysqli_query($link, $query); //link query to database
 			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
@@ -233,6 +235,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	<br>
 
 <script>
+
 //when user clicks off of the zip field:
 $(document).ready(function(){
 	$('#zipcode').keyup(function(){
