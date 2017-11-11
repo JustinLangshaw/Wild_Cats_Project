@@ -49,6 +49,7 @@
        	
        	<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
+		<script src="searchScript.js"></script> 
   	</head>
 	<body>
 	<div class="row">
@@ -720,7 +721,7 @@
 								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
 								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance', 
-								 Lat='$Lat', Lng='$Lng', where RecordNumber='$RecordNumber1'";
+								 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
 
 							//echo $queryupdate;
 							mysqli_query($link, $queryupdate);
