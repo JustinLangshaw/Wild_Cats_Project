@@ -1,0 +1,101 @@
+/*search.css*/
+.todisplay 
+{
+	/*display:none;*/
+}
+.fieldset-auto-width 
+{
+	display: inline-block;
+}
+body{
+	font-family: verdana;
+	font-size: 10pt;
+	margin: 20px;
+}
+.row{
+	padding: 10px;
+}
+#columnselect {
+	color: red;
+}
+#recupdate {
+	text-align: center;
+}
+
+/* google map*/
+#map { 
+	height: 800px; 
+	width: 100%;
+}
+#map-canvas {
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+}
+
+/*map error msg*/
+.alert {
+	padding: 20px;
+	background-color: #f44336; /* Red */
+	color: white;
+	margin-bottom: 15px;
+}
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.closebtn:hover {
+	color: black;
+}
+
+/*query*/
+#emptyquerymsg {
+	color: RED;
+	text-align: center;
+}
+#querymsg {
+	color: #337ab7;
+	text-align: center;
+}
+.form-control {
+	min-width: 0;
+	width: auto;
+	display: inline;
+}
+
+/*table*/
+table {
+	display: block;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	height: 400px;
+	font-size: 10pt;
+}
+table tbody {
+	overflow-y: auto;
+}
+#container {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.btn-outline{
+	background-color: transparent;
+	color: inherit;
+	transition: all .2s;
+}
+.btn-primary.btn-outline{
+	color: #428bca;
+}
+.btn-danger.btn-outline{
+	color: #d9534f;
+}
+.btn-primary.btn-outline:hover,
+.btn-danger.btn-outline:hover{
+	color: #fff;
+}

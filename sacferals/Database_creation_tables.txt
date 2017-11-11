@@ -31,6 +31,7 @@ CREATE TABLE ReportColonyForm (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
 	DateAndTime varchar(200),
+	FeedIfReturned varchar(15),
 	FullName varchar(200),
 	Email varchar(200),
 	Phone1 varchar(15),
@@ -49,17 +50,20 @@ CREATE TABLE ReportColonyForm (
 	FriendlyPet varchar(15),
 	ColonySetting varchar(200),
 	Comments varchar(200),
+	ReqAssistance varchar(15),
 	VolunteerResponding varchar(200),
 	ResponseDate varchar(15),
 	CustNeedOutcome varchar(200),
 	BeatTeamLeader varchar(200),
 	Outcome varchar(200),
-	CompletionDate varchar(200)
+	CompletionDate varchar(200),
+	Lat decimal(10,8),
+	Lng decimal(11,8)
 );
 
 
 INSERT INTO ReportColonyForm VALUES
-	('', '', '', 'NULL', '11/25/2013 10:30:37', 'NA', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'No', 'No', 'neighbor', 'Yes', 'descrpition of injury', 'Yes', 'setting of colony', 'comments', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date');
+	('', '', '', 'NULL', '11/25/2013 10:30:37', 'no', 'full name', 'email2@yahoo.com', '916-682-1883', 'NA', 'long address', 'city', 'county', 'zip', 'Yes', '5', 'No', 'No', 'neighbor', 'Yes', 'descrpition of injury', 'Yes', 'setting of colony', 'comments', 'no', 'responder', '4/26/2014', 'needed outcome', 'beat leader name', 'outcome', 'completion date', 38.50689300, -121.54801400);
 
 	
 CREATE TABLE VolunteerForm (
