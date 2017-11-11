@@ -38,107 +38,19 @@ function formatPhone(phoneId) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 	<title>Edit Profile</title>
-	<style type="text/css">
-	body 
-	{
-		background-color: powderblue;
-	}
-	form
-	{
-		margin: auto;
-		background-color: white;
-		padding: 1em;    
-		border-color: #0b61a4;
-		border-style: solid;
-		border-width: 1px;
-		min-width: 580px;
-		width: 70%;
-	}
-	h2
-	{
-		margin: auto;
-		margin-top: 0px;
-		margin-bottom: 10px;
-		color: white;
-		background-color: #0b61a4;
-		margin-bottom: 0;
-		padding: 14px;    
-		border-color: #0b61a4;
-		border-style: solid;
-		border-width: 3px;
-		min-width: 580px;
-		width: 70%;
-		font-family: Arial,sans-serif;
-	}
-	.fieldset-auto-width 
-	{
-		display: inline-block;
-	}
-	.indent
-	{
-		padding-left: 2em;
-	}
-	.buttons{
-		text-align: right;
-	}
-	#info td input{
-		width: 100%;
-	}
-
-	/*error msg*/
-	.alert {
-	    padding: 20px;
-	    background-color: #f44336; /* Red */
-	    color: white;
-	    margin-bottom: 15px;
-	}
-	.closebtn {
-	    margin-left: 15px;
-	    color: white;
-	    font-weight: bold;
-	    float: right;
-	    font-size: 22px;
-	    line-height: 20px;
-	    cursor: pointer;
-	    transition: 0.3s;
-	}
-	.closebtn:hover {
-	    color: black;
-	}
-
-	.tooltip {
-	    position: relative;
-	    display: inline-block;
-	}
-	.tooltip .tooltiptext {
-	    visibility: hidden;
-	    width: auto;
-	    white-space: nowrap;
-	    background-color: #0b61a4;
-	    color: #fff;
-	    text-align: left;
-	    border-radius: 5px;
-	    padding: 10px 15px;
-	    font-size: 14px;
-	    
-	    /* Position the tooltip */
-	    position: absolute;
-	    z-index: 1;
-	    top: -5px;
-	    left: 150%;
-	}
-	.tooltip:hover .tooltiptext {
-	    visibility: visible;
-	}
-	</style>
-
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="css/updateprofile.css">
+	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="script.js"></script>
-
+	
 </head>
 <body>
 <?php
@@ -209,7 +121,7 @@ function formatPhone(phoneId) {
 		}
 		else {
 			//if user passes re test
-			if( preg_match($re, $username) && preg_match($reEmail, $email) ){
+			//if( preg_match($re, $username) && preg_match($reEmail, $email) ){ //not editable, so dont need to check??
 				//if user passes re2 test
 				if(preg_match($re2, $fullname) ) {	//display current table
 					if (isset($_POST['typeofwork'])) {
@@ -264,10 +176,10 @@ function formatPhone(phoneId) {
 										<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
 										You did not fill out the form correctly!</div></div>';
 				}
-			}
+			/*}
 			else{
 				print "error: Please use no special characters when creating username and make sure your email is valid.";
-			}
+			}*/
 		}
 	}
 
@@ -318,101 +230,112 @@ function formatPhone(phoneId) {
 		
 ?>
 	<h2> Update Profile </h2>
-	<form method="post" action="updateprofile.php">
-		
-		<b>Account Information</b><br>
-		<div style="padding: 10px">
-		<table id="info">
-			<tr>
-				<td>Username:</td>
-				<td><input type="text" name="username" required value="<?php echo $Ausername?>" readonly></td>
-			</tr>
-			<tr>
-				<td>Email:</td>
-				<td><input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" 
-						placeholder="email@domain.com" required value="<?php echo $email?>" readonly></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type="text" size="40" name="password" required value="<?php echo $password?>" <?php echo $passerror?>></td>
-			</tr>
-			<tr>
-				<td>Re-enter Password:</td>
-				<td><input type="text" name="repassword" required value="<?php echo $password?>" <?php echo $passerror?>></td>
-			</tr>
-		</table>
-		</div>
+	<div id="form-wrapper">
+		<form method="post" action="updateprofile.php">
+			<label for="inner-form"><h4>Account Information</h4></label>
+			<div class="form-row" id="inner-form">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="username"> Username: </label>
+					<div class="col-sm-6"><input class="form-control" type="text" id="username" name="username" required value="<?php echo $Ausername?>" readonly></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="email">Email:</label>
+					<div class="col-sm-6"><input class="form-control" type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" 
+							placeholder="email@domain.com" required value="<?php echo $email?>" readonly></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="password">Password:</label>
+					<div class="col-sm-6"><input class="form-control" type="password" id="password" name="password" required value="<?php echo $password?>" <?php echo $passerror?>></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="repass">Re-enter Password:</label>
+					<div class="col-sm-6"><input class="form-control" type="password" id="repass" name="repassword" required value="<?php echo $password?>" <?php echo $passerror?>></div>
+				</div>
+			</div>
 
-		<b>Profile Information</b><br>
-		<div style="padding: 10px">
-		<table id="info">
-			<tr>
-				<td>Full Name:</td>
-				<td><input type="text" name="fullname" required value="<?php echo $fullname?>"></td>
-			</tr>
-			<tr>
-				<td>Complete Address:</td>
-				<td><input type="text" size="40" name="completeaddress" value="<?php echo $address?>"></td>
-			</tr>
-			<tr>
-				<td>Phone1:</td>
-				<td><input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" 
-							maxlength="10" onkeyup="formatPhone('phone1');" value="<?php echo $phone1?>"/></td>
-			</tr>
-			<tr>
-				<td>Phone2:</td>
-				<td><input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" 
-							maxlength="10" onkeyup="formatPhone('phone2');" value="<?php echo $phone2?>"/></td>
-			</tr>
-		</table><br>
+			<hr>
+			
+			<label for="inner-form2"><h4>Profile Information</h4></label>
+			<div class="form-row" id="inner-form2">
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="fullname">Full Name:</label>
+					<div class="col-sm-6"><input class="form-control" type="text" name="fullname" id="fullname" pattern="[a-zA-Z]{3,}\s[a-zA-Z]{3,}" 
+						title="Enter first and last name" placeholder="First Last" value="<?php echo $fullname?>" required></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="completeaddress">Complete Address:</label>
+					<div class="col-sm-6"><input class="form-control" type="text" id="completeaddress" name="completeaddress" pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}" 
+						title="Enter street# and street name" id="completeaddress" value="<?php echo $address?>"></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="phone1">Phone1:</label>
+					<div class="col-sm-6"><input class="form-control" type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" 
+								maxlength="10" onkeyup="formatPhone('phone1');" value="<?php echo $phone1?>"/></div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label" for="phone2">Phone2:</label>
+					<div class="col-sm-6"><input class="form-control" type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" 
+								maxlength="10" onkeyup="formatPhone('phone2');" value="<?php echo $phone2?>"/></div>
+				</div>
+			</div>
 
-		<table>
-			<tr><td>Prefered Method Of Contact:</td></tr>
-			<tr><td><input type="checkbox" name="contact[]" value="contactemail" <?php if($contactemail==1) echo "checked" ?>> Email</td></tr>
-			<tr><td><input type="checkbox" name="contact[]" value="contactphone1" <?php if($contactphone1==1) echo "checked" ?>> Phone #1</td></tr>
-			<tr><td><input type="checkbox" name="contact[]" value="contactphone2" <?php if($contactphone2==1) echo "checked" ?>> Phone #2</td></tr>
-		</table><br>
+			<div class="form-row" id="inner-form3">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-check-label">Prefered Method Of Contact:</label>
+						<div class="form-check">
+							<label><input type="checkbox" name="contact[]" value="contactemail" <?php if($contactemail==1) echo "checked" ?>> Email</label></div>
+						<div class="form-check">
+							<label><input type="checkbox" name="contact[]" value="contactphone1" <?php if($contactphone1==1) echo "checked" ?>> Phone #1</label></div>
+						<div class="form-check">
+							<label><input type="checkbox" name="contact[]" value="contactphone2" <?php if($contactphone2==1) echo "checked" ?>> Phone #2</label></div>
+					</div>
+				</div>
+			</div>
 
-		<table>
-			<tr>Type of Work You Would Like To Volunteer For:</tr>
-			<tr>
-				<td><input type="checkbox" name="typeofwork[]" value="transporting" <?php if($transporting==1) echo "checked" ?>></td>
-				<td>Transporting cats to and from spay/neuter clinics</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" name="typeofwork[]" value="helptrap" <?php if($helptrap==1) echo "checked" ?>></td> 
-				<td>Helping others trap feral cats</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" name="typeofwork[]" value="helpeducate" <?php if($helpeducate==1) echo "checked" ?>></td> 
-				<td>Helping educate the public about ferals</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" name="typeofwork[]" value="usingphone" <?php if($usingphone==1) echo "checked" ?>></td> 
-				<td>Using the phone and computer to respond to feral inquiries and help resolve feral issues</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" name="typeofwork[]" value="helpingclinic" <?php if($helpingclinic==1) echo "checked" ?>></td> 
-				<td>Helping at feral spay/neuter clinics</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" name="typeofwork[]" value="other" class='checkdisplay' <?php if($other==1) echo "checked" ?>></td> 
-				<td>Other</td>
-			</tr>
-		</table>
+			<div class="form-row" id="inner-form3">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="form-check-label">Type of Work You Would Like To Volunteer For:</label>
+						<div class="form-check">
+							<label><input type="checkbox" name="typeofwork[]" id="cb1" value="transporting" <?php if($transporting==1) echo "checked" ?>>
+							Transporting cats to and from spay/neuter clinics</label>
+						</div>
+						<div class="form-check">
+							<label><input type="checkbox" name="typeofwork[]" id="cb2" value="helptrap" <?php if($helptrap==1) echo "checked" ?>>
+							Helping others trap feral cats</label>
+						</div>
+						<div class="form-check">
+							<label><input type="checkbox" name="typeofwork[]" id="cb3" value="helpeducate" <?php if($helpeducate==1) echo "checked" ?>>
+							Helping educate the public about ferals</label>
+						</div>
+						<div class="form-check">
+							<label><input type="checkbox" name="typeofwork[]" id="cb4" value="usingphone" <?php if($usingphone==1) echo "checked" ?>>
+							Using the phone and computer to respond to feral inquiries and help resolve feral issues</label>
+						</div>
+						<div class="form-check">
+							<label><input type="checkbox" name="typeofwork[]" id="cb5" value="helpingclinic" <?php if($helpingclinic==1) echo "checked" ?>>
+							Helping at feral spay/neuter clinics</label>
+						</div>
+						<div class="form-check">
+							<label><input type="checkbox" name="typeofwork[]" id="cb6" value="other" class='checkdisplay' <?php if($other==1) echo "checked" ?>>
+							Other</label>
+						</div>
+						<div class='todisplay indent' <?php if($other==0) echo 'style="display: none"' ?>>
+							Other work you would like to volunteer for.<br>
+							<textarea class="form-control" id="othertasks" rows="4" cols="10" name="othertasks"><?php if($other==1) echo $othertasks ?></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		<div class='todisplay indent' <?php if($other==0) echo 'style="display: none"' ?>>
-			Other work you would like to volunteer for.<br>
-			<textarea rows="4" cols="50" name="othertasks"><?php if($other==1) echo $othertasks ?></textarea><br><br>
-		</div>
-		</div>
-
-		<div class="buttons">
-			<input type="button" onclick="location.href='userprofile.php'" value="Cancel">
-			<input type="submit" name="submit" value="Update" >
-		</div>
-	</form>
-	<br>
+			<div class="form-row" id="buttons">
+				<input class="btn" type="button" onclick="location.href='userprofile.php'" value="Cancel">
+				<input class="btn btn-primary" type="submit" name="submit" value="Update" >
+			</div>
+		</form>
+	</div>
+	
 <?php 
 } 
 ?>
