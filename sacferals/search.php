@@ -601,7 +601,7 @@
 							}
 						}
 						print "
-						</tbody></div>
+						</tbody>
 					</table>
 				</form>";
 			}
@@ -766,6 +766,8 @@
 				$query = "select * from ReportColonyForm order by $sort";
 				$result = mysqli_query($link, $query);
 			}
+			$_SESSION['totalrecords']=mysqli_num_rows($result);
+			
 			if(!isset($_GET['editrow']))
 			{
 			//if edit is not set
@@ -834,7 +836,7 @@
 					print"
 					</thead>
 
-					<tbody style='width: 6594px;'>";
+					<tbody>";
 
 					//while the next row (set by query) exists?
 
@@ -1032,9 +1034,10 @@
 ?>
 
    		<form id="resettable" method='get' action='search.php'>
-			<input class="btn" type="submit" value="Refresh Table" name="RefreshTable"/>
-   			<input class="btn btn-primary" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export Table" />
-   		</form>
+			<input class="btn" type="submit" value="Refresh" name="RefreshTable"/>
+   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
+			<span id="ttlrecs">Total Records: <?php echo $_SESSION['totalrecords']; ?></span>
+		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		<hr>
