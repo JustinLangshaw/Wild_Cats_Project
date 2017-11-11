@@ -86,10 +86,10 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	{
 		if(preg_match($re, $first) && preg_match($re, $last))
 		{	//no need to check for duplicates
-			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$feedifreturned[0]', '$fullname', '$email', '$phone1', '$phone2', 
+			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
 			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
-			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '$reqassistance', '', '', '', '', '', '',
-			 '$lat', '$lng')";
+			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '', '', '', '', '', '',
+			'$feedifreturned[0]', '$reqassistance', '$lat', '$lng')";
 	
 			mysqli_query($link, $query); //link query to database
 			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
@@ -128,9 +128,12 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 <body>
 
 	<?php echo $result; ?>
-
+	<div class="alert" id='alert' style='display:none'>
+		<span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+		<label id='errorMsg'></label>
+	</div>
 	<h2> Report a Feral Cat Colony & Get TNR Assistance </h2>
-	<form method="post" action="reportform.php" id='reportform'>
+	<form method="post" action="reportform.php" name='reportform' id='reportform'>
 		<p>Thank you for providing information about a feral cat colony 
 		   (a "colony" is a term used to describe a group of cats living together.)</p>
 		<p>Please answer the questions below to the best of your ability.  The more 
@@ -166,13 +169,13 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 				<b>Does anyone feed the cats?</b><br>
 				<textarea rows="4" cols="50" name="feederdescription"></textarea><br><br>
 			</div>
-			
-			<b>*Address of Cat Colony</b>
+			<span id="invalidAddr" type="hidden"></span>
+			<br><b>*Address of Cat Colony</b>
 			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 				<span class="tooltiptext">If you have any additional information,
 					indicate in the Additional Comments box at the very bottom of the form.</span>
 			</div><br>
-			<input type="text" name="colonystreet" pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}" title="Enter street# and street name" id="colonystreet" required><br><br>
+			<input type="text" name="colonystreet" pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9\s]{2,30}[a-zA-Z]{2,15}" title="Enter street# and street name" id="colonystreet" required><br><br>
 			<b>*Zip Code</b><br>
 			<input type="text" name="zipcode" id="zipcode" maxlength="5" required><span id="ziperror"></span><br><br>
 			<b>*City</b><br>
@@ -180,7 +183,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			<b>*County</b><br>
 			<input type="text" name="county" id="county" required><br><br>
 			<b>State</b><br>
-			<input type="text" value="CA" readonly><br><br>
+			<input type="text" value="CA" id="state" readonly><br><br>
 			
 			<b>Has trapping been attempted or are any of the cats' ears tipped?</b>
 			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
@@ -191,7 +194,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
 			
 			<b>*Approx # of Cats (including Kittens)</b><br>
-			<input type="number" name="numberofcats" min="1" max="99" id="numberofcats" required><br><br>
+			<input type="number" name="numberofcats" min="1" max="99"id="numberofcats" required><br><br>
 			<b>If there are kittens, are they under 8 weeks old and nursing?</b>
 			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 				<span class="tooltiptext">Kitten Description<br>
@@ -229,12 +232,64 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 			<b>Physical Limitations</b><br>
 			<input type="checkbox" name="reqassistance" value="Yes"> Due to physical limitations, I require assistance with trapping.</input><br><br>
 			
-			<input type="submit" name="submitcolony" value="Submit"  > <!-- button itself -->
+			<input type="hidden" name="lat" id="lat"/>
+			<input type="hidden" name="lng" id="lng"/>
+			<input type="submit" name="submitcolony" value="Submit" id="submitBtn" > <!-- button itself -->
 		</div>
 	</form>
 	<br>
 
 <script>
+
+//Checks user input for street, city, and zipcode
+$(document).ready(function(){
+	$('#colonystreet').focusout(getGeocode)	
+	$('#zipcode').focusout(getGeocode);
+	$('#city_wrap').focusout(getGeocode);
+});
+
+//Gets geocode if address is availible 
+function getGeocode() {
+    var lat = null;
+    var lng = null;
+    var street = $('#colonystreet').val();
+    var city = $('#city').val();
+    var state = $('#state').val();
+    var zip = $('#zipcode').val();
+    var address = street + "," + city + "," + state + "," + zip;
+    var redBanner = $('#alert');
+    var errorMsg = $('#invalidAddr');
+
+    if ((street != "") && (city != "") && (zip != "")) {
+        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' +
+            address + '&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response) {
+            if (response.results != "") {
+                if ((response.status == 'OK') && (response.results[0].geometry.location_type == 'ROOFTOP') && (response.results[0].partial_match != true) && (response.results.length < 2)) {
+                    lat = response.results[0].geometry.location.lat;
+                    lng = response.results[0].geometry.location.lng;
+                    $('#lat').val(lat);
+                    $('#lng').val(lng);
+                    errorMsg.html('');
+                    $('#zipcode').attr('style', '');
+                    $('#colonystreet').attr('style', '');
+                    $('#city').attr('style', '');
+                } else {
+                    errorMsg.html("Cannot locate exact location of address. Please check if address is valid.");
+                    $('#zipcode').attr('style', 'border: 1px solid #d66');
+                    $('#colonystreet').attr('style', 'border: 1px solid #d66');
+                    $('#city').attr('style', 'border: 1px solid #d66');
+                    $('#invalidAddr').attr('style', 'color: RED');;
+                }
+            } else {
+                errorMsg.html("Cannot identfy address entered. Make sure you are entering an address in the proper format.");
+                $('#zipcode').attr('style', 'border: 1px solid #d66');
+                $('#colonystreet').attr('style', 'border: 1px solid #d66');
+                $('#city').attr('style', 'border: 1px solid #d66');
+                $('#invalidAddr').attr('style', 'color: RED');
+            }
+        });
+    }
+}
 
 //when user clicks off of the zip field:
 $(document).ready(function(){

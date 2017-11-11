@@ -123,11 +123,6 @@ print"
 <a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
 <a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
 </br>
-
-<br>
-<a href=''>EDIT</a>
-<a href=''>DELETE</a>
-</br>
 ";
 ?>
 </body>
