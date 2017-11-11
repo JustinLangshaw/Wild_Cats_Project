@@ -58,6 +58,8 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$comments = $_POST['comments'];
 	$feedifreturned = $_POST['feedifreturned'];
 	$reqassistance = $_POST['reqassistance'];
+	$lat = $_POST['lat'];
+	$lng = $_POST['lng'];
 	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
