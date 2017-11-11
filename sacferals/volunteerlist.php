@@ -451,7 +451,7 @@
 							}
 						}
 						print "
-						</tbody></div>
+						</tbody>
 					</table>
 				</form>";
 			}
@@ -592,6 +592,8 @@
 				$query = "select * from VolunteerForm order by $sort";
 				$result = mysqli_query($link, $query);
 			}
+			$_SESSION['totalrecords']=mysqli_num_rows($result);
+			
 			if(!isset($_GET['editrow']))
 			{
 			//if edit is not set
@@ -766,7 +768,8 @@
    		<form id="resettable" method='get' action='volunteerlist.php'>
 			<input class="btn" type="submit" value="Refresh" name="RefreshTable"/>
    			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
-   		</form>
+			<span id="ttlrecs">Total Records: <?php echo $_SESSION['totalrecords']; ?></span>
+		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 	</body>
