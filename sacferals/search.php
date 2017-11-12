@@ -879,8 +879,8 @@
 						$myArray[28]=$BeatTeamLeader;
 						$myArray[29]=$Outcome;
 						$myArray[30]=$CompletionDate;
-						$myArray[31]="Lat";
-						$myArray[32]="Lng";
+						$myArray[31]=$Lat;
+						$myArray[32]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="Comments1";
