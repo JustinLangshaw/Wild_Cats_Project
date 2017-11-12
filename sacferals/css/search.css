@@ -84,6 +84,9 @@ table tbody {
 	white-space: nowrap;
 	overflow: hidden;
 }
+#ttlrecs {
+	float: right;
+}
 .btn-outline{
 	background-color: transparent;
 	color: inherit;
