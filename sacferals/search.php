@@ -49,7 +49,6 @@
        	
        	<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
-		<script src="searchScript.js"></script> 
   	</head>
 	<body>
 	<div class="row">
@@ -102,7 +101,7 @@
 					<option value='FriendlyPet'>Friendly/Pet</option>
 					<option value='ColonySetting'>Colony Setting</option>
 					<option value='Comments'>Additional Comments</option>
-					<option value='ReqAssistance'>Require Assitance</option>
+					<option value='ReqAssitance'>Require Assitance</option>
 					<option value='VolunteerResponding'>Volunteer Responding</option>
 					<option value='ResponseDate'>Response Date</option>
 					<option value='CustNeedOutcome'>Customer Need Outcome</option>
@@ -151,7 +150,7 @@
 						<option value='FriendlyPet'>Friendly/Pet</option>
 						<option value='ColonySetting'>Colony Setting</option>
 						<option value='Comments'>Additional Comments</option>
-						<option value='ReqAssistance'>Require Assistance</option>
+						<option value='ReqAssitance'>Require Assistance</option>
 						<option value='VolunteerResponding'>Volunteer Responding</option>
 						<option value='ResponseDate'>Response Date</option>
 						<option value='CustNeedOutcome'>Customer Need Outcome</option>
@@ -318,10 +317,10 @@
 				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1."";
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
-				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
+				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row;
 
 					$sort = $_GET['sort']; //'sort' is magic sorting variable
 					if(!isset($sort))
@@ -411,10 +410,10 @@
 
 						while($row = mysqli_fetch_row($result))
 						{
-							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
+							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-							$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
+							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+							$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
 							if($RecordNumber1==$RecordNumber)
@@ -526,7 +525,7 @@
 									<td><input type='text' name='FriendlyPet' value='$FriendlyPet'></td>
 									<td><input type='text' name='ColonySetting' value='$ColonySetting'></td>
 									<td><textarea name='Comments'>$Comments</textarea></td>
-									<td><input type='text' name='ReqAssistance' value='$ReqAssistance'></td>
+									<td><input type='text' name='ReqAssitance' value='$ReqAssitance'></td>
 									<td><input type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
 									<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
 									<td><input type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
@@ -586,7 +585,7 @@
 									<td>$FriendlyPet</td>
 									<td>$ColonySetting</td>
 									<td>$Comments</td>
-									<td>$ReqAssistance</td>
+									<td>$ReqAssitance</td>
 									<td>$VolunteerResponding</td>
 									<td>$ResponseDate</td>
 									<td>$CustNeedOutcome</td>
@@ -636,7 +635,7 @@
 				$FriendlyPet = $_POST['FriendlyPet'];
 				$ColonySetting = $_POST['ColonySetting'];
 				$Comments = $_POST['Comments'];
-				$ReqAssistance = $_POST['ReqAssistance'];
+				$ReqAssitance = $_POST['ReqAssitance'];
 				$VolunteerResponding = $_POST['VolunteerResponding'];
 				$ResponseDate = $_POST['ResponseDate'];
 				$CustNeedOutcome = $_POST['CustNeedOutcome'];
@@ -720,8 +719,8 @@
 								 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
 								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance', 
-								 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
+								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssitance='$ReqAssitance', 
+								 Lat='$Lat', Lng='$Lng', where RecordNumber='$RecordNumber1'";
 
 							//echo $queryupdate;
 							mysqli_query($link, $queryupdate);
@@ -821,7 +820,7 @@
 							<th><a href='search.php?sort=FriendlyPet'>Friendly/Pet</a></th>
 							<th><a href='search.php?sort=ColonySetting'>Colony_Setting</a></th>
 							<th><a href='search.php?sort=Comments'>Additional_Comments</a></th>
-							<th><a href='search.php?sort=ReqAssistance'>Require_Assistance</a></th>
+							<th><a href='search.php?sort=ReqAssitance'>Require_Assistance</a></th>
 							<th><a href='search.php?sort=VolunteerResponding'>Volunteer_Responding</a></th>
 							<th><a href='search.php?sort=ResponseDate'>Response_Date</a></th>
 							<th><a href='search.php?sort=CustNeedOutcome'>Customer_Needed_Outcome</a></th>
@@ -842,10 +841,10 @@
 
 					while($row = mysqli_fetch_row($result))
 					{
-						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
+						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 
 						$myArray[0]=$RecordNumber;
@@ -872,7 +871,7 @@
 						$myArray[21]=$FriendlyPet;
 						$myArray[22]=$ColonySetting;
 						$myArray[23]=$Comments;
-						$myArray[24]=$ReqAssistance;
+						$myArray[24]=$ReqAssitance;
 						$myArray[25]=$VolunteerResponding;
 						$myArray[26]=$ResponseDate;
 						$myArray[27]=$CustNeedOutcome;
@@ -906,7 +905,7 @@
 						$myArray1[21]="FriendlyPet";
 						$myArray1[22]="ColonySetting";
 						$myArray1[23]="Comments";
-						$myArray1[24]="ReqAssistance";
+						$myArray1[24]="ReqAssitance";
 						$myArray1[25]="VolunteerResponding";
 						$myArray1[26]="ResponseDate";
 						$myArray1[27]="CustNeedOutcome";
@@ -986,7 +985,7 @@
 							<td>$FriendlyPet</td>
 							<td>$ColonySetting</td>
 							<td>$Comments</td>
-							<td>$ReqAssistance</td>
+							<td>$ReqAssitance</td>
 							<td>$VolunteerResponding</td>
 							<td>$ResponseDate</td>
 							<td>$CustNeedOutcome</td>
