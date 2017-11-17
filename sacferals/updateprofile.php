@@ -361,7 +361,7 @@ $(document).ready(function () {
 				$('#password').attr('style','border: 1px solid #d66');
 				$('#repass').attr('style','border: 1px solid #d66');
 				$('#passerrmsg').html("<small>passwords do not match</small>");
-			} else if(pwd=='' || repwd==''{
+			} else if(pwd=='' || repwd=''{
 				$('#repass').attr('style','border: 1px solid #d66');
 				$('#passerrmsg').html("<small>passwords cannot be empty</small>");
 			} else {
