@@ -352,7 +352,7 @@ function formatPhone(phoneId) {
 
 <script>
 $(document).ready(function () {
-	$('#updateform input').on('keyup change foucs', function(){
+	$('#updateform input').on('keyup change', function(){
 		var id = $(this)[0].id;
 		if(id=='password' || id=='repass'){
 			var pwd = $('#password').val();
