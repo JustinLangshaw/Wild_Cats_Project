@@ -1,15 +1,20 @@
 body {
 	background-color: powderblue;
+	margin: 20px;
+	font-family: Georgia, serif;
+	font-size: 15px;
+	color: black; /*default for bootstrap is dark-gray*/
 }
 form {
 	margin: auto;
 	background-color: white;
-	padding: 1em;    
+	padding: 1.3em;    
 	border-color: #0b61a4;
 	border-style: solid;
 	border-width: 1px;
 	min-width: 580px;
 	width: 70%;
+	 
 }
 h2 {
 	margin: auto;
@@ -26,24 +31,44 @@ h2 {
 	min-width: 580px;
 	width: 70%;
 	font-family: Arial,sans-serif;
+	font-size: 25px;
+	font-weight: bold;
 }
 img {
 	height: 14;
 }
-#formdiv {
+
+#inner-form { 
+	display: none;
+	padding: 10px 15% 10px 5%;
+}
+.form-check label{
+	font-weight: normal !important;
+}
+/*#formdiv {
 	display: none;
 	padding: 0px 4vw;
-}
-.fieldset-auto-width {
+}*/
+/*.fieldset-auto-width {
 	display: inline-block;
-}
+}*/
 .todisplay {
-	display:none;
+	display: none;
 }
 .indent {
 	padding-left: 2em;
 }
-
+#textarea {
+	max-width: 100%;
+}
+#buttons{
+	text-align: right;
+}
+#ziperror, #catserror, #invalidAddr{
+	color: red;
+	margin: auto;
+	display: table;
+}
 /*error msg*/
 .alert {
 	padding: 20px;
@@ -65,20 +90,21 @@ img {
 	color: black;
 }
 
-.tooltip {
+#tooltip {
 	position: relative;
 	display: inline-block;
 	margin: 0;
 }
-.tooltip .tooltiptext {
+#tooltip .tooltiptext {
 	visibility: hidden;
-	width: 160px;
+	width: 190px;
 	/*white-space: nowrap;*/
 	background-color: gainsboro; /*very light gray*/
 	text-align: left;
 	border-radius: 5px;
 	padding: 10px 15px;
 	font-size: 13px;
+	font-weight: normal !important;
 	font-family: verdana;
 	
 	/* Position the tooltip */
@@ -88,7 +114,7 @@ img {
 	left: 155%;
 	
 }
-.tooltip .tooltiptext::after {
+#tooltip .tooltiptext::after {
 	content: "";
 	position: absolute;
 	top: 8px;
@@ -98,6 +124,6 @@ img {
 	border-style: solid;
 	border-color: transparent gainsboro transparent transparent;
 }
-.tooltip:hover .tooltiptext {
+#tooltip:hover .tooltiptext {
 	visibility: visible;
 }
