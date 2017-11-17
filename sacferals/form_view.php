@@ -70,6 +70,11 @@
 					<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
 					</br>
 					
+					<br>
+					<a href=''>EDIT</a>
+					<a href=''>DELETE</a>
+					</br>
+					
 					<br><b>RecordNumber: </b>$RecordNumber</br>
 					<br><b>Comments: </b>$Comments1</br>
 					<br><b>Responder: </b>$Responder</br>
@@ -77,34 +82,31 @@
 					<br><b>DateAndTime: </b> $DateAndTime</br>
 					<br><b>FeedIfReturned: </b> $FeedIfReturned</br>
 					<br><b>Full Name: </b> $FullName</br>
+					<br><b>Email: </b> $Email</br>
+					<br><b>Phone1: </b> $Phone1</br>
+					<br><b>Phone2: </b> $Phone2</br>
+					<br><b>ColonyAddress: </b> $ColonyAddress</br>
+					<br><b>City: </b> $City</br>
+					<br><b>County: </b> $County</br>
+					<br><b>ZipCode: </b> $ZipCode</br>
+					<br><b>AnyoneAttempted: </b> $AnyoneAttempted</br>
+					<br><b>ApproximateCats: </b> $ApproximateCats</br>
+					<br><b>Kittens: </b> $Kittens</br>
+					<br><b>ColonyCareGiver: </b> $ColonyCareGiver</br>
+					<br><b>FeederDescription: </b> $FeederDescription</br>
+					<br><b>Injured: </b> $Injured</br>
+					<br><b>InjuryDescription: </b> $InjuryDescription</br>
+					<br><b>FriendlyPet: </b> $FriendlyPet</br>
+					<br><b>ColonySetting: </b> $ColonySetting</br>
+					<br><b>Comments: </b> $Comments</br>
+					<br><b>ReqAssitance: </b> $ReqAssitance</br>
+					<br><b>VolunteerResponding: </b> $VolunteerResponding</br>
+					<br><b>ResponseDate: </b> $ResponseDate</br>
+					<br><b>CustNeedOutcome: </b> $CustNeedOutcome</br>
+					<br><b>BeatTeamLeader: </b> $BeatTeamLeader</br>
+					<br><b>Outcome: </b> $Outcome</br>
+					<br><b>CompletionDate: </b> $CompletionDate</br>
 					";
-					//follow the pattern here
-					print "
-					<br>$Email</br>
-					<br>$Phone1</br>
-					<br>$Phone2</br>
-					<br>$ColonyAddress</br>
-					<br>$City</br>
-					<br>$County</br>
-					<br>$ZipCode</br>
-					<br>$AnyoneAttempted</br>
-					<br>$ApproximateCats</br>
-					<br>$Kittens</br>
-					<br>$ColonyCareGiver</br>
-					<br>$FeederDescription</br>
-					<br>$Injured</br>
-					<br>$InjuryDescription</br>
-					<br>$FriendlyPet</br>
-					<br>$ColonySetting</br>
-					<br>$Comments</br>
-					<br>$ReqAssitance</br>
-					<br>$VolunteerResponding</br>
-					<br>$ResponseDate</br>
-					<br>$CustNeedOutcome</br>
-					<br>$BeatTeamLeader</br>
-					<br>$Outcome</br>
-					<br>$CompletionDate</br>
-				";
 				}
 				else
 				{
