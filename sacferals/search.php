@@ -27,7 +27,7 @@
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
 
-		if($level == 1)
+		if($level == 1 || $level == 2)
 		{
 ?>
 
@@ -38,14 +38,14 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<!--<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">-->
 		<link rel="stylesheet" href="css/search.css">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+		<!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>-->
+		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+       <!-- <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>-->
        	
        	<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
@@ -1025,12 +1025,6 @@
 			<div class='todisplay4'>
 			</div>";
 			*/
-		}
-		else if($level == 2)
-		{
-			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
-		}
-	}
 ?>
 
    		<form id="resettable" method='get' action='search.php'>
@@ -1058,6 +1052,15 @@
 		<script src="plotMapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-	</body>
-</html>
 
+<?php
+		}
+		else {
+			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
+			header("Location: userprofile.php");
+		}
+	}
+?>
+
+</body>
+</html>
