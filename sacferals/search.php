@@ -118,7 +118,25 @@
 				 <input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
 		</div>
-		<div class="col-md-8">
+<?php   //Canned Queries Section
+        $cannedQueryList="SELECT QueryName, QueryString FROM CannedQueries";
+	$result=mysqli_query($link, $cannedQueryList);
+	$array=mysqli_fetch_all($result);
+        print "<div class='col-md-2'><b> Canned Queries</b>
+		<form id='CannedQueryForm' name='CannedQueryForm' method='get' action='search.php'>
+			<select name='select3[]' size=7 tabindex='1'>";
+				foreach ($array as $row) {
+					print "<option title='$row[1]'>$row[0]</option>";
+				}
+	print "	</select>
+			<br>
+			<input class='btn btn-primary' type='submit' name='Submit' value='Submit' tabindex='2' />
+			<input class='btn' type='submit' name='Edit' value='Edit'/><br>
+			<input class='btn' type='submit' name='Create' value='Create'>
+			<input class='btn btn-danger' type='submit' name='Delete' value='Delete'/>
+		</form>
+        </div>"; ?>
+		<div class="col-md-6">
 			<form id="queryform" method='get' action='search.php'>
 			<!-- Custom Query -->
 			<div class="row">
