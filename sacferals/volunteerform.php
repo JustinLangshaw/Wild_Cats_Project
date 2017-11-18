@@ -127,9 +127,9 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		if (isset($_POST['typeofwork'])) {
 			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query
-				$query = "insert into VolunteerForm values('', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$phone2', '$preferedcontact',
+				$query = "insert into VolunteerForm values('', '', 'Inactive', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$phone2', '$preferedcontact',
 				'$contactemail', '$contactphone1', '$contactphone2', '$typeofworkstring', '$transporting', '$helptrap', '$helpeducate', '$usingphone', '$helpingclinic',
-				'$other', '$othertasks', '$experience', '', '', '' )";
+				'$other', '$othertasks', '$experience', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' )";
 
 				mysqli_query($link, $query); //link query to database
 				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
