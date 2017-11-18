@@ -168,6 +168,40 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  insert into SacFeralsUsers values("56", "Guest1", "guest1@yahoo.com", "123", "1");
  insert into SacFeralsUsers values("57", "Guest2", "guest2@yahoo.com", "abc", "2");
 
+CREATE TABLE `CannedQueries` (
+  `idCannedQueries` int(11) NOT NULL,
+  `QueryName` varchar(45) NOT NULL,
+  `QueryString` varchar(200) NOT NULL,
+  PRIMARY KEY (`idCannedQueries`));
+
+INSERT INTO `nguyen_sacferals`.`CannedQueries`
+(`idCannedQueries`,
+`QueryName`,
+`QueryString`)
+VALUES
+(0,
+'Default',
+'SELECT * FROM ReportColonyForm;');
+
+INSERT INTO `nguyen_sacferals`.`CannedQueries`
+(`idCannedQueries`,
+`QueryName`,
+`QueryString`)
+VALUES
+(1,
+'See Canned Queries',
+'SELECT * FROM CannedQueries;');
+
+INSERT INTO `nguyen_sacferals`.`CannedQueries`
+(`idCannedQueries`,
+`QueryName`,
+`QueryString`)
+VALUES
+(2,
+'Error',
+'ajsdifoajiw');
+
+
 
 
 
