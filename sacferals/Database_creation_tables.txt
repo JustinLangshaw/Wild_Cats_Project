@@ -102,6 +102,20 @@ INSERT INTO VolunteerForm VALUES
 	('NULL', '11/25/2013 10:30:37', 'Some name', 'complete address', 'email2@yahoo.com', '916-613-4444', '(503) 111-2222', 'prefered method', TRUE, TRUE, FALSE, 'list of type of work', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 'written out other tasks', 'past exp', 'some type of name', 'date of response entry', 'sent to email conf with date and notes');
 	
 
+CREATE TABLE CannedQueries (
+	ID int NOT NULL AUTO_INCREMENT,
+	QueryName varchar(45) NOT NULL,
+	QueryString varchar(200) NOT NULL,
+	PRIMARY KEY (ID)
+);
+
+INSERT INTO CannedQueries values
+	('', 'Default', "SELECT * FROM ReportColonyForm");
+
+INSERT INTO CannedQueries VALUES
+	('','status open', "SELECT * FROM ReportColonyForm where Status='open'");
+
+
 CREATE TABLE SundaySSPCA (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
