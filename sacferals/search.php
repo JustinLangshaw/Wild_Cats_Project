@@ -139,7 +139,8 @@
 					<div class="row">
 						<input class="btn btn-primary" type="submit" name="submitcannedquery" value="Search" tabindex='7'/>
 						<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
-						<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save Current Query" />
+						<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save" />
+						<button class='btn btn-info' type='button' id="addnewquery" name='addnewquery' data-toggle="modal" data-target="#addnewqueryModal">Create</button>
 					</div> <!-- data-toggle="modal" data-target="#getcndqnameModal" -->
 				</form>
 			</div>
@@ -221,7 +222,7 @@
 					<div class="modal-body">
 						<div class="form-group row">
 							<label class="col-sm-4 col-for-label" for="queryname" style="text-align: center">Query Name:</label>
-							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" title="Cannot be empty" required /></div>
+							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" maxlength="45" title="Cannot be empty" required /></div>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -233,7 +234,34 @@
 		</div>
 	</div>	
 
-
+	<!-- modal for saving canned query name -->
+	<div class="modal fade" id="addnewqueryModal" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form id="createquery" method='get' action='search.php'>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="motal-title" id="myModalLabel2">Create your Canned Query</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group row">
+							<label class="col-sm-4 col-for-label" for="newqueryname" style="text-align: center">Query Name:</label>
+							<div class="col-sm-6"><input class="form-control" id="newqueryname" name="newqueryname" type="text" maxlength="45" title="Cannot be empty" required /></div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-for-label" for="newquery" style="text-align: center">Query:</label>
+							<div class="col-sm-6"><textarea class="form-control" id="newquery" name="newquery" type="text" title="Cannot be empty" rows="4" maxlength="200" required></textarea></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn" data-dismiss="modal">Close</button>
+						<input type="submit" class="btn btn-primary" name="addnewquery" value="Save"/>
+					</div>
+				</form> 
+			</div>
+		</div>
+	</div>
+	
 <?php		
 
 			$thString="";
@@ -339,7 +367,7 @@
 								$value="%".$value."%";
 							}
 							
-							$search = $search." ".$andor." (".$column." ".$condition." '".$value."')";
+							$search = $search." ".$andor." ".$column." ".$condition." '".$value."'";
 							//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
 						}
 						$andor = $_GET['andor'][$i];
@@ -390,6 +418,28 @@
 				if(mysqli_num_rows($res)==0){
 					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', \"".$_SESSION['querysearch']."\")";
 					mysqli_query($link, $savecannedqry);
+				}
+			}
+			//canned query add new
+			if(isset($_GET['addnewquery'])){
+				$qname = $_GET['newqueryname'];
+				$newq = $_GET['newquery'];
+				
+				//check if exists so doesn't keep adding to db
+				$sea = 'select * from CannedQueries where QueryString="'.$newq.'"';
+				$res = mysqli_query($link, $sea);
+				if(mysqli_num_rows($res)==0){
+					//check if valid query
+					$res2 = mysqli_query($link, $newq);
+					if(mysqli_num_rows($res2)==0){
+						echo "<div id='emptyquerymsg'><h3>Invalid Query: ".$newq."</h3></div>";
+					} else {
+						$savecannedqry = "insert into CannedQueries values('', '".$qname."', \"".$newq."\")";
+						mysqli_query($link, $savecannedqry);
+					}
+				} else {
+					$rw = mysqli_fetch_row($res);
+					echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
 				}
 			}
 			//canned query delete
