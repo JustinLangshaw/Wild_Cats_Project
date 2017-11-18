@@ -22,8 +22,7 @@
 	else 
 	{ 	//print out errors:
 		//error_reporting(-1);
-		//ini_set('display_errors', 'On');
-		
+		//ini_set('display_errors', 'On');		
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
 
@@ -47,7 +46,7 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
        	
-       	<script src="js/exportExcel.js?version=1.5"></script>
+       	<script src="js/exportExcelScript.js"></script>
 		<script src="js/customquery.js"></script> 
   	</head>
 	<body>
@@ -78,24 +77,50 @@
 			<form id='form1' name='form1' method='get' action='volunteerlist.php'>
 				<select class="input-sm" name='select2[]' size='7' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
-					<option value='DateAndTime'>Date And Time</option>
+					<option value='Comments'>Triage Comments</option>
+					<option value='VolunteerStatus'>Volunteer Status</option>
+					<option value='DateAndTime'>Date Submitted</option>
+					<option value='WorkshopAttended'>Workshop</option>
+					<option value='WorkshopDate'>Workshop Date</option>
+					<option value='DateActivated'>Date Activated</option>
 					<option value='FullName'>Full Name</option>
-					<option value='CompleteAddress'>Complete Address</option>
+					<option value='Address'>Complete Address</option>
 					<option value='Email'>Email</option>
 					<option value='Phone1'>Phone1</option>
 					<option value='Phone2'>Phone2</option>
 					<option value='PreferedContact'>Prefered Contact</option>
+					<option value='contactemail'>Prefered Email</option>
+					<option value='contactphone1'>Prefered Phone1</option>
+					<option value='contactphone2'>Prefered Phone2</option>
 					<option value='TypeOfWork'>Type Of Work</option>
-					<option value='OtherTasks'>Other Tasks</option>
-					<option value='PastWorkExp'>Past Work Exp</option>
-					<option value='JobStatus'>Job Status</option>
-					<option value='Jobs'>Jobs</option>
+					<option value='transporting'>Transporter</option>
+					<option value='helptrap'>Trapper</option>
+					<option value='helpeducate'>Educator</option>
+					<option value='usingphone'>Triage</option>
+					<option value='other'>Other</option>
+					<option value='OtherTasks'>Other Tasks Details</option>
+					<option value='PastWorkExp'>Past Experience</option>
+					<option value='UnknownNameColumn'>Unknown</option>
+					<option value='ResponseDate'>Response Date</option>
+					<option value='EmailResponse'>Email Response</option>
+					<option value='BEATId'>BEAT ID</option>					
+					<option value='BEATName'>BEAT Name</option>
+					<option value='BEATGeneralArea'>BEAT Gen. Area</option>
+					<option value='BEATZipCodes'>BEAT Zip Code</option>
+					<option value='BEATTrainDate'>BEAT Train Date</option>
+					<option value='BEATMembers'>BEAT Member</option>
+					<option value='BEATMembersPhone'>BEAT Member Phone</option>
+					<option value='BEATMemberEmails'>BEAT Member Email</option>
+					<option value='BEATType'>BEAT Type</option>
+					<option value='BEATNotes'>BEAT Notes</option>
+					<option value='BEATStatus'>BEAT Status</option>					
+					<option value='TriageBEATNotes'>BEAT Triage Notes</option>
 				</select>
 				<br>
 				<input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
 				<input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
-		</div>
+		</div>		
 		<div class="col-md-8">
 			<form id="queryform" method='get' action='volunteerlist.php'>
 			<!-- Custom Query -->
@@ -106,18 +131,44 @@
 				<div id="blueprint">
 					<select class="input-sm" id="query" name="query[]" tabindex='3'>
 						<option value='RecordNumber'>ID</option>
-						<option value='DateAndTime'>Date And Time</option>
+						<option value='Comments'>Triage Comments</option>
+						<option value='VolunteerStatus'>Volunteer Status</option>
+						<option value='DateAndTime'>Date Submitted</option>
+						<option value='WorkshopAttended'>Workshop</option>
+					    <option value='WorkshopDate'>Workshop Date</option>
+						<option value='DateActivated'>Date Activated</option>
 						<option value='FullName'>Full Name</option>
-						<option value='CompleteAddress'>Complete Address</option>
+						<option value='Address'>Complete Address</option>
 						<option value='Email'>Email</option>
 						<option value='Phone1'>Phone1</option>
 						<option value='Phone2'>Phone2</option>
 						<option value='PreferedContact'>Prefered Contact</option>
+						<option value='contactemail'>Prefered Email</option>
+						<option value='contactphone1'>Prefered Phone1</option>
+						<option value='contactphone2'>Prefered Phone2</option>
 						<option value='TypeOfWork'>Type Of Work</option>
-						<option value='OtherTasks'>Other Tasks</option>
-						<option value='PastWorkExp'>Past Work Exp</option>
-						<option value='JobStatus'>Job Status</option>
-						<option value='Jobs'>Jobs</option>
+						<option value='transporting'>Transporter</option>
+						<option value='helptrap'>Trapper</option>
+						<option value='helpeducate'>Educator</option>
+						<option value='usingphone'>Triage</option>
+						<option value='other'>Other</option>
+						<option value='OtherTasks'>Other Tasks Details</option>
+						<option value='PastWorkExp'>Past Experience</option>
+						<option value='UnknownNameColumn'>Unknown</option>
+						<option value='ResponseDate'>Response Date</option>
+						<option value='EmailResponse'>Email Response</option>
+						<option value='BEATId'>BEAT ID</option>					
+						<option value='BEATName'>BEAT Name</option>
+						<option value='BEATGeneralArea'>BEAT Gen. Area</option>
+						<option value='BEATZipCodes'>BEAT Zip Code</option>
+						<option value='BEATTrainDate'>BEAT Train Date</option>
+						<option value='BEATMembers'>BEAT Member</option>
+						<option value='BEATMembersPhone'>BEAT Member Phone</option>
+						<option value='BEATMemberEmails'>BEAT Member Email</option>
+						<option value='BEATType'>BEAT Type</option>
+						<option value='BEATNotes'>BEAT Notes</option>
+						<option value='BEATStatus'>BEAT Status</option>					
+						<option value='TriageBEATNotes'>BEAT Triage Notes</option>
 					</select>
 
 					<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
@@ -184,6 +235,7 @@
 					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
 				else
 					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
+
 			}
 
 			/*
@@ -254,13 +306,17 @@
 			if(isset($_GET['editrow']))
 			{
 				$RecordNumber1 = $_GET['RecordNumber'];
+								
 				$query = "select * from VolunteerForm  where RecordNumber = ".$RecordNumber1."";
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
+				list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone,$BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row;
+				
+				/*
 				list($RecordNumber, $DateAndTime, $FullName, $CompleteAddress, $Email, $Phone1, $Phone2, $PreferedContact, 
 					$contactEmail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, 
 					$usingphone, $helpingclinic, $Other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, 
-					$EmailResponses) = $row; // variables are set to current row
+					$EmailResponse) = $row; // variables are set to current row*/
 
 					$sort = $_GET['sort']; //'sort' is magic sorting variable
 					if(!isset($sort))
@@ -288,9 +344,8 @@
 					<div class='col-sm-12'>
 					<form method='post' action='volunteerlist.php'>
 
-					<b>Report A Feral Cat Colony</b><br><br>
-
-					<table id='reportTable' class='table table-striped table-bordered table-condensed'>
+					<b>Volunteer Table</b><br><br>
+					<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
 							<tr>
 								<th> </th>";
@@ -305,45 +360,61 @@
 							{
 								print "
 								<th><a href='volunteerlist.php?sort=RecordNumber'>ID</a></th>
-								<th><a href='volunteerlist.php?sort=DateAndTime'>Time_Stamp</a></th>
-								<th><a href='volunteerlist.php?sort=FullName'>Full_Name</a></th>
-								<th><a href='volunteerlist.php?sort=CompleteAddress'>Complete_Address</a></th>
-								<th><a href='volunteerlist.php?sort=Email'>Email</a></th>
-								<th><a href='volunteerlist.php?sort=Phone1'>Phone1</a></th>
-								<th><a href='volunteerlist.php?sort=Phone2'>Phone2</a></th>
-								<th><a href='volunteerlist.php?sort=PreferedContact'>Prefered_Contact</a></th>
-								<th><a href='volunteerlist.php?sort=TypeOfWork'>Type_Of_Work</a></th>
-								<th><a href='volunteerlist.php?sort=OtherTasks'>Other_Tasks</a></th>
-								<th><a href='volunteerlist.php?sort=PastWorkExp'>Past_Work_Exp</a></th>
-								<th>Job_Status</th>
-								<th>Jobs</th>
+								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
+								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
+								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
+								<th><a href='volunteerlist.php?sort='DateActivated'>Date Activated</a></th>
+								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
+								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
+								<th><a href='volunteerlist.php?sort='Email'>Email</a></th>
+								<th><a href='volunteerlist.php?sort='Phone1'>Phone1</a></th>
+								<th><a href='volunteerlist.php?sort='Phone2'>Phone2</a></th>
+								<th><a href='volunteerlist.php?sort='PreferedContact'>Prefered Contact</a></th>
+								<th><a href='volunteerlist.php?sort='contactemail'>Prefered Email</a></th>
+								<th><a href='volunteerlist.php?sort='contactphone1'>Prefered Phone1</a></th>
+								<th><a href='volunteerlist.php?sort='contactphone2'>Prefered Phone2</a></th>
+								<th><a href='volunteerlist.php?sort='TypeOfWork'>Type Of Work</a></th>
+								<th><a href='volunteerlist.php?sort='transporting'>Transporter</a></th>
+								<th><a href='volunteerlist.php?sort='helptrap'>Trapper</a></th>
+								<th><a href='volunteerlist.php?sort='helpeducate'>Educator</a></th>
+								<th><a href='volunteerlist.php?sort='usingphone'>Triage</a></th>
+								<th><a href='volunteerlist.php?sort='other'>Other</a></th>
+								<th><a href='volunteerlist.php?sort='OtherTasks'>Other Tasks Details</a></th>
+								<th><a href='volunteerlist.php?sort='PastWorkExp'>Past Experience</a></th>
+								<th><a href='volunteerlist.php?sort='UnknownNameColumn'>Unknown</a></th>
+								<th><a href='volunteerlist.php?sort='ResponseDate'>Response Date</a></th>
+								<th><a href='volunteerlist.php?sort='EmailResponse'>Email Response</a></th>
+								<th><a href='volunteerlist.php?sort='BEATId'>BEAT ID</a></th>					
+								<th><a href='volunteerlist.php?sort='BEATName'>BEAT Name</a></th>
+								<th><a href='volunteerlist.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
+								<th><a href='volunteerlist.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
+								<th><a href='volunteerlist.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
+								<th><a href='volunteerlist.php?sort='BEATMembers'>BEAT Member</a></th>
+								<th><a href='volunteerlist.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
+								<th><a href='volunteerlist.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
+								<th><a href='volunteerlist.php?sort='BEATType'>BEAT Type</a></th>
+								<th><a href='volunteerlist.php?sort='BEATNotes'>BEAT Notes</a></th>
+								<th><a href='volunteerlist.php?sort='BEATStatus'>BEAT Status</a></th>					
+								<th><a href='volunteerlist.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>
 							</tr>
 						</thead>
 						";
 							}
-
 						print "<tbody>";
 
 						//while the next row (set by query) exists?
-
-
-
 						while($row = mysqli_fetch_row($result))
 						{
-							list($RecordNumber, $DateAndTime, $FullName, $CompleteAddress, $Email, $Phone1, $Phone2, 
-							$PreferedContact, $contactEmail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, 
-							$helptrap, $helpeducate, $usingphone, $helpingclinic, $Other, $OtherTasks, $PastWorkExp, 
-							$UnknownNameColumn, $ResponseDate, $EmailResponses) = $row; // variables are set to current row
-												// then printed in one table row
-
+							list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row; // then printed in one table row
+						
 							if($RecordNumber1==$RecordNumber)
 							{
-
 								print "
 								<tr>
 									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
-
 
 								if($tdEditString != '')
 								{
@@ -374,7 +445,6 @@
 
 									if(!in_array($RecordNumber, $_GET['select2']))
 									{
-
 										$tdEditString.="<input type='hidden' name='RecordNumber' value='".$RecordNumber1."' readonly>";
 									}
 
@@ -385,19 +455,45 @@
 								else
 								{
 									print "
-									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
-									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
+									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>									
+									<td><input type='text' name='Comments' value='$Comments'></td>
+									<td><input type='text' name='VolunteerStatus' value='$VolunteerStatus'></td>
+									<td><input type='text' name='DateAndTime' value='$DateAndTime'></td>
+									<td><input type='text' name='WorkshopAttended' value='$WorkshopAttended'></td>
+									<td><input type='text' name='WorkshopDate' value='$WorkshopDate'></td>
+									<td><input type='text' name='DateActivated' value='$DateActivated'></td>
 									<td><input type='text' name='FullName' value='$FullName'></td>
-									<td><input type='text' name='CompleteAddress' value='$CompleteAddress'></td>
+									<td><input type='text' name='Address' value='$Address'></td>
 									<td><input type='text' name='Email' value='$Email'></td>
 									<td><input type='text' name='Phone1' value='$Phone1'></td>
 									<td><input type='text' name='Phone2' value='$Phone2'></td>
 									<td><input type='text' name='PreferedContact' value='$PreferedContact'></td>
-									<td><textarea name='TypeOfWork' value='$TypeOfWork'>$TypeOfWork</textarea></td>
-									<td><textarea name='OtherTasks' value='$OtherTasks'>$OtherTasks</textarea></td>
-									<td><textarea name='PastWorkExp' value='$PastWorkExp'>$PastWorkExp</textarea></td>
-									<td><input type='text' name='' value=''></td>
-									<td><input type='text' name='' value=''></td>
+									<td><input type='text' name='contactemail' value='$contactemail'></td>
+									<td><input type='text' name='contactphone1' value='$contactphone1'></td>
+									<td><input type='text' name='contactphone2' value='$contactphone2'></td>
+									<td><input type='text' name='TypeOfWork' value='$TypeOfWork'></td>
+									<td><input type='text' name='transporting' value='$transporting'></td>
+									<td><input type='text' name='helptrap' value='$helptrap'></td>
+									<td><input type='text' name='helpeducate' value='$helpeducate'></td>
+									<td><input type='text' name='usingphone' value='$usingphone'></td>
+									<td><input type='text' name='other' value='$other'></td>
+									<td><input type='text' name='OtherTasks' value='$OtherTasks'></td>
+									<td><input type='text' name='PastWorkExp' value='$PastWorkExp'></td>
+									<td><input type='text' name='UnknownNameColumn' value='$UnknownNameColumn'></td>
+									<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
+									<td><input type='text' name='EmailResponse' value='$EmailResponse'></td>
+									<td><input type='text' name='BEATId' value='$BEATId'></td>					
+									<td><input type='text' name='BEATName' value='$BEATName'></td>
+									<td><input type='text' name='BEATGeneralArea' value='$BEATGeneralArea'></td>
+									<td><input type='text' name='BEATZipCodes' value='$BEATZipCodes'></td>
+									<td><input type='text' name='BEATTrainDate' value='$BEATTrainDate'></td>
+									<td><input type='text' name='BEATMembers' value='$BEATMembers'></td>
+									<td><input type='text' name='BEATMembersPhone' value='$BEATMembersPhone'></td>
+									<td><input type='text' name='BEATMemberEmails' value='$BEATMemberEmails'></td>
+									<td><input type='text' name='BEATType' value='$BEATType'></td>
+									<td><input type='text' name='BEATNotes' value='$BEATNotes'></td>
+									<td><input type='text' name='BEATStatus' value='$BEATStatus'></td>					
+									<td><input type='text' name='TriageBEATNotes' value='$TriageBEATNotes'></td>					
 								</tr>
 								";
 								}
@@ -429,22 +525,44 @@
 								{
 									print "
 									<td>$RecordNumber</td>
+									<td><textarea value='$Comments' readonly>$Comments</textarea></td>
+									<td>$VolunteerStatus</td>
 									<td>$DateAndTime</td>
+									<td>$WorkshopAttended</td>
+									<td>$WorkshopDate</td>
+									<td>$DateActivated</td>
 									<td>$FullName</td>
-									<td>$CompleteAddress</td>
+									<td><textarea value='$Address' readonly>$Address</textarea></td>
 									<td>$Email</td>
 									<td>$Phone1</td>
 									<td>$Phone2</td>
 									<td>$PreferedContact</td>
+									<td>$contactemail</td>
+									<td>$contactphone1</td>
+									<td>$contactphone2</td>
 									<td>$TypeOfWork</td>
-									<td>$OtherTasks</td>
-									<td>$PastWorkExp</td>
-									<td></td>
-									<td><ul style='list-style-type:disc'>
-										  <li>job 1</li>
-										  <li>job 2</li>
-										</ul>
-									</td>
+									<td>$transporting</td>
+									<td>$helptrap</td>
+									<td>$helpeducate</td>
+									<td>$usingphone</td>
+									<td>$other</td>
+									<td><textarea value='$OtherTasks' readonly>$OtherTasks</textarea></td>
+									<td><textarea value='$PastWorkExp' readonly>$PastWorkExp</textarea></td>
+									<td>$UnknownNameColumn</td>
+									<td>$ResponseDate</td>
+									<td>$EmailResponse</td>
+									<td>$BEATId</td>					
+									<td>$BEATName</td>
+									<td><textarea value='$BEATGeneralArea' readonly>$BEATGeneralArea</textarea></td>
+									<td><textarea value='$BEATZipCodes' readonly>$BEATZipCodes</textarea></td>
+									<td>$BEATTrainDate</td>
+									<td>$BEATMembers</td>
+									<td>$BEATMembersPhone</td>
+									<td>$BEATMemberEmails</td>
+									<td>$BEATType</td>
+									<td><textarea value='$BEATNotes' readonly>$BEATNotes</textarea></td>
+									<td>$BEATStatus</td>					
+									<td><textarea value='$TriageBEATNotes' readonly>$TriageBEATNotes</textarea></td>								
 								</tr>
 								";
 								}
@@ -463,31 +581,56 @@
 			{
 				//echo "In the recordEdit IF loop!!";
 				$RecordNumber1 = $_POST['RecordNumber'];
+				$Comments = $_POST['Comments'];
+				$VolunteerStatus = $_POST['VolunteerStatus'];
 				$DateAndTime = $_POST['DateAndTime'];
+				$WorkshopAttended = $_POST['WorkshopAttended'];
+				$WorkshopDate = $_POST['WorkshopDate'];
+				$DateActivated = $_POST['DateActivated'];
 				$FullName = $_POST['FullName'];
-				$CompleteAddress = $_POST['CompleteAddress'];
-				$contactEmail = $_POST['Email'];
-				$contactphone1 = $_POST['Phone1'];
-				$contactphone2 = $_POST['Phone2'];
+				$Address = $_POST['Address'];
+				$Email = $_POST['Email'];
+				$Phone1 = $_POST['Phone1'];
+				$Phone2 = $_POST['Phone2'];
 				$PreferedContact = $_POST['PreferedContact'];
+				$contactemail = $_POST['contactemail'];
+				$contactphone1 = $_POST['contactphone1'];
+				$contactphone2 = $_POST['contactphone2'];
 				$TypeOfWork = $_POST['TypeOfWork'];
+				$transporting = $_POST['transporting'];
+				$helptrap = $_POST['helptrap'];
+				$helpeducate = $_POST['helpeducate'];
+				$usingphone = $_POST['usingphone'];
+				$helpclinic = $_POST['helpclinic'];
+				$other = $_POST['other'];					
 				$OtherTasks = $_POST['OtherTasks'];
-				$PastWorkExp = $_POST['PastWorkExp'];
-
-				//echo $_POST['RecordNumber'];
-				//echo $RecordNumber1;
+				$PastWorkExp = $_POST['PastWorkExp'];						
+				$UnknownNameColumn = $_POST['UnknownNameColumn'];
+				$ResponseDate = $_POST['ResponseDate'];
+				$EmailResponse = $_POST['EmailResponse'];
+				$BEATId = $_POST['BEATId'];
+				$BEATName = $_POST['BEATName'];
+				$BEATGeneralArea = $_POST['BEATGeneralArea'];
+				$BEATZipCodes = $_POST['BEATZipCodes'];
+				$BEATTrainDate = $_POST['BEATTrainDate'];
+				$BEATMembers = $_POST['BEATMembers'];
+				$BEATMembersPhone = $_POST['BEATMembersPhone'];
+				$BEATMemberEmails = $_POST['BEATMemberEmails'];
+				$BEATType = $_POST['BEATType'];
+				$BEATNotes = $_POST['BEATNotes'];
+				$BEATStatus = $_POST['BEATStatus'];
+				$TriageBEATNotes = $_POST['TriageBEATNotes'];
+				$WorkshopAttended = $_POST['WorkshopAttended'];
+				$WorkshopDate = $_POST['WorkshopDate'];
 
 				$reName = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
-
 				if(true) //preg_match($reName, $FullName) &&
 				{
 					//print  "count is : ".count($_GET['select2']);
 					//print_r($_GET['select2']);
-
 					if(count($_GET['select2']) !=0 )
 					{
-						/* Build $query*/
-
+						/* Build $query*/						
 						$query = "select * from VolunteerForm where ";
 
 						foreach($_GET['select2'] as $selectedItem)
@@ -495,11 +638,9 @@
 							$query.=$selectedItem." ='".$$selectedItem."'";
 							$query.=" and ";
 						}
-
 						$query=rtrim($query," and ");
 
 						//print $query;
-
 						$result = mysqli_query($link, $query);
 
 						if(mysqli_num_rows($result) == 0)
@@ -522,45 +663,71 @@
 								$queryupdate.=", ";
 							}
 							$queryupdate=rtrim($queryupdate,", ");
-
-
 							$queryupdate.=" where RecordNumber='$RecordNumber1'";
-
 							//print $queryupdate;
-
 							mysqli_query($link, $queryupdate);
-
 						}
 					}
 					else
 					{
-
-
 						$query = "select * from VolunteerForm where RecordNumber='$RecordNumber1'";
-						$result = mysqli_query($link, $query);
-
+						$result = mysqli_query($link, $query);	
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
-						{
-							$queryupdate = "update VolunteerForm set FullName='$FullName', Email='$Email',
-								 Phone1='$Phone1', Phone2='$Phone2', ColonyAddress='$ColonyAddress',
-								 City='$City', County='$County', ZipCode='$ZipCode', AnyoneAttempted='$AnyoneAttempted',
-								 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
-								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
-								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssitance='$ReqAssitance' where RecordNumber='$RecordNumber1'";
-
-							//echo $queryupdate;
+						{						
+							//$queryupdate = "update VolunteerForm set Comments='$Comments', VolunteerStatus='$VolunteerStatus'where RecordNumber='$RecordNumber1'";
+							$queryupdate = "update VolunteerForm set 
+								 Comments='$Comments', 
+								 VolunteerStatus='$VolunteerStatus', 
+								 DateAndTime='$DateAndTime', 								 
+								 FullName='$FullName', 
+								 Address='$Address', 
+								 Email='$Email', 
+								 Phone1='$Phone1', 
+								 Phone2='$Phone2', 
+								 PreferedContact='$PreferedContact', 
+								 contactemail='$contactemail', 
+								 contactphone1='$contactphone1', 
+								 contactphone2='$contactphone2', 
+								 TypeOfWork='$TypeOfWork', 
+								 transporting='$transporting', 
+								 helptrap='$helptrap', 
+								 helpeducate='$helpeducate', 
+								 usingphone='$usingphone', 
+								 helpingclinic='$helpingclinic', 
+								 other='$other', 
+								 OtherTasks='$OtherTasks', 
+								 PastWorkExp='$PastWorkExp', 
+								 UnknownNameColumn='$UnknownNameColumn', 
+								 ResponseDate='$ResponseDate', 
+								 EmailResponse='$EmailResponse', 
+								 BEATId='$BEATId', 
+								 BEATName='$BEATName', 
+								 BEATGeneralArea='$BEATGeneralArea', 
+								 BEATZipCodes='$BEATZipCodes', 
+								 BEATTrainDate='$BEATTrainDate', 
+								 BEATMembers='$BEATMembers', 
+								 BEATMembersPhone='$BEATMembersPhone', 
+								 BEATMemberEmails='$BEATMemberEmails', 
+								 BEATType='$BEATType', 
+								 BEATNotes='$BEATNotes', 
+								 BEATStatus='$BEATStatus', 
+								 TriageBEATNotes='$TriageBEATNotes',
+								 DateActivated='$DateActivated',
+								 WorkshopAttended='$WorkshopAttended',
+								 WorkshopDate='$WorkshopDate'
+								 where RecordNumber='$RecordNumber1'";
+								 
 							mysqli_query($link, $queryupdate);
 							print "<span id='recupdate'><h2>Record was updated</h2></span>";
+						}else{
+							print "<h2>Not updated</h2>";
 						}
-
 					}
 				}
 				else
 				{
 					print "<h2>Please check all fields</h2>";
 				}
-
 			}
 			//end edit
 			///////////////////////////////////////////////////////////////////////////////////
@@ -606,9 +773,8 @@
 				<span id='querymsg'><h5>".$q.$_SESSION['querysearch']."</h5></span>
 				<div class='row'>
 				<div class='col-sm-12'>
-				<b>Volunteers</b><br><br>
-				
-				<table id='reportTable' class='table table-striped table-bordered table-condensed'>
+				<b>Volunteers</b><br><br>				
+				<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
 						<tr>
 							<th>  </th>";
@@ -622,20 +788,45 @@
 								else
 								{
 									print "
-
-								<th><a href='volunteerlist.php?sort=RecordNumber'>ID</a></th>
-								<th><a href='volunteerlist.php?sort=DateAndTime'>Time_Stamp</a></th>
-								<th><a href='volunteerlist.php?sort=FullName'>Full_Name</a></th>
-								<th><a href='volunteerlist.php?sort=CompleteAddress'>Complete_Address</a></th>
-								<th><a href='volunteerlist.php?sort=Email'>Email</a></th>
-								<th><a href='volunteerlist.php?sort=Phone1'>Phone1</a></th>
-								<th><a href='volunteerlist.php?sort=Phone2'>Phone2</a></th>
-								<th><a href='volunteerlist.php?sort=PreferedContact'>Prefered_Contact</a></th>
-								<th><a href='volunteerlist.php?sort=TypeOfWork'>Type_Of_Work</a></th>
-								<th><a href='volunteerlist.php?sort=OtherTasks'>Other_Tasks</a></th>
-								<th><a href='volunteerlist.php?sort=PastWorkExp'>Past_Work_Exp</a></th>
-								<th>Job_Status</th>
-								<th>Jobs</th>
+								<th><a href='volunteerlist.php?sort='RecordNumber'>ID</a></th>
+								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
+								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
+								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
+								<th><a href='volunteerlist.php?sort='DateActivated'>Date Actived</a></th>
+								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
+								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
+								<th><a href='volunteerlist.php?sort='Email'>Email</a></th>
+								<th><a href='volunteerlist.php?sort='Phone1'>Phone1</a></th>
+								<th><a href='volunteerlist.php?sort='Phone2'>Phone2</a></th>
+								<th><a href='volunteerlist.php?sort='PreferedContact'>Prefered Contact</a></th>
+								<th><a href='volunteerlist.php?sort='contactemail'>Prefered Email</a></th>
+								<th><a href='volunteerlist.php?sort='contactphone1'>Prefered Phone1</a></th>
+								<th><a href='volunteerlist.php?sort='contactphone2'>Prefered Phone2</a></th>
+								<th><a href='volunteerlist.php?sort='TypeOfWork'>Type Of Work</a></th>
+								<th><a href='volunteerlist.php?sort='transporting'>Transporter</a></th>
+								<th><a href='volunteerlist.php?sort='helptrap'>Trapper</a></th>
+								<th><a href='volunteerlist.php?sort='helpeducate'>Educator</a></th>
+								<th><a href='volunteerlist.php?sort='usingphone'>Triage</a></th>
+								<th><a href='volunteerlist.php?sort='other'>Other</a></th>
+								<th><a href='volunteerlist.php?sort='OtherTasks'>Other Tasks Details</a></th>
+								<th><a href='volunteerlist.php?sort='PastWorkExp'>Past Experience</a></th>
+								<th><a href='volunteerlist.php?sort='UnknownNameColumn'>Unknown</a></th>
+								<th><a href='volunteerlist.php?sort='ResponseDate'>Response Date</a></th>
+								<th><a href='volunteerlist.php?sort='EmailResponse'>Email Response</a></th>
+								<th><a href='volunteerlist.php?sort='BEATId'>BEAT ID</a></th>					
+								<th><a href='volunteerlist.php?sort='BEATName'>BEAT Name</a></th>
+								<th><a href='volunteerlist.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
+								<th><a href='volunteerlist.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
+								<th><a href='volunteerlist.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
+								<th><a href='volunteerlist.php?sort='BEATMembers'>BEAT Member</a></th>
+								<th><a href='volunteerlist.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
+								<th><a href='volunteerlist.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
+								<th><a href='volunteerlist.php?sort='BEATType'>BEAT Type</a></th>
+								<th><a href='volunteerlist.php?sort='BEATNotes'>BEAT Notes</a></th>
+								<th><a href='volunteerlist.php?sort='BEATStatus'>BEAT Status</a></th>					
+								<th><a href='volunteerlist.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>								
 						</tr>";
 								}
 					print"
@@ -643,31 +834,89 @@
 					<tbody>";
 
 					//while the next row (set by query) exists?
-
 					while($row = mysqli_fetch_row($result))
 					{
-						list($RecordNumber, $DateAndTime, $FullName, $CompleteAddress, $Email, $Phone1, $Phone2, 
-							$PreferedContact, $contactEmail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, 
-							$helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, 
-							$UnknownNameColumn, $ResponseDate, $EmailResponses) = $row; // variables are set to current row // variables are set to current row
-																		// then printed in one table row
+						list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row; // then printed in one table row // variables are set to current row 
 
 						$myArray[0]=$RecordNumber;
-						$myArray[1]=$DateAndTime;
-						$myArray[2]=$FullName;
-						$myArray[3]=$CompleteAddress;
-						$myArray[4]=$Email;
-						$myArray[5]=$Phone1;
-						$myArray[6]=$Phone2;
+						$myArray[1]=$Comments;
+						$myArray[2]=$VolunteerStatus;
+						$myArray[3]=$DateAndTime;
+						$myArray[4]=$FullName;
+						$myArray[5]=$Email;
+						$myArray[6]=$Phone1;
+						$myArray[7]=$Phone2;
+						$myArray[8]=$PreferedContact;
+						$myArray[9]=$contactemail;
+						$myArray[10]=$contactphone1;
+						$myArray[11]=$contactphone2;
+						$myArray[12]=$TypeOfWork;
+						$myArray[13]=$transporting;
+						$myArray[14]=$helptrap;
+						$myArray[15]=$helpeducate;
+						$myArray[16]=$usingphone;
+						$myArray[17]=$helpingclinic;
+						$myArray[18]=$other;
+						$myArray[19]=$OtherTasks;
+						$myArray[20]=$PastWorkExp;
+						$myArray[21]=$UnknownNameColumn;
+						$myArray[22]=$ResponseDate;
+						$myArray[23]=$EmailResponse;
+						$myArray[24]=$BEATId;
+						$myArray[25]=$BEATName;
+						$myArray[26]=$BEATGeneralArea;
+						$myArray[27]=$BEATZipCodes;
+						$myArray[28]=$BEATTrainDate;
+						$myArray[29]=$BEATMembers;
+						$myArray[30]=$BEATMembersPhone;
+						$myArray[31]=$BEATMemberEmails;
+						$myArray[32]=$BEATType;
+						$myArray[33]=$BEATNotes;
+						$myArray[34]=$BEATStatus;
+						$myArray[35]=$TriageBEATNotes;
+						$myArray[36]=$DateActivated;
+						$myArray[37]=$WorkshopAttended;
+						$myArray[38]=$WorkshopDate;
 
-						$myArray1[0]="RecordNumber";
-						$myArray1[1]="DateAndTime";
-						$myArray1[2]="FullName";
-						$myArray1[3]="CompleteAddress";
-						$myArray1[4]="Email";
-						$myArray1[5]="Phone1";
-						$myArray1[6]="Phone2";
-
+						$myArray[0]="RecordNumber";
+						$myArray[1]="Comments";
+						$myArray[2]="VolunteerStatus";
+						$myArray[3]="DateAndTime";
+						$myArray[4]="FullName";
+						$myArray[5]="Email";
+						$myArray[6]="Phone1";
+						$myArray[7]="Phone2";
+						$myArray[8]="PreferedContact";
+						$myArray[9]="contactemail";
+						$myArray[10]="contactphone1";
+						$myArray[11]="contactphone2";
+						$myArray[12]="TypeOfWork";
+						$myArray[13]="transporting";
+						$myArray[14]="helptrap";
+						$myArray[15]="helpeducate";
+						$myArray[16]="usingphone";
+						$myArray[17]="helpingclinic";
+						$myArray[18]="other";
+						$myArray[19]="OtherTasks";
+						$myArray[20]="PastWorkExp";
+						$myArray[21]="UnknownNameColumn";
+						$myArray[22]="ResponseDate";
+						$myArray[23]="EmailResponse";
+						$myArray[24]="BEATId";
+						$myArray[25]="BEATName";
+						$myArray[26]="BEATGeneralArea";
+						$myArray[27]="BEATZipCodes";
+						$myArray[28]="BEATTrainDate";
+						$myArray[29]="BEATMembers";
+						$myArray[30]="BEATMembersPhone";
+						$myArray[31]="BEATMemberEmails";
+						$myArray[32]="BEATType";
+						$myArray[33]="BEATNotes";
+						$myArray[34]="BEATStatus";
+						$myArray[35]="TriageBEATNotes";
+						$myArray[36]="DateActivated";
+						$myArray[37]="WorkshopAttended";
+						$myArray[38]="WorkshopDate";
 						print "
 						<tr>
 							<td><a style='background-color:lightgreen;' href='volunteerlist.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
@@ -683,7 +932,9 @@
 									//if recordNumber == recordNumber
 									if ($myArray1[$i] == $selectedOption)
 									{
+									
 										$tdString.="<td>$myArray[$i]</td>";
+																		
 										break;
 									}
 								}
@@ -697,6 +948,14 @@
 										switch($selectedOption){
 											case 'DateAndTime': $tdString.="<td = id='dateTimeCol'>".$$selectedOption."</td>"; break;
 											case 'CompleteAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
+											case 'Comments': $tdString.="<td><textarea name='Comments' value='$Comments' readonly>$Comments</textarea></td>"; break;
+											case 'Address': $tdString.="<td><textarea name='Address' value='$Address' readonly>$Address</textarea></td>"; break;
+											case 'OtherTasks': $tdString.="<td><textarea name='OtherTasks' value='$OtherTasks' readonly>$OtherTasks</textarea></td>"; break;
+											case 'PastWorkExp': $tdString.="<td><textarea name='PastWorkExp' value='$PastWorkExp' readonly>$PastWorkExp</textarea></td>"; break;
+											case 'BEATGeneralArea': $tdString.="<td><textarea name='BEATGeneralArea' value='$BEATGeneralArea' readonly>$BEATGeneralArea</textarea></td>"; break;
+											case 'BEATZipCodes':$tdString.="<td><textarea name='BEATZipCodes' value='$BEATZipCodes' readonly>$BEATZipCodes</textarea></td>"; break;
+											case 'BEATNotes': $tdString.="<td><textarea name='BEATZipCodes' value='$BEATNotes' readonly>$BEATNotes</textarea></td>"; break;
+											case 'TriageBEATNotes': $tdString.="<td><textarea name='TriageBEATNotes' value='$TriageBEATNotes' readonly>$TriageBEATNotes</textarea></td>"; break;									
 											default: $tdString.="<td>".$$selectedOption."</td>";
 
 										}
@@ -709,28 +968,49 @@
 							}
 							else
 							{
-								print "
+								print "														
 									<td>$RecordNumber</td>
+									<td><textarea name='Comments' value='$Comments' readonly>$Comments</textarea></td>
+									<td>$VolunteerStatus</td>
 									<td>$DateAndTime</td>
+									<td>$WorkshopAttended</td>
+									<td>$WorkshopDate</td>
+									<td>$DateActivated</td>
 									<td>$FullName</td>
-									<td>$CompleteAddress</td>
+									<td><textarea name='Address' value='$Address' readonly>$Address</textarea></td>
 									<td>$Email</td>
 									<td>$Phone1</td>
 									<td>$Phone2</td>
 									<td>$PreferedContact</td>
+									<td>$contactemail</td>
+									<td>$contactphone1</td>
+									<td>$contactphone2</td>
 									<td>$TypeOfWork</td>
-									<td>$OtherTasks</td>
-									<td>$PastWorkExp</td>
-									<td></td>
-									<td><ul style='list-style-type:disc'>
-										  <li>job 1</li>
-										  <li>job 2</li>
-										</ul>
-									</td>
+									<td>$transporting</td>
+									<td>$helptrap</td>
+									<td>$helpeducate</td>
+									<td>$usingphone</td>
+									<td>$other</td>
+									<td><textarea name='OtherTasks' value='$OtherTasks' readonly>$OtherTasks</textarea></td>
+									<td><textarea name='PastWorkExp' value='$PastWorkExp' readonly>$PastWorkExp</textarea></td>
+									<td>$UnknownNameColumn</td>
+									<td>$ResponseDate</td>
+									<td>$EmailResponse</td>
+									<td>$BEATId</td>					
+									<td>$BEATName</td>
+									<td><textarea name='BEATGeneralArea' value='$BEATGeneralArea' readonly>$BEATGeneralArea</textarea></td>
+									<td><textarea name='BEATZipCodes' value='$BEATZipCodes' readonly>$BEATZipCodes</textarea></td>
+									<td>$BEATTrainDate</td>
+									<td>$BEATMembers</td>
+									<td>$BEATMembersPhone</td>
+									<td>$BEATMemberEmails</td>
+									<td>$BEATType</td>
+									<td><textarea name='BEATZipCodes' value='$BEATNotes' readonly>$BEATNotes</textarea></td>
+									<td>$BEATStatus</td>					
+									<td><textarea name='TriageBEATNotes' value='$TriageBEATNotes' readonly>$TriageBEATNotes</textarea></td>
 								</tr>
 								";
 							}
-
 					}
 					print "
 					</tbody>
@@ -767,7 +1047,7 @@
 
    		<form id="resettable" method='get' action='volunteerlist.php'>
 			<input class="btn" type="submit" value="Refresh" name="RefreshTable"/>
-   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
+   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('volunteerTable', 'Volunteers')" value="Export" />
 			<span id="ttlrecs">Total Records: <?php echo $_SESSION['totalrecords']; ?></span>
 		</form>
 		</div> <!-- end div class='col-sm'12' -->
