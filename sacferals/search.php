@@ -38,16 +38,13 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<!--<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/search.css">
 		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>-->
-		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-       <!-- <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
        	
-       	<script src="exportExcelScript.js?version=1.5"></script>
+		<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
 		<script src="searchScript.js"></script> 
   	</head>
@@ -199,13 +196,96 @@
 					<input class="btn btn-primary btn-outline" type="button" id="cqaddbtn" name="addquery" value="+"/>
 				</div>
 			</div>
-			<div class="row">
-				<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
+			<div class="row"> <!-- Custom Query -->
+				<form id="queryform" method='get' action='search.php'>
+					<div class="row">
+						<b>Custom Query</b>
+					</div>
+					<div class="row" id="cqrow">
+						<div id="blueprint">
+							<select class="input-sm" id="query" name="query[]" tabindex='3'>
+								<option value='RecordNumber'>ID</option>
+								<option value='Comments1'>Comments</option>
+								<option value='Responder'>Responder</option>
+								<option value='Status'>Status</option>
+								<option value='DateAndTime'>Date And Time</option>
+								<option value='FeedIfReturned'>Feed If Returned</option>
+								<option value='FullName'>Full Name</option>
+								<option value='Email'>Email</option>
+								<option value='Phone1'>Phone1</option>
+								<option value='Phone2'>Phone2</option>
+								<option value='ColonyAddress'>Colony Address</option>
+								<option value='City'>City</option>
+								<option value='County'>County</option>
+								<option value='ZipCode'>ZipCode</option>
+								<option value='AnyoneAttempted'>Anyone Attempted</option>
+								<option value='ApproximateCats'>Approximate Cats</option>
+								<option value='Kittens'>Kittens</option>
+								<option value='ColonyCareGiver'>Colony Caregiver</option>
+								<option value='FeederDescription'>Feeder Description</option>
+								<option value='Injured'>Injured/Pregnant</option>
+								<option value='InjuryDescription'>Injury Description</option>
+								<option value='FriendlyPet'>Friendly/Pet</option>
+								<option value='ColonySetting'>Colony Setting</option>
+								<option value='Comments'>Additional Comments</option>
+								<option value='ReqAssistance'>Require Assistance</option>
+								<option value='VolunteerResponding'>Volunteer Responding</option>
+								<option value='ResponseDate'>Response Date</option>
+								<option value='CustNeedOutcome'>Customer Need Outcome</option>
+								<option value='BeatTeamLeader'>Beat Team Leader</option>
+								<option value='Outcome'>Outcome</option>
+								<option value='CompletionDate'>Completion Date</option>
+								<option value='Lat'>Latitude</option>
+								<option value='Lng'>Longitude</option>
+							</select>
+
+							<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
+								<option value='='>=</option>
+								<option value='!='>&ne;</option>
+								<option value='<'>&lt;</option>
+								<option value='>'>&gt;</option>
+								<option value='<='>&le;</option>
+								<option value='>='>&ge;</option>
+								<option value='contains'>contains</option>
+							</select>
+
+							<input class="form-control" type="text" id="queryvalue" name="queryvalue[]" placeholder="By value" tabindex='5'/>
+							<input class="btn btn-primary btn-outline" type="button" id="cqaddbtn" name="addquery" value="+"/>
+						</div>
+					</div>
+					<div class="row">
+						<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
+					</div>
+				</form>
 			</div>
-			</form>
 		</div>
 	</div>
 	</div>
+	
+	<!-- modal for saving canned query name -->
+	<div class="modal fade" id="getcndqnameModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form id="addcurrqry" method='get' action='search.php'>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="motal-title" id="myModalLabel">Name your Canned Query</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group row">
+							<label class="col-sm-4 col-for-label" for="queryname" style="text-align: center">Query Name:</label>
+							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" title="Cannot be empty" required /></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn" data-dismiss="modal">Close</button>
+						<input type="submit" class="btn btn-primary" name="addcurrentquery" value="Save"/>
+					</div>
+				</form> 
+			</div>
+		</div>
+	</div>	
+
 
 <?php		
 
@@ -323,6 +403,57 @@
 						echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
 					else $_SESSION['querysearch'] = $search;
 				}
+			}
+			//canned query search
+			if(isset($_GET['submitcannedquery'])){
+				unset($_SESSION['querysearch']); //refresh variable
+				$cannedqueryname = $_GET['cannedquery'][0];
+				
+				$sea = "select * from CannedQueries where QueryName='".$cannedqueryname."'";
+				$res = mysqli_query($link, $sea);
+				if(mysqli_num_rows($res)==0)
+					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+				else {
+					$rw = mysqli_fetch_row($res);
+					$_SESSION['querysearch'] = $rw[2];
+				}
+			}
+			//canned query check for existance & then display modal
+			if(isset($_GET['savecurrentquery'])){
+				$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
+				$res = mysqli_query($link, $sea);
+				if(mysqli_num_rows($res)==0){
+					echo "<script type='text/javascript'>
+							$(document).ready(function(){
+								$('#getcndqnameModal').modal('show');
+							});
+						</script>";
+				} else {
+					$rw = mysqli_fetch_row($res);
+					echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+				}
+			}
+			//canned query save
+			if(isset($_GET['addcurrentquery'])){
+				$qryname = $_GET['queryname'];
+
+				//still check if exists so doesn't keep adding to db
+				$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
+				$res = mysqli_query($link, $sea);
+				if(mysqli_num_rows($res)==0){
+					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', \"".$_SESSION['querysearch']."\")";
+					mysqli_query($link, $savecannedqry);
+				}
+			}
+			//canned query delete
+			if(isset($_GET['deletecannedquery'])){
+				$cannedqueryname = $_GET['cannedquery'][0];
+				
+				$sea = "delete from CannedQueries where QueryName='".$cannedqueryname."'";
+				$res = mysqli_query($link, $sea);
+				if(mysqli_num_rows($res)==0){
+					print "<span id='recupdate'><h2>Query \"".$cannedqueryname."\" was removed</h2></span>";
+				} else print "error";
 			}
 			
 			if(isset($_GET['Reset']))
