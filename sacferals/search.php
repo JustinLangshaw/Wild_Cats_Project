@@ -38,41 +38,64 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<!--<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">-->
 		<link rel="stylesheet" href="css/search.css">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>-->
-		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
        <!-- <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>-->
        	
        	<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
 		<script src="searchScript.js"></script> 
   	</head>
+	
 	<body>
-	<div class="row">
-		<div class="col-sm-6">
-			<b>Logged in as <?php echo $Ausername ?></b> <br><br>
-			
-			- <a href='userprofile.php' align='right'>Back to Admin Hub</a>
-		</div>
-		<div class="col-sm-6">
-			<div style='float:right'>
-				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
-					<span class='caret'></span></button>
-					<ul class='dropdown-menu dropdown-menu-right'>
-						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
-						<li class='divider'></li>
-						<li><a href='./updateprofile.php'>Update Profile</a></li>
+	<div class="header">
+	<nav class="navbar navbar-inverse">
+  		<div class="container-fluid">
+    			<div class="navbar-header">
+      				<a class="navbar-brand">Logged in as <?php echo $Ausername ?></a>
+    			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">View Records</a></li>
+      				<li><a href="./volunteerlist.php">View Volunteers</a></li>
+				<li class="dropdown">
+        				<a class="dropdown-toggle" data-toggle="dropdown">Forms
+					<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+          					<li><a href="./reportform.php" target="_blank">Report a Colony Form</a></li>
+						<li><a href="./volunteerform.php" target="_blank">Volunteer Form</a></li>
+        				</ul>
+				</li>
+			</ul>
+    			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+        				<a class="dropdown-toggle" data-toggle="dropdown">Useful Links
+					<span class="caret"></span></a>
+        				<ul class="dropdown-menu">
+          					<li><a href="https://www.catstats.org/" target="_blank">CatStats Website</a></li>
+						<li><a href="https://www.gmail.com" target="_blank">Gmail</a></li>
+						<li><a href="https://www.google.com/maps" target="_blank">Google Maps</a></li>
+						<li><a href="http://assessorparcelviewer.saccounty.net/JSViewer/assessor.html" target="_blank">Sacramento County Assessor Parcel Viewer</a></li>
+        				</ul>
+      				</li>
+      				<li class="dropdown">
+        				<a class="dropdown-toggle" data-toggle="dropdown">
+        				<span class="glyphicon glyphicon-menu-hamburger"></span>
+					<span class="caret"></span></a>
+        				<ul class="dropdown-menu">
+          					<li><a href='./updateprofile.php'>Update Profile</a></li>
 						<li><a href='./logout.php'>Sign Out</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+        				</ul>
+      				</li>
+  			</ul>
+  		</div>
+	</nav>
 	</div>
-	<hr>
+
 	<div class="row">
 		<div class="col-md-4">
 			<div id="columnselect">Note: Hold down ctrl or shift to select multiple columns</div>
@@ -118,24 +141,6 @@
 				 <input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
 		</div>
-<?php   //Canned Queries Section
-        $cannedQueryList="SELECT QueryName, QueryString FROM CannedQueries";
-	$result=mysqli_query($link, $cannedQueryList);
-	$array=mysqli_fetch_all($result);
-        print "<div class='col-md-2'><b> Canned Queries</b>
-		<form id='CannedQueryForm' name='CannedQueryForm' method='get' action='search.php'>
-			<select name='select3[]' size=7 tabindex='1'>";
-				foreach ($array as $row) {
-					print "<option title='$row[1]'>$row[0]</option>";
-				}
-	print "	</select>
-			<br>
-			<input class='btn btn-primary' type='submit' name='Submit' value='Submit' tabindex='2' />
-			<input class='btn' type='submit' name='Edit' value='Edit'/><br>
-			<input class='btn' type='submit' name='Create' value='Create'>
-			<input class='btn btn-danger' type='submit' name='Delete' value='Delete'/>
-		</form>
-        </div>"; ?>
 		<div class="col-md-6">
 			<form id="queryform" method='get' action='search.php'>
 			<!-- Custom Query -->
