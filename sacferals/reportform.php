@@ -7,8 +7,14 @@
 <script type="text/javascript">
 function displayformdiv(){ 
 	var check = document.getElementById('maincheckbox');
-	if(check.checked) document.getElementById('formdiv').style.display="block";
-	else document.getElementById('formdiv').style.display="none";
+	if(check.checked) {
+		document.getElementById('inner-form').style.display="block";
+		document.getElementById('hr-show').style.display="block";
+	}
+	else {
+		document.getElementById('inner-form').style.display="none";
+		document.getElementById('hr-show').style.display="none";
+	}
 }
 
 function formatPhone(phoneId) {
@@ -62,7 +68,6 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$lng = $_POST['lng'];
 	
 	
-	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
 	$required = array('fullname','email','colonystreet','zipcode','city','numberofcats','county');
@@ -86,10 +91,10 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	{
 		if(preg_match($re, $first) && preg_match($re, $last))
 		{	//no need to check for duplicates
-			$query = "insert into ReportColonyForm values('', '', '', '', Now(), '$fullname', '$email', '$phone1', '$phone2', 
+			$query = "insert into ReportColonyForm values('', '', 'Open', '', Now(), '$feedifreturned[0]', '$fullname', '$email', '$phone1', '$phone2', 
 			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
-			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '', '', '', '', '', '',
-			'$feedifreturned[0]', '$reqassistance', '$lat', '$lng')";
+			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '$reqassistance', '', '', '', '', '', '',
+			'$lat', '$lng')";
 	
 			mysqli_query($link, $query); //link query to database
 			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
@@ -117,128 +122,266 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 <html lang="en">
 <head>	
 	<title>Report Colony/Caregiver Registration</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
+	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="css/reportform.css">
+	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="script.js"></script> 
-    <link rel="stylesheet" href="css/reportform.css">
-	<!--
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>-->
 </head>
 <body>
 
 	<?php echo $result; ?>
+	<div class="alert" id='alert' style='display:none'>
+		<span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+		<label id='errorMsg'></label>
+	</div>
 
-	<h2> Report a Feral Cat Colony & Get TNR Assistance </h2>
-	<form method="post" action="reportform.php" id='reportform'>
-		<p>Thank you for providing information about a feral cat colony 
-		   (a "colony" is a term used to describe a group of cats living together.)</p>
-		<p>Please answer the questions below to the best of your ability.  The more 
-		   information you provide, the more help we will be able to provide.  It's 
-		   important that we are able to get in contact with you regarding this request.  
-		   Without your name and contact information, it is unlikely we will be able to 
-		   assist the colony you are reporting.</p>
-
-		<input type="checkbox" id="maincheckbox" onclick="displayformdiv()"> I have read all the information required for filling out this form.</input><br>
-
-		<div id="formdiv">
-			<br><b><small><font color="red">* Required Fields</font></small></b><br><br>
-			<b>Will anyone feed the cats if they are altered and returned?</b><br>
-			<input type="radio" name="feedifreturned[]" value="Yes" id="feedifreturnedyes"> Yes<br>
-			<input type="radio" name="feedifreturned[]" value="No" id="feedifreturnedno"> No<br><br>
-			
-			<b>*Full Name</b><br>
-			<input type="text" name="fullname" id="fullname" pattern="[a-zA-Z]{3,}\s[a-zA-Z]{3,}" title="Enter first and last name" placeholder="First Last" required><br><br>
-			<b>*Email Address</b>
-			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-				<span class="tooltiptext">This is our preferred method of contact.</span>
-			</div><br>
-			<input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required><br><br>
-			<b>Primary Phone</b><br>
-			<input type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" /><br><br>
-			<b>Secondary Phone</b><br>
-			<input type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" /><br><br>
-
-			<b>Are you the primary caregiver/feeder?</b><br>	
-			<input type="radio" name="caregiver[]" value="Yes" onclick="displayForm(this)"> Yes<br>
-			<input type="radio" name="caregiver[]" value="No" onclick="displayForm(this)"> No<br><br>
-			<div class='indent todisplay' id="feederID">
-				<b>Does anyone feed the cats?</b><br>
-				<textarea rows="4" cols="50" name="feederdescription"></textarea><br><br>
+	<h2> Report a Feral Cat Colony &amp; Get TNR Assistance </h2>
+	<div id="form-wrapper">
+		<form method="post" action="reportform.php" id='reportform'>
+			<div class="form-row">
+				<p>Thank you for providing information about a feral cat colony 
+				   (a "colony" is a term used to describe a group of cats living together.)</p>
+				<p>Please answer the questions below to the best of your ability.  The more 
+				   information you provide, the more help we will be able to provide.  It's 
+				   important that we are able to get in contact with you regarding this request.  
+				   Without your name and contact information, it is unlikely we will be able to 
+				   assist the colony you are reporting.</p>
 			</div>
-			
-			<b>*Address of Cat Colony</b>
-			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-				<span class="tooltiptext">If you have any additional information,
-					indicate in the Additional Comments box at the very bottom of the form.</span>
-			</div><br>
-			<input type="text" name="colonystreet" pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}" title="Enter street# and street name" id="colonystreet" required><br><br>
-			<b>*Zip Code</b><br>
-			<input type="text" name="zipcode" id="zipcode" maxlength="5" required><span id="ziperror"></span><br><br>
-			<b>*City</b><br>
-			<span id="city_wrap"><input type="text" name="city" id="city" required></span><br><br>
-			<b>*County</b><br>
-			<input type="text" name="county" id="county" required><br><br>
-			<b>State</b><br>
-			<input type="text" value="CA" readonly><br><br>
-			
-			<b>Has trapping been attempted or are any of the cats' ears tipped?</b>
-			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-				<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this means this
-					cat has already been trapped and is altered. Release this cat immediately.</span>
-			</div><br>
-			<input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes<br>
-			<input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No<br><br>
-			
-			<b>*Approx # of Cats (including Kittens)</b><br>
-			<input type="number" name="numberofcats" min="1" max="99" id="numberofcats" required><br><br>
-			<b>If there are kittens, are they under 8 weeks old and nursing?</b>
-			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-				<span class="tooltiptext">Kitten Description<br>
-					Will be provided by SacFerals later.</span>
-			</div><br>
-			<input type="radio" name="kittens[]" value="Yes" id="kittensyes"> Yes<br>
-			<input type="radio" name="kittens[]" value="No" id="kittensno"> No<br><br>
-			
-			<b>Injured or Pregnant Cats?</b>
-			<div class="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-				<span class="tooltiptext">Signs of INJURED cats can include inflammation/swelling, limping, 
-					rapid breathing or other signs of stress, and blood.<br>
-					Signs of a PREGNANT cat can include nesting activities, vomiting,
-					and an enlarged abdomen.</span>
-			</div><br>
-			<input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes<br>
-			<input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No<br><br>
-			<div class='indent todisplay' id="recentlyinjuredID">
-				<b>Describe Condition</b><br>
-				<textarea rows="4" cols="50" name="injurydescription"></textarea><br><br>
-			</div>
-			
-			<b>Are any of the cats friendly or pets?</b><br>
-			<input type="radio" name="friendlypet[]" value="Yes" id="friendlypetyes"> Yes<br>
-			<input type="radio" name="friendlypet[]" value="No" id="friendlypetno"> No<br><br>
-			
-			<b>What is the setting of this colony?</b><br>
-			<input type="radio" name="setting[]" value="Residential" id="residentialsetting"> Residential<br>
-			<input type="radio" name="setting[]" value="Commercial" id="commercialsetting"> Commercial<br>
-			<input type="radio" name="setting[]" value="Industrial"id="industrialsetting"> Industrial<br><br>
 
-			<b>Additional Comments</b><br>
-			<textarea rows="4" cols="50" name="comments"></textarea><br><br>
-			
-			<b>Physical Limitations</b><br>
-			<input type="checkbox" name="reqassistance" value="Yes"> Due to physical limitations, I require assistance with trapping.</input><br><br>
-			
-			<input type="submit" name="submitcolony" value="Submit"  > <!-- button itself -->
-		</div>
-	</form>
-	<br>
+			<div class="form-row">
+				<div class="form-check">
+					<label><input type="checkbox" id="maincheckbox" onclick="displayformdiv()"> &nbsp; I have read all the information required for filling out this form.</input></label>
+				</div>
+			</div>
+		
+			<span id="hr-show" class="todisplay"><hr></span>
+		
+			<div class="form-row todisplay" id="inner-form">
+				<div class="form-group"><font color="red">* Required Fields</font></div>
+				<div class="form-group">
+					<label class="form-check-label">Will anyone feed the cats if they are altered and returned?</label>
+					<div class="form-check">
+						<label><input type="radio" name="feedifreturned[]" value="Yes" id="feedifreturnedyes"> Yes</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="feedifreturned[]" value="No" id="feedifreturnedno"> No</label></div>
+				</div>
+				<div class="form-group">
+					<label class="col-form-label" for="fullname">*Full Name </label>			<!--L+ [-] L+ 							middle          L+ [-'] L+-->				    
+					<input class="form-control" type="text" name="fullname" id="fullname" pattern="[a-zA-Z]+[-]{0,1}[a-zA-Z]+\s[a-zA-Z\s]{0,}[a-zA-Z]+[-']{0,1}[a-zA-Z]+" title="Enter first and last name" placeholder="First Last" required>
+				</div>
+				<div class="form-group">
+					<label class="col-form-label" for="email">*Email Address
+						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+							<span class="tooltiptext">This is our preferred method of contact.</span>
+						</div>
+					</label>
+					<input class="form-control" type="email" name="email" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required>
+				</div>
+				<div class="form-group">
+					<label class="col-form-label" for="phone1">Primary Phone</label>
+					<input class="form-control" type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
+				</div>
+				<div class="form-group">
+					<label class="col-form-label" for="phone2">Secondary Phone</label>
+					<input class="form-control" type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
+				</div>
+
+				<div class="form-group">
+					<label class="form-check-label">Are you the primary caregiver/feeder?</label>
+					<div class="form-check">
+						<label><input type="radio" name="caregiver[]" value="Yes" onclick="displayForm(this)"> Yes</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="caregiver[]" value="No" onclick="displayForm(this)"> No</label></div>
+					<div class='form-group  indent todisplay' id="feederID">
+						Does anyone feed the cats?<br>
+						<textarea class="form-control" id="textarea" rows="4" name="feederdescription"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<label class="col-form-label" for="colonystreet">*Address of Cat Colony
+							<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+								<span class="tooltiptext">If you have any additional information,
+									indicate in the Additional Comments box at the very bottom of the form.</span>
+							</div>
+						</label>
+						<input class="form-control" type="text" name="colonystreet" placeholder="1234 Sesame St"
+							pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}" title="Enter street# and street name" id="colonystreet" required>
+						<span id="invalidAddr" type="hidden"></span>
+					</div>
+					<div class="col-sm-2">
+						<label class="col-form-label" for="state">State</label>
+						<input class="form-control" type="text" id="state" value="CA" readonly>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-4">
+						<label class="col-form-label" for="zipcode">*Zip Code</label>
+						<input class="form-control" type="text" name="zipcode" id="zipcode" maxlength="5" required>
+						<span id="ziperror"></span>
+					</div>
+					<div class="col-sm-4">
+						<label class="col-form-label" for="city">*City</label>
+						<span id="city_wrap"><input class="form-control" type="text" name="city" id="city" title="Enter a City" required></span>
+					</div>
+					<div class="col-sm-4">
+						<label class="col-form-label" for="county">*County</label>
+						<input class="form-control" type="text" name="county" id="county" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="form-check-label">Has trapping been attempted or are any of the cats' ears tipped?
+						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+							<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this means this
+								cat has already been trapped and is altered. Release this cat immediately.</span>
+						</div>
+					</label>
+					<div class="form-check">
+						<label><input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No</label></div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label class="col-form-label" for="numberofcats">*Approx # of Cats (including Kittens)</label>
+					</div>
+					<div class="col-sm-2">
+						<input class="form-control" type="number" name="numberofcats" min="1" max="99" id="numberofcats" required>
+						<span id="catserror"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="form-check-label">If there are kittens, are they under 8 weeks old and nursing?
+						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+							<span class="tooltiptext">Kitten Description<br>
+								Will be provided by SacFerals later.</span>
+						</div>
+					</label>
+					<div class="form-check">
+						<label><input type="radio" name="kittens[]" value="Yes" id="kittensyes"> Yes</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="kittens[]" value="No" id="kittensno"> No</label></div>
+				</div>
+				<div class="form-group">
+					<label class="form-check-label">Injured or Pregnant Cats?
+						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+							<span class="tooltiptext">Signs of INJURED cats can include inflammation/swelling, limping, 
+								rapid breathing or other signs of stress, and blood.<br>
+								Signs of a PREGNANT cat can include nesting activities, vomiting,
+								and an enlarged abdomen.</span>
+						</div>
+					</label>
+					<div class="form-check">
+						<label><input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes</label></div>
+					<div class='form-group indent todisplay' id="recentlyinjuredID">
+						Describe Condition<br>
+						<textarea class="form-control" rows="4" cols="50" name="injurydescription"></textarea>
+					</div>
+					<div class="form-check">
+						<label><input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No</label></div>
+				</div>
+				<div class="form-group">
+					<label class="form-check-label">Are any of the cats friendly or pets?</label>
+					<div class="form-check">
+						<label><input type="radio" name="friendlypet[]" value="Yes" id="friendlypetyes"> Yes</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="friendlypet[]" value="No" id="friendlypetno"> No</label></div>
+				</div>
+				<div class="form-group">
+					<label class="form-check-label">What is the setting of this colony?</label>
+					<div class="form-check">
+						<label><input type="radio" name="setting[]" value="Residential" id="residentialsetting"> Residential</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="setting[]" value="Commercial" id="commercialsetting"> Commercial</label></div>
+					<div class="form-check">
+						<label><input type="radio" name="setting[]" value="Industrial"id="industrialsetting"> Industrial</label></div>
+				</div>
+				
+				<div class="form-group">
+					<label class="form-check-label">Physical Limitations</label>
+					<div class="form-check">
+						<label><input type="checkbox" name="reqassistance" value="Yes"> Due to physical limitations, I require assistance with trapping.</input></label>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="form-check-label">Additional Comments</label>
+					<textarea class="form-control" rows="4" cols="50" name="comments" id="textarea"></textarea>
+				</div>
+				
+				<input type="hidden" name="lat" id="lat"/>
+				<input type="hidden" name="lng" id="lng"/>
+				
+				<br>
+				<div class="form-group row" id="buttons">
+					<input class="btn btn-primary" type="submit" name="submitcolony" value="Submit"  > <!-- button itself -->
+				</div>
+			</div>
+		</form>
+	</div>
 
 <script>
+//Checks user input for street, city, and zipcode
+$(document).ready(function(){
+	$('#colonystreet').focusout(getGeocode)	
+	$('#zipcode').focusout(getGeocode);
+	$('#city_wrap').focusout(getGeocode);
+});
+
+//Gets geocode if address is availible 
+function getGeocode() {
+    var lat = null;
+    var lng = null;
+    var street = $('#colonystreet').val();
+    var city = $('#city').val();
+    var state = $('#state').val();
+    var zip = $('#zipcode').val();
+    var address = street + "," + city + "," + state + "," + zip;
+    var redBanner = $('#alert');
+    var errorMsg = $('#invalidAddr');
+
+    if ((street != "") && (city != "") && (zip != "")) {
+        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' +
+            address + '&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response) {
+            if (response.results != "") {
+                if ((response.status == 'OK') && (response.results[0].geometry.location_type == 'ROOFTOP') && (response.results[0].partial_match != true) && (response.results.length < 2)) {
+                    lat = response.results[0].geometry.location.lat;
+                    lng = response.results[0].geometry.location.lng;
+                    $('#lat').val(lat);
+                    $('#lng').val(lng);
+                    errorMsg.html('');
+                    $('#zipcode').attr('style', '');
+                    $('#colonystreet').attr('style', '');
+                    $('#city').attr('style', '');
+                } else {
+                    errorMsg.html("<small>Cannot locate exact location of address. Please check if address is valid.</small>");
+                    $('#zipcode').attr('style', 'border: 1px solid #d66');
+                    $('#colonystreet').attr('style', 'border: 1px solid #d66');
+                    $('#city').attr('style', 'border: 1px solid #d66');
+                    $('#invalidAddr').attr('style', 'color: RED');;
+                }
+            } else {
+                errorMsg.html("<small>Cannot identfy address entered. Make sure you are entering an address in the proper format.</small>");
+                $('#zipcode').attr('style', 'border: 1px solid #d66');
+                $('#colonystreet').attr('style', 'border: 1px solid #d66');
+                $('#city').attr('style', 'border: 1px solid #d66');
+                $('#invalidAddr').attr('style', 'color: RED');
+            }
+        });
+    }
+}
 
 //when user clicks off of the zip field:
 $(document).ready(function(){
-	$('#zipcode').keyup(function(){
+	$('#zipcode').on('keyup focus', function(){
 		if($(this).val().length==5){
 			var zip = $(this).val();
 			var city = '';
@@ -250,65 +393,99 @@ $(document).ready(function(){
 			$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
 					+zip+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response){
 				//find the city and county
-				var address_components = response.results[0].address_components;
-				$.each(address_components, function(index, component){
-					var types = component.types;
-					$.each(types, function(index, type){
-						if(type == 'locality') city = component.long_name;
-						if(type == 'administrative_area_level_1') state = component.short_name;
-						if(type == 'administrative_area_level_2') county = component.long_name;
-						if(type == 'neighborhood') citybackup = component.long_name;
-					});
-				});
-				if(city=='') city=citybackup;
-				if(state=='CA'){
-					$('#zipcode').attr('style','');
-					$('#ziperror').html('');
-					//pre-fill the city and state
-					var cities = response.results[0].postcode_localities;
-					if(cities){
-						//turn city into a dropdown if necessary
-						var $select = $(document.createElement('select'));
-						$.each(cities, function(index,locality){
-							var $option = $(document.createElement('option'));
-							$option.html(locality);
-							$option.attr('value',locality);
-							if(city == locality) $option.attr('selected','selected');
-							$select.append($option);
+				if(response.results[0]!=null){ //if zip even exists
+					var address_components = response.results[0].address_components;
+					$.each(address_components, function(index, component){
+						var types = component.types;
+						$.each(types, function(index, type){
+							if(type == 'locality') city = component.long_name;
+							if(type == 'administrative_area_level_1') state = component.short_name;
+							if(type == 'administrative_area_level_2') county = component.long_name;
+							if(type == 'neighborhood') citybackup = component.long_name;
 						});
-						$select.attr('id','city');
-						$select.attr('name','city');
-						$('#city_wrap').html($select);
-					}
-					else {
-						$('#city_wrap').html('<input type="text" name="city" id="city">');
-						$('#city').val(city);
-					}
-					if(county == '') {
-						$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
-							+city+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(res){
-							var address_components2 = res.results[0].address_components;
-							$.each(address_components2, function(indx, compnt){
-								var types2 = compnt.types;
-								$.each(types2, function(indx, typ){
-									if(typ == 'administrative_area_level_2'){
-										county = compnt.long_name;
-										$('#county').val(county);
-									}
+					});
+					if(city=='') city=citybackup;
+					if(state=='CA'){
+						$('#zipcode').attr('style','');
+						$('#ziperror').html('');
+						//pre-fill the city and state
+						var cities = response.results[0].postcode_localities;
+						if(cities){
+							//turn city into a dropdown if necessary
+							var $select = $(document.createElement('select'));
+							$.each(cities, function(index,locality){
+								var $option = $(document.createElement('option'));
+								$option.html(locality);
+								$option.attr('value',locality);
+								if(city == locality) $option.attr('selected','selected');
+								$select.append($option);
+							});
+							$select.append('<option value="Other">Other</option>');
+							$select.attr('id','city');
+							$select.attr('name','city');
+							$select.attr('class','form-control');
+							$('#city_wrap').html($select);
+						}
+						else {
+							$('#city_wrap').html('<input class="form-control" type="text" name="city" id="city" title="Enter a City" required>');
+							$('#city').val(city);
+						}
+						if(county == '') {
+							$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
+								+city+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(res){
+								var address_components2 = res.results[0].address_components;
+								$.each(address_components2, function(indx, compnt){
+									var types2 = compnt.types;
+									$.each(types2, function(indx, typ){
+										if(typ == 'administrative_area_level_2'){
+											county = compnt.long_name;
+											$('#county').val(county);
+										}
+									});
 								});
 							});
-						});
+						}
+						else $('#county').val(county);
 					}
-					else $('#county').val(county);
+					else{
+						$('#zipcode').attr('style','border: 1px solid #d66');
+						$('#ziperror').html('<small>Must be in California</small>');
+						$('#zipcode').val('');
+						if($('#city_wrap').find('select').length!=0)
+							$('#city_wrap').html('<input class="form-control" type="text" name="city" id="city" title="Enter a City" required>');
+						else $('#city').val('');
+						$('#county').val('');
+					}
 				}
 				else{
 					$('#zipcode').attr('style','border: 1px solid #d66');
-					$('#ziperror').attr('style','color: RED');
-					$('#ziperror').html(' Must be in California');
-					$('#city').val('');
+					$('#ziperror').html('<small>That Zip Code doesn\'t exist</small>');
+					$('#zipcode').val('');
+					if($('#city_wrap').find('select').length!=0)
+						$('#city_wrap').html('<input class="form-control" type="text" name="city" id="city" title="Enter a City" required>');
+					else $('#city').val('');
 					$('#county').val('');
 				}
 			});
+		}
+	});
+	
+	$('#city_wrap').on('change', '#city', function(){
+		if($(this).val() == 'Other'){
+			$('#city_wrap').html('<input class="form-control" type="text" name="city" id="city" placeholder="Enter a City" title="Enter a City" required>');
+			$('#city').focus();
+		}
+	});
+	
+	$('#numberofcats').on('keyup change', function(){
+		if($(this).val()>99 || $(this).val()<1){
+			$('#numberofcats').attr('style','border: 1px solid #d66');
+			$('#catserror').html('<small>only 0-99</small>');
+			$('#numberofcats').val('');
+		}
+		else{
+			$('#numberofcats').attr('style','');
+			$('#catserror').html('');
 		}
 	});
 });

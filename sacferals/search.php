@@ -27,7 +27,7 @@
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
 
-		if($level == 1)
+		if($level == 1 || $level == 2)
 		{
 ?>
 
@@ -38,17 +38,18 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
-		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<!--<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">-->
 		<link rel="stylesheet" href="css/search.css">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+		<!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>-->
+		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+       <!-- <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>-->
        	
        	<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
+		<script src="searchScript.js"></script> 
   	</head>
 	<body>
 	<div class="row">
@@ -600,7 +601,7 @@
 							}
 						}
 						print "
-						</tbody></div>
+						</tbody>
 					</table>
 				</form>";
 			}
@@ -720,7 +721,7 @@
 								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
 								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance', 
-								 Lat='$Lat', Lng='$Lng', where RecordNumber='$RecordNumber1'";
+								 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
 
 							//echo $queryupdate;
 							mysqli_query($link, $queryupdate);
@@ -765,6 +766,8 @@
 				$query = "select * from ReportColonyForm order by $sort";
 				$result = mysqli_query($link, $query);
 			}
+			$_SESSION['totalrecords']=mysqli_num_rows($result);
+			
 			if(!isset($_GET['editrow']))
 			{
 			//if edit is not set
@@ -833,7 +836,7 @@
 					print"
 					</thead>
 
-					<tbody style='width: 6594px;'>";
+					<tbody>";
 
 					//while the next row (set by query) exists?
 
@@ -876,8 +879,8 @@
 						$myArray[28]=$BeatTeamLeader;
 						$myArray[29]=$Outcome;
 						$myArray[30]=$CompletionDate;
-						$myArray[31]="Lat";
-						$myArray[32]="Lng";
+						$myArray[31]=$Lat;
+						$myArray[32]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="Comments1";
@@ -1022,18 +1025,13 @@
 			<div class='todisplay4'>
 			</div>";
 			*/
-		}
-		else if($level == 2)
-		{
-			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
-		}
-	}
 ?>
 
    		<form id="resettable" method='get' action='search.php'>
-			<input class="btn" type="submit" value="Refresh Table" name="RefreshTable"/>
-   			<input class="btn btn-primary" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export Table" />
-   		</form>
+			<input class="btn" type="submit" value="Refresh" name="RefreshTable"/>
+   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
+			<span id="ttlrecs">Total Records: <?php echo $_SESSION['totalrecords']; ?></span>
+		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		<hr>
@@ -1054,6 +1052,15 @@
 		<script src="plotMapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-	</body>
-</html>
 
+<?php
+		}
+		else {
+			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
+			header("Location: userprofile.php");
+		}
+	}
+?>
+
+</body>
+</html>

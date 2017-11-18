@@ -1,14 +1,14 @@
 body {
 	background-color: powderblue;
 	margin: 20px;
-	font-family: Georgia, serif;
+	/*font-family: Georgia, serif;*/
 	font-size: 15px;
-	color: black; /*default for bootstrap is dark-gray*/
+	color: black;
 }
 form {
 	margin: auto;
 	background-color: white;
-	padding: 1.3em;    
+	padding: 2em;    
 	border-color: #0b61a4;
 	border-style: solid;
 	border-width: 1px;
@@ -34,41 +34,36 @@ h2 {
 	font-size: 25px;
 	font-weight: bold;
 }
-img {
-	height: 14;
-}
 
-#inner-form { 
-	display: none;
-	padding: 10px 15% 10px 5%;
-}
-.form-check label{
-	font-weight: normal !important;
-}
-/*#formdiv {
-	display: none;
-	padding: 0px 4vw;
-}*/
-/*.fieldset-auto-width {
-	display: inline-block;
-}*/
-.todisplay {
-	display: none;
-}
-.indent {
+.indent
+{
 	padding-left: 2em;
-}
-#textarea {
-	max-width: 100%;
 }
 #buttons{
 	text-align: right;
 }
-#ziperror, #catserror, #invalidAddr{
+#emailnote{
+	color: darkgray;
+	margin: auto;
+	display: table;
+}
+#passerrmsg{
 	color: red;
 	margin: auto;
 	display: table;
 }
+#inner-form, #inner-form2, #inner-form3 { 
+	padding: 10px 40px;
+}
+
+.form-check label{
+	font-weight: normal !important;
+}
+
+#othertasks {
+	max-width: 70%;
+}
+
 /*error msg*/
 .alert {
 	padding: 20px;
@@ -90,40 +85,27 @@ img {
 	color: black;
 }
 
-#tooltip {
+.tooltip {
 	position: relative;
 	display: inline-block;
-	margin: 0;
 }
-#tooltip .tooltiptext {
+.tooltip .tooltiptext {
 	visibility: hidden;
-	width: 190px;
-	/*white-space: nowrap;*/
-	background-color: gainsboro; /*very light gray*/
+	width: auto;
+	white-space: nowrap;
+	background-color: #0b61a4;
+	color: #fff;
 	text-align: left;
 	border-radius: 5px;
 	padding: 10px 15px;
-	font-size: 13px;
-	font-weight: normal !important;
-	font-family: verdana;
+	font-size: 14px;
 	
 	/* Position the tooltip */
 	position: absolute;
 	z-index: 1;
-	top: -50%;
-	left: 155%;
-	
+	top: -5px;
+	left: 150%;
 }
-#tooltip .tooltiptext::after {
-	content: "";
-	position: absolute;
-	top: 8px;
-	right: 100%; 
-	margin-left: -5px;
-	border-width: 5px;
-	border-style: solid;
-	border-color: transparent gainsboro transparent transparent;
-}
-#tooltip:hover .tooltiptext {
+.tooltip:hover .tooltiptext {
 	visibility: visible;
 }
