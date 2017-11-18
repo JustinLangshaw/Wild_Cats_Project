@@ -104,7 +104,9 @@ CREATE TABLE VolunteerForm (
   BEATNotes TEXT,
   BEATStatus VARCHAR(255),
   TriageBEATNotes VARCHAR(255),
-  DateActivated VARCHAR(45));
+  DateActivated VARCHAR(45),
+  WorkshopAttended VARCHAR(255),
+  WorkshopDate VARCHAR(45));
 
 INSERT INTO `sacferals`.`VolunteerForm` (`Comments`, `FullName`, `Address`, `Email`, `Phone1`, `Phone2`, `contactemail`, `contactphone1`, `contactphone2`, `TypeOfWork`, `transporting`, `helptrap`, `helpeducate`, `usingphone`, `helpingclinic`, `other`, `OtherTasks`, `PastWorkExp`, `BEATId`, `BEATName`, `BEATGeneralArea`, `BEATZipCodes`, `BEATTrainDate`, `BEATMembers`, `BEATMembersPhone`, `BEATMemberEmails`, `BEATType`, `BEATNotes`, `BEATStatus`, `TriageBEATNotes`) VALUES ('Something something something stuff stuff stuff things things things', 'First Last', '123 Small St., Sacramento, CA, 95828', 'fl@email.com', '(123)456-7890', '(987)654-3210', '1', '0', '0', 'List of work', '1', '0', '0', '0', '0', '0', 'Other tasks details', 'Relavant experiances', '1', 'South', 'Elk Grove, South Sac.  ', '95823, 95758, 95634\n', '6/22/2014\n', 'Member Name', '(123) 987 - 4561', 'beat@email.com', 'TRAPPING/TRANSPORT\n', 'NEEDS TO MENTOR WITH TRANSPORT\n', 'Experienced?\n', 'All City when able\n');
 

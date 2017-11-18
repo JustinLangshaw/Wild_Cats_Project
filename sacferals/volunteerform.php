@@ -129,7 +129,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 			{	//if not process the insert query
 				$query = "insert into VolunteerForm values('', '', 'Inactive', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$phone2', '$preferedcontact',
 				'$contactemail', '$contactphone1', '$contactphone2', '$typeofworkstring', '$transporting', '$helptrap', '$helpeducate', '$usingphone', '$helpingclinic',
-				'$other', '$othertasks', '$experience', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' )";
+				'$other', '$othertasks', '$experience', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')";
 
 				mysqli_query($link, $query); //link query to database
 				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";

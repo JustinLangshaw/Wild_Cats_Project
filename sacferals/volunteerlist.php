@@ -80,6 +80,8 @@
 					<option value='Comments'>Triage Comments</option>
 					<option value='VolunteerStatus'>Volunteer Status</option>
 					<option value='DateAndTime'>Date Submitted</option>
+					<option value='WorkshopAttended'>Workshop</option>
+					<option value='WorkshopDate'>Workshop Date</option>
 					<option value='DateActivated'>Date Activated</option>
 					<option value='FullName'>Full Name</option>
 					<option value='Address'>Complete Address</option>
@@ -132,6 +134,8 @@
 						<option value='Comments'>Triage Comments</option>
 						<option value='VolunteerStatus'>Volunteer Status</option>
 						<option value='DateAndTime'>Date Submitted</option>
+						<option value='WorkshopAttended'>Workshop</option>
+					    <option value='WorkshopDate'>Workshop Date</option>
 						<option value='DateActivated'>Date Activated</option>
 						<option value='FullName'>Full Name</option>
 						<option value='Address'>Complete Address</option>
@@ -306,7 +310,7 @@
 				$query = "select * from VolunteerForm  where RecordNumber = ".$RecordNumber1."";
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
-				list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone,$BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated) = $row;
+				list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone,$BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row;
 				
 				/*
 				list($RecordNumber, $DateAndTime, $FullName, $CompleteAddress, $Email, $Phone1, $Phone2, $PreferedContact, 
@@ -359,6 +363,8 @@
 								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
 								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
 								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
 								<th><a href='volunteerlist.php?sort='DateActivated'>Date Activated</a></th>
 								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
 								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
@@ -401,7 +407,7 @@
 						//while the next row (set by query) exists?
 						while($row = mysqli_fetch_row($result))
 						{
-							list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated) = $row; // then printed in one table row
+							list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row; // then printed in one table row
 						
 							if($RecordNumber1==$RecordNumber)
 							{
@@ -453,6 +459,8 @@
 									<td><input type='text' name='Comments' value='$Comments'></td>
 									<td><input type='text' name='VolunteerStatus' value='$VolunteerStatus'></td>
 									<td><input type='text' name='DateAndTime' value='$DateAndTime'></td>
+									<td><input type='text' name='WorkshopAttended' value='$WorkshopAttended'></td>
+									<td><input type='text' name='WorkshopDate' value='$WorkshopDate'></td>
 									<td><input type='text' name='DateActivated' value='$DateActivated'></td>
 									<td><input type='text' name='FullName' value='$FullName'></td>
 									<td><input type='text' name='Address' value='$Address'></td>
@@ -520,6 +528,8 @@
 									<td><textarea value='$Comments' readonly>$Comments</textarea></td>
 									<td>$VolunteerStatus</td>
 									<td>$DateAndTime</td>
+									<td>$WorkshopAttended</td>
+									<td>$WorkshopDate</td>
 									<td>$DateActivated</td>
 									<td>$FullName</td>
 									<td><textarea value='$Address' readonly>$Address</textarea></td>
@@ -574,6 +584,8 @@
 				$Comments = $_POST['Comments'];
 				$VolunteerStatus = $_POST['VolunteerStatus'];
 				$DateAndTime = $_POST['DateAndTime'];
+				$WorkshopAttended = $_POST['WorkshopAttended'];
+				$WorkshopDate = $_POST['WorkshopDate'];
 				$DateActivated = $_POST['DateActivated'];
 				$FullName = $_POST['FullName'];
 				$Address = $_POST['Address'];
@@ -608,6 +620,8 @@
 				$BEATNotes = $_POST['BEATNotes'];
 				$BEATStatus = $_POST['BEATStatus'];
 				$TriageBEATNotes = $_POST['TriageBEATNotes'];
+				$WorkshopAttended = $_POST['WorkshopAttended'];
+				$WorkshopDate = $_POST['WorkshopDate'];
 
 				$reName = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
 				if(true) //preg_match($reName, $FullName) &&
@@ -664,8 +678,7 @@
 							$queryupdate = "update VolunteerForm set 
 								 Comments='$Comments', 
 								 VolunteerStatus='$VolunteerStatus', 
-								 DateAndTime='$DateAndTime', 
-								 
+								 DateAndTime='$DateAndTime', 								 
 								 FullName='$FullName', 
 								 Address='$Address', 
 								 Email='$Email', 
@@ -699,7 +712,9 @@
 								 BEATNotes='$BEATNotes', 
 								 BEATStatus='$BEATStatus', 
 								 TriageBEATNotes='$TriageBEATNotes',
-								 DateActivated='$DateActivated'
+								 DateActivated='$DateActivated',
+								 WorkshopAttended='$WorkshopAttended',
+								 WorkshopDate='$WorkshopDate'
 								 where RecordNumber='$RecordNumber1'";
 								 
 							mysqli_query($link, $queryupdate);
@@ -773,10 +788,12 @@
 								else
 								{
 									print "
-								<th><a href='volunteerlist.php?sort=RecordNumber'>ID</a></th>
+								<th><a href='volunteerlist.php?sort='RecordNumber'>ID</a></th>
 								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
 								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
 								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
+								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
 								<th><a href='volunteerlist.php?sort='DateActivated'>Date Actived</a></th>
 								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
 								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
@@ -819,7 +836,7 @@
 					//while the next row (set by query) exists?
 					while($row = mysqli_fetch_row($result))
 					{
-						list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated) = $row; // then printed in one table row // variables are set to current row 
+						list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row; // then printed in one table row // variables are set to current row 
 
 						$myArray[0]=$RecordNumber;
 						$myArray[1]=$Comments;
@@ -858,6 +875,8 @@
 						$myArray[34]=$BEATStatus;
 						$myArray[35]=$TriageBEATNotes;
 						$myArray[36]=$DateActivated;
+						$myArray[37]=$WorkshopAttended;
+						$myArray[38]=$WorkshopDate;
 
 						$myArray[0]="RecordNumber";
 						$myArray[1]="Comments";
@@ -896,7 +915,8 @@
 						$myArray[34]="BEATStatus";
 						$myArray[35]="TriageBEATNotes";
 						$myArray[36]="DateActivated";
-
+						$myArray[37]="WorkshopAttended";
+						$myArray[38]="WorkshopDate";
 						print "
 						<tr>
 							<td><a style='background-color:lightgreen;' href='volunteerlist.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
@@ -953,6 +973,8 @@
 									<td><textarea name='Comments' value='$Comments' readonly>$Comments</textarea></td>
 									<td>$VolunteerStatus</td>
 									<td>$DateAndTime</td>
+									<td>$WorkshopAttended</td>
+									<td>$WorkshopDate</td>
 									<td>$DateActivated</td>
 									<td>$FullName</td>
 									<td><textarea name='Address' value='$Address' readonly>$Address</textarea></td>
