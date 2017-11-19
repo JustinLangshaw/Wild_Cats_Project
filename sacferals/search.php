@@ -42,57 +42,34 @@
 		<link rel="stylesheet" href="css/search.css">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>	
        	
 		<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
 		<script src="searchScript.js"></script> 
   	</head>
-	
 	<body>
-	<div class="header">
-	<nav class="navbar navbar-inverse">
-  		<div class="container-fluid">
-    			<div class="navbar-header">
-      				<a class="navbar-brand">Logged in as <?php echo $Ausername ?></a>
-    			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">View Records</a></li>
-      				<li><a href="./volunteerlist.php">View Volunteers</a></li>
-				<li class="dropdown">
-        				<a class="dropdown-toggle" data-toggle="dropdown">Forms
-					<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-          					<li><a href="./reportform.php" target="_blank">Report a Colony Form</a></li>
-						<li><a href="./volunteerform.php" target="_blank">Volunteer Form</a></li>
-        				</ul>
-				</li>
-			</ul>
-    			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-        				<a class="dropdown-toggle" data-toggle="dropdown">Useful Links
-					<span class="caret"></span></a>
-        				<ul class="dropdown-menu">
-          					<li><a href="https://www.catstats.org/" target="_blank">CatStats Website</a></li>
-						<li><a href="https://www.gmail.com" target="_blank">Gmail</a></li>
-						<li><a href="https://www.google.com/maps" target="_blank">Google Maps</a></li>
-						<li><a href="http://assessorparcelviewer.saccounty.net/JSViewer/assessor.html" target="_blank">Sacramento County Assessor Parcel Viewer</a></li>
-        				</ul>
-      				</li>
-      				<li class="dropdown">
-        				<a class="dropdown-toggle" data-toggle="dropdown">
-        				<span class="glyphicon glyphicon-menu-hamburger"></span>
-					<span class="caret"></span></a>
-        				<ul class="dropdown-menu">
-          					<li><a href='./updateprofile.php'>Update Profile</a></li>
+	<div class="row">
+		<div class="col-sm-6">
+			<b>Logged in as <?php echo $Ausername ?></b> <br><br>
+			
+			- <a href='userprofile.php' align='right'>Back to Admin Hub</a>
+		</div>
+		<div class="col-sm-6">
+			<div style='float:right'>
+				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
+					<span class='caret'></span></button>
+					<ul class='dropdown-menu dropdown-menu-right'>
+						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
+						<li class='divider'></li>
+						<li><a href='./updateprofile.php'>Update Profile</a></li>
 						<li><a href='./logout.php'>Sign Out</a></li>
-        				</ul>
-      				</li>
-  			</ul>
-  		</div>
-	</nav>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
-
+	<hr>
 	<div class="row">
 		<div class="col-md-4">
 			<div id="columnselect">Note: Hold down ctrl or shift to select multiple columns</div>
@@ -138,7 +115,6 @@
 				 <input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
 		</div>
-
 		<div class="col-md-8">
 			<div class="row"> <!-- Canned Query -->
 				<form id="cannedqueryform" method='get' action='search.php'>
@@ -163,11 +139,9 @@
 					<div class="row">
 						<input class="btn btn-primary" type="submit" name="submitcannedquery" value="Search" tabindex='7'/>
 						<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
-						<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save" />
-						<button class='btn btn-info' type='button' id="addnewquery" name='addnewquery' data-toggle="modal" data-target="#addnewqueryModal">Create</button>
+						<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save Current Query" />
 					</div> <!-- data-toggle="modal" data-target="#getcndqnameModal" -->
 				</form>
-        
 			</div>
 			<div class="row"> <!-- Custom Query -->
 				<form id="queryform" method='get' action='search.php'>
@@ -247,7 +221,7 @@
 					<div class="modal-body">
 						<div class="form-group row">
 							<label class="col-sm-4 col-for-label" for="queryname" style="text-align: center">Query Name:</label>
-							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" maxlength="45" title="Cannot be empty" required /></div>
+							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" title="Cannot be empty" required /></div>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -259,34 +233,7 @@
 		</div>
 	</div>	
 
-	<!-- modal for saving canned query name -->
-	<div class="modal fade" id="addnewqueryModal" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form id="createquery" method='get' action='search.php'>
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="motal-title" id="myModalLabel2">Create your Canned Query</h4>
-					</div>
-					<div class="modal-body">
-						<div class="form-group row">
-							<label class="col-sm-4 col-for-label" for="newqueryname" style="text-align: center">Query Name:</label>
-							<div class="col-sm-6"><input class="form-control" id="newqueryname" name="newqueryname" type="text" maxlength="45" title="Cannot be empty" required /></div>
-						</div>
-						<div class="form-group row">
-							<label class="col-sm-4 col-for-label" for="newquery" style="text-align: center">Query:</label>
-							<div class="col-sm-6"><textarea class="form-control" id="newquery" name="newquery" type="text" title="Cannot be empty" rows="4" maxlength="200" required></textarea></div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn" data-dismiss="modal">Close</button>
-						<input type="submit" class="btn btn-primary" name="addnewquery" value="Save"/>
-					</div>
-				</form> 
-			</div>
-		</div>
-	</div>
-	
+
 <?php		
 
 			$thString="";
@@ -392,7 +339,7 @@
 								$value="%".$value."%";
 							}
 							
-							$search = $search." ".$andor." ".$column." ".$condition." '".$value."'";
+							$search = $search." ".$andor." (".$column." ".$condition." '".$value."')";
 							//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
 						}
 						$andor = $_GET['andor'][$i];
@@ -443,28 +390,6 @@
 				if(mysqli_num_rows($res)==0){
 					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', \"".$_SESSION['querysearch']."\")";
 					mysqli_query($link, $savecannedqry);
-				}
-			}
-			//canned query add new
-			if(isset($_GET['addnewquery'])){
-				$qname = $_GET['newqueryname'];
-				$newq = $_GET['newquery'];
-				
-				//check if exists so doesn't keep adding to db
-				$sea = 'select * from CannedQueries where QueryString="'.$newq.'"';
-				$res = mysqli_query($link, $sea);
-				if(mysqli_num_rows($res)==0){
-					//check if valid query
-					$res2 = mysqli_query($link, $newq);
-					if(mysqli_num_rows($res2)==0){
-						echo "<div id='emptyquerymsg'><h3>Invalid Query: ".$newq."</h3></div>";
-					} else {
-						$savecannedqry = "insert into CannedQueries values('', '".$qname."', \"".$newq."\")";
-						mysqli_query($link, $savecannedqry);
-					}
-				} else {
-					$rw = mysqli_fetch_row($res);
-					echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
 				}
 			}
 			//canned query delete
