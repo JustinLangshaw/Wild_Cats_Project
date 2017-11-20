@@ -72,9 +72,9 @@
 	<hr>
 	<div class="row">
 		<div class="col-md-4">
-			<div id="columnselect">Note: Hold down ctrl or shift to select multiple columns</div>
 			<form id='form1' name='form1' method='get' action='search.php'>
-				<select class="input-sm" name='select2[]' size='7' multiple='multiple' tabindex='1'>
+				<p id="columnselect">Note: Hold down ctrl or shift to select multiple columns</p>
+				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
 					<option value='Comments1'>Comments</option>
 					<option value='Responder'>Responder</option>
@@ -108,105 +108,110 @@
 					<option value='CompletionDate'>Completion Date</option>
 					<option value='Lat'>Latitude</option>
 					<option value='Lng'>Longitude</option>
-				  </select>
-				 <br>
-
-				 <input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
-				 <input class="btn" type='submit' name='Select All' value='Reset'/>
+				</select>
+				<br>
+				<input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
+				<input class="btn" type='submit' name='Select All' value='Reset'/>
 			</form>
 		</div>
 		<div class="col-md-8">
-			<div class="row"> <!-- Canned Query -->
-				<form id="cannedqueryform" method='get' action='search.php'>
-					<div class="row">
-						<b>Canned Querys</b>
-					</div>
-					<div class="row" id="cannedqrow">
-						<select class="input-sm col-sm-6 col-md-6" id="cannedquery" name="cannedquery[]" tabindex='3'>
-<?php
-							$cannedq = "select * from CannedQueries";
-							$cannedr = mysqli_query($link, $cannedq);
-							if($cannedr==null) print "<option value=''>No Canned Queries Available</option>";
-							else {
-								while($cannedrow = mysqli_fetch_row($cannedr)){
-									print "<option value='".$cannedrow[1]."'>".$cannedrow[1]."</option>";
-								}
-							}
-							
-?>
-						</select>
-					</div>
-					<div class="row">
-						<input class="btn btn-primary" type="submit" name="submitcannedquery" value="Search" tabindex='7'/>
-						<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
-						<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save Current Query" />
-					</div> <!-- data-toggle="modal" data-target="#getcndqnameModal" -->
-				</form>
-			</div>
-			<div class="row"> <!-- Custom Query -->
-				<form id="queryform" method='get' action='search.php'>
-					<div class="row">
-						<b>Custom Query</b>
-					</div>
-					<div class="row" id="cqrow">
-						<div id="blueprint">
-							<select class="input-sm" id="query" name="query[]" tabindex='3'>
-								<option value='RecordNumber'>ID</option>
-								<option value='Comments1'>Comments</option>
-								<option value='Responder'>Responder</option>
-								<option value='Status'>Status</option>
-								<option value='DateAndTime'>Date And Time</option>
-								<option value='FeedIfReturned'>Feed If Returned</option>
-								<option value='FullName'>Full Name</option>
-								<option value='Email'>Email</option>
-								<option value='Phone1'>Phone1</option>
-								<option value='Phone2'>Phone2</option>
-								<option value='ColonyAddress'>Colony Address</option>
-								<option value='City'>City</option>
-								<option value='County'>County</option>
-								<option value='ZipCode'>ZipCode</option>
-								<option value='AnyoneAttempted'>Anyone Attempted</option>
-								<option value='ApproximateCats'>Approximate Cats</option>
-								<option value='Kittens'>Kittens</option>
-								<option value='ColonyCareGiver'>Colony Caregiver</option>
-								<option value='FeederDescription'>Feeder Description</option>
-								<option value='Injured'>Injured/Pregnant</option>
-								<option value='InjuryDescription'>Injury Description</option>
-								<option value='FriendlyPet'>Friendly/Pet</option>
-								<option value='ColonySetting'>Colony Setting</option>
-								<option value='Comments'>Additional Comments</option>
-								<option value='ReqAssistance'>Require Assistance</option>
-								<option value='VolunteerResponding'>Volunteer Responding</option>
-								<option value='ResponseDate'>Response Date</option>
-								<option value='CustNeedOutcome'>Customer Need Outcome</option>
-								<option value='BeatTeamLeader'>Beat Team Leader</option>
-								<option value='Outcome'>Outcome</option>
-								<option value='CompletionDate'>Completion Date</option>
-								<option value='Lat'>Latitude</option>
-								<option value='Lng'>Longitude</option>
-							</select>
-
-							<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
-								<option value='='>=</option>
-								<option value='!='>&ne;</option>
-								<option value='<'>&lt;</option>
-								<option value='>'>&gt;</option>
-								<option value='<='>&le;</option>
-								<option value='>='>&ge;</option>
-								<option value='contains'>contains</option>
-							</select>
-
-							<input class="form-control" type="text" id="queryvalue" name="queryvalue[]" placeholder="By value" tabindex='5'/>
-							<input class="btn btn-primary btn-outline" type="button" id="cqaddbtn" name="addquery" value="+"/>
-						</div>
-					</div>
-					<div class="row">
-						<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
-					</div>
-				</form>
-			</div>
+			<form id='writtenqueryform' name='writtenquery' method='get' action='search.php'>
+				<div class="row"><b>Manual Query</b></div>
+				<div class="row">
+					<textarea class="form-control" id="manquery" name="manquery" rows="6" placeholder="Enter your Query" required ></textarea>
+					<br>
+					<input class="btn btn-primary" type="submit" name="runwrittenqry" id="runwrittenqry" value="Run" tabindex='7'/>
+					<input class='btn btn-success' type='submit' id="savewrittenqry" name='savewrittenqry' value="Save"/>
+				</div>
+			</form>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-4"> <!-- Canned Query -->
+			<form id="cannedqueryform" method='get' action='search.php'>
+				<label><b>Canned Queries</b></label>
+				<div class="row" id="cannedqrow">
+					<select class="input-sm col-md-6 col-sm-4 col-xs-8" id="cannedquery" name="cannedquery[]" tabindex='3'>
+<?php
+						$cannedq = "select * from CannedQueries";
+						$cannedr = mysqli_query($link, $cannedq);
+						if($cannedr==null) print "<option value=''>No Canned Queries Available</option>";
+						else {
+							while($cannedrow = mysqli_fetch_row($cannedr)){
+								print "<option value='".$cannedrow[1]."'>".$cannedrow[1]."</option>";
+							}
+						}
+						
+?>
+					</select>
+				</div>
+				<div class="row">
+					<input class="btn btn-primary" type="submit" name="submitcannedquery" value="Search" tabindex='7'/>
+					<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
+					<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save Current" />
+				</div> <!-- data-toggle="modal" data-target="#addnewqueryModal" -->
+			</form>
+		</div>
+		<div class="col-md-8"> <!-- Custom Query -->
+			<form id="queryform" method='get' action='search.php'>
+				<label><b>Custom Query</b></label>
+				<div class="row" id="cqrow">
+					<div id="blueprint">
+						<select class="input-sm" id="query" name="query[]" tabindex='3'>
+							<option value='RecordNumber'>ID</option>
+							<option value='Comments1'>Comments</option>
+							<option value='Responder'>Responder</option>
+							<option value='Status'>Status</option>
+							<option value='DateAndTime'>Date And Time</option>
+							<option value='FeedIfReturned'>Feed If Returned</option>
+							<option value='FullName'>Full Name</option>
+							<option value='Email'>Email</option>
+							<option value='Phone1'>Phone1</option>
+							<option value='Phone2'>Phone2</option>
+							<option value='ColonyAddress'>Colony Address</option>
+							<option value='City'>City</option>
+							<option value='County'>County</option>
+							<option value='ZipCode'>ZipCode</option>
+							<option value='AnyoneAttempted'>Anyone Attempted</option>
+							<option value='ApproximateCats'>Approximate Cats</option>
+							<option value='Kittens'>Kittens</option>
+							<option value='ColonyCareGiver'>Colony Caregiver</option>
+							<option value='FeederDescription'>Feeder Description</option>
+							<option value='Injured'>Injured/Pregnant</option>
+							<option value='InjuryDescription'>Injury Description</option>
+							<option value='FriendlyPet'>Friendly/Pet</option>
+							<option value='ColonySetting'>Colony Setting</option>
+							<option value='Comments'>Additional Comments</option>
+							<option value='ReqAssistance'>Require Assistance</option>
+							<option value='VolunteerResponding'>Volunteer Responding</option>
+							<option value='ResponseDate'>Response Date</option>
+							<option value='CustNeedOutcome'>Customer Need Outcome</option>
+							<option value='BeatTeamLeader'>Beat Team Leader</option>
+							<option value='Outcome'>Outcome</option>
+							<option value='CompletionDate'>Completion Date</option>
+							<option value='Lat'>Latitude</option>
+							<option value='Lng'>Longitude</option>
+						</select>
+
+						<select class="input-sm" id="condition" name="condition[]" tabindex='4'>
+							<option value='='>=</option>
+							<option value='!='>&ne;</option>
+							<option value='<'>&lt;</option>
+							<option value='>'>&gt;</option>
+							<option value='<='>&le;</option>
+							<option value='>='>&ge;</option>
+							<option value='contains'>contains</option>
+						</select>
+
+						<input class="form-control" type="text" id="queryvalue" name="queryvalue[]" placeholder="By value" required tabindex='5'/>
+						<input class="btn btn-primary btn-outline" type="button" id="cqaddbtn" name="addquery" value="+"/>
+					</div>
+				</div>
+				<div class="row">
+					<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
+				</div>
+			</form>
+		</div>
 	</div>
 	
 	<!-- modal for saving canned query name -->
@@ -221,7 +226,7 @@
 					<div class="modal-body">
 						<div class="form-group row">
 							<label class="col-sm-4 col-for-label" for="queryname" style="text-align: center">Query Name:</label>
-							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" title="Cannot be empty" required /></div>
+							<div class="col-sm-6"><input class="form-control" id="queryname" name="queryname" type="text" maxlength="45" title="Cannot be empty" required /></div>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -232,8 +237,30 @@
 			</div>
 		</div>
 	</div>	
-
-
+	<!-- modal for saving canned query name -->
+	<div class="modal fade" id="getcndqnameModal2" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form id="addcurrqry2" method='get' action='search.php'>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="motal-title" id="myModalLabel2">Name your Canned Query</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group row">
+							<label class="col-sm-4 col-for-label" for="queryname2" style="text-align: center">Query Name:</label>
+							<div class="col-sm-6"><input class="form-control" id="queryname2" name="queryname2" type="text" maxlength="45" title="Cannot be empty" required /></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn" data-dismiss="modal">Close</button>
+						<input type="submit" class="btn btn-primary" name="addcurrentquery2" value="Save"/>
+					</div>
+				</form> 
+			</div>
+		</div>
+	</div>
+	
 <?php		
 
 			$thString="";
@@ -267,6 +294,22 @@
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				if($selectedOption=="RecordNumber") $printvalue = "ID";
+				else if($selectedOption=="Comments1") $printvalue = "Comments";
+				else if($selectedOption=="DateAndTime") $printvalue = "Date/Time";
+				else if($selectedOption=="FeedIfReturned") $printvalue = "Will Feed";
+				else if($selectedOption=="ColonyAddress") $printvalue = "Colony Address";
+				else if($selectedOption=="ZipCode") $printvalue = "Zip";
+				else if($selectedOption=="AnyoneAttempted") $printvalue = "Anyone Attempted";
+				else if($selectedOption=="ApproximateCats") $printvalue = "# Cats";
+				else if($selectedOption=="ColonyCareGiver") $printvalue = "Caregiver/ Feeder";
+				else if($selectedOption=="FeederDescription" || $selectedOption=="InjuryDescription") $printvalue = "Description";
+				else if($selectedOption=="Injured") $printvalue = "Injured/ Pregnant";
+				else if($selectedOption=="FriendlyPet") $printvalue = "Friendly/ Pet";
+				else if($selectedOption=="ColonySetting") $printvalue = "Setting";
+				else if($selectedOption=="ReqAssistance") $printvalue = "Require Assistance";
+				else if($selectedOption=="VolunteerResponding") $printvalue = "Responder";
+				else if($selectedOption=="ResponseDate") $printvalue = "Response Date";
+				else if($selectedOption=="CustNeedOutcome") $printvalue = "Outcome Needed";
 				else $printvalue = $selectedOption;
 				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
 			}
@@ -339,7 +382,7 @@
 								$value="%".$value."%";
 							}
 							
-							$search = $search." ".$andor." (".$column." ".$condition." '".$value."')";
+							$search = $search." ".$andor." ".$column." ".$condition." '".$value."'";
 							//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
 						}
 						$andor = $_GET['andor'][$i];
@@ -367,17 +410,21 @@
 			}
 			//canned query check for existance & then display modal
 			if(isset($_GET['savecurrentquery'])){
-				$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
-				$res = mysqli_query($link, $sea);
-				if(mysqli_num_rows($res)==0){
-					echo "<script type='text/javascript'>
-							$(document).ready(function(){
-								$('#getcndqnameModal').modal('show');
-							});
-						</script>";
+				if(isset($_SESSION['querysearch'])){
+					$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
+					$res = mysqli_query($link, $sea);
+					if(mysqli_num_rows($res)==0){
+						echo "<script type='text/javascript'>
+								$(document).ready(function(){
+									$('#getcndqnameModal').modal('show');
+								});
+							</script>";
+					} else {
+						$rw = mysqli_fetch_row($res);
+						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+					}
 				} else {
-					$rw = mysqli_fetch_row($res);
-					echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+					echo "<div id='emptyquerymsg'><h3>No Query to save</h3></div>";
 				}
 			}
 			//canned query save
@@ -401,6 +448,47 @@
 				if(mysqli_num_rows($res)==0){
 					print "<span id='recupdate'><h2>Query \"".$cannedqueryname."\" was removed</h2></span>";
 				} else print "error";
+			}
+			//manual query run
+			if(isset($_GET['runwrittenqry'])){
+				unset($_SESSION['querysearch']); //refresh variable
+				$wrttnqry = $_GET['manquery'];
+				$wrttnqryres = mysqli_query($link, $wrttnqry);
+				if(mysqli_num_rows($wrttnqryres)==0)
+					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+				else $_SESSION['querysearch'] = $wrttnqry;
+			}
+			//manual query check for existance & then display modal to get name
+			if(isset($_GET['savewrittenqry'])){
+				//dont do anything if empty
+				if($newq != ''){
+					$wrttnqry = 'select * from CannedQueries where QueryString="'.$_GET['manquery'].'"';
+					$wrttnqryres = mysqli_query($link, $wrttnqry);
+					if(mysqli_num_rows($wrttnqryres)==0){
+						echo "<script type='text/javascript'>
+								$(document).ready(function(){
+									$('#getcndqnameModal2').modal('show');
+								});
+							</script>";
+					} else {
+						$rw = mysqli_fetch_row($wrttnqryres);
+						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+					}
+				} else {
+					echo "<div id='emptyquerymsg'><h3>No Query to save</h3></div>";
+				}
+			}
+			//manual query save
+			if(isset($_GET['addcurrentquery2'])){
+				$qryname = $_GET['queryname2'];
+
+				//still check if exists so doesn't keep adding to db
+				$wrttnqry = 'select * from CannedQueries where QueryString="'.$_GET['manquery'].'"';
+				$wrttnqryres = mysqli_query($link, $wrttnqry);
+				if(mysqli_num_rows($wrttnqryres)==0){
+					$savewrttnqry = "insert into CannedQueries values('', '".$qryname."', \"".$wrttnqry."\")";
+					mysqli_query($link, $savewrttnqry);
+				}
 			}
 			
 			if(isset($_GET['Reset']))
@@ -467,33 +555,33 @@
 							{
 								print "
 								<th><a>ID</a></th>
-								<th><a>Comments1</a></th>
+								<th><a>Comments</a></th>
 								<th><a>Responder</a></th>
 								<th><a>Status</a></th>
-								<th><a>Date_And_Time</a></th>
-								<th><a>Feed_If_Returned</a></th>
-								<th><a>Full_Name</a></th>
+								<th><a>Date/Time</a></th>
+								<th><a>Will Feed</a></th>
+								<th><a>FullName</a></th>
 								<th><a>Email</a></th>
-								<th><a>Phone_1</a></th>
-								<th><a>Phone_2</a></th>
-								<th><a>ColonyAddress</a></th>
+								<th><a>Phone1</a></th>
+								<th><a>Phone2</a></th>
+								<th><a>Colony Address</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
-								<th><a>Zip_Code</a></th>
-								<th><a>Anyone_Attempted</a></th>
-								<th><a>Approximate_Cats</a></th>
+								<th><a>Zip</a></th>
+								<th><a>Anyone Attempted</a></th>
+								<th><a># Cats</a></th>
 								<th><a>Kittens</a></th>
-								<th><a>Colony_Caregiver</a></th>
-								<th><a>Feeder_Description</a></th>
-								<th><a>Injured/Pregnant</a></th>
-								<th><a>Injury_Description</a></th>
-								<th><a>Friendly/Pet</a></th>
-								<th><a>Colony_Setting</a></th>
-								<th><a>Additional_Comments</a></th>
-								<th><a>Require_Assistance</a></th>
-								<th><a>Volunteer_Responding</a></th>
-								<th><a>Response_Date</a></th>
-								<th><a>Customer_Needed_Outcome</a></th>
+								<th><a>Caregiver/ Feeder</a></th>
+								<th><a>Description</a></th>
+								<th><a>Injured/ Pregnant</a></th>
+								<th><a>Description</a></th>
+								<th><a>Friendly/ Pet</a></th>
+								<th><a>Setting</a></th>
+								<th><a>Additional Comments</a></th>
+								<th><a>Require Assistance</a></th>
+								<th><a>Responder</a></th>
+								<th><a>Response Date</a></th>
+								<th><a>Outcome Needed</a></th>
 								<th><a>Beat_Team_Leader</a></th>
 								<th><a>Outcome</a></th>
 								<th><a>Completion_Date</a></th>
@@ -902,30 +990,30 @@
 							<th><a href='search.php?sort=Comments1'>Comments</a></th>
 							<th><a href='search.php?sort=Responder'>Responder</a></th>
 							<th><a href='search.php?sort=Status'>Status</a></th>
-							<th><a href='search.php?sort=DateAndTime'>Date_And_Time</a></th>
-							<th><a href='search.php?sort=FeedIfReturned'>Feed_If_Returned</a></th>
-							<th><a href='search.php?sort=FullName'>Full_Name</a></th>
+							<th><a href='search.php?sort=DateAndTime'>Date/Time</a></th>
+							<th><a href='search.php?sort=FeedIfReturned'>Will Feed</a></th>
+							<th><a href='search.php?sort=FullName'>FullName</a></th>
 							<th><a href='search.php?sort=Email'>Email</a></th>
-							<th><a href='search.php?sort=Phone1'>Phone_1</a></th>
-							<th><a href='search.php?sort=Phone2'>Phone_2</a></th>
-							<th><a href='search.php?sort=ColonyAddress'>ColonyAddress</a></th>
+							<th><a href='search.php?sort=Phone1'>Phone1</a></th>
+							<th><a href='search.php?sort=Phone2'>Phone2</a></th>
+							<th><a href='search.php?sort=ColonyAddress'>Colony Address</a></th>
 							<th><a href='search.php?sort=City'>City</a></th>
 							<th><a href='search.php?sort=County'>County</a></th>
-							<th><a href='search.php?sort=ZipCode'>Zip_Code</a></th>
-							<th><a href='search.php?sort=AnyoneAttempted'>Anyone_Attempted</a></th>
-							<th><a href='search.php?sort=ApproximateCats'>Approximate_Cats</a></th>
+							<th><a href='search.php?sort=ZipCode'>Zip</a></th>
+							<th><a href='search.php?sort=AnyoneAttempted'>Anyone Attempted</a></th>
+							<th><a href='search.php?sort=ApproximateCats'># Cats</a></th>
 							<th><a href='search.php?sort=Kittens'>Kittens</a></th>
-							<th><a href='search.php?sort=ColonyCareGiver'>Colony_Caregiver</a></th>
-							<th><a href='search.php?sort=FeederDescription'>Feeder_Description</a></th>
-							<th><a href='search.php?sort=Injured'>Injured/Pregnant</a></th>
-							<th><a href='search.php?sort=InjuryDescription'>InjuryDescription</a></th>
-							<th><a href='search.php?sort=FriendlyPet'>Friendly/Pet</a></th>
-							<th><a href='search.php?sort=ColonySetting'>Colony_Setting</a></th>
-							<th><a href='search.php?sort=Comments'>Additional_Comments</a></th>
-							<th><a href='search.php?sort=ReqAssistance'>Require_Assistance</a></th>
-							<th><a href='search.php?sort=VolunteerResponding'>Volunteer_Responding</a></th>
-							<th><a href='search.php?sort=ResponseDate'>Response_Date</a></th>
-							<th><a href='search.php?sort=CustNeedOutcome'>Customer_Needed_Outcome</a></th>
+							<th><a href='search.php?sort=ColonyCareGiver'>Caregiver/ Feeder</a></th>
+							<th><a href='search.php?sort=FeederDescription'>Description</a></th>
+							<th><a href='search.php?sort=Injured'>Injured/ Pregnant</a></th>
+							<th><a href='search.php?sort=InjuryDescription'>Description</a></th>
+							<th><a href='search.php?sort=FriendlyPet'>Friendly/ Pet</a></th>
+							<th><a href='search.php?sort=ColonySetting'>Setting</a></th>
+							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>
+							<th><a href='search.php?sort=ReqAssistance'>Require Assistance</a></th>
+							<th><a href='search.php?sort=VolunteerResponding'>Responder</a></th>
+							<th><a href='search.php?sort=ResponseDate'>Response Date</a></th>
+							<th><a href='search.php?sort=CustNeedOutcome'>Outcome Needed</a></th>
 							<th><a href='search.php?sort=BeatTeamLeader'>Beat_Team_Leader</a></th>
 							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
 							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>

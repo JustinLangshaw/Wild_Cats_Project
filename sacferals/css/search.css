@@ -63,9 +63,13 @@ body{
 	color: #337ab7;
 	text-align: center;
 }
+#cqaddbtn {
+	padding: 5px 10px;
+}
 .form-control {
 	min-width: 0;
 	width: auto;
+	height: 30px;
 	display: inline;
 }
 
@@ -74,18 +78,32 @@ table {
 	display: block;
 	overflow-x: scroll;
 	overflow-y: scroll;
-	height: 400px;
+	height: 600px;
 	font-size: 10pt;
 }
-table tbody {
+tbody {
 	overflow-y: auto;
 }
-#container {
+.selected td{ 
+	color: white;
+	background-color: darkgray;/*#337ab7 !important; */
+}
+/*#container {
 	white-space: nowrap;
 	overflow: hidden;
-}
+}*/
 #ttlrecs {
 	float: right;
+}
+#colsel{
+	margin-bottom: 2px;
+}
+#columnselect{
+	max-width: 60%;
+}
+#manquery{
+	width: 60%; 
+	max-width: 100%;
 }
 .btn-outline{
 	background-color: transparent;
