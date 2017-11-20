@@ -17,6 +17,9 @@ body{
 .row{
 	padding: 10px;
 }
+#copyrow {
+	cursor: pointer;
+}
 #columnselect {
 	color: red;
 }
@@ -69,7 +72,6 @@ body{
 	padding: 5px 10px;
 }
 .form-control {
-	min-width: 0;
 	width: auto;
 	height: 30px;
 	display: inline;
@@ -86,7 +88,9 @@ table {
 tbody {
 	overflow-y: auto;
 }
-
+table textarea{
+	overflow-x: hidden;
+}
 th {
 	text-align: center;
 	vertical-align: middle !important;
@@ -111,6 +115,9 @@ th {
 #manquery{
 	width: 60%; 
 	max-width: 100%;
+}
+.btn-default{
+	background-color: lightgray;
 }
 .btn-outline{
 	background-color: transparent;
