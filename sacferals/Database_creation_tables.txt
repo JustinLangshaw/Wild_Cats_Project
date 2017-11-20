@@ -1,4 +1,4 @@
-﻿CREATE TABLE FeralInterventionForm (
+CREATE TABLE FeralInterventionForm (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
 	DateAndTime varchar(200),
@@ -112,12 +112,18 @@ INSERT INTO `sacferals`.`VolunteerForm` (`Comments`, `FullName`, `Address`, `Ema
 
 
 
+CREATE TABLE CannedQueries (
+	ID int NOT NULL AUTO_INCREMENT,
+	QueryName varchar(45) NOT NULL,
+	QueryString varchar(200) NOT NULL,
+	PRIMARY KEY (ID)
+);
 
+INSERT INTO CannedQueries values
+	('', 'Default', "SELECT * FROM ReportColonyForm");
+INSERT INTO CannedQueries VALUES
+	('','status open', "SELECT * FROM ReportColonyForm where Status='open'");
 
-
-
-
-	
 
 CREATE TABLE SundaySSPCA (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
