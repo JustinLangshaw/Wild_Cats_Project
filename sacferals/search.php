@@ -49,7 +49,7 @@
 		<script src="searchScript.js"></script> 
   	</head>
 	<body>
-	<div class="row">
+	<div class="row"> <!-- navbar -->
 		<div class="col-sm-6">
 			<b>Logged in as <?php echo $Ausername ?></b> <br><br>
 			
@@ -70,6 +70,7 @@
 		</div>
 	</div>
 	<hr>
+	<div class="maindiv"> <!-- rest of page -->
 	<div class="row">
 		<div class="col-md-4">
 			<form id='form1' name='form1' method='get' action='search.php'>
@@ -679,51 +680,51 @@
 									else if($Status=="Kittens") $selectedKittens='selected';
 									
 									print "
-									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
-									<td><input type='text' name='Comments1' value='$Comments1'></td>
-									<td><input type='text' name='Responder' value='$Responder'></td>
+									<td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
+									<td><textarea class='form-control' name='Comments1' rows='4' value='$Comments1'>$Comments1</textarea></td>
+									<td><input class='form-control' type='text' name='Responder' value='$Responder'></td>
 									<td>"//<div style='text-align:Center;'>Current Status: ' $Status '
 									."<div style='text-align:Center'>" //<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Change Report Status<span class='caret'></span></button>
 										//<ul class='dropdown-menu dropdown-menu-center'>
 											//<li><div style='text-align:Center'>Changes Applied when Submit Edit is clicked</li>
 											/*<li><div style='text-align:Center'>*/."<form id='form1' name='form1' method='get' action='search.php' width: 400px>
-												<select name='Status'>
-													<option value=''>Empty</option>
+												<select class='input-sm' name='Status'>
+													<option value=''>Empty</option> 
 													<option value='Open'".$selectedOpen.">Open</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
 													<option value='Critical'".$selectedCritical.">Critical</option>
 													<option value='Kittens'".$selectedKittens.">Kittens!</option>
 												</select><br>
 									</form>"./*</li></ul></div></div>*/"</div></td>
-									<td><input type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
-									<td><input type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
-									<td><input type='text' name='FullName' value='$FullName'></td>
-									<td><input type='text' name='Email' value='$Email'></td>
-									<td><input type='text' name='Phone1' value='$Phone1'></td>
-									<td><input type='text' name='Phone2' value='$Phone2'></td>
-									<td><input type='text' name='ColonyAddress' value='$ColonyAddress'></td>
-									<td><input type='text' name='City' value='$City'></td>
-									<td><input type='text' name='County' value='$County'></td>
-									<td><input type='text' name='ZipCode' value='$ZipCode'></td>
-									<td><input type='text' name='AnyoneAttempted' value='$AnyoneAttempted'></td>
-									<td><input type='text' name='ApproximateCats' value='$ApproximateCats'></td>
-									<td><input type='text' name='Kittens' value='$Kittens'></td>
-									<td><input type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
-									<td><input type='text' name='FeederDescription' value='$FeederDescription'></td>
-									<td><input type='text' name='Injured' value='$Injured'></td>
-									<td><input type='text' name='InjuryDescription' value='$InjuryDescription'></td>
-									<td><input type='text' name='FriendlyPet' value='$FriendlyPet'></td>
-									<td><input type='text' name='ColonySetting' value='$ColonySetting'></td>
-									<td><textarea name='Comments'>$Comments</textarea></td>
-									<td><input type='text' name='ReqAssistance' value='$ReqAssistance'></td>
-									<td><input type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
-									<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
-									<td><input type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
-									<td><input type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
-									<td><input type='text' name='Outcome' value='$Outcome'></td>
-									<td><input type='text' name='CompletionDate' value='$CompletionDate'></td>
-									<td><input type='text' name='Lat' value='$Lat'></td>
-									<td><input type='text' name='Lng' value='$Lng'></td>
+									<td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
+									<td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
+									<td><input class='form-control' type='text' name='FullName' value='$FullName'></td>
+									<td><input class='form-control' type='text' name='Email' value='$Email'></td>
+									<td><input class='form-control' type='text' name='Phone1' value='$Phone1'></td>
+									<td><input class='form-control' type='text' name='Phone2' value='$Phone2'></td>
+									<td><input class='form-control' type='text' name='ColonyAddress' value='$ColonyAddress'></td>
+									<td><input class='form-control' type='text' name='City' value='$City'></td>
+									<td><input class='form-control' type='text' name='County' value='$County'></td>
+									<td><input class='form-control' type='text' name='ZipCode' value='$ZipCode'></td>
+									<td><input class='form-control' type='text' name='AnyoneAttempted' value='$AnyoneAttempted'></td>
+									<td><input class='form-control' type='text' name='ApproximateCats' value='$ApproximateCats'></td>
+									<td><input class='form-control' type='text' name='Kittens' value='$Kittens'></td>
+									<td><input class='form-control' type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
+									<td><textarea class='form-control' name='FeederDescription'  rows='4' value='$FeederDescription'>$FeederDescription</textarea></td>
+									<td><input class='form-control' type='text' name='Injured' value='$Injured'></td>
+									<td><textarea class='form-control' name='InjuryDescription'  rows='4' value='$InjuryDescription'>$InjuryDescription</textarea></td>
+									<td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'></td>
+									<td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'></td>
+									<td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td>
+									<td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'></td>
+									<td><input class='form-control' type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
+									<td><input class='form-control' type='text' name='ResponseDate' value='$ResponseDate'></td>
+									<td><input class='form-control' type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
+									<td><input class='form-control' type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
+									<td><input class='form-control' type='text' name='Outcome' value='$Outcome'></td>
+									<td><input class='form-control' type='text' name='CompletionDate' value='$CompletionDate'></td>
+									<td><input class='form-control' type='text' name='Lat' value='$Lat'></td>
+									<td><input class='form-control' type='text' name='Lng' value='$Lng'></td>
 								</tr>
 								";
 								}
@@ -1152,7 +1153,7 @@
 								print "
 
 							<td>$RecordNumber </td>
-							<td>$Comments1 </td>
+							<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>
 							<td>$Responder </td>
 							<td id='statusCol'>$Status </td>
 							<td id='dateTimeCol'>$DateAndTime</td>
@@ -1169,12 +1170,12 @@
 							<td>$ApproximateCats</td>
 							<td>$Kittens</td>
 							<td>$ColonyCareGiver</td>
-							<td>$FeederDescription</td>
+							<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' readonly>$FeederDescription</textarea></td>
 							<td>$Injured</td>
-							<td>$InjuryDescription</td>
+							<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' readonly>$InjuryDescription</textarea></td>
 							<td>$FriendlyPet</td>
 							<td>$ColonySetting</td>
-							<td>$Comments</td>
+							<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>
 							<td>$ReqAssistance</td>
 							<td>$VolunteerResponding</td>
 							<td>$ResponseDate</td>
@@ -1219,7 +1220,7 @@
    		<form id="resettable" method='get' action='search.php'>
 			<input class="btn" type="submit" value="Refresh" name="RefreshTable"/>
    			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
-			<span id="ttlrecs">Total Records: <?php echo $_SESSION['totalrecords']; ?></span>
+			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
 		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
@@ -1251,5 +1252,6 @@
 	}
 ?>
 
+</div> <!-- end maindiv -->
 </body>
 </html>
