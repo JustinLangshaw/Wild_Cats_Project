@@ -10,7 +10,9 @@
 body{
 	font-family: verdana;
 	font-size: 10pt;
-	margin: 20px;
+}
+.maindiv{
+	margin: 30px;
 }
 .row{
 	padding: 10px;
@@ -83,6 +85,11 @@ table {
 }
 tbody {
 	overflow-y: auto;
+}
+
+th {
+	text-align: center;
+	vertical-align: middle !important;
 }
 .selected td{ 
 	color: white;
