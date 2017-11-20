@@ -95,9 +95,6 @@ tbody {
 #ttlrecs {
 	float: right;
 }
-#newquery{
-	max-width: inherit;
-}
 #colsel{
 	margin-bottom: 2px;
 }
