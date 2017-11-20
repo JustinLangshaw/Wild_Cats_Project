@@ -46,7 +46,7 @@
        	
 		<script src="exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
-		<script src="searchScript.js"></script> 
+		<script src="js/searchScript.js"></script> 
   	</head>
 	<body>
 	<div class="row"> <!-- navbar -->
