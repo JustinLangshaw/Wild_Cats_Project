@@ -86,8 +86,8 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	$password = $_POST['password'];
 	$repassword = $_POST['repassword'];
 	
-	$re = "/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/";
-	$reEmail = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/";
+	$re =  "/^[a-zA-Z0-9]{4,10}$/";	//username must be length 4+ with only number and letters
+	$reEmail = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/";	//check proper format of email
 	
 	if($username == "" || $email == "" || $password == "" || $repassword == "")//doesn't execute? 
 	{
@@ -98,16 +98,16 @@ if(isset($_POST['register'])) //this processes after user submits data.
 		print "error: passwords do not match";
 	}
 	else 
-	{
+	{	
 		//if user passes re test
-		if( preg_match($re, $username) && preg_match($reEmail, $email) )
+		if( (preg_match($re, $username)) && (preg_match($reEmail, $email)) )
 		{	//display current table
 			$querycheck = "select * from SacFeralsUsers where username='$username' or email='$email'";
 			$resultcheck = mysqli_query($link, $querycheck); //link query to database
 			
 			if(mysqli_num_rows($resultcheck) == 0)// test if query does "nothing", and thus has no records
 			{	//if not, record doesn't exist so you can process the insert query
-				$query = "insert into SacFeralsUsers values('', '$username', '$email', '$password', '2')";
+				$query = "insert into SacFeralsUsers values('', '$username', '$email', '$password', '0')";
 				mysqli_query($link, $query); //link query to database
 				print "Account Created"; // print confirmation	
 				

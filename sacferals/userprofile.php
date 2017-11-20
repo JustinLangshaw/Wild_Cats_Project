@@ -75,7 +75,7 @@
             print "- <a href='search.php' align='right'>View/Edit Database</a><br>";
             print "- <a href='changeaccounttype.php' align='right'>Change User Account Types</a><br>";
             print "- <a href='volunteerlist.php' align='right'>View Volunteers</a><br>";
-
+			print "- <a href='adminprofile.php' align='right'>Administrator</a><br>";
 
             print "<br><a href='volunteerform.php' align='right' target='blank' >volunteer form</a> for testing purposes<br>";
             print "<a href='reportform.php' align='right' target='blank1' >report form</a> for testing purposes<br>";
