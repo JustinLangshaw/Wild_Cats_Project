@@ -116,6 +116,20 @@ th {
 	width: 60%; 
 	max-width: 100%;
 }
+
+.copysuccessmsg{
+	color: black;
+	font-weight: bold;
+	background: lightgray;
+	position: fixed;
+	top: 30%;
+	left: 40%;
+	padding: 40px 80px;
+	border-radius: 10px;
+	z-index: 10000;
+}
+
+/*btn designs*/
 .btn-default{
 	background-color: lightgray;
 }

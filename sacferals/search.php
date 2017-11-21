@@ -1250,7 +1250,8 @@
 		<script src="plotMapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-
+		
+		<div class="copysuccessmsg" role="alert" hidden>Copied to clipboard</div>
 <?php
 		}
 		else {
