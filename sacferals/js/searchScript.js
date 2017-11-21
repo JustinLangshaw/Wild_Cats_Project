@@ -68,6 +68,7 @@ function copyFunction(el){
 			alert("error when copying");
 		}
 		if(success){ //remove temp element if successsful copy
+			$(".copysuccessmsg").fadeIn(300).delay(900).fadeOut(400);
 			tmpElem.remove();
 		}
 	}
