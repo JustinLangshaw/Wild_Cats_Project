@@ -238,13 +238,15 @@
 					else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
 					else if($VolunteerStatus=="Active") $selectedActive='selected';
 					else if($VolunteerStatus=="Triage") $selectedTriage='selected';
+					else if($VolunteerStatus=="Vacation") $selectedVacation='selected';
 					
 					$tdEditString.="<td><div style='text-align:Center'>
 						<form id='form1' name='form1' method='get' action='adminprofile.php'>
 						<select name='VolunteerStatus'>
 							<option value='Inactive'".$selectedInactive.">Inactive</option>
 							<option value='Active'".$selectedActive.">Active</option>
-							<option value='Triage'".$selectedTriage.">Triage</option>		
+							<option value='Triage'".$selectedTriage.">Triage</option>	
+							<option value='Vacation'".$selectedVacation.">Vacation</option>
 						</select><br>
 						</form></div></td>";
 				}else
@@ -455,13 +457,16 @@
 											else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
 											else if($VolunteerStatus=="Active") $selectedActive='selected';
 											else if($VolunteerStatus=="Triage") $selectedTriage='selected';
-											
+											else if($VolunteerStatus=="Vacation") $selectedVacation='selected';
+
 											$tdEditString.="<td><div style='text-align:Center'>
 												<form id='form1' name='form1' method='get' action='adminprofile.php'>
 												<select name='VolunteerStatus'>
 													<option value='Inactive'".$selectedInactive.">Inactive</option>
 													<option value='Active'".$selectedActive.">Active</option>
-													<option value='Triage'".$selectedTriage.">Triage</option>		
+													<option value='Triage'".$selectedTriage.">Triage</option>
+													<option value='Vacation'".$selectedVacation.">Vacation</option>
+													
 												</select><br>
 												</form></div></td>";
 										}else
@@ -487,6 +492,7 @@
 									else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
 									else if($VolunteerStatus=="Active") $selectedActive='selected';
 									else if($VolunteerStatus=="Triage") $selectedTriage='selected';
+									else if($VolunteerStatus=="Vacation") $selectedVacation='selected';
 									
 									print "
 									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>									
@@ -498,6 +504,7 @@
 													<option value='Inactive'".$selectedInactive.">Inactive</option>
 													<option value='Active'".$selectedActive.">Active</option>
 													<option value='Triage'".$selectedTriage.">Triage</option>
+													<option value='Vacation'".$selectedVacation.">Vacation</option>
 												</select><br>
 										</form>
 									</div></td>	
@@ -683,42 +690,46 @@
 							$query.=" and ";
 						}
 						$query=rtrim($query," and ");
-						//print $query;						
+						//print $query;									
 						$result = mysqli_query($link, $query);
-
-						if(mysqli_num_rows($result) == 0) //This  was preventing updates if a certain column is selected and another row of that column has the same entry
+						//if(mysqli_num_rows($result) == 0) //This  was preventing updates if a certain column is selected and another row of that column has the same entry
+						//{						
+						$queryupdate = " update VolunteerForm set ";
+						if(count($_GET['select2'] == 0))
 						{
-							$queryupdate = " update VolunteerForm set ";
-							if(count($_GET['select2'] == 0))
-							{
-								//print "hi?";
-							}
-
-							foreach($_GET['select2'] as $selectedItem)
-							{
-								if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
-								{
-									continue;
-								}
-
-								$queryupdate.=$selectedItem."='".$$selectedItem."'";
-								$queryupdate.=", ";
-							}
-							$queryupdate=rtrim($queryupdate,", ");
-							$queryupdate.=" where RecordNumber='$RecordNumber1'";							
-							mysqli_query($link, $queryupdate);
-							
-							//Update permission level for volunteer							
-							$queryupdate = "update SacFeralsUsers set level=";
-							switch($VolunteerStatus){
-								case 'Inactive': $queryupdate.= "0"; break;
-								case 'Active': $queryupdate.= "3"; break;
-								case 'Triage': $queryupdate.= "2"; break;
-							}
-							mysqli_query($link, "SET SQL_SAFE_UPDATES=0;");	//Disables safe update mode
-							$queryupdate.=" where email=(select Email from VolunteerForm where RecordNumber=$RecordNumber1);";
-							mysqli_query($link, $queryupdate);							
+							//print "hi?";
 						}
+						
+						if($DateActivated=='' && (($VolunteerStatus=='Active') || ($VolunteerStatus=='Triage'))){
+								$DateActivated=date("Y-m-d H:i:s",time());							
+						}
+												
+						foreach($_GET['select2'] as $selectedItem)
+						{
+							if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
+							{
+								continue;
+							}
+
+							$queryupdate.=$selectedItem."='".$$selectedItem."'";
+							$queryupdate.=", ";
+						}
+						$queryupdate=rtrim($queryupdate,", ");
+						$queryupdate.=" where RecordNumber='$RecordNumber1'";							
+						mysqli_query($link, $queryupdate);
+						
+						//Update permission level for volunteer							
+						$queryupdate = "update SacFeralsUsers set level=";
+						switch($VolunteerStatus){
+							case 'Inactive': $queryupdate.= "0"; break;
+							case 'Active': $queryupdate.= "3"; break;
+							case 'Triage': $queryupdate.= "2"; break;
+							//if 'Vacation' don't update level
+						}
+						mysqli_query($link, "SET SQL_SAFE_UPDATES=0;");	//Disables safe update mode
+						$queryupdate.=" where email=(select Email from VolunteerForm where RecordNumber=$RecordNumber1);";
+						mysqli_query($link, $queryupdate);							
+						//}
 					}
 					else
 					{
@@ -726,7 +737,10 @@
 						$result = mysqli_query($link, $query);	
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
 						{						
-							//$queryupdate = "update VolunteerForm set Comments='$Comments', VolunteerStatus='$VolunteerStatus'where RecordNumber='$RecordNumber1'";
+							 if($DateActivated=='' && (($VolunteerStatus=='Active') || ($VolunteerStatus=='Triage'))){
+								$DateActivated=date("Y-m-d H:i:s",time());
+							}
+						
 							$queryupdate = "update VolunteerForm set 
 								 Comments='$Comments', 
 								 VolunteerStatus='$VolunteerStatus', 
@@ -768,7 +782,7 @@
 								 WorkshopAttended='$WorkshopAttended',
 								 WorkshopDate='$WorkshopDate'
 								 where RecordNumber='$RecordNumber1'";
-								 
+								 								
 							mysqli_query($link, $queryupdate);
 							
 							//Update permission level for volunteer
@@ -777,6 +791,7 @@
 								case 'Inactive': $queryupdate.= "0"; break;
 								case 'Active': $queryupdate.= "3"; break;
 								case 'Triage': $queryupdate.= "2"; break;
+								//if 'Vacation' don't update level
 							}
 							$queryupdate.=" where email='$Email'";
 							mysqli_query($link, $queryupdate);
@@ -804,7 +819,6 @@
 				//also delete user account if it exist in SacFeralsUsers
 				mysqli_query($link, "SET SQL_SAFE_UPDATES = 0;");
 				$query = "delete from SacFeralsUsers where email=(select Email from VolunteerForm where RecordNumber = $RecordNumber);";
-				echo $query;
 				mysqli_query($link, $query);
 
 				//print $query;
