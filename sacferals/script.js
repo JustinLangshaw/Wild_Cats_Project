@@ -28,6 +28,10 @@ function displayForm(c) {
 			$('#settingdetails').fadeIn('fast');
 		else if(c.name=='settingdetails' && c.checked==false)
 			$('#settingdetails').fadeOut('fast');
+		if(c.name=='typeofwork[]' && c.checked==true)
+			$('#othertasks').fadeIn('fast');
+		else if(c.name=='typeofwork[]' && c.checked==false)
+			$('#othertasks').fadeOut('fast');
     }
     if (c.value == "No") {  
         if(c.name == "caregiver[]")

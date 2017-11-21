@@ -38,12 +38,18 @@ img {
 	height: 14;
 }
 
-#inner-form { 
+#inner-form {
 	display: none;
 	padding: 10px 15% 10px 8%;
 }
-.form-check label{
+#volform{ 
+	padding: 30px 15% 30px 5%;
+}
+.form-check label, #volform label>small, #volform label>span {
 	font-weight: normal !important;
+}
+textarea {
+	max-width: 100%;
 }
 /*#formdiv {
 	display: none;
@@ -58,17 +64,15 @@ img {
 .indent {
 	padding-left: 2em;
 }
-#textarea {
-	max-width: 100%;
-}
 #buttons{
 	text-align: right;
 }
-#ziperror, #catserror, #invalidAddr{
+#ziperror, #catserror, #invalidAddr, #workerror{
 	color: red;
 	margin: auto;
 	display: table;
 }
+
 /*error msg*/
 .alert {
 	padding: 20px;
@@ -90,6 +94,7 @@ img {
 	color: black;
 }
 
+/*tooltip*/
 #tooltip {
 	position: relative;
 	display: inline-block;
