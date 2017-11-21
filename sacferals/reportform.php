@@ -49,45 +49,33 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$phone2 = $_POST['phone2'];	
 	
 	$caregiver = $_POST['caregiver'];
-	$feederdescription = preg_replace("!\s+!", ' ', $_POST['feederdescription']);
+	$feederdescription = $_POST['feederdescription'];
 	$colonystreet = $_POST['colonystreet'];
 	$city = $_POST['city'];
 	$county = $_POST['county'];
 	$zipcode = $_POST['zipcode'];
-	$addrcomment = preg_replace("!\s+!", ' ', $_POST['addrcomment']); //prepend to additional comments
+	$addrcomment = $_POST['addrcomment']; //prepend to additional comments
 	$trapattempt = $_POST['trapattempt'];
-	$trapcomment = preg_replace("!\s+!", ' ', $_POST['trapcomment']); //prepend to additional comments
+	$trapcomment = $_POST['trapcomment']; //prepend to additional comments
 	$numberofcats = $_POST['numberofcats'];
 	$kittens = $_POST['kittens'];
-	$kittenscomment = preg_replace("!\s+!", ' ', $_POST['kittenscomment']); //prepend to additional comments
+	$kittenscomment = $_POST['kittenscomment']; //prepend to additional comments
 	$injured = $_POST['recentlyinjured'];
-	$injurydescription = preg_replace("!\s+!", ' ', $_POST['injurydescription']);
+	$injurydescription = $_POST['injurydescription'];
 	$friendlypet = $_POST['friendlypet'];
 	$setting = $_POST['setting'];
-	$settingcomment = preg_replace("!\s+!", ' ', $_POST['settingcomment']); //prepend to additional comments
-	$comments = preg_replace("!\s+!", ' ', $_POST['comments']);
+	$settingcomment = $_POST['settingcomment']; //prepend to additional comments
+	$comments = $_POST['comments'];
 	$feedifreturned = $_POST['feedifreturned'];
 	$reqassistance = $_POST['reqassistance'];
 	$lat = $_POST['lat'];
 	$lng = $_POST['lng'];
 	
 	//combining all comments
-	if($settingcomment!='') {
-		if (preg_match("/^[a-zA-Z0-9]$/", substr($settingcomment, -1))) $settingcomment.=".";
-		$comments=$settingcomment.' '.$comments;
-	}
-	if($kittenscomment!='') {
-		if (preg_match("/^[a-zA-Z0-9]$/", substr($kittenscomment, -1))) $kittenscomment.=".";
-		$comments=$kittenscomment.' '.$comments;
-	}
-	if($trapcomment!='') {
-		if (preg_match("/^[a-zA-Z0-9]$/", substr($trapcomment, -1))) $trapcomment.=".";
-		$comments=$trapcomment.' '.$comments;
-	}
-	if($addrcomment!='') {
-		if (preg_match("/^[a-zA-Z0-9]$/", substr($addrcomment, -1))) $addrcomment.=".";
-		$comments=$addrcomment.' '.$comments;
-	}
+	if($settingcomment!='') $comments=$settingcomment.' '.$comments;
+	if($kittenscomment!='') $comments=$kittenscomment.' '.$comments;
+	if($trapcomment!='') $comments=$trapcomment.' '.$comments;
+	if($addrcomment!='') $comments=$addrcomment.' '.$comments;
 	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
