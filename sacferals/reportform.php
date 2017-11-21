@@ -147,12 +147,12 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" href="css/reportform.css">
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="script.js"></script> 
 </head>
 <body>
@@ -271,7 +271,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 					</div>
 					<div class='form-group indent todisplay' id="addrdetails">
 						Please describe<br>
-						<textarea class="form-control" rows="4" cols="50" name="addrcomment"></textarea>
+						<textarea class="form-control" rows="4"  name="addrcomment"></textarea>
 					</div>
 				</div>
 				
@@ -329,7 +329,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 						<label><input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes</label></div>
 					<div class='form-group indent todisplay' id="recentlyinjuredID">
 						Describe Condition<br>
-						<textarea class="form-control" rows="4" cols="50" name="injurydescription"></textarea>
+						<textarea class="form-control" rows="4"  name="injurydescription"></textarea>
 					</div>
 					<div class="form-check">
 						<label><input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No</label></div>
@@ -354,7 +354,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 					</div>
 					<div class='form-group indent todisplay' id="settingdetails">
 						Please describe<br>
-						<textarea class="form-control" rows="4" cols="50" name="settingcomment"></textarea>
+						<textarea class="form-control" rows="4"  name="settingcomment"></textarea>
 					</div>
 				</div>
 				
@@ -367,7 +367,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 				
 				<div class="form-group">
 					<label class="form-check-label">Additional Comments</label>
-					<textarea class="form-control" rows="4" cols="50" name="comments" id="textarea"></textarea>
+					<textarea class="form-control" rows="4"  name="comments" id="textarea"></textarea>
 				</div>
 				
 				<input type="hidden" name="lat" id="lat"/>
