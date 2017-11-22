@@ -228,6 +228,7 @@ function formatPhone(phoneId) {
 			}
 		}
 		
+		if($level==1 || $level==2){ //if admin or triage user
 ?>
 	<h2> Update Profile </h2>
 	<div id="form-wrapper">
@@ -259,6 +260,7 @@ function formatPhone(phoneId) {
 				</div>
 			</div>
 <?php
+		} 
 		if($level==2){ //if triage user
 ?>
 			<hr>
@@ -338,7 +340,7 @@ function formatPhone(phoneId) {
 				</div>
 			</div>
 <?php
-	}
+		}
 ?>
 			<div class="form-row" id="buttons">
 				<input class="btn btn-default" type="button" onclick="location.href='userprofile.php'" value="Cancel">
@@ -348,7 +350,7 @@ function formatPhone(phoneId) {
 	</div>
 	
 <?php 
-} 
+	} 
 ?>
 
 <script>
