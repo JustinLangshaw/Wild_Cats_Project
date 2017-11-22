@@ -733,11 +733,7 @@
 							{
 								print "
 								<tr>
-									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-										<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
-										<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View</a> 
-										<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
-									</td>
+									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View</a> </td>
 								";
 
 								if($tdString != '')
@@ -853,50 +849,29 @@
 					if(count($_GET['select2']) !=0 )
 					{
 						/* Build $query*/
-
 						$query = "select * from ReportColonyForm where ";
-
 						foreach($_GET['select2'] as $selectedItem)
 						{
 							$query.=$selectedItem." ='".$$selectedItem."'";
 							$query.=" and ";
 						}
-
 						$query=rtrim($query," and ");
-
-						//print $query;
-
 						$result = mysqli_query($link, $query);
-
-						if(mysqli_num_rows($result) == 0)
+				
+						$queryupdate = " update ReportColonyForm set ";
+						foreach($_GET['select2'] as $selectedItem)
 						{
-							$queryupdate = " update ReportColonyForm set ";
-
-							if(count($_GET['select2'] == 0))
+							if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
 							{
-								//print "hi?";
+								continue;
 							}
 
-							foreach($_GET['select2'] as $selectedItem)
-							{
-								if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
-								{
-									continue;
-								}
-
-								$queryupdate.=$selectedItem."='".$$selectedItem."'";
-								$queryupdate.=", ";
-							}
-							$queryupdate=rtrim($queryupdate,", ");
-
-
-							$queryupdate.=" where RecordNumber='$RecordNumber1'";
-
-							//print $queryupdate;
-
-							mysqli_query($link, $queryupdate);
-
+							$queryupdate.=$selectedItem."='".$$selectedItem."'";
+							$queryupdate.=", ";
 						}
+						$queryupdate=rtrim($queryupdate,", ");
+						$queryupdate.=" where RecordNumber='$RecordNumber1'";
+						mysqli_query($link, $queryupdate);
 					}
 					else
 					{
@@ -1112,11 +1087,7 @@
 						
 						print "
 						<tr>
-							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-								<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
-								<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> 
-								<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
-							</td>
+							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> <a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> <a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> </td>
 							";
 
 							//$_GET['select2'] as RecordNumber
@@ -1160,10 +1131,10 @@
 							{
 								print "
 
-							<td>$RecordNumber</td>
+							<td>$RecordNumber </td>
 							<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>
-							<td>$Responder</td>
-							<td id='statusCol'>$Status</td>
+							<td>$Responder </td>
+							<td id='statusCol'>$Status </td>
 							<td id='dateTimeCol'>$DateAndTime</td>
 							<td>$FeedIfReturned</td>
 							<td>$FullName</td>
@@ -1250,8 +1221,7 @@
 		<script src="plotMapScript.js?version=1.5"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
-		
-		<div class="copysuccessmsg" role="alert" hidden>Copied to clipboard</div>
+
 <?php
 		}
 		else {
