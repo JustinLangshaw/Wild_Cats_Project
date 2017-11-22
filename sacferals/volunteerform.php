@@ -264,21 +264,5 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	</div>
 </form>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$('form').submit(function(){ //dont submit form (clear out) if work not chosen
-		var work = $('#workchecks').find('input');
-		for(var i=0; i<work.length; i++){
-			if(work[i].checked) return true;
-		}
-		
-		$('#worklabel').attr('style','color: red');
-		$('#workerror').html('<small>Must select at least one</small>');
-		$('#workerror').removeAttr('hidden');
-		return false;
-	});
-});
-</script>
-
 </body>
 </html>
