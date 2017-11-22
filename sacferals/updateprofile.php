@@ -303,8 +303,9 @@ function formatPhone(phoneId) {
 
 			<div class="form-row" id="inner-form3">
 				<div class="form-group row">
-					<div class="col-sm-12">
-						<label class="form-check-label">Type of Work You Would Like To Volunteer For:</label>
+					<div class="col-sm-12" id="workchecks">
+						<span hidden id="workerror"></span>
+						<label class="form-check-label" id="worklabel">Type of Work You Would Like To Volunteer For:</label>
 						<div class="form-check">
 							<label><input type="checkbox" name="typeofwork[]" id="cb1" value="transporting" <?php if($transporting==1) echo "checked" ?>>
 							Transporting cats to and from spay/neuter clinics</label>
@@ -340,8 +341,8 @@ function formatPhone(phoneId) {
 	}
 ?>
 			<div class="form-row" id="buttons">
-				<input class="btn" type="button" onclick="location.href='userprofile.php'" value="Cancel">
-				<input class="btn btn-primary" type="submit" name="submit" value="Update" >
+				<input class="btn btn-default" type="button" onclick="location.href='userprofile.php'" value="Cancel">
+				<input class="btn btn-primary" type="submit" name="submit" id="updatebtn" value="Update" >
 			</div>
 		</form>
 	</div>
@@ -361,13 +362,16 @@ $(document).ready(function () {
 				$('#password').attr('style','border: 1px solid #d66');
 				$('#repass').attr('style','border: 1px solid #d66');
 				$('#passerrmsg').html("<small>passwords do not match</small>");
+				$('#updatebtn').prop('disabled',true);
 			} else if(pwd=='' || repwd==''){
 				$('#repass').attr('style','border: 1px solid #d66');
-				$('#passerrmsg').html("<small>passwords cannot be empty</small>");
+				$('#passerrmsg').html("<small>passwords cannot be emtpy</small>");
+				$('#updatebtn').prop('disabled',true);
 			} else {
 				$('#password').attr('style','');
 				$('#repass').attr('style','');
 				$('#passerrmsg').html("");
+				$('#updatebtn').prop('disabled',false);
 			}
 		}
 	});

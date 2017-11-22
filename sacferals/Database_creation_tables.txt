@@ -49,7 +49,7 @@ CREATE TABLE ReportColonyForm (
 	InjuryDescription varchar(200),
 	FriendlyPet varchar(15),
 	ColonySetting varchar(200),
-	Comments varchar(200),
+	Comments text,
 	ReqAssistance varchar(15),
 	VolunteerResponding varchar(200),
 	ResponseDate varchar(15),
