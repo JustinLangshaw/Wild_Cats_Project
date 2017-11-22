@@ -109,7 +109,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 							<span id="passerrmsg"><?php echo $passerrmsg; ?></span>	
 						</fieldset>
 						<fieldset class='form_field'>
-							<label class='form_label' for="email">*Email Address
+							<label class='form_label required' for="email">Email Address
 								<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 									<span class="tooltiptext">Use the exact same email used during submitting the volunteer form.</span>
 								</div>
