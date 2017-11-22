@@ -4,7 +4,80 @@
 	$link = connectdb($host, $user, $pass, $db);
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>	
+	<title>Create Account</title>
+	<style type="text/css">
+    .fieldset-auto-width 
+	{
+         display: inline-block;
+    }
+	</style>
+
+	<link rel="stylesheet" type="text/css" href="userprofile.css" />
+	
+</head>
+
+<body class="main_body">
+<!-- <a href="createaccount.php">Clean</a> <br>
+
+	<form method="post" action="createaccount.php">
+		<div>
+			<fieldset class='fieldset-auto-width'><legend>Create Account</legend>
+			<label><input type='text' name='username'>User Name</label><br>
+			<label><input type='password' name='password'>Password</label><br>
+			<label><input type='password' name='repassword'>Re-Enter Password</label><br>
+			<label><input type='text' name='email'>Email</label><br>
+			<label><input type='submit' name='register' value='Register'></label><br>
+			</fieldset>
+		</div>
+	</form>
+
+	<h4>Please use the same email you used when submitting the volunteer form, otherwise we will have to manually add the jobs you selected.</h4>
+ -->
+ 	<div class='main_login' style='margin-top:20px'>
+		<div class='page-wrap'>
+			<div class='main'>
+				<div class='main_container'>
+					<h1 class='main_heading'>Create Account</h1>
+					<form class='form' role='form' method='post' action='createaccount.php'>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Username</label>
+							<input type='username' class='form_input' placeholder='Enter your username or email' required='required' name='username' value=''>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Password</label>
+								<input type='password' class='form_input' name='password' id='password_field' required='required' placeholder='Enter your password'>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Re-Enter Password</label>
+								<input type='password' class='form_input' name='repassword' id='password_field' required='required' placeholder='Re-Enter your password'>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Email
+								<i class="tooltip"><img src="https://shots.jotform.com/kade/Screenshots/blue_question_mark.png" height="13px"/>
+									<span class="tooltiptext">Please use the same email used during submitting the volunteer form.</span>
+								</i>
+							</label>
+								<input type='text' class='form_input' name='email' id='email_field' required='required' placeholder='Enter your email'>
+						</fieldset>
+						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
+		 					<div class='button_label'>Register</div>
+						</button>
+
+						<div class='main_heading-2'>
+							<a href='userprofile.php'>Back to login</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <?php	
+
 
 if(isset($_POST['register'])) //this processes after user submits data.
 {
@@ -13,8 +86,8 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	$password = $_POST['password'];
 	$repassword = $_POST['repassword'];
 	
-	$re = "/(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[_.-]?[a-zA-Z0-9]+$/";
-	$reEmail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/";
+	$re =  "/^[a-zA-Z0-9]{4,10}$/";	//username must be length 4+ with only number and letters
+	$reEmail = "/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/";	//check proper format of email
 	
 	if($username == "" || $email == "" || $password == "" || $repassword == "")//doesn't execute? 
 	{
@@ -22,30 +95,23 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	}
 	else if($password != $repassword)
 	{
-		$passerror = "style='border:1px solid #d66'";
-		$passerrmsg = "<small>passwords do not match</small>";
+		print "error: passwords do not match";
 	}
 	else 
-	{
+	{	
 		//if user passes re test
-		if( preg_match($re, $username) && preg_match($reEmail, $email) )
-		{	//check if a current user already had the username and email
+		if( (preg_match($re, $username)) && (preg_match($reEmail, $email)) )
+		{	//display current table
 			$querycheck = "select * from SacFeralsUsers where username='$username' or email='$email'";
 			$resultcheck = mysqli_query($link, $querycheck); //link query to database
 			
 			if(mysqli_num_rows($resultcheck) == 0)// test if query does "nothing", and thus has no records
-			{	//if not, record doesn't exist check if filled out a volunteer form (using email)
-				$reprtformcheck = "select * from VolunteerForm where email='$email'";
-				$res = mysqli_query($link, $reprtformcheck); 
+			{	//if not, record doesn't exist so you can process the insert query
+				$query = "insert into SacFeralsUsers values('', '$username', '$email', '$password', '0')";
+				mysqli_query($link, $query); //link query to database
+				print "Account Created"; // print confirmation	
 				
-				if(mysqli_num_rows($res) != 0){ //email not in user & is in volunteerform
-					$query = "insert into SacFeralsUsers values('', '$username', '$email', '$password', '0')";
-					mysqli_query($link, $query); //link query to database
-					print "Account Created"; // print confirmation	
-				}
-				else {
-					print "error: You must first fill out a volunteer form";
-				}
+			
 			}
 			else
 			{
@@ -60,102 +126,8 @@ if(isset($_POST['register'])) //this processes after user submits data.
 } 
 	
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>	
-	<title>Create Account</title>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	
-	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-	
-	<style type="text/css">
-    .fieldset-auto-width 
-	{
-         display: inline-block;
-    }
-	</style>
-
-	<link rel="stylesheet" type="text/css" href="userprofile.css" />
-	
-</head>
-
-<body class="main_body">
-	<div class='main_login' style='margin-top:20px'>
-		<div class='page-wrap'>
-			<div class='main'>
-				<div class='main_container'>
-					<h1 class='main_heading'>Create Account</h1>
-					<form class='form' id="createaccountform" role='form' method='post' action='createaccount.php'>
-						<fieldset class='form_field'>
-							<label class='form_label required'>Username</label>
-							<input type='username' class='form_input' placeholder='Enter your username or email' required='required' name='username'
-								pattern="(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[_.-]?[a-zA-Z0-9]+$" title="Must start and end with a letter. Allowed special characters: underscore, dot, dash">
-						</fieldset>
-						<fieldset class='form_field'>
-							<label class='form_label required'>Password</label>
-							<input type='password' class='form_input' name='password' id='password' required='required' placeholder='Enter your password' <?php echo $passerror?>>
-						</fieldset>
-						<fieldset class='form_field'>
-							<label class='form_label required'>Re-Enter Password</label>
-							<input type='password' class='form_input' name='repassword' id='repass' required='required' placeholder='Re-Enter your password' <?php echo $passerror?>>
-							<span id="passerrmsg"><?php echo $passerrmsg; ?></span>	
-						</fieldset>
-						<fieldset class='form_field'>
-							<label class='form_label required' for="email">Email Address
-								<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-									<span class="tooltiptext">Use the exact same email used during submitting the volunteer form.</span>
-								</div>
-							</label>
-							<input type='email' class='form_input' name='email' id='email_field' required='required' 
-								pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com">
-						</fieldset>
-						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
-		 					<div class='button_label'>Register</div>
-						</button>
-
-						<div class='main_heading-2'>
-							<a href='userprofile.php'>Back to login</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-<script>
-$(document).ready(function () { 
-	$('#createaccountform input').on('keyup change', function(){
-		var id = $(this)[0].id;
-		if(id=='password' || id=='repass'){
-			var pwd = $('#password').val();
-			var repwd = $('#repass').val();
-			if(pwd != repwd){
-				$('#password').attr('style','border: 1px solid #d66');
-				$('#repass').attr('style','border: 1px solid #d66');
-				$('#passerrmsg').html("<small>passwords do not match</small>");
-				$('#updatebtn').prop('disabled',true);
-			} else if(pwd=='' || repwd==''){
-				$('#repass').attr('style','border: 1px solid #d66');
-				$('#passerrmsg').html("<small>passwords cannot be emtpy</small>");
-				$('#updatebtn').prop('disabled',true);
-			} else {
-				$('#password').attr('style','');
-				$('#repass').attr('style','');
-				$('#passerrmsg').html("");
-				$('#updatebtn').prop('disabled',false);
-			}
-		}
-	});
-});
-</script>
 
 </body>
+
 </html>
