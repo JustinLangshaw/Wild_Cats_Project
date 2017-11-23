@@ -22,7 +22,7 @@ function authenticateUser()
 	$result = mysqli_query($link, $query);
 	$row = mysqli_fetch_row($result);
 	
-	if(mysqli_num_rows($result) == 0 || $row[4]!=1 || $row[4]!=2) //not valid if not activated
+	if(mysqli_num_rows($result) == 0 || ($row[4]!=1 && $row[4]!=2)) //not valid if not activated
 	{
 		$_SESSION['authenticate234252432341'] = "Not Valid!!!";
 	}
