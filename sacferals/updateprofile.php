@@ -260,7 +260,7 @@ function formatPhone(phoneId) {
 				</div>
 			</div>
 <?php
-		} 
+		}
 		if($level==2){ //if triage user
 ?>
 			<hr>
@@ -376,6 +376,18 @@ $(document).ready(function () {
 				$('#updatebtn').prop('disabled',false);
 			}
 		}
+	});
+	
+	$('#updateform').submit(function(){ //dont submit form if at least one isn't selected
+		var work = $('#workchecks').find('input');
+		for(var i=0; i<work.length; i++){
+			if(work[i].checked) return true;
+		}
+		
+		$('#worklabel').attr('style','color: red');
+		$('#workerror').html('<small>Must select at least one</small>');
+		$('#workerror').removeAttr('hidden');
+		return false;
 	});
 });
 </script>

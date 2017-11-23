@@ -5,19 +5,6 @@ $(document).ready(function () {
         else
           $('.todisplay').fadeOut('fast'); 
     });
-	
-	//for volunteerform and triage updateprofile
-	$('form').submit(function(){ //dont submit form (clear out) if work not chosen
-		var work = $('#workchecks').find('input');
-		for(var i=0; i<work.length; i++){
-			if(work[i].checked) return true;
-		}
-		
-		$('#worklabel').attr('style','color: red');
-		$('#workerror').html('<small>Must select at least one</small>');
-		$('#workerror').removeAttr('hidden');
-		return false;
-	});
 });
 
 
