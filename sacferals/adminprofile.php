@@ -812,16 +812,18 @@
 
 			if(isset($_GET['del']))
 			{			
-				$RecordNumber = $_GET['RecordNumber'];				
-				$query = "delete from VolunteerForm where RecordNumber='$RecordNumber'";
-				mysqli_query($link, $query);
-					
-				//also delete user account if it exist in SacFeralsUsers
+				$RecordNumber = $_GET['RecordNumber'];	
+				
+				//delete user account if it exist in SacFeralsUsers
+				$query = "SET SQL_SAFE_UPDATES = 0;";
 				mysqli_query($link, "SET SQL_SAFE_UPDATES = 0;");
 				$query = "delete from SacFeralsUsers where email=(select Email from VolunteerForm where RecordNumber = $RecordNumber);";
 				mysqli_query($link, $query);
 
-				//print $query;
+				//then delete record from VolunteerForm
+				$query = "delete from VolunteerForm where RecordNumber='$RecordNumber';";
+				mysqli_query($link, $query);
+								
 				print "<h2>Record Deleted</h2>";
 				//showReportColony();
 			}
