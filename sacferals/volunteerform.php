@@ -193,8 +193,9 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		<div class="col-xs-10 col-sm-10 col-md-8 col-lg-6">
 			<label class="col-form-label" for="completeaddress">Complete Mailing Address<br><small>(Optional)</small></label>
 			<input class="form-control" type="text" name="completeaddress" placeholder="1234 Sesame St, City, State, Zip"
-				pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}[,\s]{0,1}[a-zA-Z0-9\s]{3,}[,\s]{0,1}[a-zA-Z\s]{3,}[,\s]{0,1}[0-9]{5,5}" 
 				title="Enter Street, City, State, and Zip" id="completeaddress" size="40">
+				<!--pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}.?,?\s[a-zA-Z]{0,1}.?[a-zA-Z0-9\s]{3,},?\s[a-zA-Z\s]{3,},?\s[0-9]{5,5}"-->
+				
 		</div>
 	</div>
 	<div class="form-group row">
