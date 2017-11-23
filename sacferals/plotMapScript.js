@@ -1,9 +1,10 @@
 //Code for plotting locations from Reports table on a map
 
 //Initialize Google Map
+var map;
 function initMap() {
-    latlng = new google.maps.LatLng(38.6041169, -121.4182844);
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var latlng = new google.maps.LatLng(38.6041169, -121.4182844);
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: latlng
     });
@@ -24,8 +25,7 @@ function initMap() {
 //Plot locations on map including details on the report
 var markerList = [];
 function plotMarkers(resultsMap, locDetails) {
-    resultsMap.setCenter(resultsMap.latlng);
-
+	map.setCenter(locDetails.latlng);
     var marker = new google.maps.Marker({
         map: resultsMap,
         title: locDetails.address,
@@ -37,7 +37,7 @@ function plotMarkers(resultsMap, locDetails) {
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
     });
-	markerList.push(marker);
+	markerList.push(marker);	
 }
 
 //Get the address infos for mapping
