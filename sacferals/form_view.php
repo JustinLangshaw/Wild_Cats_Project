@@ -35,25 +35,58 @@
 	{ 	
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
-
+		$largestRecord;
+		$smallestRecord;
+		
 		if($level == 1)
 		{
-
+			
+			$query = "SELECT MAX( RecordNumber ) FROM ReportColonyForm";
+			$result = mysqli_query($link, $query);
+			while($row = mysqli_fetch_row($result))
+			{
+				list($largestNumber) = $row;
+				$largestRecord=$largestNumber;
+			}
+			$query = "SELECT MIN( RecordNumber ) FROM ReportColonyForm";
+			$result = mysqli_query($link, $query);
+			while($row = mysqli_fetch_row($result))
+			{
+				list($smallestNumber) = $row;
+				$smallestRecord=$smallestNumber;
+			}
+			//print "Max record number is: ".$largestRecord;
+			//print "<br> Min record number is: ".$smallestRecord."<br>";
+			
+			
 			$RecordNumber1 = $_GET['RecordNumber'];
 			$RecordNumber1MinusOne = (int)$RecordNumber1-1;
 			$RecordNumber1PlusOne = (int)$RecordNumber1+1;
 			
+			do{
+				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1PlusOne."";
+				$result = mysqli_query($link, $query);
+				if(mysqli_num_rows($result)==0 && $RecordNumber1PlusOne<$largestRecord)
+				{
+					$RecordNumber1PlusOne++;
+				}
+				
+			}while(mysqli_num_rows($result)==0 && $RecordNumber1PlusOne<$largestRecord);
+			
+			do{
+				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1MinusOne."";
+				$result = mysqli_query($link, $query);
+				if(mysqli_num_rows($result)==0 && $RecordNumber1MinusOne>$smallestRecord)
+				{
+					$RecordNumber1MinusOne--;
+				}
+				
+			}while(mysqli_num_rows($result)==0 && $RecordNumber1MinusOne>$smallestRecord);
+			
+			
+			
 			$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1."";
 			$result = mysqli_query($link, $query);
-				if(mysqli_num_rows($result)==0)
-				{
-					print"
-						<br>
-						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
-						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
-						<br><br>
-						Record Doesn't Exist.<br><br>";
-				}
 			//print $query."<br>";
 			while($row = mysqli_fetch_row($result))
 			{
@@ -64,12 +97,32 @@
 																				// then printed in one table row
 				if($RecordNumber1==$RecordNumber)
 				{
-					print "
-					<br>
-					<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
-					<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
-					</br>
+					if($RecordNumber1MinusOne<$smallestRecord)
+					{
+						print "
+						<br>
+						(Beginning of Records) 
+						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+						</br>";
+					}
+					else if($RecordNumber1PlusOne>$largestRecord)
+					{
+						print "
+						<br>
+						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
+						(End of Records)
+						</br>";
+					}
+					else
+					{
+						print "
+						<br>
+						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
+						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+						</br>";
+					}
 					
+					print "
 					<br>
 					<a href=''>EDIT</a>
 					<a href=''>DELETE</a>
@@ -107,6 +160,7 @@
 					<br><b>Outcome: </b> $Outcome</br>
 					<br><b>CompletionDate: </b> $CompletionDate</br>
 					";
+					
 				}
 				else
 				{
@@ -120,17 +174,37 @@
 		}
 	}
 
-print"
-<br>
-<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
-<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
-</br>
-
-<br>
-<a href=''>EDIT</a>
-<a href=''>DELETE</a>
-</br>
-";
+	if($RecordNumber1MinusOne<$smallestRecord)
+	{
+		print "
+		<br>
+		(Beginning of Records) 
+		<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+		</br>";
+	}
+	else if($RecordNumber1PlusOne>$largestRecord)
+	{
+		print "
+		<br>
+		<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
+		(End of Records)
+		</br>";
+	}
+	else
+	{
+		print "
+		<br>
+		<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
+		<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+		</br>";
+	}
+	
+	print"
+	<br>
+	<a href=''>EDIT</a>
+	<a href=''>DELETE</a>
+	</br>
+	";
 ?>
 </body>
 </html>
