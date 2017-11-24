@@ -90,11 +90,11 @@
 			//print $query."<br>";
 			while($row = mysqli_fetch_row($result))
 			{
-				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
-				$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-				$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-				$Outcome, $CompletionDate, $FeedIfReturned, $ReqAssitance) = $row; // variables are set to current row
-																				// then printed in one table row
+				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
+						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
+						
 				if($RecordNumber1==$RecordNumber)
 				{
 					if($RecordNumber1MinusOne<$smallestRecord)
@@ -159,6 +159,8 @@
 					<br><b>BeatTeamLeader: </b> $BeatTeamLeader</br>
 					<br><b>Outcome: </b> $Outcome</br>
 					<br><b>CompletionDate: </b> $CompletionDate</br>
+					<br><b>Latitude: </b> $Lat</br>
+					<br><b>Longitude: </b> $Lng</br>
 					";
 					
 				}
