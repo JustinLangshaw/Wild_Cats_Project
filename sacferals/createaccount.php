@@ -5,9 +5,8 @@
 ?>
 
 <?php	
-
 if(isset($_POST['register'])) //this processes after user submits data.
-{
+{	
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
@@ -30,31 +29,54 @@ if(isset($_POST['register'])) //this processes after user submits data.
 		//if user passes re test
 		if( preg_match($re, $username) && preg_match($reEmail, $email) )
 		{	//check if a current user already had the username and email
-			$querycheck = "select * from SacFeralsUsers where username='$username' or email='$email'";
-			$resultcheck = mysqli_query($link, $querycheck); //link query to database
-			
-			if(mysqli_num_rows($resultcheck) == 0)// test if query does "nothing", and thus has no records
+			$querycheck = $link->prepare("select * from SacFeralsUsers where username=? or email=?");
+			$querycheck->bind_param("ss", $username, $email);
+			$querycheck->execute();//link query to database
+			$querycheck->store_result();
+			if(!$querycheck->fetch()){ 
+				$resultcheck = 0;
+			} else{
+				$resultcheck = $querycheck->num_rows;
+			}
+			$querycheck->close(); 
+
+			if($resultcheck == 0)// test if query does "nothing", and thus has no records
 			{	//if not, record doesn't exist check if filled out a volunteer form (using email)
-				$reprtformcheck = "select * from VolunteerForm where email='$email'";
-				$res = mysqli_query($link, $reprtformcheck); 
+				$reprtformcheck = $link->prepare("select * from VolunteerForm where email=?");
+				$reprtformcheck->bind_param("s", $email);
+				$reprtformcheck->execute();
+				$reprtformcheck->store_result();
+				if(!$reprtformcheck->fetch()){
+					$res = 0;
+				}else{
+					$res = $reprtformcheck->num_rows;
+				}
+				$reprtformcheck->close();			
 				
-				if(mysqli_num_rows($res) != 0){ //email not in user & is in volunteerform
-					$query = "insert into SacFeralsUsers values('', '$username', '$email', '$password', '0')";
-					mysqli_query($link, $query); //link query to database
-					print "Account Created"; // print confirmation	
+				if($res != 0){ //email not in user & is in volunteerform
+					$query = $link->prepare("insert into SacFeralsUsers values('', ?, ?, ?, '0')");
+					$query->bind_param("sss", $username, $email, $password);
+					$query->execute();
+					$query->close();
+					$msg="Success: Account created for $username."; // print confirmation	
+					$fontcolor="green";
 				}
 				else {
-					print "error: You must first fill out a volunteer form";
+					$msg="Error: Must fill out a volunteer form first.";
+					$fontcolor="red";
 				}
 			}
 			else
 			{
-				print "error: That account name or email already exists";
-			}
+				$msg="Error: That username or email already exists.";
+				$fontcolor="red";
+			}			
+			$link->close();
 		}
 		else
 		{
-			print "error: Please use no special characters when creating username and make sure your email is valid.";
+			$msg="Error: Username must start and end with a letter. Allowed special characters: underscore, dot, dash. Make sure your email is valid.";
+			$fontcolor="red";
 		}
 	}
 } 
@@ -95,18 +117,10 @@ if(isset($_POST['register'])) //this processes after user submits data.
 					<h1 class='main_heading'>Create Account</h1>
 					<form class='form' id="createaccountform" role='form' method='post' action='createaccount.php'>
 						<fieldset class='form_field'>
+							<font color="<?php echo $fontcolor?>" size=2.5><label id="error" name="error" ><?php echo $msg?></label></font>
 							<label class='form_label required'>Username</label>
 							<input type='username' class='form_input' placeholder='Enter your username or email' required='required' name='username'
 								pattern="(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[_.-]?[a-zA-Z0-9]+$" title="Must start and end with a letter. Allowed special characters: underscore, dot, dash">
-						</fieldset>
-						<fieldset class='form_field'>
-							<label class='form_label required'>Password</label>
-							<input type='password' class='form_input' name='password' id='password' required='required' placeholder='Enter your password' <?php echo $passerror?>>
-						</fieldset>
-						<fieldset class='form_field'>
-							<label class='form_label required'>Re-Enter Password</label>
-							<input type='password' class='form_input' name='repassword' id='repass' required='required' placeholder='Re-Enter your password' <?php echo $passerror?>>
-							<span id="passerrmsg"><?php echo $passerrmsg; ?></span>	
 						</fieldset>
 						<fieldset class='form_field'>
 							<label class='form_label required' for="email">Email Address
@@ -117,10 +131,19 @@ if(isset($_POST['register'])) //this processes after user submits data.
 							<input type='email' class='form_input' name='email' id='email_field' required='required' 
 								pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com">
 						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Password</label>
+							<input type='password' class='form_input' name='password' id='password' required='required' placeholder='Enter your password' <?php echo $passerror?>>
+						</fieldset>
+						<fieldset class='form_field'>
+							<label class='form_label required'>Re-Enter Password</label>
+							<input type='password' class='form_input' name='repassword' id='repass' required='required' placeholder='Re-Enter your password' <?php echo $passerror?>>
+							<span id="passerrmsg"><?php echo $passerrmsg; ?></span>	
+						</fieldset>
+						
 						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
 		 					<div class='button_label'>Register</div>
 						</button>
-
 						<div class='main_heading-2'>
 							<a href='userprofile.php'>Back to login</a>
 						</div>
