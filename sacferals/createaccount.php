@@ -44,12 +44,20 @@ if(isset($_POST['register'])) //this processes after user submits data.
 					print "Account Created"; // print confirmation	
 				}
 				else {
-					print "error: You must first fill out a volunteer form";
+					//print "error: You must first fill out a volunteer form";
+					echo '<div style="padding-bottom:10px">
+							<div class="alert">
+								<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>'
+								.$email.' hasn\'t been registered yet. You must first fill out a volunteer form.</div></div>';
 				}
 			}
 			else
 			{
-				print "error: That account name or email already exists";
+				//print "error: That account name or email already exists";
+				echo '<div style="padding-bottom:10px">
+						<div class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>'
+							.$username.' and\or '.$email.' already exist</div></div>';
 			}
 		}
 		else
@@ -71,19 +79,11 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	
 	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
 	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" type="text/css" href="css/userprofile.css">
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-	
-	<style type="text/css">
-    .fieldset-auto-width 
-	{
-         display: inline-block;
-    }
-	</style>
-
-	<link rel="stylesheet" type="text/css" href="userprofile.css" />
 	
 </head>
 
@@ -117,7 +117,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 							<input type='email' class='form_input' name='email' id='email_field' required='required' 
 								pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com">
 						</fieldset>
-						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
+						<button type='submit' id='reg' class='button' name='register'>
 		 					<div class='button_label'>Register</div>
 						</button>
 
@@ -141,16 +141,17 @@ $(document).ready(function () {
 				$('#password').attr('style','border: 1px solid #d66');
 				$('#repass').attr('style','border: 1px solid #d66');
 				$('#passerrmsg').html("<small>passwords do not match</small>");
-				$('#updatebtn').prop('disabled',true);
+				$('#reg').attr('disabled',true);
 			} else if(pwd=='' || repwd==''){
 				$('#repass').attr('style','border: 1px solid #d66');
+				$('#password').attr('style','border: 1px solid #d66');
 				$('#passerrmsg').html("<small>passwords cannot be emtpy</small>");
-				$('#updatebtn').prop('disabled',true);
+				$('#reg').attr('disabled',true);
 			} else {
 				$('#password').attr('style','');
 				$('#repass').attr('style','');
 				$('#passerrmsg').html("");
-				$('#updatebtn').prop('disabled',false);
+				$('#reg').attr('disabled',false);
 			}
 		}
 	});
