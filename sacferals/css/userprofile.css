@@ -66,8 +66,15 @@ a{color:rgba(0,0,0,.54)}
 	margin-right:2.3%;
 	width:31.7%
 }
-.main_container:last-child{
+.main_container:last-child, #alert-box:last-child{
 	margin-right:0
+}
+#alert-box{
+	margin-left:30%;
+	float:left;
+	display:block;
+	margin-right:2.3%;
+	width:40%
 }
 @media screen and (max-width:1025px){
 	.main_container{
@@ -77,43 +84,64 @@ a{color:rgba(0,0,0,.54)}
 		margin-right:2.3%;
 		width:48.8%
 	}
-	.main_container:last-child{
+	.main_container:last-child, #alert-box:last-child{
 		margin-right:0
+	}
+	#alert-box{
+		margin-left:20%;
+		float:left;
+		display:block;
+		margin-right:2.3%;
+		width:60%
 	}
 }
 @media screen and (max-width:625px){
-	.main_container{
+	.main_container, #alert-box{
 		margin-left:17%;
 		float:left;
 		display:block;
 		margin-right:2.3%;
 		width:65.8%
 	}
-	.main_container:last-child{
+	.main_container:last-child, #alert-box:last-child{
 		margin-right:0
+	}
+	#alert-box{
+		margin-left:10%;
+		float:left;
+		display:block;
+		margin-right:2.3%;
+		width:80%
 	}
 }
 @media screen and (max-width:550px){
-	.main_container{
+	.main_container, #alert-box{
 		margin-left:8.5%;
 		float:left;
 		display:block;
 		margin-right:2.3%;
 		width:82.9%
 	}
-	.main_container:last-child{
+	.main_container:last-child, #alert-box:last-child{
 		margin-right:0
 	}
-}
-@media screen and (max-width:475px){
-	.main_container{
+	#alert-box{
 		margin-left:0;
 		float:left;
 		display:block;
 		margin-right:2.3%;
 		width:100%
 	}
-	.main_container:last-child{
+}
+@media screen and (max-width:475px){
+	.main_container, #alert-box{
+		margin-left:0;
+		float:left;
+		display:block;
+		margin-right:2.3%;
+		width:100%
+	}
+	.main_container:last-child, #alert-box:last-child{
 		margin-right:0
 	}
 }
@@ -266,6 +294,7 @@ img {
 	background-color: #f44336; /* Red */
 	color: white;
 	margin-bottom: 15px;
+	text-align: center;
 }
 .closebtn {
 	margin-left: 15px;

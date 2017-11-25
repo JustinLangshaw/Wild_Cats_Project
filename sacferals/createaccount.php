@@ -4,6 +4,26 @@
 	$link = connectdb($host, $user, $pass, $db);
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>	
+	<title>Create Account</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
+	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" type="text/css" href="userprofile.css">
+	
+	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+	
+</head>
+
+<body class="main_body">
+
 <?php	
 
 if(isset($_POST['register'])) //this processes after user submits data.
@@ -45,7 +65,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 				}
 				else {
 					//print "error: You must first fill out a volunteer form";
-					echo '<div style="padding-bottom:10px">
+					echo '<div class="row" id="alert-box">
 							<div class="alert">
 								<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>'
 								.$email.' hasn\'t been registered yet. You must first fill out a volunteer form.</div></div>';
@@ -54,7 +74,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 			else
 			{
 				//print "error: That account name or email already exists";
-				echo '<div style="padding-bottom:10px">
+				echo '<div class="row" id="alert-box">
 						<div class="alert">
 							<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>'
 							.$username.' and\or '.$email.' already exist</div></div>';
@@ -69,25 +89,6 @@ if(isset($_POST['register'])) //this processes after user submits data.
 	
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>	
-	<title>Create Account</title>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link rel="stylesheet" type="text/css" href="css/userprofile.css">
-	
-	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-	
-</head>
-
-<body class="main_body">
 	<div class='main_login' style='margin-top:20px'>
 		<div class='page-wrap'>
 			<div class='main'>
