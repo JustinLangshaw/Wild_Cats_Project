@@ -941,7 +941,7 @@
 					mysqli_query($link, $query);
 				}
 				//print $query;
-				print "<span id='recupdate'><h2>Record Deleted(s)</h2></span>";
+				print "<span id='recupdate'><h2>Record(s) Deleted</h2></span>";
 				//showReportColony();
 			}
 
