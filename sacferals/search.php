@@ -77,20 +77,20 @@
 				<p id="columnselect">Note: Hold down ctrl or shift to select multiple columns</p>
 				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
-					<option value='Comments1'>Comments</option>
-					<option value='Responder'>Responder</option>
-					<option value='Status'>Status</option>
 					<option value='DateAndTime'>Date And Time</option>
+					<option value='Responder'>Responder</option>
+					<option value='Comments1'>Comments</option>
+					<option value='Status'>Status</option>
 					<option value='FeedIfReturned'>Feed If Returned</option>
 					<option value='FullName'>Full Name</option>
 					<option value='Email'>Email</option>
 					<option value='Phone1'>Phone1</option>
 					<option value='Phone2'>Phone2</option>
-					<option value='ColonyAddress'>Colony Address</option>
+					<option value='ColonyAddress'>Address</option>
 					<option value='City'>City</option>
 					<option value='County'>County</option>
 					<option value='ZipCode'>ZipCode</option>
-					<option value='AnyoneAttempted'>Anyone Attempted</option>
+					<option value='AnyoneAttempted'>Trapping/ Eartip</option>
 					<option value='ApproximateCats'>Approximate Cats</option>
 					<option value='Kittens'>Kittens</option>
 					<option value='ColonyCareGiver'>Colony Caregiver</option>
@@ -102,7 +102,7 @@
 					<option value='Comments'>Additional Comments</option>
 					<option value='ReqAssistance'>Require Assitance</option>
 					<option value='VolunteerResponding'>Volunteer Responding</option>
-					<option value='ResponseDate'>Response Date</option>
+					<option value='ResponseDate'>Date</option>
 					<option value='CustNeedOutcome'>Customer Need Outcome</option>
 					<option value='BeatTeamLeader'>Beat Team Leader</option>
 					<option value='Outcome'>Outcome</option>
@@ -160,20 +160,20 @@
 					<div id="blueprint">
 						<select class="input-sm" id="query" name="query[]" tabindex='3'>
 							<option value='RecordNumber'>ID</option>
-							<option value='Comments1'>Comments</option>
-							<option value='Responder'>Responder</option>
-							<option value='Status'>Status</option>
 							<option value='DateAndTime'>Date And Time</option>
+							<option value='Responder'>Responder</option>
+							<option value='Comments1'>Comments</option>
+							<option value='Status'>Status</option>
 							<option value='FeedIfReturned'>Feed If Returned</option>
 							<option value='FullName'>Full Name</option>
 							<option value='Email'>Email</option>
 							<option value='Phone1'>Phone1</option>
 							<option value='Phone2'>Phone2</option>
-							<option value='ColonyAddress'>Colony Address</option>
+							<option value='ColonyAddress'>Address</option>
 							<option value='City'>City</option>
 							<option value='County'>County</option>
 							<option value='ZipCode'>ZipCode</option>
-							<option value='AnyoneAttempted'>Anyone Attempted</option>
+							<option value='AnyoneAttempted'>Trapping/ Eartip</option>
 							<option value='ApproximateCats'>Approximate Cats</option>
 							<option value='Kittens'>Kittens</option>
 							<option value='ColonyCareGiver'>Colony Caregiver</option>
@@ -183,9 +183,9 @@
 							<option value='FriendlyPet'>Friendly/Pet</option>
 							<option value='ColonySetting'>Colony Setting</option>
 							<option value='Comments'>Additional Comments</option>
-							<option value='ReqAssistance'>Require Assistance</option>
+							<option value='ReqAssistance'>Assist</option>
 							<option value='VolunteerResponding'>Volunteer Responding</option>
-							<option value='ResponseDate'>Response Date</option>
+							<option value='ResponseDate'>Date</option>
 							<option value='CustNeedOutcome'>Customer Need Outcome</option>
 							<option value='BeatTeamLeader'>Beat Team Leader</option>
 							<option value='Outcome'>Outcome</option>
@@ -298,19 +298,19 @@
 				else if($selectedOption=="Comments1") $printvalue = "Comments";
 				else if($selectedOption=="DateAndTime") $printvalue = "Date/Time";
 				else if($selectedOption=="FeedIfReturned") $printvalue = "Will Feed";
-				else if($selectedOption=="ColonyAddress") $printvalue = "Colony Address";
+				else if($selectedOption=="ColonyAddress") $printvalue = "Address";
 				else if($selectedOption=="ZipCode") $printvalue = "Zip";
-				else if($selectedOption=="AnyoneAttempted") $printvalue = "Anyone Attempted";
+				else if($selectedOption=="AnyoneAttempted") $printvalue = "Trapping/ Eartip";
 				else if($selectedOption=="ApproximateCats") $printvalue = "# Cats";
-				else if($selectedOption=="ColonyCareGiver") $printvalue = "Caregiver/ Feeder";
+				else if($selectedOption=="ColonyCareGiver") $printvalue = "Caregiver";
 				else if($selectedOption=="FeederDescription" || $selectedOption=="InjuryDescription") $printvalue = "Description";
-				else if($selectedOption=="Injured") $printvalue = "Injured/ Pregnant";
-				else if($selectedOption=="FriendlyPet") $printvalue = "Friendly/ Pet";
+				else if($selectedOption=="Injured") $printvalue = "Sick";
+				else if($selectedOption=="FriendlyPet") $printvalue = "Friendly";
 				else if($selectedOption=="ColonySetting") $printvalue = "Setting";
-				else if($selectedOption=="ReqAssistance") $printvalue = "Require Assistance";
+				else if($selectedOption=="ReqAssistance") $printvalue = "Assist";
 				else if($selectedOption=="VolunteerResponding") $printvalue = "Responder";
-				else if($selectedOption=="ResponseDate") $printvalue = "Response Date";
-				else if($selectedOption=="CustNeedOutcome") $printvalue = "Outcome Needed";
+				else if($selectedOption=="ResponseDate") $printvalue = "Date";
+				else if($selectedOption=="CustNeedOutcome") $printvalue = "Needs";
 				else $printvalue = $selectedOption;
 				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
 			}
@@ -556,33 +556,33 @@
 							{
 								print "
 								<th><a>ID</a></th>
-								<th><a>Comments</a></th>
-								<th><a>Responder</a></th>
-								<th><a>Status</a></th>
 								<th><a>Date/Time</a></th>
+								<th><a>Responder</a></th>
+								<th><a>Comments</a></th>
+								<th><a>Status</a></th>
 								<th><a>Will Feed</a></th>
 								<th><a>FullName</a></th>
 								<th><a>Email</a></th>
 								<th><a>Phone1</a></th>
 								<th><a>Phone2</a></th>
-								<th><a>Colony Address</a></th>
+								<th><a>Address</a></th>
 								<th><a>City</a></th>
 								<th><a>County</a></th>
 								<th><a>Zip</a></th>
-								<th><a>Anyone Attempted</a></th>
+								<th><a>Trapping/ Eartip</a></th>
 								<th><a># Cats</a></th>
 								<th><a>Kittens</a></th>
-								<th><a>Caregiver/ Feeder</a></th>
+								<th><a>Caregiver</a></th>
 								<th><a>Description</a></th>
-								<th><a>Injured/ Pregnant</a></th>
+								<th><a>Sick</a></th>
 								<th><a>Description</a></th>
-								<th><a>Friendly/ Pet</a></th>
+								<th><a>Friendly</a></th>
 								<th><a>Setting</a></th>
 								<th><a>Additional Comments</a></th>
-								<th><a>Require Assistance</a></th>
+								<th><a>Assist</a></th>
 								<th><a>Responder</a></th>
-								<th><a>Response Date</a></th>
-								<th><a>Outcome Needed</a></th>
+								<th><a>Date</a></th>
+								<th><a>Needs</a></th>
 								<th><a>Beat_Team_Leader</a></th>
 								<th><a>Outcome</a></th>
 								<th><a>Completion_Date</a></th>
@@ -681,8 +681,9 @@
 									
 									print "
 									<td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
-									<td><textarea class='form-control' name='Comments1' rows='4' value='$Comments1'>$Comments1</textarea></td>
+									<td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
 									<td><input class='form-control' type='text' name='Responder' value='$Responder'></td>
+									<td><textarea class='form-control' name='Comments1' rows='4' value='$Comments1'>$Comments1</textarea></td>
 									<td>"//<div style='text-align:Center;'>Current Status: ' $Status '
 									."<div style='text-align:Center'>" //<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Change Report Status<span class='caret'></span></button>
 										//<ul class='dropdown-menu dropdown-menu-center'>
@@ -696,7 +697,6 @@
 													<option value='Kittens'".$selectedKittens.">Kittens!</option>
 												</select><br>
 									</form>"./*</li></ul></div></div>*/"</div></td>
-									<td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime</td>
 									<td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
 									<td><input class='form-control' type='text' name='FullName' value='$FullName'></td>
 									<td><input class='form-control' type='text' name='Email' value='$Email'></td>
@@ -757,10 +757,10 @@
 								{
 									print "
 									<td>$RecordNumber</td>
-									<td>$Comments1</td>
-									<td>$Responder</td>
-									<td id='statusCol'>$Status</td>
 									<td id='dateTimeCol'>$DateAndTime</td>
+									<td>$Responder</td>
+									<td>$Comments1</td>
+									<td id='statusCol'>$Status</td>
 									<td>$FeedIfReturned</td>
 									<td>$FullName</td>
 									<td>$Email</td>
@@ -998,33 +998,33 @@
 									print "
 
 							<th><a href='search.php?sort=RecordNumber'>ID</a></th>
-							<th><a href='search.php?sort=Comments1'>Comments</a></th>
-							<th><a href='search.php?sort=Responder'>Responder</a></th>
-							<th><a href='search.php?sort=Status'>Status</a></th>
 							<th><a href='search.php?sort=DateAndTime'>Date/Time</a></th>
+							<th><a href='search.php?sort=Responder'>Responder</a></th>
+							<th><a href='search.php?sort=Comments1'>Comments</a></th>
+							<th><a href='search.php?sort=Status'>Status</a></th>
 							<th><a href='search.php?sort=FeedIfReturned'>Will Feed</a></th>
 							<th><a href='search.php?sort=FullName'>FullName</a></th>
 							<th><a href='search.php?sort=Email'>Email</a></th>
 							<th><a href='search.php?sort=Phone1'>Phone1</a></th>
 							<th><a href='search.php?sort=Phone2'>Phone2</a></th>
-							<th><a href='search.php?sort=ColonyAddress'>Colony Address</a></th>
+							<th><a href='search.php?sort=ColonyAddress'>Address</a></th>
 							<th><a href='search.php?sort=City'>City</a></th>
 							<th><a href='search.php?sort=County'>County</a></th>
 							<th><a href='search.php?sort=ZipCode'>Zip</a></th>
-							<th><a href='search.php?sort=AnyoneAttempted'>Anyone Attempted</a></th>
+							<th><a href='search.php?sort=AnyoneAttempted'>Trapping/ Eartip</a></th>
 							<th><a href='search.php?sort=ApproximateCats'># Cats</a></th>
 							<th><a href='search.php?sort=Kittens'>Kittens</a></th>
-							<th><a href='search.php?sort=ColonyCareGiver'>Caregiver/ Feeder</a></th>
+							<th><a href='search.php?sort=ColonyCareGiver'>Caregiver</a></th>
 							<th><a href='search.php?sort=FeederDescription'>Description</a></th>
-							<th><a href='search.php?sort=Injured'>Injured/ Pregnant</a></th>
+							<th><a href='search.php?sort=Injured'>Sick</a></th>
 							<th><a href='search.php?sort=InjuryDescription'>Description</a></th>
-							<th><a href='search.php?sort=FriendlyPet'>Friendly/ Pet</a></th>
+							<th><a href='search.php?sort=FriendlyPet'>Friendly</a></th>
 							<th><a href='search.php?sort=ColonySetting'>Setting</a></th>
 							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>
-							<th><a href='search.php?sort=ReqAssistance'>Require Assistance</a></th>
+							<th><a href='search.php?sort=ReqAssistance'>Assist</a></th>
 							<th><a href='search.php?sort=VolunteerResponding'>Responder</a></th>
-							<th><a href='search.php?sort=ResponseDate'>Response Date</a></th>
-							<th><a href='search.php?sort=CustNeedOutcome'>Outcome Needed</a></th>
+							<th><a href='search.php?sort=ResponseDate'>Date</a></th>
+							<th><a href='search.php?sort=CustNeedOutcome'>Needs</a></th>
 							<th><a href='search.php?sort=BeatTeamLeader'>Beat_Team_Leader</a></th>
 							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
 							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>
@@ -1049,10 +1049,10 @@
 																		// then printed in one table row
 
 						$myArray[0]=$RecordNumber;
-						$myArray[1]=$Comments1;
+						$myArray[1]=$DateAndTime;
 						$myArray[2]=$Responder;
-						$myArray[3]=$Status;
-						$myArray[4]=$DateAndTime;
+						$myArray[3]=$Comments1;
+						$myArray[4]=$Status;
 						$myArray[5]=$FeedIfReturned;
 						$myArray[6]=$FullName;
 						$myArray[7]=$Email;
@@ -1083,10 +1083,10 @@
 						$myArray[32]=$Lng;
 
 						$myArray1[0]="RecordNumber";
-						$myArray1[1]="Comments1";
+						$myArray1[1]="DateAndTime";
 						$myArray1[2]="Responder";
-						$myArray1[3]="Status";
-						$myArray1[4]="DateAndTime";
+						$myArray1[3]="Comments1";
+						$myArray1[4]="Status";
 						$myArray1[5]="FeedIfReturned";
 						$myArray1[6]="FullName";
 						$myArray1[7]="Email";
@@ -1167,10 +1167,10 @@
 								print "
 
 							<td>$RecordNumber</td>
-							<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>
-							<td>$Responder</td>
-							<td id='statusCol'>$Status</td>
 							<td id='dateTimeCol'>$DateAndTime</td>
+							<td>$Responder</td>
+							<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>
+							<td id='statusCol'>$Status</td>
 							<td>$FeedIfReturned</td>
 							<td>$FullName</td>
 							<td>$Email</td>
