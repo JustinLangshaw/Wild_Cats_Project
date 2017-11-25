@@ -231,7 +231,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<input type="submit" class="btn btn-primary" name="addcurrentquery" value="Save"/>
 					</div>
 				</form> 
@@ -254,7 +254,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<input type="submit" class="btn btn-primary" name="addcurrentquery2" value="Save"/>
 					</div>
 				</form> 
@@ -734,7 +734,7 @@
 								print "
 								<tr>
 									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-										<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
+										<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber[]=$RecordNumber' class='confirmation'>Delete</a> 
 										<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View</a> 
 										<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
 									</td>
@@ -936,10 +936,12 @@
 			if(isset($_GET['del']))
 			{
 				$RecordNumber = $_GET['RecordNumber'];
-				$query = "delete from ReportColonyForm where RecordNumber='$RecordNumber'";
-				mysqli_query($link, $query);
+				foreach ($RecordNumber as $rec){
+					$query = "delete from ReportColonyForm where RecordNumber='$rec'";
+					mysqli_query($link, $query);
+				}
 				//print $query;
-				print "<span id='recupdate'><h2>Record Deleted</h2></span>";
+				print "<span id='recupdate'><h2>Record Deleted(s)</h2></span>";
 				//showReportColony();
 			}
 
@@ -975,6 +977,10 @@
 				<div class='row'>
 				<div class='col-sm-12'>
 				<b>Report A Feral Cat Colony</b><br><br>
+				<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
+				<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
+				<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
+				<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
 				
 				<table id='reportTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
@@ -1111,9 +1117,9 @@
 						$myArray1[32]="Lng";
 						
 						print "
-						<tr>
+						<tr id='$RecordNumber'>
 							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-								<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
+								<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber[]=$RecordNumber'  class='confirmation'>Delete</a> 
 								<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> 
 								<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
 							</td>
@@ -1262,5 +1268,30 @@
 ?>
 
 </div> <!-- end maindiv -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('table tbody tr').click(function(){
+		if($(this).attr('selected')=='selected'){
+			$(this).attr('selected',false);
+		}
+		else $(this).attr('selected',true);
+		
+		if($('[selected="selected"]')[0]!=null){
+			$('#editrowbtn').attr("disabled",false);
+			$('#deleterowbtn').attr("disabled",false);
+			$('#formviewbtn').attr("disabled",false);
+			$('#copyrowbtn').attr("disabled",false);
+		}
+		else {
+			$('#editrowbtn').attr("disabled",true);
+			$('#deleterowbtn').attr("disabled",true);
+			$('#formviewbtn').attr("disabled",true);
+			$('#copyrowbtn').attr("disabled",true);
+		}
+	});
+});
+</script>
+
 </body>
 </html>

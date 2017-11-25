@@ -88,16 +88,17 @@ table {
 tbody {
 	overflow-y: auto;
 }
-table textarea{
+.row textarea{
+	max-width: 100%;
 	overflow-x: hidden;
 }
 th {
 	text-align: center;
 	vertical-align: middle !important;
 }
-.selected td{ 
+tr[selected="selected"]{ 
 	color: white;
-	background-color: darkgray;/*#337ab7 !important; */
+	background-color: darkgray !important;/*#337ab7 !important; */
 }
 /*#container {
 	white-space: nowrap;
