@@ -50,7 +50,7 @@
 		<script src="js/customquery.js"></script> 
   	</head>
 	<body>
-<div class="row"> <!-- navbar -->
+	<div class="row"> <!-- navbar -->
 		<div class="col-sm-6">
 			<b>Logged in as <?php echo $Ausername ?></b> <br><br>
 			
@@ -1207,6 +1207,7 @@
 		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
+		</div> <!-- end maindiv -->
 	</body>
 </html>
 
