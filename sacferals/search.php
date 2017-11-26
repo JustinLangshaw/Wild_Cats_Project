@@ -454,8 +454,9 @@
 			if(isset($_GET['runwrittenqry'])){
 				unset($_SESSION['querysearch']); //refresh variable
 				$wrttnqry = $_GET['manquery'];
+				$cols = explode(" ",$wrttnqry);
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
-				if(mysqli_num_rows($wrttnqryres)==0)
+				if(mysqli_num_rows($wrttnqryres)==0 || (!(strcasecmp($cols[0],'select')) && $cols[3]!='ReportColonyForm'))
 					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
 				else $_SESSION['querysearch'] = $wrttnqry;
 			}
