@@ -232,7 +232,7 @@ function formatPhone(phoneId) {
 ?>
 	<h2> Update Profile </h2>
 	<div id="form-wrapper">
-		<form id="updateform" method="post" action="updateprofile.php">
+		<form id="<?php if($level==2) echo 'updateform'; else if($level==1) echo 'adminform'; ?>" method="post" action="updateprofile.php">
 			<label for="inner-form"><h4>Account Information</h4></label>
 			<div class="form-row" id="inner-form">
 				<div class="form-group row">
@@ -355,7 +355,7 @@ function formatPhone(phoneId) {
 
 <script>
 $(document).ready(function () {
-	$('#updateform input').on('keyup change', function(){
+	$('form input').on('keyup change', function(){
 		var id = $(this)[0].id;
 		if(id=='password' || id=='repass'){
 			var pwd = $('#password').val();
@@ -378,6 +378,7 @@ $(document).ready(function () {
 		}
 	});
 	
+	//only for triage user
 	$('#updateform').submit(function(){ //dont submit form if at least one isn't selected
 		var work = $('#workchecks').find('input');
 		for(var i=0; i<work.length; i++){
