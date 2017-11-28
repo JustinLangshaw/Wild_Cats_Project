@@ -125,6 +125,19 @@ INSERT INTO CannedQueries VALUES
 	('','status open', "SELECT * FROM ReportColonyForm where Status='open'");
 
 
+CREATE TABLE CannedQueriesVolunteers (
+	ID int NOT NULL AUTO_INCREMENT,
+	QueryName varchar(45) NOT NULL,
+	QueryString varchar(200) NOT NULL,
+	PRIMARY KEY (ID)
+);
+
+INSERT INTO CannedQueriesVolunteers values
+	('', 'Default', "SELECT * FROM VolunteerForm");
+INSERT INTO CannedQueriesVolunteers VALUES
+	('','status inactive', "SELECT * FROM VolunteerForm where VolunteerStatus='Inactive'");
+
+
 CREATE TABLE SundaySSPCA (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
