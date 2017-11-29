@@ -419,7 +419,8 @@ function getGeocode() {
                     $('#zipcode').attr('style', 'border: 1px solid #d66');
                     $('#colonystreet').attr('style', 'border: 1px solid #d66');
                     $('#city').attr('style', 'border: 1px solid #d66');
-                    $('#invalidAddr').attr('style', 'color: RED');;
+                    $('#invalidAddr').attr('style', 'color: RED');
+                    $('#zipcode').val(''); //clear so doens't submit form with illegal address
                 }
             } else {
                 errorMsg.html("<small>Cannot identfy address entered. Make sure you are entering an address in the proper format.</small>");
@@ -427,6 +428,7 @@ function getGeocode() {
                 $('#colonystreet').attr('style', 'border: 1px solid #d66');
                 $('#city').attr('style', 'border: 1px solid #d66');
                 $('#invalidAddr').attr('style', 'color: RED');
+                $('#zipcode').val(''); //clear so doens't submit form with illegal address
             }
         });
     }
@@ -533,7 +535,7 @@ $(document).ready(function(){
 	$('#numberofcats').on('keyup change', function(){
 		if($(this).val()>99 || $(this).val()<1){
 			$('#numberofcats').attr('style','border: 1px solid #d66');
-			$('#catserror').html('<small>only 0-99</small>');
+			$('#catserror').html('<small>only 1 to 99</small>');
 			$('#numberofcats').val('');
 		}
 		else{
