@@ -24,10 +24,9 @@
 
 <body class="main_body">
 
-<?php	
-
+<?php
 if(isset($_POST['register'])) //this processes after user submits data.
-{
+{	
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
@@ -83,16 +82,21 @@ if(isset($_POST['register'])) //this processes after user submits data.
 					$fontcolor="green";
 				}
 				else {
+
 					$msg="Error: Must fill out a volunteer form first.";
 					$fontcolor="red";
+
 				}
 			}
 			else
 			{
+
 				$msg="Error: That username or email already exists.";
 				$fontcolor="red";
+
 			}			
 			$link->close();
+
 		}
 		else
 		{
@@ -125,6 +129,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 							<input type='email' class='form_input' name='email' id='email_field' required='required' 
 								pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com">
 						</fieldset>
+
 						<fieldset class='form_field'>
 							<label class='form_label required'>Password</label>
 							<input type='password' class='form_input' name='password' id='password' required='required' placeholder='Enter your password' <?php echo $passerror?>>
@@ -138,7 +143,6 @@ if(isset($_POST['register'])) //this processes after user submits data.
 						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
 		 					<div class='button_label'>Register</div>
 						</button>
-						
 						<div class='main_heading-2'>
 							<a href='userprofile.php'>Back to login</a>
 						</div>
