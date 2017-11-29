@@ -24,7 +24,7 @@
 
 <body class="main_body">
 
-<?php 
+<?php 	
 if(isset($_POST['register'])) //this processes after user submits data.
 {	
 	$username = $_POST['username'];
@@ -140,7 +140,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 						</fieldset>
 						
 						<button type='submit' class='button' name='register' style='background-color: #BE1D2C'>
-							
+
 		 					<div class='button_label'>Register</div>
 						</button>
 						<div class='main_heading-2'>
