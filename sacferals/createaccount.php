@@ -24,7 +24,7 @@
 
 <body class="main_body">
 
-<?php 	
+<?php
 if(isset($_POST['register'])) //this processes after user submits data.
 {	
 	$username = $_POST['username'];
