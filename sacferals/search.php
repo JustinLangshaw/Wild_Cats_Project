@@ -413,7 +413,7 @@
 							} 
 							else if($condition=='=' && ($value=='null' || $value=="''")) $value="";
 							
-							$search = $search."".$andor." ".$column." ".$condition." '".$value."'";	
+							$search = $search." ".$andor." ".$column." ".$condition." '".$value."'";	
 						}
 						$andor = $_GET['andor'][$i];
 						$i++;
