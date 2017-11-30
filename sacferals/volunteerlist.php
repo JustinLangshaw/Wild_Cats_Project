@@ -419,9 +419,13 @@
 								$condition=" not like ";
 								$value="%".$value."%";
 							} 
-							else if($condition=='=' && ($value=='null' || $value=="''")) $value="";
+							if(strcasecmp($value,'null')==0 || $value=="''" || $value=='""'){
+								$condition="is null or ".$column." = ''";
+								$value="";
+							}
+							else $value="'".$value."'";
 							
-							$search = $search."".$andor." ".$column." ".$condition." '".$value."'";	
+							$search = $search." ".$andor." ".$column." ".$condition." ".$value;	
 						}
 						$andor = $_GET['andor'][$i];
 						$i++;
@@ -474,7 +478,7 @@
 				$sea = 'select * from CannedQueriesVolunteers where QueryString="'.$_SESSION['volunteerquerysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', \"".$_SESSION['volunteerquerysearch']."\")";
+					$savecannedqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', ".'"'.$_SESSION['volunteerquerysearch'].'"'.")";
 					mysqli_query($link, $savecannedqry);
 				}
 			}
@@ -500,11 +504,15 @@
 			}
 			//manual query check for existance & then display modal to get name
 			if(isset($_GET['savewrittenqry'])){
+				$qryname = str_replace("'", "\'", $_GET['queryname2']);
+				$newq = str_replace("'", "\'", $_GET['manquery']);
+				
 				//dont do anything if empty
 				if($newq != ''){
-					$wrttnqry = 'select * from CannedQueriesVolunteers where QueryString="'.$_GET['manquery'].'"';
+					$wrttnqry = "select * from CannedQueriesVolunteers where QueryString='".$newq."'";
 					$wrttnqryres = mysqli_query($link, $wrttnqry);
 					if(mysqli_num_rows($wrttnqryres)==0){
+						$_SESSION['volunteerquerytosave'] = $newq;
 						echo "<script type='text/javascript'>
 								$(document).ready(function(){
 									$('#getcndqnameModal2').modal('show');
@@ -512,7 +520,7 @@
 							</script>";
 					} else {
 						$rw = mysqli_fetch_row($wrttnqryres);
-						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name ".'"'.$rw[1].'"'."</h3></div>";
 					}
 				} else {
 					echo "<div id='emptyquerymsg'><h3>No Query to save</h3></div>";
@@ -520,13 +528,12 @@
 			}
 			//manual query save
 			if(isset($_GET['addcurrentquery2'])){
-				$qryname = $_GET['queryname2'];
-
-				//still check if exists so doesn't keep adding to db
-				$wrttnqry = 'select * from CannedQueries where QueryString="'.$_GET['manquery'].'"';
+				$qryname = str_replace("'", "\'", $_GET['queryname2']);
+				
+				$wrttnqry = "select * from CannedQueriesVolunteers where QueryString='".$_SESSION['volunteerquerytosave']."'";
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0){
-					$savewrttnqry = "insert into CannedQueries values('', '".$qryname."', \"".$wrttnqry."\")";
+					$savewrttnqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', '".$_SESSION['volunteerquerytosave']."')";
 					mysqli_query($link, $savewrttnqry);
 				}
 			}
