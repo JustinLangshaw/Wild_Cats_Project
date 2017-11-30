@@ -1058,7 +1058,7 @@
 						$myArray[34]="BEATStatus";
 						$myArray[35]="TriageBEATNotes";
 						$myArray[36]="DateActivated";
-						$myArray[37]="Workshop Attended";
+						$myArray[37]="WorkshopAttended";
 						$myArray[38]="WorkshopDate";
 
 							//$_GET['select2'] as RecordNumber
