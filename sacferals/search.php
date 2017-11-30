@@ -49,27 +49,49 @@
 		<script src="js/searchScript.js"></script> 
   	</head>
 	<body>
-	<div class="row"> <!-- navbar -->
-		<div class="col-sm-6">
-			<b>Logged in as <?php echo $Ausername ?></b> <br><br>
-			
-			- <a href='userprofile.php' align='right'>Back to Admin Hub</a>
-		</div>
-		<div class="col-sm-6">
-			<div style='float:right'>
-				<div class='dropdown'><button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><img src='images/menu_icon.png' width='20' height='20'>
-					<span class='caret'></span></button>
-					<ul class='dropdown-menu dropdown-menu-right'>
-						<li><a href='https://www.catstats.org/' target='_blank'>CatStats Website</a></li>
-						<li class='divider'></li>
-						<li><a href='./updateprofile.php'>Update Profile</a></li>
-						<li><a href='./logout.php'>Sign Out</a></li>
-					</ul>
+	<div class="header"> <!-- navbar -->
+		<nav class="navbar navbar-inverse navbar-default navbar-static-top" role="navbar">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">Logged in as <?php echo $Ausername ?></a>
 				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">View Records</a></li>
+					<li><a href="<?php if($level==1) echo 'adminprofile.php'; else echo 'volunteerlist.php'; ?>">View Volunteers</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Forms
+							<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="./reportform.php" target="_blank">Report a Colony Form</a></li>
+							<li><a href="./volunteerform.php" target="_blank">Volunteer Form</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">Useful Links
+							<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="https://www.catstats.org/" target="_blank">CatStats Website</a></li>
+							<li><a href="https://www.gmail.com" target="_blank">Gmail</a></li>
+							<li><a href="https://www.google.com/maps" target="_blank">Google Maps</a></li>
+							<li><a href="http://assessorparcelviewer.saccounty.net/JSViewer/assessor.html" target="_blank">Sacramento County Assessor Parcel Viewer</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+							<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href='./updateprofile.php'>Update Profile</a></li>
+						<li><a href='./logout.php'>Sign Out</a></li>
+						</ul>
+					</li>
+				</ul>
 			</div>
-		</div>
-	</div>
-	<hr>
+		</nav>
+	</div> 
+	
 	<div class="maindiv"> <!-- rest of page -->
 	<div class="row">
 		<div class="col-md-4">
@@ -1156,9 +1178,13 @@
 										switch($selectedOption){
 											case 'Status': $tdString.="<td = id='statusCol'>".$$selectedOption."</td>"; break;
 											case 'DateAndTime': $tdString.="<td = id='dateTimeCol'>".$$selectedOption."</td>"; break;
+											case 'Comments1': $tdString.="<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>"; break;
 											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
 											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
 											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
+											case 'FeederDescription': $tdString.="<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>"; break;
+											case 'InjuryDescription': $tdString.="<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>"; break;
+											case 'Comments': $tdString.="<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>"; break;
 											case 'Lat': $tdString.="<td = id='latCol'>".$$selectedOption."</td>"; break;
 											case 'Lng': $tdString.="<td = id='lngCol'>".$$selectedOption."</td>"; break;											
 											default: $tdString.="<td>".$$selectedOption."</td>";
