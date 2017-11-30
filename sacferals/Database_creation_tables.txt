@@ -193,7 +193,6 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  insert into SacFeralsAdmin values("55", "Mary", "Jones", "abc", "2");
  
  
- 
  create table SacFeralsUsers(userid int not null auto_increment, 
  primary key(userid),
  username varchar(80), 
@@ -205,8 +204,43 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  insert into SacFeralsUsers values("57", "Guest2", "guest2@yahoo.com", "abc", "2");
 
 
-
-
+CREATE TABLE DeletedReports (
+	DeleteId int NOT NULL AUTO_INCREMENT,
+    primary key(DeleteId),
+	Comments1 varchar(200),
+	Responder varchar(200),
+	Status varchar(200),
+	RecordNumber int,
+	DateAndTime varchar(200),
+	FeedIfReturned varchar(15),
+	FullName varchar(200),
+	Email varchar(200),
+	Phone1 varchar(15),
+	Phone2 varchar(15),
+	ColonyAddress varchar(200),
+	City varchar(200),
+	County varchar(200),
+	ZipCode varchar(200),
+	AnyoneAttempted varchar(15),
+	ApproximateCats int,
+	Kittens varchar(15),
+	ColonyCareGiver varchar(15),
+	FeederDescription varchar(200),
+	Injured varchar(15),
+	InjuryDescription varchar(200),
+	FriendlyPet varchar(15),
+	ColonySetting varchar(200),
+	Comments text,
+	ReqAssistance varchar(15),
+	VolunteerResponding varchar(200),
+	ResponseDate varchar(15),
+	CustNeedOutcome varchar(200),
+	BeatTeamLeader varchar(200),
+	Outcome varchar(200),
+	CompletionDate varchar(200),
+	Lat decimal(10,8),
+	Lng decimal(11,8)
+);
 
 
 
