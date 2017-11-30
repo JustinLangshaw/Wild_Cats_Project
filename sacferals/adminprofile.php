@@ -1337,7 +1337,7 @@
 		else if($level == 2)
 		{
 			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
-			header("Location: userprofile.php");
+			header("Location: search.php");
 		}
 	}
 ?>
