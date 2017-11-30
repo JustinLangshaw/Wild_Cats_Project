@@ -502,9 +502,7 @@
 					<b>Volunteer Table</b><br><br>
 					<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
-							<tr>
-								<th> </th>";
-
+							<tr>";
 							if($thString != '')
 							{
 								print $thString;
@@ -655,14 +653,6 @@
 							}
 							else
 							{
-								print "
-								<td><a style='background-color:lightgreen;' href='volunteerlist.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-									<a style='background-color:#ff8080;' href='volunteerlist.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
-									<a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form_View </a> 
-								</td>
-								
-								";
-
 								if($tdString != '')
 								{
 									$tdString = "";
@@ -931,9 +921,7 @@
 				<b>Volunteers</b><br><br>				
 				<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
-						<tr>
-							<th>  </th>";
-
+						<tr>";
 							if($thString != '')
 								{
 									print $thString;
@@ -1070,14 +1058,8 @@
 						$myArray[34]="BEATStatus";
 						$myArray[35]="TriageBEATNotes";
 						$myArray[36]="DateActivated";
-						$myArray[37]="WorkshopAttended";
+						$myArray[37]="Workshop Attended";
 						$myArray[38]="WorkshopDate";
-						print "
-						<tr>
-							<td><a style='background-color:lightgreen;' href='volunteerlist.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-								<a style='background-color:#ff8080;' href='volunteerlist.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
-								<a style = 'background-color:#00ffff;' href='form_view.php' target = '_blank'>Form_View </a> 
-							</td>";
 
 							//$_GET['select2'] as RecordNumber
 							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number
