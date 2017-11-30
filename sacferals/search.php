@@ -967,13 +967,51 @@
 			if(isset($_GET['del']))
 			{
 				$RecordNumber = $_GET['RecordNumber'];
+
 				foreach ($RecordNumber as $rec){
-					$query = "delete from ReportColonyForm where RecordNumber='$rec'";
+					//Save deleted record(s) in DeletedReports
+					$query = "insert into DeletedReports (
+						Comments1,
+						Responder,
+						`Status`,
+						RecordNumber,
+						DateAndTime,
+						FeedIfReturned,
+						FullName,
+						Email,
+						Phone1,
+						Phone2,
+						ColonyAddress,
+						City,
+						County,
+						ZipCode,
+						AnyoneAttempted,
+						ApproximateCats,
+						Kittens,
+						ColonyCareGiver,
+						FeederDescription,
+						Injured,
+						InjuryDescription,
+						FriendlyPet,
+						ColonySetting,
+						Comments,
+						ReqAssistance,
+						VolunteerResponding,
+						ResponseDate,
+						CustNeedOutcome,
+						BeatTeamLeader,
+						Outcome,
+						CompletionDate,
+						Lat,
+						Lng) 
+						(SELECT * FROM ReportColonyForm where RecordNumber = $rec);";					
 					mysqli_query($link, $query);
+					
+					//Delete record(s)
+					$query = "delete from ReportColonyForm where RecordNumber='$rec'";
+					mysqli_query($link, $query);													
 				}
-				//print $query;
 				print "<span id='recupdate'><h2>Record(s) Deleted</h2></span>";
-				//showReportColony();
 			}
 
 			$sort = $_GET['sort']; //'sort' is magic sorting variable
@@ -1288,7 +1326,7 @@
 			</div>
 		</div>
 		
-		<script src="plotMapScript.js?version=1.5"></script>
+		<script src="js/plotMapScript.js?version=6.0"></script>
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M&callback=initMap"></script>
 		

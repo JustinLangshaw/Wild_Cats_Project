@@ -342,7 +342,6 @@
 					else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
 					else if($VolunteerStatus=="Active") $selectedActive='selected';
 					else if($VolunteerStatus=="Triage") $selectedTriage='selected';
-					else if($VolunteerStatus=="Vacation") $selectedVacation='selected';
 					
 					$tdEditString.="<td><div style='text-align:Center'>
 						<form id='form1' name='form1' method='get' action='adminprofile.php'>
@@ -350,7 +349,6 @@
 							<option value='Inactive'".$selectedInactive.">Inactive</option>
 							<option value='Active'".$selectedActive.">Active</option>
 							<option value='Triage'".$selectedTriage.">Triage</option>	
-							<option value='Vacation'".$selectedVacation.">Vacation</option>
 						</select><br>
 						</form></div></td>";
 				}else
@@ -662,7 +660,6 @@
 											else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
 											else if($VolunteerStatus=="Active") $selectedActive='selected';
 											else if($VolunteerStatus=="Triage") $selectedTriage='selected';
-											else if($VolunteerStatus=="Vacation") $selectedVacation='selected';
 
 											$tdEditString.="<td><div style='text-align:Center'>
 												<form id='form1' name='form1' method='get' action='adminprofile.php'>
@@ -670,7 +667,6 @@
 													<option value='Inactive'".$selectedInactive.">Inactive</option>
 													<option value='Active'".$selectedActive.">Active</option>
 													<option value='Triage'".$selectedTriage.">Triage</option>
-													<option value='Vacation'".$selectedVacation.">Vacation</option>
 													
 												</select><br>
 												</form></div></td>";
@@ -697,7 +693,6 @@
 									else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
 									else if($VolunteerStatus=="Active") $selectedActive='selected';
 									else if($VolunteerStatus=="Triage") $selectedTriage='selected';
-									else if($VolunteerStatus=="Vacation") $selectedVacation='selected';
 									
 									print "
 									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>									
@@ -709,7 +704,6 @@
 													<option value='Inactive'".$selectedInactive.">Inactive</option>
 													<option value='Active'".$selectedActive.">Active</option>
 													<option value='Triage'".$selectedTriage.">Triage</option>
-													<option value='Vacation'".$selectedVacation.">Vacation</option>
 												</select><br>
 										</form>
 									</div></td>	
@@ -929,7 +923,6 @@
 							case 'Inactive': $queryupdate.= "0"; break;
 							case 'Active': $queryupdate.= "3"; break;
 							case 'Triage': $queryupdate.= "2"; break;
-							//if 'Vacation' don't update level
 						}
 						mysqli_query($link, "SET SQL_SAFE_UPDATES=0;");	//Disables safe update mode
 						$queryupdate.=" where email=(select Email from VolunteerForm where RecordNumber=$RecordNumber1);";
@@ -996,7 +989,6 @@
 								case 'Inactive': $queryupdate.= "0"; break;
 								case 'Active': $queryupdate.= "3"; break;
 								case 'Triage': $queryupdate.= "2"; break;
-								//if 'Vacation' don't update level
 							}
 							$queryupdate.=" where email='$Email'";
 							mysqli_query($link, $queryupdate);
