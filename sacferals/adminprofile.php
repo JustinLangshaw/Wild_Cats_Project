@@ -26,6 +26,13 @@
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
 
+		//prevent page from appending same query to current query
+		$curr_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		if(strpos($curr_url,"?query")>0){
+			$cleared_url = strtok($curr_url, "?"); //remove get variables
+			header("Location: ".$cleared_url);
+		}
+
 		if($level == 1)
 		{
 ?>
