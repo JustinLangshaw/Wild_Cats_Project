@@ -1185,9 +1185,9 @@
 							<td>$ApproximateCats</td>
 							<td>$Kittens</td>
 							<td>$ColonyCareGiver</td>
-							<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' readonly>$FeederDescription</textarea></td>
+							<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>
 							<td>$Injured</td>
-							<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' readonly>$InjuryDescription</textarea></td>
+							<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>
 							<td>$FriendlyPet</td>
 							<td>$ColonySetting</td>
 							<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>
