@@ -156,6 +156,8 @@
 		<div class="col-md-8"> <!-- Custom Query -->
 			<form id="queryform" method='get' action='search.php'>
 				<label><b>Custom Query</b></label>
+				&nbsp;&nbsp;&nbsp;
+				<span style="color: darkgray;"><small>(Enter null or '' for empty value)</small></span>
 				<div class="row" id="cqrow">
 					<div id="blueprint">
 						<select class="input-sm" id="query" name="query[]" tabindex='3'>
@@ -202,9 +204,10 @@
 							<option value='<='>&le;</option>
 							<option value='>='>&ge;</option>
 							<option value='contains'>contains</option>
+							<option value='!contains'>not contain</option>
 						</select>
 
-						<input class="form-control" type="text" id="queryvalue" name="queryvalue[]" placeholder="By value" required tabindex='5'/>
+						<input class="form-control" type="text" id="queryvalue" name="queryvalue[]" placeholder="By value" title="Enter null or '' for empty value" required tabindex='5'/>
 						<input class="btn btn-primary btn-outline" type="button" id="cqaddbtn" name="addquery" value="+"/>
 					</div>
 				</div>
@@ -366,12 +369,12 @@
 
 			//custom query builder search
 			if(isset($_GET['submitquery'])){
-				unset($_SESSION['querysearch']); //refresh variable
-				//mysql: contains == like
-					// column like '%value%'
+				//unset($_SESSION['querysearch']); //refresh variable
+				//mysql: contains == like -> column like '%value%'
 				$value = $_GET['queryvalue'][0];
 				if($value!=NULL) {
-					$search = "select * from ReportColonyForm where ";
+					if(!(isset($_SESSION['querysearch']))) $search = "select * from ReportColonyForm where (";
+					else $search = $_SESSION['querysearch']." AND (";
 					$andor="";
 					$i=0;
 					foreach($_GET['queryvalue'] as $value){
@@ -382,13 +385,18 @@
 								$condition=" like ";
 								$value="%".$value."%";
 							}
+							else if($condition=='!contains'){
+								$condition=" not like ";
+								$value="%".$value."%";
+							} 
+							else if($condition=='=' && ($value=='null' || $value=="''")) $value="";
 							
-							$search = $search." ".$andor." ".$column." ".$condition." '".$value."'";
-							//$search = "select * from ReportColonyForm where ".$column[0].$condition[0]."'".$value."'";
+							$search = $search."".$andor." ".$column." ".$condition." '".$value."'";	
 						}
 						$andor = $_GET['andor'][$i];
 						$i++;
 					}
+					$search = $search.")";
 					$r = mysqli_query($link, $search);
 					if(mysqli_num_rows($r)==0)
 						echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
@@ -1233,7 +1241,7 @@
 ?>
 
    		<form id="resettable" method='get' action='search.php'>
-			<input class="btn btn-default" type="submit" value="Refresh" name="RefreshTable"/>
+			<input class="btn btn-default" type="submit" value="Reset" name="RefreshTable"/>
    			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
 			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
 		</form>
