@@ -2,10 +2,9 @@
 	session_start();
 	include('authenticate.php');
 	$link = connectdb($host, $user, $pass, $db);
-
 	if($_SESSION['authenticate234252432341'] != 'validuser09821')
 	{
-		authenticateUser();
+		$loginmsg = authenticateUser();
 	}
 ?>
 
@@ -42,6 +41,7 @@
 					<h1 class='main_heading'>Log in</h1>
 					<form class='form' role='form' method='post' action='userprofile.php'>
 						<fieldset class='form_field'>
+							<font color="red" size=2.5><label id="error" name="error" ><?php echo $loginmsg?></label></font>
 							<label class='form_label required'>Username</label>
 							<input type='username' class='form_input' placeholder='Enter your username or email' 
 												required='required' name='username' value=''>
