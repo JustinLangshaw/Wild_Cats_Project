@@ -190,7 +190,7 @@
 			<form id="queryform" method='get' action='adminprofile.php'>
 				<label><b>Custom Query</b></label>
 				&nbsp;&nbsp;&nbsp;
-				<span style="color: darkgray;"><small>(Enter null or '' for empty value)</small></span>
+				<span style="color: darkgray;"><small>(Enter null for empty value)</small></span>
 				<div class="row" id="cqrow">
 					<div id="blueprint">
 						<select class="input-sm" id="query" name="query[]" tabindex='3'>
