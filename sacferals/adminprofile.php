@@ -577,7 +577,14 @@
 					<div class='col-sm-12'>
 					<form method='post' action='adminprofile.php'>
 
-					<b>Volunteer Table</b><br><br>
+					<b>Volunteer Table</b>
+					<div class='row' style='float: right'>
+						<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
+							<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='adminprofile.php?RefreshTable=Reset'\"/>
+							<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('volunteerTable', 'Volunteers')\" value='Export' />
+						</div>
+					</div>
+					
 					<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
 							<tr>
@@ -1070,7 +1077,13 @@
 				<span id='querymsg'><h5>".$q.$_SESSION['volunteerquerysearch']."</h5></span>
 				<div class='row'>
 				<div class='col-sm-12'>
-				<b>Volunteers</b><br><br>
+				<b>Volunteers</b>
+				<div class='row' style='float: right'>
+					<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
+						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='adminprofile.php?RefreshTable=Reset'\"/>
+						<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('volunteerTable', 'Volunteers')\" value='Export' />
+					</div>
+				</div>
 				
 				<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
@@ -1349,11 +1362,7 @@
 	}
 ?>
 
-   		<form id="resettable" method='get' action='adminprofile.php'>
-			<input class="btn btn-default" type="submit" value="Reset" name="RefreshTable"/>
-   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('volunteerTable', 'Volunteers')" value="Export" />
-			<span id="ttlrecs">Total Records: <?php echo $_SESSION['volunteertotalrecords']; ?></span>
-		</form>
+   		<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['volunteertotalrecords']; ?></b></span>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		</div> <!-- end maindiv -->

@@ -585,8 +585,14 @@
 					<div class='col-sm-12'>
 					<form method='post' action='search.php'>
 
-					<b>Report A Feral Cat Colony</b><br><br>
-
+					<b>Report A Feral Cat Colony</b>
+					<div class='row' style='float: right'>
+						<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
+							<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='search.php?RefreshTable=Reset'\"/>
+							<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('reportTable', 'Reports')\" value='Export' />
+						</div>
+					</div>
+					
 					<table id='reportTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
 							<tr>
@@ -1060,11 +1066,19 @@
 				<span id='querymsg'><h5>".$q.$_SESSION['querysearch']."</h5></span>
 				<div class='row'>
 				<div class='col-sm-12'>
-				<b>Report A Feral Cat Colony</b><br><br>
-				<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
-				<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
-				<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
-				<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
+				<b>Report A Feral Cat Colony</b>
+				<div class='row'>
+					<div class='col-xs-6 col-sm-6 col-md-6' style='padding-left:7px; padding-right:7px;'>
+						<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
+						<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
+						<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
+						<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
+					</div>
+					<div class='col-xs-6 col-sm-6 col-md-6' style='text-align:right; padding-right:5px; padding-left:7px;'>
+						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='search.php?RefreshTable=Reset'\"/>
+						<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('reportTable', 'Reports')\" value='Export' />
+					</div>
+				</div>
 				
 				<table id='reportTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
@@ -1319,11 +1333,7 @@
 			*/
 ?>
 
-   		<form id="resettable" method='get' action='search.php'>
-			<input class="btn btn-default" type="submit" value="Reset" name="RefreshTable"/>
-   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
-			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
-		</form>
+   		<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		<hr>
