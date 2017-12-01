@@ -664,7 +664,7 @@
 
 								print "
 								<tr>
-									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
+									<td> <label><input type='submit' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
 
 

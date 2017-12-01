@@ -134,3 +134,12 @@ function formviewFunction(){
 		}
 	}
 }
+
+//Will check if a row is selected to be edited everytime page refresh
+$(document).ready(function(){
+		//Focus on Submit Edit button
+		$("#recordEdit").focus();
+});
+
+
+
