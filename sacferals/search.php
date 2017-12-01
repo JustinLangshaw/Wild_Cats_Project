@@ -664,8 +664,8 @@
 
 								print "
 								<tr>
-									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
+									<td> <label><input type='submit' name='recordEdit' id='recordEdit' value='Submit Edit'></label>
 
 
 								if($tdEditString != '')
@@ -1216,7 +1216,7 @@
 						
 						print "
 						<tr id='$RecordNumber'>
-							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
+							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber' onclick='focusEditRow()'>Edit</a> 
 								<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber[]=$RecordNumber'  class='confirmation'>Delete</a> 
 								<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> 
 								<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
