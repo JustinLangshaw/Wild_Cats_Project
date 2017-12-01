@@ -26,6 +26,13 @@
 		$Ausername = $_SESSION['Ausername'];
 		$level = $_SESSION['level'];
 
+		//prevent page from appending same query to current query
+		$curr_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		if(strpos($curr_url,"?query")>0){
+			$cleared_url = strtok($curr_url, "?"); //remove get variables
+			header("Location: ".$cleared_url);
+		}
+
 		if($level == 1 || $level==2)
 		{
 ?>
@@ -183,7 +190,7 @@
 			<form id="queryform" method='get' action='volunteerlist.php'>
 				<label><b>Custom Query</b></label>
 				&nbsp;&nbsp;&nbsp;
-				<span style="color: darkgray;"><small>(Enter null or '' for empty value)</small></span>
+				<span style="color: darkgray;"><small>(Enter null for empty value)</small></span>
 				<div class="row" id="cqrow">
 					<div id="blueprint">
 						<select class="input-sm" id="query" name="query[]" tabindex='3'>
@@ -419,9 +426,13 @@
 								$condition=" not like ";
 								$value="%".$value."%";
 							} 
-							else if($condition=='=' && ($value=='null' || $value=="''")) $value="";
+							if(strcasecmp($value,'null')==0 || $value=="''" || $value=='""'){
+								$condition="is null or ".$column." = ''";
+								$value="";
+							}
+							else $value="'".$value."'";
 							
-							$search = $search."".$andor." ".$column." ".$condition." '".$value."'";	
+							$search = $search." ".$andor." ".$column." ".$condition." ".$value;	
 						}
 						$andor = $_GET['andor'][$i];
 						$i++;
@@ -474,7 +485,7 @@
 				$sea = 'select * from CannedQueriesVolunteers where QueryString="'.$_SESSION['volunteerquerysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', \"".$_SESSION['volunteerquerysearch']."\")";
+					$savecannedqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', ".'"'.$_SESSION['volunteerquerysearch'].'"'.")";
 					mysqli_query($link, $savecannedqry);
 				}
 			}
@@ -500,11 +511,15 @@
 			}
 			//manual query check for existance & then display modal to get name
 			if(isset($_GET['savewrittenqry'])){
+				$qryname = str_replace("'", "\'", $_GET['queryname2']);
+				$newq = str_replace("'", "\'", $_GET['manquery']);
+				
 				//dont do anything if empty
 				if($newq != ''){
-					$wrttnqry = 'select * from CannedQueriesVolunteers where QueryString="'.$_GET['manquery'].'"';
+					$wrttnqry = "select * from CannedQueriesVolunteers where QueryString='".$newq."'";
 					$wrttnqryres = mysqli_query($link, $wrttnqry);
 					if(mysqli_num_rows($wrttnqryres)==0){
+						$_SESSION['volunteerquerytosave'] = $newq;
 						echo "<script type='text/javascript'>
 								$(document).ready(function(){
 									$('#getcndqnameModal2').modal('show');
@@ -512,7 +527,7 @@
 							</script>";
 					} else {
 						$rw = mysqli_fetch_row($wrttnqryres);
-						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name ".'"'.$rw[1].'"'."</h3></div>";
 					}
 				} else {
 					echo "<div id='emptyquerymsg'><h3>No Query to save</h3></div>";
@@ -520,13 +535,12 @@
 			}
 			//manual query save
 			if(isset($_GET['addcurrentquery2'])){
-				$qryname = $_GET['queryname2'];
-
-				//still check if exists so doesn't keep adding to db
-				$wrttnqry = 'select * from CannedQueries where QueryString="'.$_GET['manquery'].'"';
+				$qryname = str_replace("'", "\'", $_GET['queryname2']);
+				
+				$wrttnqry = "select * from CannedQueriesVolunteers where QueryString='".$_SESSION['volunteerquerytosave']."'";
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0){
-					$savewrttnqry = "insert into CannedQueries values('', '".$qryname."', \"".$wrttnqry."\")";
+					$savewrttnqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', '".$_SESSION['volunteerquerytosave']."')";
 					mysqli_query($link, $savewrttnqry);
 				}
 			}
@@ -581,7 +595,14 @@
 					<div class='col-sm-12'>
 					<form method='post' action='volunteerlist.php'>
 
-					<b>Volunteer Table</b><br><br>
+					<b>Volunteer Table</b>
+					<div class='row' style='float: right'>
+						<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
+							<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='volunteerlist.php?RefreshTable=Reset'\"/>
+							<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('volunteerTable', 'Volunteers')\" value='Export' />
+						</div>
+					</div>
+					
 					<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
 							<tr>";
@@ -1000,7 +1021,13 @@
 				<span id='querymsg'><h5>".$q.$_SESSION['volunteerquerysearch']."</h5></span>
 				<div class='row'>
 				<div class='col-sm-12'>
-				<b>Volunteers</b><br><br>	
+				<b>Volunteers</b>
+				<div class='row' style='float: right'>
+					<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
+						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='volunteerlist.php?RefreshTable=Reset'\"/>
+						<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('volunteerTable', 'Volunteers')\" value='Export' />
+					</div>
+				</div>
 			
 				<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
@@ -1265,11 +1292,7 @@
 	}
 ?>
 
-   		<form id="resettable" method='get' action='volunteerlist.php'>
-			<input class="btn btn-default" type="submit" value="Reset" name="RefreshTable"/>
-   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('volunteerTable', 'Volunteers')" value="Export" />
-			<span id="ttlrecs">Total Records: <?php echo $_SESSION['volunteertotalrecords']; ?></span>
-		</form>
+   		<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['volunteertotalrecords']; ?></b></span>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		</div> <!-- end maindiv -->

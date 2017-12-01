@@ -186,7 +186,7 @@
 			<form id="queryform" method='get' action='search.php'>
 				<label><b>Custom Query</b></label>
 				&nbsp;&nbsp;&nbsp;
-				<span style="color: darkgray;"><small>(Enter null or '' for empty value)</small></span>
+				<span style="color: darkgray;"><small>(Enter null for empty value)</small></span>
 				<div class="row" id="cqrow">
 					<div id="blueprint">
 						<select class="input-sm" id="query" name="query[]" tabindex='3'>
@@ -418,9 +418,13 @@
 								$condition=" not like ";
 								$value="%".$value."%";
 							} 
-							else if($condition=='=' && ($value=='null' || $value=="''")) $value="";
+							if(strcasecmp($value,'null')==0 || $value=="''" || $value=='""'){
+								$condition="is null or ".$column." = ''";
+								$value="";
+							}
+							else $value="'".$value."'";
 							
-							$search = $search." ".$andor." ".$column." ".$condition." '".$value."'";	
+							$search = $search." ".$andor." ".$column." ".$condition." ".$value;	
 						}
 						$andor = $_GET['andor'][$i];
 						$i++;
@@ -473,7 +477,8 @@
 				$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', \"".$_SESSION['querysearch']."\")";
+					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', '".$_SESSION['querysearch']."')";
+					echo $savecannedqry;
 					mysqli_query($link, $savecannedqry);
 				}
 			}
@@ -499,11 +504,15 @@
 			}
 			//manual query check for existance & then display modal to get name
 			if(isset($_GET['savewrittenqry'])){
+				$qryname = str_replace("'", "\'", $_GET['queryname2']);
+				$newq = str_replace("'", "\'", $_GET['manquery']);
+				
 				//dont do anything if empty
 				if($newq != ''){
-					$wrttnqry = 'select * from CannedQueries where QueryString="'.$_GET['manquery'].'"';
+					$wrttnqry = "select * from CannedQueries where QueryString='".$newq."'";
 					$wrttnqryres = mysqli_query($link, $wrttnqry);
 					if(mysqli_num_rows($wrttnqryres)==0){
+						$_SESSION['querytosave'] = $newq;
 						echo "<script type='text/javascript'>
 								$(document).ready(function(){
 									$('#getcndqnameModal2').modal('show');
@@ -511,7 +520,7 @@
 							</script>";
 					} else {
 						$rw = mysqli_fetch_row($wrttnqryres);
-						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
+						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name ".'"'.$rw[1].'"'."</h3></div>";
 					}
 				} else {
 					echo "<div id='emptyquerymsg'><h3>No Query to save</h3></div>";
@@ -519,13 +528,12 @@
 			}
 			//manual query save
 			if(isset($_GET['addcurrentquery2'])){
-				$qryname = $_GET['queryname2'];
-
-				//still check if exists so doesn't keep adding to db
-				$wrttnqry = 'select * from CannedQueries where QueryString="'.$_GET['manquery'].'"';
+				$qryname = str_replace("'", "\'", $_GET['queryname2']);
+				
+				$wrttnqry = "select * from CannedQueries where QueryString='".$_SESSION['querytosave']."'";
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0){
-					$savewrttnqry = "insert into CannedQueries values('', '".$qryname."', \"".$wrttnqry."\")";
+					$savewrttnqry = "insert into CannedQueries values('', '".$qryname."', '".$_SESSION['querytosave']."')";
 					mysqli_query($link, $savewrttnqry);
 				}
 			}
@@ -577,8 +585,14 @@
 					<div class='col-sm-12'>
 					<form method='post' action='search.php'>
 
-					<b>Report A Feral Cat Colony</b><br><br>
-
+					<b>Report A Feral Cat Colony</b>
+					<div class='row' style='float: right'>
+						<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
+							<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='search.php?RefreshTable=Reset'\"/>
+							<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('reportTable', 'Reports')\" value='Export' />
+						</div>
+					</div>
+					
 					<table id='reportTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
 							<tr>
@@ -1052,11 +1066,19 @@
 				<span id='querymsg'><h5>".$q.$_SESSION['querysearch']."</h5></span>
 				<div class='row'>
 				<div class='col-sm-12'>
-				<b>Report A Feral Cat Colony</b><br><br>
-				<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
-				<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
-				<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
-				<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
+				<b>Report A Feral Cat Colony</b>
+				<div class='row'>
+					<div class='col-xs-6 col-sm-6 col-md-6' style='padding-left:7px; padding-right:7px;'>
+						<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
+						<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
+						<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
+						<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
+					</div>
+					<div class='col-xs-6 col-sm-6 col-md-6' style='text-align:right; padding-right:5px; padding-left:7px;'>
+						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='search.php?RefreshTable=Reset'\"/>
+						<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('reportTable', 'Reports')\" value='Export' />
+					</div>
+				</div>
 				
 				<table id='reportTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
@@ -1311,11 +1333,7 @@
 			*/
 ?>
 
-   		<form id="resettable" method='get' action='search.php'>
-			<input class="btn btn-default" type="submit" value="Reset" name="RefreshTable"/>
-   			<input class="btn btn-success" type="button" id="exportButton" onclick="tableToExcel('reportTable', 'Reports')" value="Export" />
-			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
-		</form>
+   		<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		<hr>
