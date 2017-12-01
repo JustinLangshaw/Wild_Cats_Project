@@ -51,7 +51,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>	
        	
-		<script src="exportExcelScript.js?version=1.5"></script>
+		<script src="js/exportExcelScript.js?version=1.5"></script>
 		<script src="js/customquery.js"></script> 
 		<script src="js/searchScript.js"></script> 
   	</head>
@@ -664,7 +664,7 @@
 
 								print "
 								<tr>
-									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
+									<td> <label><input type='submit' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
 
 
