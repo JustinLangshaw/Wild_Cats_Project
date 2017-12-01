@@ -665,7 +665,7 @@
 								print "
 								<tr>
 									<td> <label><input type='submit' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
-										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
+										 <label><input type='submit' name='cancel' value='Cancel Edit' id='cancelEdit'></label> </td>";
 
 
 								if($tdEditString != '')
@@ -696,8 +696,7 @@
 									
 											$tdEditString.="<td><div style='text-align:Center'>
 												<form id='form1' name='form1' method='get' action='search.php'>
-												<select name='Status'>
-													<option value=''>Empty</option>
+												<select name='Status' id='statusselect'>
 													<option value='Open'".$selectedOpen.">Open</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
 													<option value='Critical'".$selectedCritical.">Critical</option>
@@ -725,7 +724,7 @@
 								}
 								else
 								{
-									if($Status=='') $selected='';
+									if($Status=='') $selectedOpen='selected';
 									else if($Status=="Open") $selectedOpen='selected';
 									else if($Status=="Closed") $selectedClosed='selected';
 									else if($Status=="Critical") $selectedCritical='selected';
@@ -741,8 +740,7 @@
 										//<ul class='dropdown-menu dropdown-menu-center'>
 											//<li><div style='text-align:Center'>Changes Applied when Submit Edit is clicked</li>
 											/*<li><div style='text-align:Center'>*/."<form id='form1' name='form1' method='get' action='search.php' width: 400px>
-												<select class='input-sm' name='Status'>
-													<option value=''>Empty</option> 
+												<select class='input-sm' name='Status' id='statusselect'> 
 													<option value='Open'".$selectedOpen.">Open</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
 													<option value='Critical'".$selectedCritical.">Critical</option>
@@ -785,11 +783,7 @@
 							{
 								print "
 								<tr>
-									<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-										<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber[]=$RecordNumber' class='confirmation'>Delete</a> 
-										<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View</a> 
-										<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
-									</td>
+									<td></td>
 								";
 
 								if($tdString != '')
@@ -1082,8 +1076,7 @@
 				
 				<table id='reportTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
-						<tr>
-							<th>  </th>";
+						<tr>";
 
 							if($thString != '')
 								{
@@ -1215,13 +1208,7 @@
 						$myArray1[32]="Lng";
 						
 						print "
-						<tr id='$RecordNumber'>
-							<td><a style='background-color:lightgreen;' href='search.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
-								<a style='background-color:#ff8080;' href='search.php?del=yes&RecordNumber[]=$RecordNumber'  class='confirmation'>Delete</a> 
-								<a style = 'background-color:#00ffff;' href='form_view.php?&RecordNumber=$RecordNumber' target = '_blank'>Form_View </a> 
-								<a style='background-color:gold; color:black;' id='copyrow' onclick='copyFunction(this.parentElement.parentElement)'>Copy</a>
-							</td>
-							";
+						<tr id='$RecordNumber'>";
 
 							//$_GET['select2'] as RecordNumber
 							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number

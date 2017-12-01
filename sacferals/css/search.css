@@ -100,6 +100,12 @@ tr[selected="selected"]{
 	color: white;
 	background-color: darkgray !important;/*#337ab7 !important; */
 }
+tr[selected="selected"] #recordEdit, /*keep titles white on select*/
+tr[selected="selected"] #cancelEdit, 
+tr[selected="selected"] #statusselect{ 
+	color: #000000;
+}
+
 /*#container {
 	white-space: nowrap;
 	overflow: hidden;
