@@ -52,6 +52,7 @@
         
        	<script src="js/exportExcelScript.js"></script>
 		<script src="js/customquery.js"></script> 
+		<script src="js/searchScript.js"></script>
   	</head>
 	<body>
 	<div class="header"> <!-- navbar -->
@@ -653,7 +654,7 @@
 							{
 								print "
 								<tr>
-									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
+									<td> <label><input type='submit' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
 
 								if($tdEditString != '')
