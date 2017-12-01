@@ -134,9 +134,3 @@ function formviewFunction(){
 		}
 	}
 }
-
-$(document).ready(function focusEditRow(){	
-	$("#recordEdit").focus();
-});
-
-
