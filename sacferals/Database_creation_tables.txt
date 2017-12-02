@@ -1,4 +1,4 @@
-CREATE TABLE FeralInterventionForm (
+﻿CREATE TABLE FeralInterventionForm (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
 	DateAndTime varchar(200),
@@ -197,7 +197,7 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  primary key(userid),
  username varchar(80), 
  email varchar(80), 
- password varchar(30),
+ password varchar(40),
  level int);
  
  insert into SacFeralsUsers values("56", "Guest1", "guest1@yahoo.com", "123", "1");

@@ -16,7 +16,7 @@ function authenticateUser()
 	$username = $_POST['username'];
 	$pass = $_POST['pass'];
 	
-	$query = $link->prepare("select * from SacFeralsUsers where (BINARY username = BINARY ? or email=?) and BINARY password = BINARY ?");
+	$query = $link->prepare("select * from SacFeralsUsers where (BINARY username = BINARY ? or email=?) and BINARY password=BINARY SHA1(?)");
 	$query->bind_param("sss", $username, $username, $pass);
 	$query->execute();
 	$query->bind_result($userid, $usern, $email, $password, $level);

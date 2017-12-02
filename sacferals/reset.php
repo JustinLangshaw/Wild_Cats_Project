@@ -57,10 +57,11 @@
 			if(mysqli_num_rows($resultcheck)!= 0) {//for all users & user exists				
 					$row = mysqli_fetch_array($resultcheck);
 					$level = $row['level'];
-					$query = "update SacFeralsUsers set username='$username',email='$email',password='$password'
+					$query = "update SacFeralsUsers set username='$username',email='$email',password=SHA1('$password')
 								where username='$username';";
 					if(mysqli_query($link, $query)){
 						echo "Password reset successfully. ";
+						header('Refresh: .8; url=userprofile.php');
 					}else{
 						echo "Password reset failed. ";
 					}								
@@ -92,7 +93,6 @@
 		else{
 			$row2 = mysqli_fetch_array($result2);
 			$email = $row2['email'];
-			$password = $row2['password'];
 			$Ausername = $row2['username'];
 		}		
 ?>
@@ -127,7 +127,7 @@
 			</div>
 			<div class="form-row" id="buttons">
 				<input class="btn" type="button" onclick="location.href='adminprofile.php'" value="Cancel">
-				<input class="btn btn-primary" type="submit" name="submit" value="Update" >
+				<input class="btn btn-primary" type="submit" name="submit" id="updatebtn" value="Update" >
 			</div>
 		</form>
 	</div>
@@ -154,6 +154,29 @@ $(document).ready(function () {
 				$('#password').attr('style','');
 				$('#repass').attr('style','');
 				$('#passerrmsg').html("");
+			}
+		}
+	});
+	
+	$('form input').on('keyup change', function(){
+		var id = $(this)[0].id;
+		if(id=='password' || id=='repass'){
+			var pwd = $('#password').val();
+			var repwd = $('#repass').val();
+			if(pwd != repwd){
+				$('#password').attr('style','border: 1px solid #d66');
+				$('#repass').attr('style','border: 1px solid #d66');
+				$('#passerrmsg').html("<small>passwords do not match</small>");
+				$('#updatebtn').prop('disabled',true);
+			} else if(pwd=='' || repwd==''){
+				$('#repass').attr('style','border: 1px solid #d66');
+				$('#passerrmsg').html("<small>passwords cannot be emtpy</small>");
+				$('#updatebtn').prop('disabled',true);
+			} else {
+				$('#password').attr('style','');
+				$('#repass').attr('style','');
+				$('#passerrmsg').html("");
+				$('#updatebtn').prop('disabled',false);
 			}
 		}
 	});
