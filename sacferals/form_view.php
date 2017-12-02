@@ -15,7 +15,7 @@
 <head>	
 	<title>Form View</title>
 	<style>
-		body {background-color: #5ab1c5;}
+		body {background-color: #CEF8FD;}
 		label {display: block;}
 		table, th, td 
 		{
@@ -107,22 +107,28 @@
 					if($RecordNumber1MinusOne<$smallestRecord)
 					{
 						print "
+						<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 						BACK 
 						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
 						<br>(Beginning of Records) <br>";
 					}
 					else if($RecordNumber1PlusOne>$largestRecord)
 					{
 						print "
+						<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
 						NEXT 
+						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
 						<br>(End of Records)<br>";
 					}
 					else
 					{
 						print "
+						<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
 						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
 						<br><br>";
 					}
 					
@@ -333,16 +339,20 @@
 			{
 				print "
 				<br>
+				<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 				BACK 
 				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
 				<br>(Beginning of Records) <br>";
 			}
 			else if($RecordNumber1PlusOne>$largestRecord)
 			{
 				print "
 				<br>
+				<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
 				NEXT
+				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
 				<br>
 				(End of Records)<br>";
 			}
@@ -350,8 +360,10 @@
 			{
 				print "
 				<br>
+				<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
 				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
+				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
 				<br><br>";
 			}
 			
