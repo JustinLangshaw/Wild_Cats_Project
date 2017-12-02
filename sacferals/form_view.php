@@ -15,12 +15,12 @@
 <head>	
 	<title>Form View</title>
 	<style>
-		body {background-color: #CEF8FD;}
+		body {background-color: #B1C8CB;}
 		label {display: block;}
 		table, th, td 
 		{
 			border: 1px solid black;
-			background-color: #b3ffcc;
+			background-color: #C2F7FE;
 		}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
