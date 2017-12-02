@@ -558,7 +558,7 @@
 			{
 				$RecordNumber1 = $_GET['RecordNumber'];
 								
-				$query = "select * from VolunteerForm  where RecordNumber = ".$RecordNumber1."";
+				$query = "select * from VolunteerForm  where RecordNumber = ".$RecordNumber1." order by RecordNumber desc";
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
 				list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone,$BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row;
@@ -581,7 +581,7 @@
 				}
 				else{
 					//regular search
-					$query = "select * from VolunteerForm order by $sort";
+					$query = "select * from VolunteerForm order by $sort desc";
 					$result = mysqli_query($link, $query);
 				}
 				
@@ -616,49 +616,50 @@
 							{
 								print "
 								<th><a href='volunteerlist.php?sort=RecordNumber'>ID</a></th>
-								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
-								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
-								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
-								<th><a href='volunteerlist.php?sort='DateActivated'>Date Activated</a></th>
-								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
-								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
-								<th><a href='volunteerlist.php?sort='Email'>Email</a></th>
-								<th><a href='volunteerlist.php?sort='Phone1'>Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='Phone2'>Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='PreferedContact'>Prefered Contact</a></th>
-								<th><a href='volunteerlist.php?sort='contactemail'>Prefered Email</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone1'>Prefered Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone2'>Prefered Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='TypeOfWork'>Type Of Work</a></th>
-								<th><a href='volunteerlist.php?sort='transporting'>Transporter</a></th>
-								<th><a href='volunteerlist.php?sort='helptrap'>Trapper</a></th>
-								<th><a href='volunteerlist.php?sort='helpeducate'>Educator</a></th>
-								<th><a href='volunteerlist.php?sort='usingphone'>Triage</a></th>
-								<th><a href='volunteerlist.php?sort='other'>Other</a></th>
-								<th><a href='volunteerlist.php?sort='OtherTasks'>Other Tasks Details</a></th>
-								<th><a href='volunteerlist.php?sort='PastWorkExp'>Past Experience</a></th>
-								<th><a href='volunteerlist.php?sort='UnknownNameColumn'>Unknown</a></th>
-								<th><a href='volunteerlist.php?sort='ResponseDate'>Response Date</a></th>
-								<th><a href='volunteerlist.php?sort='EmailResponse'>Email Response</a></th>
-								<th><a href='volunteerlist.php?sort='BEATId'>BEAT ID</a></th>					
-								<th><a href='volunteerlist.php?sort='BEATName'>BEAT Name</a></th>
-								<th><a href='volunteerlist.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
-								<th><a href='volunteerlist.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
-								<th><a href='volunteerlist.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembers'>BEAT Member</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
-								<th><a href='volunteerlist.php?sort='BEATType'>BEAT Type</a></th>
-								<th><a href='volunteerlist.php?sort='BEATNotes'>BEAT Notes</a></th>
-								<th><a href='volunteerlist.php?sort='BEATStatus'>BEAT Status</a></th>					
-								<th><a href='volunteerlist.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>
-							</tr>
-						</thead>
-						";
+								<th><a href='volunteerlist.php?sort=Comments'>Triage Comments</a></th>
+								<th><a href='volunteerlist.php?sort=VolunteerStatus'>Volunteer Status</a></th>
+								<th><a href='volunteerlist.php?sort=DateAndTime'>Date Submitted</a></th>
+								<th><a href='volunteerlist.php?sort=WorkshopAttended'>Workshop</a></th>
+								<th><a href='volunteerlist.php?sort=WorkshopDate'>Workshop Date</a></th>
+								<th><a href='volunteerlist.php?sort=DateActivated'>Date Activated</a></th>
+								<th><a href='volunteerlist.php?sort=FullName'>Full Name</a></th>
+								<th><a href='volunteerlist.php?sort=Address'>Complete Address</a></th>
+								<th><a href='volunteerlist.php?sort=Email'>Email</a></th>
+								<th><a href='volunteerlist.php?sort=Phone1'>Phone1</a></th>
+								<th><a href='volunteerlist.php?sort=Phone2'>Phone2</a></th>
+								<th><a href='volunteerlist.php?sort=PreferedContact'>Prefered Contact</a></th>
+								<th><a href='volunteerlist.php?sort=contactemail'>Prefered Email</a></th>
+								<th><a href='volunteerlist.php?sort=contactphone1'>Prefered Phone1</a></th>
+								<th><a href='volunteerlist.php?sort=contactphone2'>Prefered Phone2</a></th>
+								<th><a href='volunteerlist.php?sort=TypeOfWork'>Type Of Work</a></th>
+								<th><a href='volunteerlist.php?sort=transporting'>Transporter</a></th>
+								<th><a href='volunteerlist.php?sort=helptrap'>Trapper</a></th>
+								<th><a href='volunteerlist.php?sort=helpeducate'>Educator</a></th>
+								<th><a href='volunteerlist.php?sort=usingphone'>Triage</a></th>
+								<th><a href='volunteerlist.php?sort=other'>Other</a></th>
+								<th><a href='volunteerlist.php?sort=OtherTasks'>Other Tasks Details</a></th>
+								<th><a href='volunteerlist.php?sort=PastWorkExp'>Past Experience</a></th>
+								<th><a href='volunteerlist.php?sort=UnknownNameColumn'>Unknown</a></th>
+								<th><a href='volunteerlist.php?sort=ResponseDate'>Response Date</a></th>
+								<th><a href='volunteerlist.php?sort=EmailResponse'>Email Response</a></th>
+								<th><a href='volunteerlist.php?sort=BEATId'>BEAT ID</a></th>					
+								<th><a href='volunteerlist.php?sort=BEATName'>BEAT Name</a></th>
+								<th><a href='volunteerlist.php?sort=BEATGeneralArea'>BEAT Gen. Area</a></th>
+								<th><a href='volunteerlist.php?sort=BEATZipCodes'>BEAT Zip Code</a></th>
+								<th><a href='volunteerlist.php?sort=BEATTrainDate'>BEAT Train Date</a></th>
+								<th><a href='volunteerlist.php?sort=BEATMembers'>BEAT Member</a></th>
+								<th><a href='volunteerlist.php?sort=BEATMembersPhone'>BEAT Member Phone</a></th>
+								<th><a href='volunteerlist.php?sort=BEATMemberEmails'>BEAT Member Email</a></th>
+								<th><a href='volunteerlist.php?sort=BEATType'>BEAT Type</a></th>
+								<th><a href='volunteerlist.php?sort=BEATNotes'>BEAT Notes</a></th>
+								<th><a href='volunteerlist.php?sort=BEATStatus'>BEAT Status</a></th>					
+								<th><a href='volunteerlist.php?sort=TriageBEATNotes'>BEAT Triage Notes</a></th>
+							</tr>";
 							}
-						print "<tbody>";
+						print"	
+						</thead>
+						
+						<tbody>";
 
 						//while the next row (set by query) exists?
 						while($row = mysqli_fetch_row($result))
@@ -918,7 +919,7 @@
 					}
 					else
 					{
-						$query = "select * from VolunteerForm where RecordNumber='$RecordNumber1'";
+						$query = "select * from VolunteerForm where RecordNumber='$RecordNumber1' order by RecordNumber desc";
 						$result = mysqli_query($link, $query);	
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
 						{						
@@ -1004,7 +1005,7 @@
 			}
 			else{
 				//regular search
-				$query = "select * from VolunteerForm order by $sort";
+				$query = "select * from VolunteerForm order by $sort desc";
 				$result = mysqli_query($link, $query);
 			}
 			$_SESSION['volunteertotalrecords']=mysqli_num_rows($result);
@@ -1041,45 +1042,45 @@
 								else
 								{
 									print "
-								<th><a href='volunteerlist.php?sort='RecordNumber'>ID</a></th>
-								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
-								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
-								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
-								<th><a href='volunteerlist.php?sort='DateActivated'>Date Actived</a></th>
-								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
-								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
-								<th><a href='volunteerlist.php?sort='Email'>Email</a></th>
-								<th><a href='volunteerlist.php?sort='Phone1'>Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='Phone2'>Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='PreferedContact'>Prefered Contact</a></th>
-								<th><a href='volunteerlist.php?sort='contactemail'>Prefered Email</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone1'>Prefered Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone2'>Prefered Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='TypeOfWork'>Type Of Work</a></th>
-								<th><a href='volunteerlist.php?sort='transporting'>Transporter</a></th>
-								<th><a href='volunteerlist.php?sort='helptrap'>Trapper</a></th>
-								<th><a href='volunteerlist.php?sort='helpeducate'>Educator</a></th>
-								<th><a href='volunteerlist.php?sort='usingphone'>Triage</a></th>
-								<th><a href='volunteerlist.php?sort='other'>Other</a></th>
-								<th><a href='volunteerlist.php?sort='OtherTasks'>Other Tasks Details</a></th>
-								<th><a href='volunteerlist.php?sort='PastWorkExp'>Past Experience</a></th>
-								<th><a href='volunteerlist.php?sort='UnknownNameColumn'>Unknown</a></th>
-								<th><a href='volunteerlist.php?sort='ResponseDate'>Response Date</a></th>
-								<th><a href='volunteerlist.php?sort='EmailResponse'>Email Response</a></th>
-								<th><a href='volunteerlist.php?sort='BEATId'>BEAT ID</a></th>					
-								<th><a href='volunteerlist.php?sort='BEATName'>BEAT Name</a></th>
-								<th><a href='volunteerlist.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
-								<th><a href='volunteerlist.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
-								<th><a href='volunteerlist.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembers'>BEAT Member</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
-								<th><a href='volunteerlist.php?sort='BEATType'>BEAT Type</a></th>
-								<th><a href='volunteerlist.php?sort='BEATNotes'>BEAT Notes</a></th>
-								<th><a href='volunteerlist.php?sort='BEATStatus'>BEAT Status</a></th>					
-								<th><a href='volunteerlist.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>								
+								<th><a href='volunteerlist.php?sort=RecordNumber'>ID</a></th>
+								<th><a href='volunteerlist.php?sort=Comments'>Triage Comments</a></th>
+								<th><a href='volunteerlist.php?sort=VolunteerStatus'>Volunteer Status</a></th>
+								<th><a href='volunteerlist.php?sort=DateAndTime'>Date Submitted</a></th>
+								<th><a href='volunteerlist.php?sort=WorkshopAttended'>Workshop</a></th>
+								<th><a href='volunteerlist.php?sort=WorkshopDate'>Workshop Date</a></th>
+								<th><a href='volunteerlist.php?sort=DateActivated'>Date Actived</a></th>
+								<th><a href='volunteerlist.php?sort=FullName'>Full Name</a></th>
+								<th><a href='volunteerlist.php?sort=Address'>Complete Address</a></th>
+								<th><a href='volunteerlist.php?sort=Email'>Email</a></th>
+								<th><a href='volunteerlist.php?sort=Phone1'>Phone1</a></th>
+								<th><a href='volunteerlist.php?sort=Phone2'>Phone2</a></th>
+								<th><a href='volunteerlist.php?sort=PreferedContact'>Prefered Contact</a></th>
+								<th><a href='volunteerlist.php?sort=contactemail'>Prefered Email</a></th>
+								<th><a href='volunteerlist.php?sort=contactphone1'>Prefered Phone1</a></th>
+								<th><a href='volunteerlist.php?sort=contactphone2'>Prefered Phone2</a></th>
+								<th><a href='volunteerlist.php?sort=TypeOfWork'>Type Of Work</a></th>
+								<th><a href='volunteerlist.php?sort=transporting'>Transporter</a></th>
+								<th><a href='volunteerlist.php?sort=helptrap'>Trapper</a></th>
+								<th><a href='volunteerlist.php?sort=helpeducate'>Educator</a></th>
+								<th><a href='volunteerlist.php?sort=usingphone'>Triage</a></th>
+								<th><a href='volunteerlist.php?sort=other'>Other</a></th>
+								<th><a href='volunteerlist.php?sort=OtherTasks'>Other Tasks Details</a></th>
+								<th><a href='volunteerlist.php?sort=PastWorkExp'>Past Experience</a></th>
+								<th><a href='volunteerlist.php?sort=UnknownNameColumn'>Unknown</a></th>
+								<th><a href='volunteerlist.php?sort=ResponseDate'>Response Date</a></th>
+								<th><a href='volunteerlist.php?sort=EmailResponse'>Email Response</a></th>
+								<th><a href='volunteerlist.php?sort=BEATId'>BEAT ID</a></th>					
+								<th><a href='volunteerlist.php?sort=BEATName'>BEAT Name</a></th>
+								<th><a href='volunteerlist.php?sort=BEATGeneralArea'>BEAT Gen. Area</a></th>
+								<th><a href='volunteerlist.php?sort=BEATZipCodes'>BEAT Zip Code</a></th>
+								<th><a href='volunteerlist.php?sort=BEATTrainDate'>BEAT Train Date</a></th>
+								<th><a href='volunteerlist.php?sort=BEATMembers'>BEAT Member</a></th>
+								<th><a href='volunteerlist.php?sort=BEATMembersPhone'>BEAT Member Phone</a></th>
+								<th><a href='volunteerlist.php?sort=BEATMemberEmails'>BEAT Member Email</a></th>
+								<th><a href='volunteerlist.php?sort=BEATType'>BEAT Type</a></th>
+								<th><a href='volunteerlist.php?sort=BEATNotes'>BEAT Notes</a></th>
+								<th><a href='volunteerlist.php?sort=BEATStatus'>BEAT Status</a></th>					
+								<th><a href='volunteerlist.php?sort=TriageBEATNotes'>BEAT Triage Notes</a></th>								
 						</tr>";
 								}
 					print"

@@ -551,7 +551,7 @@
 			if(isset($_GET['editrow']))
 			{
 				$RecordNumber1 = $_GET['RecordNumber'];
-				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1."";
+				$query = "select * from ReportColonyForm  where RecordNumber = ".$RecordNumber1." order by RecordNumber desc";
 				$result = mysqli_query($link, $query);
 				$row = mysqli_fetch_row($result);
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
@@ -571,7 +571,7 @@
 				}
 				else{
 					//regular search
-					$query = "select * from ReportColonyForm order by $sort";
+					$query = "select * from ReportColonyForm order by $sort desc";
 					$result = mysqli_query($link, $query);
 				}
 				
@@ -910,8 +910,6 @@
 
 						$query=rtrim($query," and ");
 
-						//print $query;
-
 						$result = mysqli_query($link, $query);
 
 						if(mysqli_num_rows($result) == 0)
@@ -948,7 +946,7 @@
 					{
 
 
-						$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1'";
+						$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1' order by RecordNumber desc";
 						$result = mysqli_query($link, $query);
 
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
@@ -1043,7 +1041,7 @@
 			}
 			else{
 				//regular search
-				$query = "select * from ReportColonyForm order by $sort";
+				$query = "select * from ReportColonyForm order by $sort desc";
 				$result = mysqli_query($link, $query);
 			}
 			$_SESSION['totalrecords']=mysqli_num_rows($result);
@@ -1081,13 +1079,12 @@
 							if($thString != '')
 								{
 									print $thString;
-									print"</tr>";
+									print"</tr></thead>";
 									//print"(editRow not set header)";
 								}
 								else
 								{
 									print "
-
 							<th><a href='search.php?sort=RecordNumber'>ID</a></th>
 							<th><a href='search.php?sort=DateAndTime'>Date/Time</a></th>
 							<th><a href='search.php?sort=Responder'>Responder</a></th>
@@ -1123,14 +1120,13 @@
 							<th><a href='search.php?sort=Lng'>Longitude</a></th>
 
 						</tr>";
-								}
+						}
 					print"
 					</thead>
 
 					<tbody>";
 
 					//while the next row (set by query) exists?
-
 					while($row = mysqli_fetch_row($result))
 					{
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
