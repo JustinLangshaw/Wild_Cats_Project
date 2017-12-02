@@ -107,7 +107,7 @@
 					if($RecordNumber1MinusOne<$smallestRecord)
 					{
 						print "
-						<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
+						First Record 
 						BACK 
 						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
 						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
@@ -119,7 +119,7 @@
 						<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
 						NEXT 
-						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
+						Latest Record
 						<br>(End of Records)<br>";
 					}
 					else
@@ -339,7 +339,7 @@
 			{
 				print "
 				<br>
-				<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
+				First Record 
 				BACK 
 				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>NEXT</a>
 				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
@@ -351,8 +351,8 @@
 				<br>
 				<a href='form_view.php?&RecordNumber=$smallestRecord'>First Record</a>
 				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>BACK</a>
-				NEXT
-				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
+				NEXT 
+				Latest Record
 				<br>
 				(End of Records)<br>";
 			}
