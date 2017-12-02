@@ -228,10 +228,11 @@ function formatPhone(phoneId) {
 			}
 		}
 		
+		if($level==1 || $level==2){ //if admin or triage user
 ?>
 	<h2> Update Profile </h2>
 	<div id="form-wrapper">
-		<form id="updateform" method="post" action="updateprofile.php">
+		<form id="<?php if($level==2) echo 'updateform'; else if($level==1) echo 'adminform'; ?>" method="post" action="updateprofile.php">
 			<label for="inner-form"><h4>Account Information</h4></label>
 			<div class="form-row" id="inner-form">
 				<div class="form-group row">
@@ -259,6 +260,7 @@ function formatPhone(phoneId) {
 				</div>
 			</div>
 <?php
+		}
 		if($level==2){ //if triage user
 ?>
 			<hr>
@@ -303,8 +305,9 @@ function formatPhone(phoneId) {
 
 			<div class="form-row" id="inner-form3">
 				<div class="form-group row">
-					<div class="col-sm-12">
-						<label class="form-check-label">Type of Work You Would Like To Volunteer For:</label>
+					<div class="col-sm-12" id="workchecks">
+						<span hidden id="workerror"></span>
+						<label class="form-check-label" id="worklabel">Type of Work You Would Like To Volunteer For:</label>
 						<div class="form-check">
 							<label><input type="checkbox" name="typeofwork[]" id="cb1" value="transporting" <?php if($transporting==1) echo "checked" ?>>
 							Transporting cats to and from spay/neuter clinics</label>
@@ -337,22 +340,22 @@ function formatPhone(phoneId) {
 				</div>
 			</div>
 <?php
-	}
+		}
 ?>
 			<div class="form-row" id="buttons">
-				<input class="btn" type="button" onclick="location.href='userprofile.php'" value="Cancel">
-				<input class="btn btn-primary" type="submit" name="submit" value="Update" >
+				<input class="btn btn-default" type="button" onclick="location.href='userprofile.php'" value="Cancel">
+				<input class="btn btn-primary" type="submit" name="submit" id="updatebtn" value="Update" >
 			</div>
 		</form>
 	</div>
 	
 <?php 
-} 
+	} 
 ?>
 
 <script>
 $(document).ready(function () {
-	$('#updateform input').on('keyup change', function(){
+	$('form input').on('keyup change', function(){
 		var id = $(this)[0].id;
 		if(id=='password' || id=='repass'){
 			var pwd = $('#password').val();
@@ -361,15 +364,31 @@ $(document).ready(function () {
 				$('#password').attr('style','border: 1px solid #d66');
 				$('#repass').attr('style','border: 1px solid #d66');
 				$('#passerrmsg').html("<small>passwords do not match</small>");
+				$('#updatebtn').prop('disabled',true);
 			} else if(pwd=='' || repwd==''){
 				$('#repass').attr('style','border: 1px solid #d66');
-				$('#passerrmsg').html("<small>passwords cannot be empty</small>");
+				$('#passerrmsg').html("<small>passwords cannot be emtpy</small>");
+				$('#updatebtn').prop('disabled',true);
 			} else {
 				$('#password').attr('style','');
 				$('#repass').attr('style','');
 				$('#passerrmsg').html("");
+				$('#updatebtn').prop('disabled',false);
 			}
 		}
+	});
+	
+	//only for triage user
+	$('#updateform').submit(function(){ //dont submit form if at least one isn't selected
+		var work = $('#workchecks').find('input');
+		for(var i=0; i<work.length; i++){
+			if(work[i].checked) return true;
+		}
+		
+		$('#worklabel').attr('style','color: red');
+		$('#workerror').html('<small>Must select at least one</small>');
+		$('#workerror').removeAttr('hidden');
+		return false;
 	});
 });
 </script>

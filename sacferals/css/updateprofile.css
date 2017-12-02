@@ -47,7 +47,7 @@ h2 {
 	margin: auto;
 	display: table;
 }
-#passerrmsg{
+#passerrmsg, #workerror{
 	color: red;
 	margin: auto;
 	display: table;
@@ -62,6 +62,11 @@ h2 {
 
 #othertasks {
 	max-width: 70%;
+}
+
+/*buttons*/
+.btn-default{
+	background-color: lightgray;
 }
 
 /*error msg*/
@@ -85,6 +90,7 @@ h2 {
 	color: black;
 }
 
+/*tooltip*/
 .tooltip {
 	position: relative;
 	display: inline-block;

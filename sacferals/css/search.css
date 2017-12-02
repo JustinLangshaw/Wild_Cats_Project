@@ -10,10 +10,15 @@
 body{
 	font-family: verdana;
 	font-size: 10pt;
-	margin: 20px;
+}
+.maindiv{
+	margin: 30px;
 }
 .row{
 	padding: 10px;
+}
+#copyrow {
+	cursor: pointer;
 }
 #columnselect {
 	color: red;
@@ -63,9 +68,12 @@ body{
 	color: #337ab7;
 	text-align: center;
 }
+#cqaddbtn {
+	padding: 5px 10px;
+}
 .form-control {
-	min-width: 0;
 	width: auto;
+	height: 30px;
 	display: inline;
 }
 
@@ -74,18 +82,63 @@ table {
 	display: block;
 	overflow-x: scroll;
 	overflow-y: scroll;
-	height: 400px;
+	height: 600px;
 	font-size: 10pt;
 }
-table tbody {
+tbody {
 	overflow-y: auto;
 }
-#container {
+.row textarea{
+	max-width: 100%;
+	overflow-x: hidden;
+}
+th {
+	text-align: center;
+	vertical-align: middle !important;
+}
+tr[selected="selected"]{ 
+	color: white;
+	background-color: darkgray !important;/*#337ab7 !important; */
+}
+tr[selected="selected"] #recordEdit, /*keep titles white on select*/
+tr[selected="selected"] #cancelEdit, 
+tr[selected="selected"] #statusselect{ 
+	color: #000000;
+}
+
+/*#container {
 	white-space: nowrap;
 	overflow: hidden;
-}
+}*/
 #ttlrecs {
 	float: right;
+}
+#colsel{
+	margin-bottom: 2px;
+}
+#columnselect{
+	max-width: 60%;
+}
+#manquery{
+	width: 60%; 
+	max-width: 100%;
+}
+
+.copysuccessmsg{
+	color: black;
+	font-weight: bold;
+	background: lightgray;
+	position: fixed;
+	top: 30%;
+	left: 40%;
+	padding: 40px 80px;
+	border-radius: 10px;
+	z-index: 10000;
+}
+
+/*btn designs*/
+.btn-default{
+	background-color: lightgray;
 }
 .btn-outline{
 	background-color: transparent;

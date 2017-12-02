@@ -1,9 +1,10 @@
 //Code for plotting locations from Reports table on a map
 
 //Initialize Google Map
+var map;
 function initMap() {
-    latlng = new google.maps.LatLng(38.6041169, -121.4182844);
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var latlng = new google.maps.LatLng(38.6041169, -121.4182844);
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: latlng
     });
@@ -24,8 +25,7 @@ function initMap() {
 //Plot locations on map including details on the report
 var markerList = [];
 function plotMarkers(resultsMap, locDetails) {
-    resultsMap.setCenter(resultsMap.latlng);
-
+	map.setCenter(locDetails.latlng);
     var marker = new google.maps.Marker({
         map: resultsMap,
         title: locDetails.address,
@@ -37,7 +37,7 @@ function plotMarkers(resultsMap, locDetails) {
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map, marker);
     });
-	markerList.push(marker);
+	markerList.push(marker);	
 }
 
 //Get the address infos for mapping
@@ -74,38 +74,48 @@ function getMapQueries() {
     } else {
         dateTimeIndex = dateTimeIndex.cellIndex;
     }
-
+	if(addrIndex == null){
+		address = "";
+	}else{
+		addrIndex = addrIndex.cellIndex;
+	}
+	if(cityIndex == null){
+		city = "";	
+	}else{
+		cityIndex = cityIndex.cellIndex;
+	}
+	if(zipIndex == null){
+		zipcode = "";
+	}else{
+		zipIndex = zipIndex.cellIndex;
+	}
+	
     //If latitude and longitude columns cannot be found, do not proceed
     if ((latIndex == null) || (lngIndex == null)) {
         invalidCols = true;
         return;
     } else {
-        addrIndex = addrIndex.cellIndex;
-        cityIndex = cityIndex.cellIndex;
-        zipIndex = zipIndex.cellIndex;
         latIndex = latIndex.cellIndex;
         lngIndex = lngIndex.cellIndex;
     }
 
     //Iterate through rows of Report table and grab the text in cells if columns availible 
     for (var r = 1; r < table.rows.length; r++) {
-        if (dateTimeIndex != null) dateTime = table.rows[r].cells[dateTimeIndex].innerHTML;
-        if (reportStatusIndex != null) reportStatus = table.rows[r].cells[reportStatusIndex].innerHTML;
-
-        address = table.rows[r].cells[addrIndex].innerHTML;
-        city = table.rows[r].cells[cityIndex].innerHTML;
-        zipcode = table.rows[r].cells[zipIndex].innerHTML;
+        if (dateTimeIndex != null) dateTime = table.rows[r].cells[dateTimeIndex].innerHTML;		
+        if (reportStatusIndex != null) reportStatus = table.rows[r].cells[reportStatusIndex].innerHTML;		
+		if (addrIndex != null) address = table.rows[r].cells[addrIndex].innerHTML;	
+		if (cityIndex != null) city = table.rows[r].cells[cityIndex].innerHTML; 
+		if (zipIndex != null) zipcode = table.rows[r].cells[zipIndex].innerHTML; 
+			
         lat = table.rows[r].cells[latIndex].innerHTML;
         lng = table.rows[r].cells[lngIndex].innerHTML;
-        //alert(lat+" "+lng);
         geocode = new google.maps.LatLng(lat, lng);
         search = address + " " + city + " " + zipcode
         searchDetails = "<p><b>Address: " + search +
             "<br>Reported at: " + dateTime +
             "<br>Status: " + reportStatus + "</b></p>";
         bundle[r] = {
-            latlng: geocode,
-            address: search,
+            latlng: geocode,          
             details: searchDetails
         };
     }

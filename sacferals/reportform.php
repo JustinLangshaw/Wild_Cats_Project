@@ -49,24 +49,45 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$phone2 = $_POST['phone2'];	
 	
 	$caregiver = $_POST['caregiver'];
-	$feederdescription = $_POST['feederdescription'];
+	$feederdescription = preg_replace("!\s+!", ' ', $_POST['feederdescription']);
 	$colonystreet = $_POST['colonystreet'];
 	$city = $_POST['city'];
 	$county = $_POST['county'];
 	$zipcode = $_POST['zipcode'];
+	$addrcomment = preg_replace("!\s+!", ' ', $_POST['addrcomment']); //prepend to additional comments
 	$trapattempt = $_POST['trapattempt'];
+	$trapcomment = preg_replace("!\s+!", ' ', $_POST['trapcomment']); //prepend to additional comments
 	$numberofcats = $_POST['numberofcats'];
 	$kittens = $_POST['kittens'];
+	$kittenscomment = preg_replace("!\s+!", ' ', $_POST['kittenscomment']); //prepend to additional comments
 	$injured = $_POST['recentlyinjured'];
-	$injurydescription = $_POST['injurydescription'];
+	$injurydescription = preg_replace("!\s+!", ' ', $_POST['injurydescription']);
 	$friendlypet = $_POST['friendlypet'];
 	$setting = $_POST['setting'];
-	$comments = $_POST['comments'];
+	$settingcomment = preg_replace("!\s+!", ' ', $_POST['settingcomment']); //prepend to additional comments
+	$comments = preg_replace("!\s+!", ' ', $_POST['comments']);
 	$feedifreturned = $_POST['feedifreturned'];
 	$reqassistance = $_POST['reqassistance'];
 	$lat = $_POST['lat'];
 	$lng = $_POST['lng'];
 	
+	//combining all comments
+	if($settingcomment!='') {
+		if (preg_match("/^[a-zA-Z0-9]$/", substr($settingcomment, -1))) $settingcomment.=".";
+		$comments=$settingcomment.' '.$comments;
+	}
+	if($kittenscomment!='') {
+		if (preg_match("/^[a-zA-Z0-9]$/", substr($kittenscomment, -1))) $kittenscomment.=".";
+		$comments=$kittenscomment.' '.$comments;
+	}
+	if($trapcomment!='') {
+		if (preg_match("/^[a-zA-Z0-9]$/", substr($trapcomment, -1))) $trapcomment.=".";
+		$comments=$trapcomment.' '.$comments;
+	}
+	if($addrcomment!='') {
+		if (preg_match("/^[a-zA-Z0-9]$/", substr($addrcomment, -1))) $addrcomment.=".";
+		$comments=$addrcomment.' '.$comments;
+	}
 	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
@@ -126,12 +147,12 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<!--<link rel="shortcut icon" href="images/sacferals.png" type="image/x-icon">-->
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" href="css/reportform.css">
 	
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="script.js"></script> 
 </head>
 <body>
@@ -172,25 +193,32 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 					<div class="form-check">
 						<label><input type="radio" name="feedifreturned[]" value="No" id="feedifreturnedno"> No</label></div>
 				</div>
-				<div class="form-group">
-					<label class="col-form-label" for="fullname">*Full Name </label>			<!--L+ [-] L+ 							middle          L+ [-'] L+-->				    
-					<input class="form-control" type="text" name="fullname" id="fullname" pattern="[a-zA-Z]+[-]{0,1}[a-zA-Z]+\s[a-zA-Z\s]{0,}[a-zA-Z]+[-']{0,1}[a-zA-Z]+" title="Enter first and last name" placeholder="First Last" required>
+				<div class="form-group row">
+					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+						<label class="col-form-label" for="fullname">*Full Name </label>									<!--L+ [-] L+ 							middle          L+ [-'] L+-->				    
+						<input class="form-control" type="text" name="fullname" id="fullname" pattern="[a-zA-Z]+[-]{0,1}[a-zA-Z]+\s[a-zA-Z\s]{0,}[a-zA-Z]+[-']{0,1}[a-zA-Z]+" 
+							title="Enter first and last name" placeholder="First Last" required>
+					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-form-label" for="email">*Email Address
-						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-							<span class="tooltiptext">This is our preferred method of contact.</span>
-						</div>
-					</label>
-					<input class="form-control" type="email" name="email" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required>
+				<div class="form-group row">
+					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+						<label class="col-form-label" for="email">*Email Address
+							<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+								<span class="tooltiptext">This is our preferred method of contact.</span>
+							</div>
+						</label>
+						<input class="form-control" type="email" name="email" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required>
+					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-form-label" for="phone1">Primary Phone</label>
-					<input class="form-control" type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
-				</div>
-				<div class="form-group">
-					<label class="col-form-label" for="phone2">Secondary Phone</label>
-					<input class="form-control" type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
+				<div class="form-group row">
+					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+						<label class="col-form-label" for="phone1">Primary Phone</label>
+						<input class="form-control" type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
+					</div>
+					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+						<label class="col-form-label" for="phone2">Secondary Phone</label>
+						<input class="form-control" type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
+					</div>
 				</div>
 
 				<div class="form-group">
@@ -206,7 +234,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 				</div>
 				
 				<div class="form-group row">
-					<div class="col-sm-10">
+					<div class="col-xs-6 col-sm-6 col-md-5 col-lg-4">
 						<label class="col-form-label" for="colonystreet">*Address of Cat Colony
 							<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 								<span class="tooltiptext">If you have any additional information,
@@ -217,26 +245,36 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 							pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}" title="Enter street# and street name" id="colonystreet" required>
 						<span id="invalidAddr" type="hidden"></span>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-xs-2 col-sm-2 col-md-3 col-lg-2">
 						<label class="col-form-label" for="state">State</label>
-						<input class="form-control" type="text" id="state" value="CA" readonly>
+						<input class="form-control" type="text" id="state" value="CA" tabindex="-1" readonly>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-sm-4">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
 						<label class="col-form-label" for="zipcode">*Zip Code</label>
 						<input class="form-control" type="text" name="zipcode" id="zipcode" maxlength="5" required>
 						<span id="ziperror"></span>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-xs-5 col-sm-4 col-md-4 col-lg-3">
 						<label class="col-form-label" for="city">*City</label>
 						<span id="city_wrap"><input class="form-control" type="text" name="city" id="city" title="Enter a City" required></span>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-xs-5 col-sm-4 col-md-4 col-lg-3">
 						<label class="col-form-label" for="county">*County</label>
 						<input class="form-control" type="text" name="county" id="county" required>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="form-check">
+						<label><input type="checkbox" name="addrdetails" value="Yes" onClick="displayForm(this)"> Additional information about the address?</input></label>
+					</div>
+					<div class='form-group indent todisplay' id="addrdetails">
+						Please describe<br>
+						<textarea class="form-control" rows="4"  name="addrcomment"></textarea>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label class="form-check-label">Has trapping been attempted or are any of the cats' ears tipped?
 						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
@@ -245,15 +283,19 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 						</div>
 					</label>
 					<div class="form-check">
-						<label><input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes"> Yes</label></div>
+						<label><input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes" onClick="displayForm(this)"> Yes</label></div>
+					<div class='form-group  indent todisplay' id="trapdetails">
+						Please elaborate<br>
+						<textarea class="form-control" rows="4" name="trapcomment"></textarea>
+					</div>
 					<div class="form-check">
-						<label><input type="radio" name="trapattempt[]" value="No" id="trapattemptno"> No</label></div>
+						<label><input type="radio" name="trapattempt[]" value="No" id="trapattemptno" onClick="displayForm(this)"> No</label></div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label class="col-form-label" for="numberofcats">*Approx # of Cats (including Kittens)</label>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
 						<input class="form-control" type="number" name="numberofcats" min="1" max="99" id="numberofcats" required>
 						<span id="catserror"></span>
 					</div>
@@ -266,9 +308,13 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 						</div>
 					</label>
 					<div class="form-check">
-						<label><input type="radio" name="kittens[]" value="Yes" id="kittensyes"> Yes</label></div>
+						<label><input type="radio" name="kittens[]" value="Yes" id="kittensyes" onClick="displayForm(this)"> Yes</label></div>
+					<div class='form-group  indent todisplay' id="kittensdetails">
+						Describe the number of kittens and their ages<br>
+						<textarea class="form-control" rows="4" name="kittenscomment"></textarea>
+					</div>
 					<div class="form-check">
-						<label><input type="radio" name="kittens[]" value="No" id="kittensno"> No</label></div>
+						<label><input type="radio" name="kittens[]" value="No" id="kittensno" onClick="displayForm(this)"> No</label></div>
 				</div>
 				<div class="form-group">
 					<label class="form-check-label">Injured or Pregnant Cats?
@@ -283,7 +329,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 						<label><input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes</label></div>
 					<div class='form-group indent todisplay' id="recentlyinjuredID">
 						Describe Condition<br>
-						<textarea class="form-control" rows="4" cols="50" name="injurydescription"></textarea>
+						<textarea class="form-control" rows="4"  name="injurydescription"></textarea>
 					</div>
 					<div class="form-check">
 						<label><input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No</label></div>
@@ -303,6 +349,13 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 						<label><input type="radio" name="setting[]" value="Commercial" id="commercialsetting"> Commercial</label></div>
 					<div class="form-check">
 						<label><input type="radio" name="setting[]" value="Industrial"id="industrialsetting"> Industrial</label></div>
+					<div class="form-check">
+						<label><input type="checkbox" name="settingdetails" value="Yes" onClick="displayForm(this)"> Any additional information?</input></label>
+					</div>
+					<div class='form-group indent todisplay' id="settingdetails">
+						Please describe<br>
+						<textarea class="form-control" rows="4"  name="settingcomment"></textarea>
+					</div>
 				</div>
 				
 				<div class="form-group">
@@ -314,7 +367,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 				
 				<div class="form-group">
 					<label class="form-check-label">Additional Comments</label>
-					<textarea class="form-control" rows="4" cols="50" name="comments" id="textarea"></textarea>
+					<textarea class="form-control" rows="4"  name="comments" id="textarea"></textarea>
 				</div>
 				
 				<input type="hidden" name="lat" id="lat"/>
@@ -350,7 +403,7 @@ function getGeocode() {
 
     if ((street != "") && (city != "") && (zip != "")) {
         $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' +
-            address + '&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response) {
+            address + '&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').done(function(response) {
             if (response.results != "") {
                 if ((response.status == 'OK') && (response.results[0].geometry.location_type == 'ROOFTOP') && (response.results[0].partial_match != true) && (response.results.length < 2)) {
                     lat = response.results[0].geometry.location.lat;
@@ -366,7 +419,8 @@ function getGeocode() {
                     $('#zipcode').attr('style', 'border: 1px solid #d66');
                     $('#colonystreet').attr('style', 'border: 1px solid #d66');
                     $('#city').attr('style', 'border: 1px solid #d66');
-                    $('#invalidAddr').attr('style', 'color: RED');;
+                    $('#invalidAddr').attr('style', 'color: RED');
+                    $('#zipcode').val(''); //clear so doens't submit form with illegal address
                 }
             } else {
                 errorMsg.html("<small>Cannot identfy address entered. Make sure you are entering an address in the proper format.</small>");
@@ -374,6 +428,7 @@ function getGeocode() {
                 $('#colonystreet').attr('style', 'border: 1px solid #d66');
                 $('#city').attr('style', 'border: 1px solid #d66');
                 $('#invalidAddr').attr('style', 'color: RED');
+                $('#zipcode').val(''); //clear so doens't submit form with illegal address
             }
         });
     }
@@ -391,7 +446,7 @@ $(document).ready(function(){
 			
 			//make a request to the google geocode api
 			$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
-					+zip+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(response){
+					+zip+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').done(function(response){
 				//find the city and county
 				if(response.results[0]!=null){ //if zip even exists
 					var address_components = response.results[0].address_components;
@@ -432,7 +487,7 @@ $(document).ready(function(){
 						}
 						if(county == '') {
 							$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address='
-								+city+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').success(function(res){
+								+city+'&key=AIzaSyDz2ZSC6IJEf38QeSbLwIxTEohm4ATem9M').done(function(res){
 								var address_components2 = res.results[0].address_components;
 								$.each(address_components2, function(indx, compnt){
 									var types2 = compnt.types;
@@ -480,7 +535,7 @@ $(document).ready(function(){
 	$('#numberofcats').on('keyup change', function(){
 		if($(this).val()>99 || $(this).val()<1){
 			$('#numberofcats').attr('style','border: 1px solid #d66');
-			$('#catserror').html('<small>only 0-99</small>');
+			$('#catserror').html('<small>only 1 to 99</small>');
 			$('#numberofcats').val('');
 		}
 		else{

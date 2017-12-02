@@ -33,14 +33,14 @@
 			header("Location: ".$cleared_url);
 		}
 
-		if($level == 1 || $level==2)
+		if($level == 1)
 		{
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
    	<head>
-		<title>Volunteer</title>
+		<title>Administrator</title>
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
@@ -52,6 +52,7 @@
         
        	<script src="js/exportExcelScript.js"></script>
 		<script src="js/customquery.js"></script> 
+		<script src="js/searchScript.js"></script>
   	</head>
 	<body>
 	<div class="header"> <!-- navbar -->
@@ -100,7 +101,7 @@
 	<div class="maindiv"> <!-- rest of page -->
 	<div class="row">
 		<div class="col-md-4">
-			<form id='form1' name='form1' method='get' action='volunteerlist.php'>
+			<form id='form1' name='form1' method='get' action='adminprofile.php'>
 				<p id="columnselect">Note: Hold down ctrl or shift to select multiple columns</p>
 				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
@@ -149,7 +150,7 @@
 			</form>
 		</div>
 		<div class="col-md-8">
-			<form id='writtenqueryform' name='writtenquery' method='get' action='volunteerlist.php'>
+			<form id='writtenqueryform' name='writtenquery' method='get' action='adminprofile.php'>
 				<div class="row"><b>Manual Query</b></div>
 				<div class="row">
 					<textarea class="form-control" id="manquery" name="manquery" rows="6" placeholder="Enter your Query" required ></textarea>
@@ -162,7 +163,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-4"> <!-- Canned Query -->
-			<form id="cannedqueryform" method='get' action='volunteerlist.php'>
+			<form id="cannedqueryform" method='get' action='adminprofile.php'>
 				<label><b>Canned Queries</b></label>
 				<div class="row" id="cannedqrow">
 					<select class="input-sm col-md-6 col-sm-4 col-xs-8" id="cannedquery" name="cannedquery[]" tabindex='3'>
@@ -187,7 +188,7 @@
 			</form>
 		</div>
 		<div class="col-md-8"> <!-- Custom Query -->
-			<form id="queryform" method='get' action='volunteerlist.php'>
+			<form id="queryform" method='get' action='adminprofile.php'>
 				<label><b>Custom Query</b></label>
 				&nbsp;&nbsp;&nbsp;
 				<span style="color: darkgray;"><small>(Enter null for empty value)</small></span>
@@ -261,7 +262,7 @@
 	<div class="modal fade" id="getcndqnameModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<form id="addcurrqry" method='get' action='volunteerlist.php'>
+				<form id="addcurrqry" method='get' action='adminprofile.php'>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="motal-title" id="myModalLabel">Name your Canned Query</h4>
@@ -284,7 +285,7 @@
 	<div class="modal fade" id="getcndqnameModal2" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<form id="addcurrqry2" method='get' action='volunteerlist.php'>
+				<form id="addcurrqry2" method='get' action='adminprofile.php'>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="motal-title" id="myModalLabel2">Name your Canned Query</h4>
@@ -311,7 +312,7 @@
 			$tdEditString="";
 			
 			//change selected columns only if unset
-			//if(!isset($_SESSION['volunteerselectedColumns'])){ 
+			//if(!isset($_SESSION['selectedColumns'])){ 
 
 			if(count($_SESSION['volunteerselectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
 			{
@@ -336,47 +337,29 @@
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				if($selectedOption=="RecordNumber") $printvalue = "ID";
-				else if($selectedOption=="Comments") $printvalue = "Triage Comments";
-				else if($selectedOption=="VolunteerStatus") $printvalue = "Volunteer Status";
-				else if($selectedOption=="DateAndTime") $printvalue = "Date Submitted";
-				else if($selectedOption=="WorkshopAttended") $printvalue = "Workshop Attended";
-				else if($selectedOption=="WorkshopDate") $printvalue = "Workshop Date";
-				else if($selectedOption=="DateActivated") $printvalue = "Date Activated";
-				else if($selectedOption=="PreferedContact") $printvalue = "Prefered Contact";
-				else if($selectedOption=="contactemail") $printvalue = "Prefered Email";
-				else if($selectedOption=="contactphone1") $printvalue = "Prefered Phone1";
-				else if($selectedOption=="contactphone2") $printvalue = "Prefered Phone2";
-				else if($selectedOption=="TypeOfWork") $printvalue = "Type Of Work";
-				else if($selectedOption=="transporting") $printvalue = "Transporter";
-				else if($selectedOption=="helptrap") $printvalue = "Trapper";
-				else if($selectedOption=="helpeducate") $printvalue = "Educator";
-				else if($selectedOption=="usingphone") $printvalue = "Triage";
-				else if($selectedOption=="other") $printvalue = "Other";
-				else if($selectedOption=="OtherTasks") $printvalue = "Other Tasks Details";
-				else if($selectedOption=="PastWorkExp") $printvalue = "Past Experience";
-				else if($selectedOption=="ResponseDate") $printvalue = "Response Date";
-				else if($selectedOption=="EmailResponse") $printvalue = "Email Response";
-				else if($selectedOption=="BEATId") $printvalue = "BEAT ID";
-				else if($selectedOption=="BEATName") $printvalue = "BEAT Name";
-				else if($selectedOption=="BEATGeneralArea") $printvalue = "BEAT Gen. Area";
-				else if($selectedOption=="BEATZipCodes") $printvalue = "BEAT Zip Code";
-				else if($selectedOption=="BEATTrainDate") $printvalue = "BEAT Train Date";
-				else if($selectedOption=="BEATMembers") $printvalue = "BEAT Member";
-				else if($selectedOption=="BEATMembersPhone") $printvalue = "BEAT Member Phone";
-				else if($selectedOption=="BEATMemberEmails") $printvalue = "BEAT Member Email";
-				else if($selectedOption=="BEATType") $printvalue = "BEAT Type";
-				else if($selectedOption=="BEATNotes") $printvalue = "BEAT Notes";
-				else if($selectedOption=="BEATStatus") $printvalue = "BEAT Status";
-				else if($selectedOption=="TriageBEATNotes") $printvalue = "BEAT Triage Notes";
 				else $printvalue = $selectedOption;
-				$thString.="<th><a href='volunteerlist.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
+				$thString.="<th><a href='adminprofile.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
 			}
 
 			foreach ($_GET['select2'] as $selectedOption)
 			{
 				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
-				else
+				else if($selectedOption=="VolunteerStatus"){
+					if($VolunteerStatus=='') $selected='';
+					else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
+					else if($VolunteerStatus=="Active") $selectedActive='selected';
+					else if($VolunteerStatus=="Triage") $selectedTriage='selected';
+					
+					$tdEditString.="<td><div style='text-align:Center'>
+						<form id='form1' name='form1' method='get' action='adminprofile.php'>
+						<select name='VolunteerStatus'>
+							<option value='Inactive'".$selectedInactive.">Inactive</option>
+							<option value='Active'".$selectedActive.">Active</option>
+							<option value='Triage'".$selectedTriage.">Triage</option>	
+						</select><br>
+						</form></div></td>";
+				}else
 					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
 
 			}
@@ -397,7 +380,7 @@
 
 			/* this doesn't work with edit yet
 			print "<b>Select which tables you would like to view: </b><br>
-			<input type='checkbox' name='searchtables[]' value='VolunteerForm' class='checkdisplay' > VolunteerForm
+			<input type='checkbox' name='searchtables[]' value='ReportColonyForm' class='checkdisplay' > ReportColonyForm
 			<input type='checkbox' name='searchtables[]' value='FeralInterventionForm' class='checkdisplay1' > FeralInterventionForm
 			<input type='checkbox' name='searchtables[]' value='VolunteerForm' class='checkdisplay2' > VolunteerForm
 			<input type='checkbox' name='searchtables[]' value='SundaySSPCA' class='checkdisplay3' > SundaySSPCA
@@ -593,19 +576,21 @@
 					<span id='querymsg'><h5>".$q.$_SESSION['volunteerquerysearch']."</h5></span>
 					<div class='row'>
 					<div class='col-sm-12'>
-					<form method='post' action='volunteerlist.php'>
+					<form method='post' action='adminprofile.php'>
 
 					<b>Volunteer Table</b>
 					<div class='row' style='float: right'>
 						<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
-							<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='volunteerlist.php?RefreshTable=Reset'\"/>
+							<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='adminprofile.php?RefreshTable=Reset'\"/>
 							<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('volunteerTable', 'Volunteers')\" value='Export' />
 						</div>
 					</div>
 					
 					<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 						<thead>
-							<tr>";
+							<tr>
+								<th> </th>";
+
 							if($thString != '')
 							{
 								print $thString;
@@ -615,45 +600,45 @@
 							else
 							{
 								print "
-								<th><a href='volunteerlist.php?sort=RecordNumber'>ID</a></th>
-								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
-								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
-								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
-								<th><a href='volunteerlist.php?sort='DateActivated'>Date Activated</a></th>
-								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
-								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
-								<th><a href='volunteerlist.php?sort='Email'>Email</a></th>
-								<th><a href='volunteerlist.php?sort='Phone1'>Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='Phone2'>Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='PreferedContact'>Prefered Contact</a></th>
-								<th><a href='volunteerlist.php?sort='contactemail'>Prefered Email</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone1'>Prefered Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone2'>Prefered Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='TypeOfWork'>Type Of Work</a></th>
-								<th><a href='volunteerlist.php?sort='transporting'>Transporter</a></th>
-								<th><a href='volunteerlist.php?sort='helptrap'>Trapper</a></th>
-								<th><a href='volunteerlist.php?sort='helpeducate'>Educator</a></th>
-								<th><a href='volunteerlist.php?sort='usingphone'>Triage</a></th>
-								<th><a href='volunteerlist.php?sort='other'>Other</a></th>
-								<th><a href='volunteerlist.php?sort='OtherTasks'>Other Tasks Details</a></th>
-								<th><a href='volunteerlist.php?sort='PastWorkExp'>Past Experience</a></th>
-								<th><a href='volunteerlist.php?sort='UnknownNameColumn'>Unknown</a></th>
-								<th><a href='volunteerlist.php?sort='ResponseDate'>Response Date</a></th>
-								<th><a href='volunteerlist.php?sort='EmailResponse'>Email Response</a></th>
-								<th><a href='volunteerlist.php?sort='BEATId'>BEAT ID</a></th>					
-								<th><a href='volunteerlist.php?sort='BEATName'>BEAT Name</a></th>
-								<th><a href='volunteerlist.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
-								<th><a href='volunteerlist.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
-								<th><a href='volunteerlist.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembers'>BEAT Member</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
-								<th><a href='volunteerlist.php?sort='BEATType'>BEAT Type</a></th>
-								<th><a href='volunteerlist.php?sort='BEATNotes'>BEAT Notes</a></th>
-								<th><a href='volunteerlist.php?sort='BEATStatus'>BEAT Status</a></th>					
-								<th><a href='volunteerlist.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>
+								<th><a href='adminprofile.php?sort=RecordNumber'>ID</a></th>
+								<th><a href='adminprofile.php?sort='Comments'>Triage Comments</a></th>
+								<th><a href='adminprofile.php?sort='VolunteerStatus'>Volunteer Status</a></th>
+								<th><a href='adminprofile.php?sort='DateAndTime'>Date Submitted</a></th>
+								<th><a href='adminprofile.php?sort='WorkshopAttended'>Workshop</a></th>
+								<th><a href='adminprofile.php?sort='WorkshopDate'>Workshop Date</a></th>
+								<th><a href='adminprofile.php?sort='DateActivated'>Date Activated</a></th>
+								<th><a href='adminprofile.php?sort='FullName'>Full Name</a></th>
+								<th><a href='adminprofile.php?sort='Address'>Complete Address</a></th>
+								<th><a href='adminprofile.php?sort='Email'>Email</a></th>
+								<th><a href='adminprofile.php?sort='Phone1'>Phone1</a></th>
+								<th><a href='adminprofile.php?sort='Phone2'>Phone2</a></th>
+								<th><a href='adminprofile.php?sort='PreferedContact'>Prefered Contact</a></th>
+								<th><a href='adminprofile.php?sort='contactemail'>Prefered Email</a></th>
+								<th><a href='adminprofile.php?sort='contactphone1'>Prefered Phone1</a></th>
+								<th><a href='adminprofile.php?sort='contactphone2'>Prefered Phone2</a></th>
+								<th><a href='adminprofile.php?sort='TypeOfWork'>Type Of Work</a></th>
+								<th><a href='adminprofile.php?sort='transporting'>Transporter</a></th>
+								<th><a href='adminprofile.php?sort='helptrap'>Trapper</a></th>
+								<th><a href='adminprofile.php?sort='helpeducate'>Educator</a></th>
+								<th><a href='adminprofile.php?sort='usingphone'>Triage</a></th>
+								<th><a href='adminprofile.php?sort='other'>Other</a></th>
+								<th><a href='adminprofile.php?sort='OtherTasks'>Other Tasks Details</a></th>
+								<th><a href='adminprofile.php?sort='PastWorkExp'>Past Experience</a></th>
+								<th><a href='adminprofile.php?sort='UnknownNameColumn'>Unknown</a></th>
+								<th><a href='adminprofile.php?sort='ResponseDate'>Response Date</a></th>
+								<th><a href='adminprofile.php?sort='EmailResponse'>Email Response</a></th>
+								<th><a href='adminprofile.php?sort='BEATId'>BEAT ID</a></th>					
+								<th><a href='adminprofile.php?sort='BEATName'>BEAT Name</a></th>
+								<th><a href='adminprofile.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
+								<th><a href='adminprofile.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
+								<th><a href='adminprofile.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
+								<th><a href='adminprofile.php?sort='BEATMembers'>BEAT Member</a></th>
+								<th><a href='adminprofile.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
+								<th><a href='adminprofile.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
+								<th><a href='adminprofile.php?sort='BEATType'>BEAT Type</a></th>
+								<th><a href='adminprofile.php?sort='BEATNotes'>BEAT Notes</a></th>
+								<th><a href='adminprofile.php?sort='BEATStatus'>BEAT Status</a></th>					
+								<th><a href='adminprofile.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>
 							</tr>
 						</thead>
 						";
@@ -669,7 +654,7 @@
 							{
 								print "
 								<tr>
-									<td> <label><input type='submit' name='recordEdit' value='Submit Edit'></label>
+									<td> <label><input type='submit' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
 										 <label><input type='submit' name='cancel' value='Cancel Edit'></label> </td>";
 
 								if($tdEditString != '')
@@ -691,7 +676,23 @@
 										{
 											$tdEditString.="<td>".$$selectedOption."</td>";
 										}
-										else
+									
+										else if($selectedOption=="VolunteerStatus"){
+											if($VolunteerStatus=='') $selected='';
+											else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
+											else if($VolunteerStatus=="Active") $selectedActive='selected';
+											else if($VolunteerStatus=="Triage") $selectedTriage='selected';
+
+											$tdEditString.="<td><div style='text-align:Center'>
+												<form id='form1' name='form1' method='get' action='adminprofile.php'>
+												<select name='VolunteerStatus'>
+													<option value='Inactive'".$selectedInactive.">Inactive</option>
+													<option value='Active'".$selectedActive.">Active</option>
+													<option value='Triage'".$selectedTriage.">Triage</option>
+													
+												</select><br>
+												</form></div></td>";
+										}else
 										{
 											$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$$selectedOption."'></td>";
 										}
@@ -710,52 +711,75 @@
 								}
 								else
 								{
+									if($VolunteerStatus=='') $selected='';
+									else if($VolunteerStatus=="Inactive") $selectedInactive='selected';
+									else if($VolunteerStatus=="Active") $selectedActive='selected';
+									else if($VolunteerStatus=="Triage") $selectedTriage='selected';
+									
 									print "
 									<td><input type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>									
-									<td><input type='text' name='Comments' value='$Comments'></td>
-									<td><input type='text' name='VolunteerStatus' value='$VolunteerStatus'></td>
-									<td><input type='text' name='DateAndTime' value='$DateAndTime'></td>
-									<td><input type='text' name='WorkshopAttended' value='$WorkshopAttended'></td>
-									<td><input type='text' name='WorkshopDate' value='$WorkshopDate'></td>
-									<td><input type='text' name='DateActivated' value='$DateActivated'></td>
-									<td><input type='text' name='FullName' value='$FullName'></td>
-									<td><input type='text' name='Address' value='$Address'></td>
-									<td><input type='text' name='Email' value='$Email'></td>
-									<td><input type='text' name='Phone1' value='$Phone1'></td>
-									<td><input type='text' name='Phone2' value='$Phone2'></td>
-									<td><input type='text' name='PreferedContact' value='$PreferedContact'></td>
-									<td><input type='text' name='contactemail' value='$contactemail'></td>
-									<td><input type='text' name='contactphone1' value='$contactphone1'></td>
-									<td><input type='text' name='contactphone2' value='$contactphone2'></td>
-									<td><input type='text' name='TypeOfWork' value='$TypeOfWork'></td>
-									<td><input type='text' name='transporting' value='$transporting'></td>
-									<td><input type='text' name='helptrap' value='$helptrap'></td>
-									<td><input type='text' name='helpeducate' value='$helpeducate'></td>
-									<td><input type='text' name='usingphone' value='$usingphone'></td>
-									<td><input type='text' name='other' value='$other'></td>
-									<td><input type='text' name='OtherTasks' value='$OtherTasks'></td>
-									<td><input type='text' name='PastWorkExp' value='$PastWorkExp'></td>
-									<td><input type='text' name='UnknownNameColumn' value='$UnknownNameColumn'></td>
-									<td><input type='text' name='ResponseDate' value='$ResponseDate'></td>
-									<td><input type='text' name='EmailResponse' value='$EmailResponse'></td>
-									<td><input type='text' name='BEATId' value='$BEATId'></td>					
-									<td><input type='text' name='BEATName' value='$BEATName'></td>
-									<td><input type='text' name='BEATGeneralArea' value='$BEATGeneralArea'></td>
-									<td><input type='text' name='BEATZipCodes' value='$BEATZipCodes'></td>
-									<td><input type='text' name='BEATTrainDate' value='$BEATTrainDate'></td>
-									<td><input type='text' name='BEATMembers' value='$BEATMembers'></td>
-									<td><input type='text' name='BEATMembersPhone' value='$BEATMembersPhone'></td>
-									<td><input type='text' name='BEATMemberEmails' value='$BEATMemberEmails'></td>
-									<td><input type='text' name='BEATType' value='$BEATType'></td>
-									<td><input type='text' name='BEATNotes' value='$BEATNotes'></td>
-									<td><input type='text' name='BEATStatus' value='$BEATStatus'></td>					
-									<td><input type='text' name='TriageBEATNotes' value='$TriageBEATNotes'></td>					
+									<td><input class='form-control' type='text' name='Comments' value='$Comments'></td>
+									
+									<td><div style='text-align:Center'>
+										<form id='form1' name='form1' method='get' action='adminprofile.php' width: 400px>
+												<select name='VolunteerStatus' class='input-sm'>
+													<option value='Inactive'".$selectedInactive.">Inactive</option>
+													<option value='Active'".$selectedActive.">Active</option>
+													<option value='Triage'".$selectedTriage.">Triage</option>
+												</select><br>
+										</form>
+									</div></td>	
+
+									<td><input class='form-control' type='text' name='DateAndTime' value='$DateAndTime'></td>
+									<td><input class='form-control' type='text' name='WorkshopAttended' value='$WorkshopAttended'></td>
+									<td><input class='form-control' type='text' name='WorkshopDate' value='$WorkshopDate'></td>
+									<td><input class='form-control' type='text' name='DateActivated' value='$DateActivated'></td>
+									<td><input class='form-control' type='text' name='FullName' value='$FullName'></td>
+									<td><input class='form-control' type='text' name='Address' value='$Address'></td>
+									<td><input class='form-control' type='text' name='Email' value='$Email'></td>
+									<td><input class='form-control' type='text' name='Phone1' value='$Phone1'></td>
+									<td><input class='form-control' type='text' name='Phone2' value='$Phone2'></td>
+									<td><input class='form-control' type='text' name='PreferedContact' value='$PreferedContact'></td>
+									<td><input class='form-control' type='text' name='contactemail' value='$contactemail'></td>
+									<td><input class='form-control' type='text' name='contactphone1' value='$contactphone1'></td>
+									<td><input class='form-control' type='text' name='contactphone2' value='$contactphone2'></td>
+									<td><input class='form-control' type='text' name='TypeOfWork' value='$TypeOfWork'></td>
+									<td><input class='form-control' type='text' name='transporting' value='$transporting'></td>
+									<td><input class='form-control' type='text' name='helptrap' value='$helptrap'></td>
+									<td><input class='form-control' type='text' name='helpeducate' value='$helpeducate'></td>
+									<td><input class='form-control' type='text' name='usingphone' value='$usingphone'></td>
+									<td><input class='form-control' type='text' name='other' value='$other'></td>
+									<td><input class='form-control' type='text' name='OtherTasks' value='$OtherTasks'></td>
+									<td><input class='form-control' type='text' name='PastWorkExp' value='$PastWorkExp'></td>
+									<td><input class='form-control' type='text' name='UnknownNameColumn' value='$UnknownNameColumn'></td>
+									<td><input class='form-control' type='text' name='ResponseDate' value='$ResponseDate'></td>
+									<td><input class='form-control' type='text' name='EmailResponse' value='$EmailResponse'></td>
+									<td><input class='form-control' type='text' name='BEATId' value='$BEATId'></td>					
+									<td><input class='form-control' type='text' name='BEATName' value='$BEATName'></td>
+									<td><input class='form-control' type='text' name='BEATGeneralArea' value='$BEATGeneralArea'></td>
+									<td><input class='form-control' type='text' name='BEATZipCodes' value='$BEATZipCodes'></td>
+									<td><input class='form-control' type='text' name='BEATTrainDate' value='$BEATTrainDate'></td>
+									<td><input class='form-control' type='text' name='BEATMembers' value='$BEATMembers'></td>
+									<td><input class='form-control' type='text' name='BEATMembersPhone' value='$BEATMembersPhone'></td>
+									<td><input class='form-control' type='text' name='BEATMemberEmails' value='$BEATMemberEmails'></td>
+									<td><input class='form-control' type='text' name='BEATType' value='$BEATType'></td>
+									<td><input class='form-control' type='text' name='BEATNotes' value='$BEATNotes'></td>
+									<td><input class='form-control' type='text' name='BEATStatus' value='$BEATStatus'></td>					
+									<td><input class='form-control' type='text' name='TriageBEATNotes' value='$TriageBEATNotes'></td>					
 								</tr>
 								";
 								}
 							}
 							else
 							{
+								print "
+								<td><a style='background-color:lightgreen;' href='adminprofile.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
+									<a style='background-color:#ff8080;' href='adminprofile.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
+									<a style = 'background-color:#00ffff;' href='reset.php' target = '_blank'>Reset </a> 
+								</td>
+								
+								";
+
 								if($tdString != '')
 								{
 									$tdString = "";
@@ -773,14 +797,14 @@
 								{
 									print "
 									<td>$RecordNumber</td>
-									<td><textarea value='$Comments' readonly>$Comments</textarea></td>
+									<td><textarea class='form-control' value='$Comments' readonly>$Comments</textarea></td>
 									<td>$VolunteerStatus</td>
 									<td>$DateAndTime</td>
 									<td>$WorkshopAttended</td>
 									<td>$WorkshopDate</td>
 									<td>$DateActivated</td>
 									<td>$FullName</td>
-									<td><textarea value='$Address' readonly>$Address</textarea></td>
+									<td><textarea class='form-control' value='$Address' readonly>$Address</textarea></td>
 									<td>$Email</td>
 									<td>$Phone1</td>
 									<td>$Phone2</td>
@@ -794,23 +818,23 @@
 									<td>$helpeducate</td>
 									<td>$usingphone</td>
 									<td>$other</td>
-									<td><textarea value='$OtherTasks' readonly>$OtherTasks</textarea></td>
-									<td><textarea value='$PastWorkExp' readonly>$PastWorkExp</textarea></td>
+									<td><textarea class='form-control' value='$OtherTasks' readonly>$OtherTasks</textarea></td>
+									<td><textarea class='form-control' value='$PastWorkExp' readonly>$PastWorkExp</textarea></td>
 									<td>$UnknownNameColumn</td>
 									<td>$ResponseDate</td>
 									<td>$EmailResponse</td>
 									<td>$BEATId</td>					
 									<td>$BEATName</td>
-									<td><textarea value='$BEATGeneralArea' readonly>$BEATGeneralArea</textarea></td>
-									<td><textarea value='$BEATZipCodes' readonly>$BEATZipCodes</textarea></td>
+									<td><textarea class='form-control' value='$BEATGeneralArea' readonly>$BEATGeneralArea</textarea></td>
+									<td><textarea class='form-control' value='$BEATZipCodes' readonly>$BEATZipCodes</textarea></td>
 									<td>$BEATTrainDate</td>
 									<td>$BEATMembers</td>
 									<td>$BEATMembersPhone</td>
 									<td>$BEATMemberEmails</td>
 									<td>$BEATType</td>
-									<td><textarea value='$BEATNotes' readonly>$BEATNotes</textarea></td>
+									<td><textarea class='form-control' value='$BEATNotes' readonly>$BEATNotes</textarea></td>
 									<td>$BEATStatus</td>					
-									<td><textarea value='$TriageBEATNotes' readonly>$TriageBEATNotes</textarea></td>								
+									<td><textarea class='form-control' value='$TriageBEATNotes' readonly>$TriageBEATNotes</textarea></td>								
 								</tr>
 								";
 								}
@@ -887,34 +911,45 @@
 							$query.=" and ";
 						}
 						$query=rtrim($query," and ");
-
-						//print $query;
+						//print $query;									
 						$result = mysqli_query($link, $query);
-
-						if(mysqli_num_rows($result) == 0)
+						//if(mysqli_num_rows($result) == 0) //This  was preventing updates if a certain column is selected and another row of that column has the same entry
+						//{						
+						$queryupdate = " update VolunteerForm set ";
+						if(count($_GET['select2'] == 0))
 						{
-							$queryupdate = " update VolunteerForm set ";
-
-							if(count($_GET['select2'] == 0))
-							{
-								//print "hi?";
-							}
-
-							foreach($_GET['select2'] as $selectedItem)
-							{
-								if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
-								{
-									continue;
-								}
-
-								$queryupdate.=$selectedItem."='".$$selectedItem."'";
-								$queryupdate.=", ";
-							}
-							$queryupdate=rtrim($queryupdate,", ");
-							$queryupdate.=" where RecordNumber='$RecordNumber1'";
-							//print $queryupdate;
-							mysqli_query($link, $queryupdate);
+							//print "hi?";
 						}
+						
+						if($DateActivated=='' && (($VolunteerStatus=='Active') || ($VolunteerStatus=='Triage'))){
+								$DateActivated=date("Y-m-d H:i:s",time());							
+						}
+												
+						foreach($_GET['select2'] as $selectedItem)
+						{
+							if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
+							{
+								continue;
+							}
+
+							$queryupdate.=$selectedItem."='".$$selectedItem."'";
+							$queryupdate.=", ";
+						}
+						$queryupdate=rtrim($queryupdate,", ");
+						$queryupdate.=" where RecordNumber='$RecordNumber1'";							
+						mysqli_query($link, $queryupdate);
+						
+						//Update permission level for volunteer							
+						$queryupdate = "update SacFeralsUsers set level=";
+						switch($VolunteerStatus){
+							case 'Inactive': $queryupdate.= "0"; break;
+							case 'Active': $queryupdate.= "3"; break;
+							case 'Triage': $queryupdate.= "2"; break;
+						}
+						mysqli_query($link, "SET SQL_SAFE_UPDATES=0;");	//Disables safe update mode
+						$queryupdate.=" where email=(select Email from VolunteerForm where RecordNumber=$RecordNumber1);";
+						mysqli_query($link, $queryupdate);							
+						//}
 					}
 					else
 					{
@@ -922,7 +957,10 @@
 						$result = mysqli_query($link, $query);	
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
 						{						
-							//$queryupdate = "update VolunteerForm set Comments='$Comments', VolunteerStatus='$VolunteerStatus'where RecordNumber='$RecordNumber1'";
+							 if($DateActivated=='' && (($VolunteerStatus=='Active') || ($VolunteerStatus=='Triage'))){
+								$DateActivated=date("Y-m-d H:i:s",time());
+							}
+						
 							$queryupdate = "update VolunteerForm set 
 								 Comments='$Comments', 
 								 VolunteerStatus='$VolunteerStatus', 
@@ -964,8 +1002,19 @@
 								 WorkshopAttended='$WorkshopAttended',
 								 WorkshopDate='$WorkshopDate'
 								 where RecordNumber='$RecordNumber1'";
-								 
+								 								
 							mysqli_query($link, $queryupdate);
+							
+							//Update permission level for volunteer
+							$queryupdate = "update SacFeralsUsers set level=";
+							switch($VolunteerStatus){
+								case 'Inactive': $queryupdate.= "0"; break;
+								case 'Active': $queryupdate.= "3"; break;
+								case 'Triage': $queryupdate.= "2"; break;
+							}
+							$queryupdate.=" where email='$Email'";
+							mysqli_query($link, $queryupdate);
+							
 							print "<span id='recupdate'><h2>Record was updated</h2></span>";
 						}else{
 							print "<h2>Not updated</h2>";
@@ -981,11 +1030,19 @@
 			///////////////////////////////////////////////////////////////////////////////////
 
 			if(isset($_GET['del']))
-			{
-				$RecordNumber = $_GET['RecordNumber'];
-				$query = "delete from VolunteerForm where RecordNumber='$RecordNumber'";
+			{			
+				$RecordNumber = $_GET['RecordNumber'];	
+				
+				//delete user account if it exist in SacFeralsUsers
+				$query = "SET SQL_SAFE_UPDATES = 0;";
+				mysqli_query($link, "SET SQL_SAFE_UPDATES = 0;");
+				$query = "delete from SacFeralsUsers where email=(select Email from VolunteerForm where RecordNumber = $RecordNumber);";
 				mysqli_query($link, $query);
-				//print $query;
+
+				//then delete record from VolunteerForm
+				$query = "delete from VolunteerForm where RecordNumber='$RecordNumber';";
+				mysqli_query($link, $query);
+								
 				print "<h2>Record Deleted</h2>";
 				//showReportColony();
 			}
@@ -1024,14 +1081,16 @@
 				<b>Volunteers</b>
 				<div class='row' style='float: right'>
 					<div class='col-xs-12 col-sm-12 col-md-12' style='text-align:right; padding-right:5px;'>
-						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='volunteerlist.php?RefreshTable=Reset'\"/>
+						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='adminprofile.php?RefreshTable=Reset'\"/>
 						<input class='btn btn-success' type='button' id='exportButton' onclick=\"tableToExcel('volunteerTable', 'Volunteers')\" value='Export' />
 					</div>
 				</div>
-			
+				
 				<table id='volunteerTable' class='table table-striped table-bordered table-condensed'>
 					<thead>
-						<tr>";
+						<tr>
+							<th>  </th>";
+
 							if($thString != '')
 								{
 									print $thString;
@@ -1041,45 +1100,45 @@
 								else
 								{
 									print "
-								<th><a href='volunteerlist.php?sort='RecordNumber'>ID</a></th>
-								<th><a href='volunteerlist.php?sort='Comments'>Triage Comments</a></th>
-								<th><a href='volunteerlist.php?sort='VolunteerStatus'>Volunteer Status</a></th>
-								<th><a href='volunteerlist.php?sort='DateAndTime'>Date Submitted</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopAttended'>Workshop</a></th>
-								<th><a href='volunteerlist.php?sort='WorkshopDate'>Workshop Date</a></th>
-								<th><a href='volunteerlist.php?sort='DateActivated'>Date Actived</a></th>
-								<th><a href='volunteerlist.php?sort='FullName'>Full Name</a></th>
-								<th><a href='volunteerlist.php?sort='Address'>Complete Address</a></th>
-								<th><a href='volunteerlist.php?sort='Email'>Email</a></th>
-								<th><a href='volunteerlist.php?sort='Phone1'>Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='Phone2'>Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='PreferedContact'>Prefered Contact</a></th>
-								<th><a href='volunteerlist.php?sort='contactemail'>Prefered Email</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone1'>Prefered Phone1</a></th>
-								<th><a href='volunteerlist.php?sort='contactphone2'>Prefered Phone2</a></th>
-								<th><a href='volunteerlist.php?sort='TypeOfWork'>Type Of Work</a></th>
-								<th><a href='volunteerlist.php?sort='transporting'>Transporter</a></th>
-								<th><a href='volunteerlist.php?sort='helptrap'>Trapper</a></th>
-								<th><a href='volunteerlist.php?sort='helpeducate'>Educator</a></th>
-								<th><a href='volunteerlist.php?sort='usingphone'>Triage</a></th>
-								<th><a href='volunteerlist.php?sort='other'>Other</a></th>
-								<th><a href='volunteerlist.php?sort='OtherTasks'>Other Tasks Details</a></th>
-								<th><a href='volunteerlist.php?sort='PastWorkExp'>Past Experience</a></th>
-								<th><a href='volunteerlist.php?sort='UnknownNameColumn'>Unknown</a></th>
-								<th><a href='volunteerlist.php?sort='ResponseDate'>Response Date</a></th>
-								<th><a href='volunteerlist.php?sort='EmailResponse'>Email Response</a></th>
-								<th><a href='volunteerlist.php?sort='BEATId'>BEAT ID</a></th>					
-								<th><a href='volunteerlist.php?sort='BEATName'>BEAT Name</a></th>
-								<th><a href='volunteerlist.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
-								<th><a href='volunteerlist.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
-								<th><a href='volunteerlist.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembers'>BEAT Member</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
-								<th><a href='volunteerlist.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
-								<th><a href='volunteerlist.php?sort='BEATType'>BEAT Type</a></th>
-								<th><a href='volunteerlist.php?sort='BEATNotes'>BEAT Notes</a></th>
-								<th><a href='volunteerlist.php?sort='BEATStatus'>BEAT Status</a></th>					
-								<th><a href='volunteerlist.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>								
+								<th><a href='adminprofile.php?sort='RecordNumber'>ID</a></th>
+								<th><a href='adminprofile.php?sort='Comments'>Triage Comments</a></th>
+								<th><a href='adminprofile.php?sort='VolunteerStatus'>Volunteer Status</a></th>
+								<th><a href='adminprofile.php?sort='DateAndTime'>Date Submitted</a></th>
+								<th><a href='adminprofile.php?sort='WorkshopAttended'>Workshop</a></th>
+								<th><a href='adminprofile.php?sort='WorkshopDate'>Workshop Date</a></th>
+								<th><a href='adminprofile.php?sort='DateActivated'>Date Actived</a></th>
+								<th><a href='adminprofile.php?sort='FullName'>Full Name</a></th>
+								<th><a href='adminprofile.php?sort='Address'>Complete Address</a></th>
+								<th><a href='adminprofile.php?sort='Email'>Email</a></th>
+								<th><a href='adminprofile.php?sort='Phone1'>Phone1</a></th>
+								<th><a href='adminprofile.php?sort='Phone2'>Phone2</a></th>
+								<th><a href='adminprofile.php?sort='PreferedContact'>Prefered Contact</a></th>
+								<th><a href='adminprofile.php?sort='contactemail'>Prefered Email</a></th>
+								<th><a href='adminprofile.php?sort='contactphone1'>Prefered Phone1</a></th>
+								<th><a href='adminprofile.php?sort='contactphone2'>Prefered Phone2</a></th>
+								<th><a href='adminprofile.php?sort='TypeOfWork'>Type Of Work</a></th>
+								<th><a href='adminprofile.php?sort='transporting'>Transporter</a></th>
+								<th><a href='adminprofile.php?sort='helptrap'>Trapper</a></th>
+								<th><a href='adminprofile.php?sort='helpeducate'>Educator</a></th>
+								<th><a href='adminprofile.php?sort='usingphone'>Triage</a></th>
+								<th><a href='adminprofile.php?sort='other'>Other</a></th>
+								<th><a href='adminprofile.php?sort='OtherTasks'>Other Tasks Details</a></th>
+								<th><a href='adminprofile.php?sort='PastWorkExp'>Past Experience</a></th>
+								<th><a href='adminprofile.php?sort='UnknownNameColumn'>Unknown</a></th>
+								<th><a href='adminprofile.php?sort='ResponseDate'>Response Date</a></th>
+								<th><a href='adminprofile.php?sort='EmailResponse'>Email Response</a></th>
+								<th><a href='adminprofile.php?sort='BEATId'>BEAT ID</a></th>					
+								<th><a href='adminprofile.php?sort='BEATName'>BEAT Name</a></th>
+								<th><a href='adminprofile.php?sort='BEATGeneralArea'>BEAT Gen. Area</a></th>
+								<th><a href='adminprofile.php?sort='BEATZipCodes'>BEAT Zip Code</a></th>
+								<th><a href='adminprofile.php?sort='BEATTrainDate'>BEAT Train Date</a></th>
+								<th><a href='adminprofile.php?sort='BEATMembers'>BEAT Member</a></th>
+								<th><a href='adminprofile.php?sort='BEATMembersPhone'>BEAT Member Phone</a></th>
+								<th><a href='adminprofile.php?sort='BEATMemberEmails'>BEAT Member Email</a></th>
+								<th><a href='adminprofile.php?sort='BEATType'>BEAT Type</a></th>
+								<th><a href='adminprofile.php?sort='BEATNotes'>BEAT Notes</a></th>
+								<th><a href='adminprofile.php?sort='BEATStatus'>BEAT Status</a></th>					
+								<th><a href='adminprofile.php?sort='TriageBEATNotes'>BEAT Triage Notes</a></th>								
 						</tr>";
 								}
 					print"
@@ -1089,7 +1148,13 @@
 					//while the next row (set by query) exists?
 					while($row = mysqli_fetch_row($result))
 					{
-						list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, $Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, $TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, $OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, $BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, $BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, $WorkshopDate) = $row; // then printed in one table row // variables are set to current row 
+						list($RecordNumber, $Comments, $VolunteerStatus, $DateAndTime, $FullName, $Address, 
+						$Email, $Phone1, $Phone2, $PreferedContact, $contactemail, $contactphone1, $contactphone2, 
+						$TypeOfWork, $transporting, $helptrap, $helpeducate, $usingphone, $helpingclinic, $other, 
+						$OtherTasks, $PastWorkExp, $UnknownNameColumn, $ResponseDate, $EmailResponse, $BEATId, $BEATName, 
+						$BEATGeneralArea, $BEATZipCodes, $BEATTrainDate, $BEATMembers, $BEATMembersPhone, $BEATMemberEmails, 
+						$BEATType, $BEATNotes, $BEATStatus, $TriageBEATNotes, $DateActivated, $WorkshopAttended, 
+						$WorkshopDate) = $row; // then printed in one table row // variables are set to current row 
 
 						$myArray[0]=$RecordNumber;
 						$myArray[1]=$Comments;
@@ -1170,6 +1235,13 @@
 						$myArray[36]="DateActivated";
 						$myArray[37]="WorkshopAttended";
 						$myArray[38]="WorkshopDate";
+						
+						print "
+						<tr id='$RecordNumber'>
+							<td><a style='background-color:lightgreen;' href='adminprofile.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
+								<a style='background-color:#ff8080;' href='adminprofile.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
+								<a style = 'background-color:#00ffff;' href='reset.php?RecordNumber=$RecordNumber' target = '_blank'>Reset </a> 
+							</td>";
 
 							//$_GET['select2'] as RecordNumber
 							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number
@@ -1178,10 +1250,8 @@
 								{
 									//if recordNumber == recordNumber
 									if ($myArray1[$i] == $selectedOption)
-									{
-									
-										$tdString.="<td>$myArray[$i]</td>";
-																		
+									{									
+										$tdString.="<td>$myArray[$i]</td>";																		
 										break;
 									}
 								}
@@ -1193,8 +1263,8 @@
 									foreach ($_GET['select2'] as $selectedOption)
 									{
 										switch($selectedOption){
-											case 'DateAndTime': $tdString.="<td id='dateTimeCol'>".$$selectedOption."</td>"; break;
-											case 'CompleteAddress': $tdString.="<td id='addressCol'>".$$selectedOption."</td>"; break;
+											case 'DateAndTime': $tdString.="<td = id='dateTimeCol'>".$$selectedOption."</td>"; break;
+											case 'CompleteAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
 											case 'Comments': $tdString.="<td><textarea class='form-control' name='Comments' value='$Comments' rows='3' readonly>$Comments</textarea></td>"; break;
 											case 'Address': $tdString.="<td><textarea class='form-control' name='Address' value='$Address' rows='3' readonly>$Address</textarea></td>"; break;
 											case 'OtherTasks': $tdString.="<td><textarea class='form-control' name='OtherTasks' value='$OtherTasks' rows='3' readonly>$OtherTasks</textarea></td>"; break;
@@ -1285,9 +1355,10 @@
 			</div>";
 			*/
 		}
-		else if($level == 0)
+		else if($level == 2)
 		{
 			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
+			header("Location: search.php");
 		}
 	}
 ?>

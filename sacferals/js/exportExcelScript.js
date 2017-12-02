@@ -20,7 +20,7 @@ var tableToExcel = (function() {
 	var yyyy = today.getFullYear();
 	
 	//Title for top of Excel
-	var excelTitle = "<p><b><big>Sacramento Feral Resources: Reports Table - "+monthName[mm]+" "+dd+", "+yyyy+"</big></b><p>";
+	var excelTitle = "<p><b><big>Sacramento Feral Resources: "+name+" Table - "+monthName[mm]+" "+dd+", "+yyyy+"</big></b><p>";
 	
 	//Insert html table in Excel format
     if (!table.nodeType) table = document.getElementById(table)
@@ -29,7 +29,7 @@ var tableToExcel = (function() {
 	//Name Excel file
 	today = monthName[mm] + '_' + dd + '_' + yyyy;
 	var link = document.createElement("a");
-                    link.download = "Reports_"+today+".xls";
+                    link.download = name+"_"+today+".xls";
                     link.href = uri + base64(format(template, ctx));
                     link.click();
   }
