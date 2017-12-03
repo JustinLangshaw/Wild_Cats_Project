@@ -49,7 +49,7 @@ function formatPhone(phoneId) {
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 	
 </head>
 <body>
