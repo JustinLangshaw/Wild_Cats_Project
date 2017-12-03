@@ -120,26 +120,41 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	
 	//if user passes re test
 	if(preg_match($re, $fullname) )
-	{	//display current table
-		$querycheck = "select * from VolunteerForm where fullname='$fullname' AND Email='$email'";
-		$resultcheck = mysqli_query($link, $querycheck); //link query to database
+	{	//display current table	
+		if(!$querycheck = $link->prepare("select * from VolunteerForm where Email=?")){ echo "Failure to verify: Prepare statement failed. "; }
+		if(!$querycheck->bind_param("s", $email)){ echo "Failure to verify: Binding failed. "; }
+		if(!$querycheck->execute()){ echo "Failure to verify: Execute failed. "; }
+		$querycheck->store_result();
+		if(!$querycheck->fetch()){
+			$result = 0;
+		}else{
+			$resultcheck = $querycheck->num_rows;
+		}
+		$querycheck->close();
 
 		if (isset($_POST['typeofwork'])) {
-			if(mysqli_num_rows($resultcheck) == 0)// magically check if this made a duplicate row
-			{	//if not process the insert query
-				$query = "insert into VolunteerForm values('', '', 'Inactive', Now(), '$fullname', '$completeaddress', '$email', '$phone1', '$phone2', '$preferedcontact',
-				'$contactemail', '$contactphone1', '$contactphone2', '$typeofworkstring', '$transporting', '$helptrap', '$helpeducate', '$usingphone', '$helpingclinic',
-				'$other', '$othertasks', '$experience', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')";
-
-				mysqli_query($link, $query); //link query to database
-				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+			if($resultcheck == 0)// magically check if this made a duplicate row
+			{	//if not process the insert query				
+				if(!$query = $link->prepare("insert into VolunteerForm values('', '', 'Inactive', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+					?, ?, ?, ?, ?, ?, ?, ?, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')"))
+					{ echo "Failure to submit: Prepare statement failed. "; }
+				if(!$query->bind_param("ssssssiiisiiiiiiss", $fullname, $completeaddress, $email, $phone1, $phone2, $preferedcontact,
+					$contactemail, $contactphone1, $contactphone2, $typeofworkstring, $transporting, $helptrap, $helpeducate, 
+					$usingphone, $helpingclinic, $other, $othertasks, $experience)) 
+					{ echo "Failure to submit: Binding failed. "; }
+				if(!$query->execute()){ 
+					echo "Failure to submit: Execute failed. ";
+				}else{
+					echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+				}
+				$query->close();	
 			}
 			else
 			{
 				$result='<div style="padding-bottom:10px">
 							<div class="alert">
 								<span class="closebtn" onclick="this.parentElement.style.display='."'none'".';">&times;</span>
-								That record already exists.</div></div>';
+								A record with that email already exists.</div></div>';
 			}
 		}else{
 			$result='<div style="padding-bottom:10px">
