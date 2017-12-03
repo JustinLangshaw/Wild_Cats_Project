@@ -242,7 +242,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 							</div>
 						</label>
 						<input class="form-control" type="text" name="colonystreet" placeholder="1234 Sesame St"
-							pattern="[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}" title="Enter street# and street name" id="colonystreet" required>
+							pattern="[0-9]{1,3}.?[0-9]{0,3}(\s[a-zA-Z0-9]{2,30})*" title="Enter street# and street name" id="colonystreet" required>
 						<span id="invalidAddr" type="hidden"></span>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-3 col-lg-2">
