@@ -177,8 +177,8 @@
 				</div>
 				<div class="row">
 					<input class="btn btn-primary" type="submit" name="submitcannedquery" value="Search" tabindex='7'/>
-					<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
 					<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save Current" />
+					&nbsp;&nbsp;&nbsp;<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
 				</div> <!-- data-toggle="modal" data-target="#addnewqueryModal" -->
 			</form>
 		</div>
@@ -1088,9 +1088,9 @@
 				<div class='row'>
 					<div class='col-xs-6 col-sm-6 col-md-6' style='padding-left:7px; padding-right:7px;'>
 						<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
-						<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
 						<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
 						<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
+						&nbsp;&nbsp;&nbsp;<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
 					</div>
 					<div class='col-xs-6 col-sm-6 col-md-6' style='text-align:right; padding-right:5px; padding-left:7px;'>
 						<input class='btn btn-default' type='button' value='Reset' name='RefreshTable' onclick=\"location.href='search.php?RefreshTable=Reset'\"/>
@@ -1342,7 +1342,11 @@
 			*/
 ?>
 
-   		<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
+   		<form id="resettable" method='get' action='search.php'>
+			<input class='btn btn-default' type='submit' value='Reset' name='RefreshTable'/>
+			<input class='btn btn-success' type='button' id='exportButton' onclick="tableToExcel('reportTable', 'Reports')" value='Export' />
+			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
+		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		<hr>
