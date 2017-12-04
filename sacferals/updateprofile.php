@@ -101,10 +101,17 @@ function formatPhone(phoneId) {
 						$contact = $_POST['contact'];
 						$typeofwork = $_POST['typeofwork'];
 
-						$contactemail;
-						$contactphone1;
-						$contactphone2;
-
+						$contactemail = 0;
+						$contactphone1 = 0;
+						$contactphone2 = 0;
+						
+						$transporting=0;
+						$helptrap=0;
+						$helpeducate=0;
+						$usingphone=0;
+						$helpingclinic=0;
+						$other=0;
+						
 						//put in loop like typeofworkstring
 						$preferedcontact= $contact[0].", ".$contact[1].", ".$contact[2];
 						$typeofworkstring='';
@@ -114,17 +121,24 @@ function formatPhone(phoneId) {
 								$typeofworkstring = $typeofworkstring.",".$typeofwork[$i];
 							}
 						}
-
-						if($contact[0]!='') $contactemail=1; else $contactemail=0;
-						if($contact[1]!='') $contactphone1=1; else $contactphone1=0;
-						if($contact[2]!='') $contactphone2=1; else $contactphone2=0;
 						
-						if($typeofwork[0]!='') $transporting=1; else $transporting=0;
-						if($typeofwork[1]!='') $helptrap=1; else $helptrap=0;
-						if($typeofwork[2]!='') $helpeducate=1; else $helpeducate=0;
-						if($typeofwork[3]!='') $usingphone=1; else $usingphone=0;
-						if($typeofwork[4]!='') $helpingclinic=1; else $helpingclinic=0;
-						if($typeofwork[5]!='') $other=1; else $other=0;
+						//Get prefered contact
+						for ($x = 0; $x <3; $x++) {
+							if($contact[$x] == 'contactemail'){ $contactemail=1; }
+							if($contact[$x] == 'contactphone1'){ $contactphone1=1; }
+							if($contact[$x] == 'contactphone2'){ $contactphone2=1; }							
+						} 
+						
+						//Get type of work
+						for ($y = 0; $y <6; $y++) {
+							if($typeofwork[$y] == 'transporting'){ $transporting=1; }
+							if($typeofwork[$y] == 'helptrap'){ $helptrap=1; }
+							if($typeofwork[$y] == 'helpeducate'){ $helpeducate=1; }
+							if($typeofwork[$y] == 'usingphone'){ $usingphone=1; }
+							if($typeofwork[$y] == 'helpingclinic'){ $helpingclinic=1; }
+							if($typeofwork[$y] == 'other'){ $other=1; }
+						
+						}
 
 						$othertasks = $_POST['othertasks'];
 						$experience = $_POST['experience'];
@@ -135,15 +149,34 @@ function formatPhone(phoneId) {
 						
 						if(preg_match($re2, $fullname) ) {
 							if (isset($_POST['typeofwork'])) {
-								$querycheck2 = "select * from VolunteerForm where Fullname='$fullname' AND Email='$email'";
+								//$querycheck2 = "select * from VolunteerForm where Fullname='$fullname' AND Email='$email'";
+								
+								
+								$rec = "select RecordNumber from VolunteerForm where Email='$email'";
+								$recresult = mysqli_query($link, $rec);
+								$recresult = mysqli_fetch_assoc($recresult);
+								$recresult = $recresult['RecordNumber'];
 								$resultcheck2 = mysqli_query($link, $querycheck); //link query to database							
 								if(mysqli_num_rows($resultcheck2) != 0) {
-									$query2 = "update VolunteerForm set FullName='".$fullname."',CompleteAddress='".$completeaddress."',Email='".$email."',Phone1='".$phone1."',
-										Phone2='".$phone2."',PreferedContact='".$preferedcontact."',contactemail=".$contactemail.",contactphone1=".$contactphone1.",
-										contactphone2=".$contactphone2.",TypeOfWork='".$typeofworkstring."',transporting=".$transporting.",helptrap=".$helptrap.",
-										helpeducate=".$helpeducate.",usingphone=".$usingphone.",helpingclinic=".$helpingclinic.",other=".$other.",OtherTasks='".$othertasks."'
-										where Fullname='".$fullname."';";
-									
+									$query2 = "update VolunteerForm set 
+									FullName='".$fullname."',
+									Address='".$completeaddress."',
+									Email='".$email."',
+									Phone1='".$phone1."',
+									Phone2='".$phone2."',
+									PreferedContact='".$preferedcontact."',
+									contactemail=".$contactemail.",
+									contactphone1=".$contactphone1.",
+									contactphone2=".$contactphone2.",
+									TypeOfWork='".$typeofworkstring."',
+									transporting=".$transporting.",
+									helptrap=".$helptrap.",
+									helpeducate=".$helpeducate.",
+									usingphone=".$usingphone.",
+									helpingclinic=".$helpingclinic.",
+									other=".$other.",
+									OtherTasks='".$othertasks."'
+									where RecordNumber='".$recresult."';";
 									mysqli_query($link, $query2); //link query to database
 									
 									mysqli_query($link, $query); //update passwords also..
@@ -213,7 +246,7 @@ function formatPhone(phoneId) {
 				else{
 					$row = mysqli_fetch_array($result);
 					$fullname = $row['FullName'];
-					$address = $row['CompleteAddress'];
+					$completeaddress = $row['Address'];
 					$phone1 = $row['Phone1'];
 					$phone2 = $row['Phone2'];
 					$contactemail = $row['contactemail'];
@@ -279,7 +312,7 @@ function formatPhone(phoneId) {
 				<div class="form-group row">
 					<label class="col-sm-4 col-form-label" for="completeaddress">Complete Address:</label>
 					<div class="col-sm-6"><input class="form-control" type="text" id="completeaddress" name="completeaddress"  
-						id="completeaddress" value="<?php echo $address?>"></div> <!--pattern="[[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}]{0,1}" title="Enter street# and street name" -->
+						id="completeaddress" value="<?php echo $completeaddress?>"></div> <!--pattern="[[0-9]{1,3}.?[0-9]{0,3}\s[a-zA-Z0-9]{2,30}\s[a-zA-Z]{2,15}]{0,1}" title="Enter street# and street name" -->
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-4 col-form-label" for="phone1">Phone1:</label>

@@ -44,9 +44,16 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	$contact = $_POST['contact'];
 	$typeofwork = $_POST['typeofwork'];
 
-	$contactemail;
-	$contactphone1;
-	$contactphone2;
+	$contactemail = 0;
+	$contactphone1 = 0;
+	$contactphone2 = 0;
+	
+	$transporting=0;
+	$helptrap=0;
+	$helpeducate=0;
+	$usingphone=0;
+	$helpingclinic=0;
+	$other=0;
 
 	//$preferedcontact= $contact[0].", ".$contact[1].", ".$contact[2];
 	$preferedcontact='';
@@ -65,54 +72,24 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		}
 	}
 
-	if($contact[0]!='')
-		$contactemail=1;
-	else
-		$contactemail=0;
-
-	if($contact[1]!='')
-		$contactphone1=1;
-	else
-		$contactphone1=0;
-
-	if($contact[2]!='')
-		$contactphone2=1;
-	else
-		$contactphone2=0;
-
+	//Get prefered contact
+	for ($x = 0; $x <3; $x++) {
+		if($contact[$x] == 'contactemail'){ $contactemail=1; }
+		if($contact[$x] == 'contactphone1'){ $contactphone1=1; }
+		if($contact[$x] == 'contactphone2'){ $contactphone2=1; }							
+	} 
 	
-	if($typeofwork[0]!='')
-		$transporting=1;
-	else
-		$transporting=0;
-
-	if($typeofwork[1]!='')
-		$helptrap=1;
-	else
-		$helptrap=0;
-
-	if($typeofwork[2]!='')
-		$helpeducate=1;
-	else
-		$helpeducate=0;
-
-	if($typeofwork[3]!='')
-		$usingphone=1;
-	else
-		$usingphone=0;
-
-	if($typeofwork[4]!='')
-		$helpingclinic=1;
-	else
-		$helpingclinic=0;
-
-	if($typeofwork[5]!='')
-		$other=1;
-	else
-		$other=0;
+	//Get type of work
+	for ($y = 0; $y <6; $y++) {
+		if($typeofwork[$y] == 'transporting'){ $transporting=1; }
+		if($typeofwork[$y] == 'helptrap'){ $helptrap=1; }
+		if($typeofwork[$y] == 'helpeducate'){ $helpeducate=1; }
+		if($typeofwork[$y] == 'usingphone'){ $usingphone=1; }
+		if($typeofwork[$y] == 'helpingclinic'){ $helpingclinic=1; }
+		if($typeofwork[$y] == 'Yes'){ $other=1; }	
+	}
 
 	$othertasks = $_POST['othertasks'];
-
 	$experience = $_POST['experience'];
 
 	//re's need updating for all fields. or we can use javascript (better)
@@ -249,6 +226,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		<label class="form-check-label" id="worklabel">*Type of Work You Would Like To Volunteer For<br><small>(Check as many as you like, but at least one)</small></label>
 		<div class="form-check">
 			<label><input type="checkbox" name="typeofwork[]" value="transporting" > Transporting cats to and from spay/neuter clinics</label></div>
+		
 		<div class="form-check">
 			<label><input type="checkbox" name="typeofwork[]" value="helptrap"> Helping others trap feral cats</label></div>
 		<div class="form-check">
@@ -257,8 +235,6 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 			<label><input type="checkbox" name="typeofwork[]" value="usingphone"> Using the phone and computer to respond to feral inquiries and help resolve feral issues</label></div>
 		<div class="form-check">
 			<label><input type="checkbox" name="typeofwork[]" value="helpingclinic"> Helping at feral spay/neuter clinics</label></div>
-		<div class="form-check">
-			<label><input type="checkbox" name="typeofwork[]" value="helpeducate"> Helping educate the public about ferals</label></div>
 		<div class="form-check">
 			<label><input type="checkbox" name="typeofwork[]" value="Yes" onClick="displayForm(this)"> Other</input></label>
 		</div>
