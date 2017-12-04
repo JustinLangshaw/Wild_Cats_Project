@@ -65,9 +65,10 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$friendlypet = $_POST['friendlypet'];
 	$setting = $_POST['setting'];
 	$settingcomment = preg_replace("!\s+!", ' ', $_POST['settingcomment']); //prepend to additional comments
-	$comments = preg_replace("!\s+!", ' ', $_POST['comments']);
 	$feedifreturned = $_POST['feedifreturned'];
+	$notfeedcomment = preg_replace("!\s+!", ' ', $_POST['notfeeddescription']); //prepend to additional comments
 	$reqassistance = $_POST['reqassistance'];
+	$comments = preg_replace("!\s+!", ' ', $_POST['comments']);
 	$lat = $_POST['lat'];
 	$lng = $_POST['lng'];
 	
@@ -80,6 +81,10 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		if (preg_match("/^[a-zA-Z0-9]$/", substr($kittenscomment, -1))) $kittenscomment.=".";
 		$comments=$kittenscomment.' '.$comments;
 	}
+	if($notfeedcomment!='') {
+		if (preg_match("/^[a-zA-Z0-9]$/", substr($notfeedcomment, -1))) $notfeedcomment.=".";
+		$comments=$notfeedcomment.' '.$comments;
+	}
 	if($trapcomment!='') {
 		if (preg_match("/^[a-zA-Z0-9]$/", substr($trapcomment, -1))) $trapcomment.=".";
 		$comments=$trapcomment.' '.$comments;
@@ -88,6 +93,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		if (preg_match("/^[a-zA-Z0-9]$/", substr($addrcomment, -1))) $addrcomment.=".";
 		$comments=$addrcomment.' '.$comments;
 	}
+	
 	
 	// Required field names
 	// this line should be used, since the 'required' attribute isn't supported in all web browsers
@@ -153,7 +159,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	<!-- This must preceed any code that uses JQuery. It links out to that library so you can use it -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="script.js"></script> 
+    <script src="js/script.js"></script> 
 </head>
 <body>
 
@@ -186,83 +192,67 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		
 			<div class="form-row todisplay" id="inner-form">
 				<div class="form-group"><font color="red">* Required Fields</font></div>
-				<div class="form-group">
-					<label class="form-check-label">Will anyone feed the cats if they are altered and returned?</label>
-					<div class="form-check">
-						<label><input type="radio" name="feedifreturned[]" value="Yes" id="feedifreturnedyes"> Yes</label></div>
-					<div class="form-check">
-						<label><input type="radio" name="feedifreturned[]" value="No" id="feedifreturnedno"> No</label></div>
-				</div>
 				<div class="form-group row">
-					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
-						<label class="col-form-label" for="fullname">*Full Name </label>									<!--L+ [-] L+ 							middle          L+ [-'] L+-->				    
+					<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label" for="fullname">*Full Name </label>									<!--L+ [-] L+ 							middle          L+ [-'] L+-->				    
+					<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">	
 						<input class="form-control" type="text" name="fullname" id="fullname" pattern="[a-zA-Z]+[-]{0,1}[a-zA-Z]+\s[a-zA-Z\s]{0,}[a-zA-Z]+[-']{0,1}[a-zA-Z]+" 
 							title="Enter first and last name" placeholder="First Last" required>
 					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
-						<label class="col-form-label" for="email">*Email Address
-							<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-								<span class="tooltiptext">This is our preferred method of contact.</span>
-							</div>
-						</label>
+					<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label" for="email">*Email<br>Address
+						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+							<span class="tooltiptext">This is our preferred method of contact.</span>
+						</div>
+					</label>
+					<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
 						<input class="form-control" type="email" name="email" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="email@domain.com" required>
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
-						<label class="col-form-label" for="phone1">Primary Phone</label>
-						<input class="form-control" type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
-					</div>
-					<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
-						<label class="col-form-label" for="phone2">Secondary Phone</label>
-						<input class="form-control" type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="form-check-label">Are you the primary caregiver/feeder?</label>
-					<div class="form-check">
-						<label><input type="radio" name="caregiver[]" value="Yes" onclick="displayForm(this)"> Yes</label></div>
-					<div class="form-check">
-						<label><input type="radio" name="caregiver[]" value="No" onclick="displayForm(this)"> No</label></div>
-					<div class='form-group  indent todisplay' id="feederID">
-						Does anyone feed the cats?<br>
-						<textarea class="form-control" id="textarea" rows="4" name="feederdescription"></textarea>
 					</div>
 				</div>
 				
 				<div class="form-group row">
-					<div class="col-xs-6 col-sm-6 col-md-5 col-lg-4">
-						<label class="col-form-label" for="colonystreet">*Address of Cat Colony
-							<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-								<span class="tooltiptext">If you have any additional information,
-									indicate in the Additional Comments box at the very bottom of the form.</span>
-							</div>
-						</label>
-						<input class="form-control" type="text" name="colonystreet" placeholder="1234 Sesame St"
-							pattern="[0-9]{1,3}.?[0-9]{0,3}(\s[a-zA-Z0-9]{2,30})*" title="Enter street# and street name" id="colonystreet" required>
-						<span id="invalidAddr" type="hidden"></span>
+					<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-form-label" for="phone1">Primary Phone</label>
+					<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+						<input class="form-control" type="tel" id="phone1" name="phone1" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone1');" />
 					</div>
-					<div class="col-xs-2 col-sm-2 col-md-3 col-lg-2">
-						<label class="col-form-label" for="state">State</label>
-						<input class="form-control" type="text" id="state" value="CA" tabindex="-1" readonly>
+					<label class="col-xs-2  col-sm-2 col-md-2 col-lg-2 col-form-label" for="phone2">Secondary Phone</label>
+					<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+						<input class="form-control" type="tel" id="phone2" name="phone2" placeholder="1234567890" pattern=".{10,13}" maxlength="10" onkeyup="formatPhone('phone2');" />
 					</div>
 				</div>
-				<div class="form-group row">
-					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
-						<label class="col-form-label" for="zipcode">*Zip Code</label>
-						<input class="form-control" type="text" name="zipcode" id="zipcode" maxlength="5" required>
-						<span id="ziperror"></span>
+				
+				
+				<label class="col-form-label">*Address of where cats are located
+					<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+						<span class="tooltiptext">If you have any additional information,
+							indicate in the Additional Comments box at the very bottom of the form.</span>
 					</div>
-					<div class="col-xs-5 col-sm-4 col-md-4 col-lg-3">
-						<label class="col-form-label" for="city">*City</label>
-						<span id="city_wrap"><input class="form-control" type="text" name="city" id="city" title="Enter a City" required></span>
+				</label>
+				<span id="invalidAddr" type="hidden"></span>
+				<div class="well">
+					<div class="form-group row">
+						<label class="col-xs-2 col-sm-2 col-md-2 col-lg-1 col-form-label" for="colonystreet">*Street</label>
+						<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+							<input class="form-control" type="text" name="colonystreet" placeholder="1234 Sesame St"
+								pattern="[0-9]{1,3}.?[0-9]{0,3}(\s[a-zA-Z0-9]{2,30})*" title="Enter street# and street name" id="colonystreet" required>
+						</div>
+						<label class="col-xs-2 col-sm-2 col-md-1 col-lg-1 col-form-label" for="state">State</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+							<input class="form-control" type="text" id="state" value="CA" tabindex="-1" readonly>
+						</div>
 					</div>
-					<div class="col-xs-5 col-sm-4 col-md-4 col-lg-3">
-						<label class="col-form-label" for="county">*County</label>
-						<input class="form-control" type="text" name="county" id="county" required>
+					<div class="form-group row">
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label" for="zipcode">*Zip</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+							<input class="form-control" type="text" name="zipcode" id="zipcode" maxlength="5" required>
+							<span id="ziperror"></span>
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label" for="city">*City</label>
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<span id="city_wrap"><input class="form-control" type="text" name="city" id="city" title="Enter a City" required></span>
+						</div>
+						<label class="col-xs-2 col-sm-2 col-md-2 col-lg-1 col-form-label" for="county">*County</label>
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<input class="form-control" type="text" name="county" id="county" required>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -275,49 +265,85 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 					</div>
 				</div>
 				
-				<div class="form-group">
-					<label class="form-check-label">Has trapping been attempted or are any of the cats' ears tipped?
+				<div class="form-group row">
+					<label class="col-md-12 form-check-label">Are you the primary caregiver/feeder?</label>
+					<div class="col-md-12">
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="caregiver[]" value="Yes" onclick="displayForm(this)"> Yes</label></div>
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="caregiver[]" value="No" onclick="displayForm(this)"> No</label></div>
+						<div class='form-group  indent todisplay' id="feederID">
+							Does anyone feed the cats?<br>
+							<textarea class="form-control" id="textarea" rows="4" name="feederdescription"></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label class="col-md-12 form-check-label">Has trapping been attempted and/or are any of the cats ear-tipped?
 						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 							<span class="tooltiptext">If the cat has the tip of one ear cut off or "tipped", this means this
 								cat has already been trapped and is altered. Release this cat immediately.</span>
 						</div>
 					</label>
-					<div class="form-check">
-						<label><input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes" onClick="displayForm(this)"> Yes</label></div>
-					<div class='form-group  indent todisplay' id="trapdetails">
-						Please elaborate<br>
-						<textarea class="form-control" rows="4" name="trapcomment"></textarea>
+					<div class="col-md-12">
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="trapattempt[]" value="Yes" id="trapattemtyes" onClick="displayForm(this)"> Yes</label></div>
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="trapattempt[]" value="No" id="trapattemptno" onClick="displayForm(this)"> No</label></div>
+						<div class='form-group  indent todisplay' id="trapdetails">
+							Please elaborate<br>
+							<textarea class="form-control" rows="4" name="trapcomment"></textarea>
+						</div>
 					</div>
-					<div class="form-check">
-						<label><input type="radio" name="trapattempt[]" value="No" id="trapattemptno" onClick="displayForm(this)"> No</label></div>
 				</div>
+				
 				<div class="form-group row">
-					<div class="col-sm-12">
-						<label class="col-form-label" for="numberofcats">*Approx # of Cats (including Kittens)</label>
+					<label class="col-md-12 form-check-label">If cats are altered and returned, will anyone provide long-term food/water?</label>
+					<div class="col-md-12">
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="feedifreturned[]" value="Yes" id="feedifreturnedyes" onClick="displayForm(this)"> Yes</label></div>
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="feedifreturned[]" value="No" id="feedifreturnedno" onClick="displayForm(this)"> No</label></div>
+						<div class='form-group indent todisplay' id="notfeed">
+							Comments<br>
+							<textarea class="form-control" rows="4"  name="notfeeddescription"></textarea>
+						</div>
 					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label class="col-xs-5 col-sm-5 col-md-4 col-lg-3 col-form-label" for="numberofcats">*Number of Cats
+						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
+							<span class="tooltiptext">Enter a number up to 99</span>
+						</div>
+						<br> <small>(including Kittens)</small>
+					</label>
 					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
 						<input class="form-control" type="number" name="numberofcats" min="1" max="99" id="numberofcats" required>
 						<span id="catserror"></span>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="form-check-label">If there are kittens, are they under 8 weeks old and nursing?
+				<div class="form-group row">
+					<label class="col-md-12 form-check-label">Are any kittens under 8 weeks old and/or still nursing?
 						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 							<span class="tooltiptext">Kitten Description<br>
 								Will be provided by SacFerals later.</span>
 						</div>
 					</label>
-					<div class="form-check">
-						<label><input type="radio" name="kittens[]" value="Yes" id="kittensyes" onClick="displayForm(this)"> Yes</label></div>
-					<div class='form-group  indent todisplay' id="kittensdetails">
-						Describe the number of kittens and their ages<br>
-						<textarea class="form-control" rows="4" name="kittenscomment"></textarea>
+					<div class="col-md-12">
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="kittens[]" value="Yes" id="kittensyes" onClick="displayForm(this)"> Yes</label></div>
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="kittens[]" value="No" id="kittensno" onClick="displayForm(this)"> No</label></div>
+						<div class='form-group  indent todisplay' id="kittensdetails">
+							Describe the number of kittens and their ages<br>
+							<textarea class="form-control" rows="4" name="kittenscomment"></textarea>
+						</div>
 					</div>
-					<div class="form-check">
-						<label><input type="radio" name="kittens[]" value="No" id="kittensno" onClick="displayForm(this)"> No</label></div>
 				</div>
-				<div class="form-group">
-					<label class="form-check-label">Injured or Pregnant Cats?
+				<div class="form-group row">
+					<label class="col-md-12 form-check-label">Sick, injured, or pregnant cats?
 						<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
 							<span class="tooltiptext">Signs of INJURED cats can include inflammation/swelling, limping, 
 								rapid breathing or other signs of stress, and blood.<br>
@@ -325,21 +351,25 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 								and an enlarged abdomen.</span>
 						</div>
 					</label>
-					<div class="form-check">
-						<label><input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes</label></div>
-					<div class='form-group indent todisplay' id="recentlyinjuredID">
-						Describe Condition<br>
-						<textarea class="form-control" rows="4"  name="injurydescription"></textarea>
+					<div class="col-md-12">
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="recentlyinjured[]" value="Yes" id="recentlyinjuredinjuredyes" onClick="displayForm(this)"> Yes</label></div>
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No</label></div>
+						<div class='form-group indent todisplay' id="recentlyinjuredID">
+							Describe Condition<br>
+							<textarea class="form-control" rows="4"  name="injurydescription"></textarea>
+						</div>
 					</div>
-					<div class="form-check">
-						<label><input type="radio" name="recentlyinjured[]" value="No" id="recentlyinjuredinjuredno" onClick="displayForm(this)"> No</label></div>
 				</div>
-				<div class="form-group">
-					<label class="form-check-label">Are any of the cats friendly or pets?</label>
-					<div class="form-check">
-						<label><input type="radio" name="friendlypet[]" value="Yes" id="friendlypetyes"> Yes</label></div>
-					<div class="form-check">
-						<label><input type="radio" name="friendlypet[]" value="No" id="friendlypetno"> No</label></div>
+				<div class="form-group row">
+					<label class="col-md-12 form-check-label">Are any of the cats friendly or pets?</label>
+					<div class="col-md-12">
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="friendlypet[]" value="Yes" id="friendlypetyes"> Yes</label></div>
+						<div class="form-check checkbox-inline">
+							<label><input type="radio" name="friendlypet[]" value="No" id="friendlypetno"> No</label></div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="form-check-label">What is the setting of this colony?</label>

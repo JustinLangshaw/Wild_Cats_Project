@@ -37,10 +37,24 @@ h2 {
 img {
 	height: 14;
 }
-
+hr{
+	height: 2px;
+	background-color: #555;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 100%;
+}
 #inner-form { 
 	display: none;
-	padding: 10px 15% 10px 8%;
+	padding: 10px 4% 10px 4%;
+}
+.well {
+	padding-top: 20px;
+	padding-bottom: 0px;
+	margin-bottom: 5px;
+}
+.checkbox-inline{
+	padding-left: 0px;
 }
 #volform{ 
 	padding: 30px 15% 30px 5%;
@@ -50,6 +64,7 @@ img {
 }
 textarea {
 	max-width: 100%;
+	overflow-x: hidden;
 }
 /*#formdiv {
 	display: none;

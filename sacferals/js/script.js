@@ -38,6 +38,8 @@ function displayForm(c) {
             $("#feederID").fadeIn('fast');
 		if(c.name == "trapattempt[]")
             $("#trapdetails").fadeOut('fast');
+		if(c.name == "feedifreturned[]")
+			$("#notfeed").fadeIn('fast');
 		if(c.name == "kittens[]")
 			$("#kittensdetails").fadeOut('fast');
         if(c.name == "recentlyinjured[]")
