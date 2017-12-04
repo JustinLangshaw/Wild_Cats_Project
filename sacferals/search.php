@@ -937,33 +937,59 @@
 							$queryupdate.=" where RecordNumber='$RecordNumber1'";
 
 							//print $queryupdate;
-
 							mysqli_query($link, $queryupdate);
 
 						}
 					}
 					else
 					{
-
-
-						$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1' order by RecordNumber desc";
+						$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1'";
 						$result = mysqli_query($link, $query);
 
 						if(mysqli_num_rows($result) == 1)//if query does nothing, then update
 						{
-							$queryupdate = "update ReportColonyForm set Comments1='$Comments1', Responder='$Responder', Status='$Status',
-								 FullName='$FullName', Email='$Email',
-								 Phone1='$Phone1', Phone2='$Phone2', ColonyAddress='$ColonyAddress',
-								 City='$City', County='$County', ZipCode='$ZipCode', AnyoneAttempted='$AnyoneAttempted',
-								 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
-								 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
-								 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-								 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance', 
-								 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
-
-							//echo $queryupdate;
-							mysqli_query($link, $queryupdate);
-							print "<span id='recupdate'><h2>Record was updated</h2></span>";
+							if(!$queryupdate = $link->prepare("update ReportColonyForm set 
+							Comments1=?, 
+							Responder=?, 
+							Status=?,
+							FullName=?, 
+							Email=?,
+							Phone1=?, 
+							Phone2=?, 
+							ColonyAddress=?,
+							City=?, 
+							County=?, 
+							ZipCode=?, 
+							AnyoneAttempted=?,
+							ApproximateCats=?, 
+							Kittens=?, 
+							ColonyCareGiver=?, 
+							FeederDescription=?,
+							Injured=?, 
+							InjuryDescription=?, 
+							FriendlyPet=?, 
+							ColonySetting=?, 
+							Comments=?,
+							VolunteerResponding=?, 
+							ResponseDate=?, 
+							CustNeedOutcome=?,
+							BeatTeamLeader=?, 
+							Outcome=?, 
+							CompletionDate=?, 
+							FeedIfReturned=?, 
+							ReqAssistance=?, 
+							Lat=?, 
+							Lng=? 
+							where RecordNumber=?")) { echo "Update failed: Prepare failed. "; }
+							if(!$queryupdate->bind_param("ssssssssssssissssssssssssssssddi", $Comments1, $Responder, $Status, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, $City, $County, $ZipCode, $AnyoneAttempted, 
+							$ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription, $Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, 
+							$BeatTeamLeader, $Outcome, $CompletionDate, $FeedIfReturned, $ReqAssistance, $Lat, $Lng, $RecordNumber1)){ echo "Update failed: Binding failed. "; }
+							if(!$queryupdate->execute()){ 
+								echo "Update failed: Execute failed. "; 
+							}else{
+								print "<span id='recupdate'><h2>Record was updated</h2></span>";
+							}
+							$queryupdate->close();	
 						}
 
 					}

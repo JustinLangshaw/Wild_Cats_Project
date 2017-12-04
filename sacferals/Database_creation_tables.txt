@@ -1,4 +1,4 @@
-CREATE TABLE FeralInterventionForm (
+﻿CREATE TABLE FeralInterventionForm (
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
 	DateAndTime varchar(200),
@@ -26,7 +26,7 @@ INSERT INTO FeralInterventionForm VALUES
 	
 CREATE TABLE ReportColonyForm (
 	Comments1 varchar(200),
-	Responder varchar(200),
+	Responder varchar(45),
 	Status varchar(200),
 	RecordNumber int NOT NULL AUTO_INCREMENT,
 	primary key(RecordNumber), 
@@ -34,9 +34,9 @@ CREATE TABLE ReportColonyForm (
 	FeedIfReturned varchar(15),
 	FullName varchar(200),
 	Email varchar(200),
-	Phone1 varchar(15),
-	Phone2 varchar(15),
-	ColonyAddress varchar(200),
+	Phone1 varchar(45),
+	Phone2 varchar(45),
+	ColonyAddress text,
 	City varchar(200),
 	County varchar(200),
 	ZipCode varchar(200),
@@ -48,7 +48,7 @@ CREATE TABLE ReportColonyForm (
 	Injured varchar(15),
 	InjuryDescription varchar(200),
 	FriendlyPet varchar(15),
-	ColonySetting varchar(200),
+	ColonySetting text,
 	Comments text,
 	ReqAssistance varchar(15),
 	VolunteerResponding varchar(200),
@@ -197,7 +197,7 @@ INSERT INTO EmergencyC4CCVouchers VALUES
  primary key(userid),
  username varchar(80), 
  email varchar(80), 
- password varchar(30),
+ password varchar(40),
  level int);
  
  insert into SacFeralsUsers values("56", "Guest1", "guest1@yahoo.com", "123", "1");

@@ -118,13 +118,19 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	{
 		if(preg_match($re, $first) && preg_match($re, $last))
 		{	//no need to check for duplicates
-			$query = "insert into ReportColonyForm values('', '', 'Open', '', Now(), '$feedifreturned[0]', '$fullname', '$email', '$phone1', '$phone2', 
-			'$colonystreet', '$city', '$county', '$zipcode', '$trapattempt[0]', '$numberofcats', '$kittens[0]',
-			'$caregiver[0]', '$feederdescription', '$injured[0]', '$injurydescription', '$friendlypet[0]', '$setting[0]', '$comments', '$reqassistance', '', '', '', '', '', '',
-			'$lat', '$lng')";
+			if(!$query = $link->prepare("insert into ReportColonyForm values('', '', 'Open', '', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+				'', '', '', '', '', '', ?, ?)")){ echo "Failure to submit: Prepare statement failed. "; }
+			
+			if(!$query->bind_param("ssssssssssisssssssssdd", $feedifreturned[0], $fullname, $email, $phone1, $phone2,$colonystreet, $city, $county, $zipcode, $trapattempt[0], 
+				$numberofcats, $kittens[0],$caregiver[0], $feederdescription, $injured[0], $injurydescription, $friendlypet[0], $setting[0], $comments, $reqassistance, $lat, $lng))
+				{ echo "Failure to submit: Binding failed. "; }
 	
-			mysqli_query($link, $query); //link query to database
-			echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+			if(!$query->execute()){
+				echo "Failure to submit: Execute failed. ";
+			}else{	
+				echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
+			}
+			$query->close();
 		}
 		else
 		{

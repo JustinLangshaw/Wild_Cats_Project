@@ -62,7 +62,7 @@ function formatPhone(phoneId) {
 		$password = $_POST['password'];
 		$repassword = $_POST['repassword'];
 		
-		if($username == "" || $email == "" || $password == "" || $repassword == ""){ //doesn't execute? 
+		if($username == "" || $email == ""){ //doesn't execute? 
 			print "error: empty username, email, password";
 		}
 		else if($password != $repassword){
@@ -82,8 +82,13 @@ function formatPhone(phoneId) {
 				//else {
 					$row = mysqli_fetch_array($resultcheck);
 					$level = $row['level'];
-					$query = "update SacFeralsUsers set username='$username',email='$email',password='$password'
+					if($password == ""){
+						$query = "update SacFeralsUsers set username='$username',email='$email'
 								where username='$username'";
+					}else{
+						$query = "update SacFeralsUsers set username='$username',email='$email',password=SHA1('$password')
+								where username='$username'";
+					}					
 					
 					if($level==2){ //if a triage user
 						//for report form
@@ -131,8 +136,7 @@ function formatPhone(phoneId) {
 						if(preg_match($re2, $fullname) ) {
 							if (isset($_POST['typeofwork'])) {
 								$querycheck2 = "select * from VolunteerForm where Fullname='$fullname' AND Email='$email'";
-								$resultcheck2 = mysqli_query($link, $querycheck); //link query to database
-								
+								$resultcheck2 = mysqli_query($link, $querycheck); //link query to database							
 								if(mysqli_num_rows($resultcheck2) != 0) {
 									$query2 = "update VolunteerForm set FullName='".$fullname."',CompleteAddress='".$completeaddress."',Email='".$email."',Phone1='".$phone1."',
 										Phone2='".$phone2."',PreferedContact='".$preferedcontact."',contactemail=".$contactemail.",contactphone1=".$contactphone1.",
@@ -249,12 +253,12 @@ function formatPhone(phoneId) {
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-4 col-form-label" for="password">Password:</label>
-					<div class="col-sm-6"><input class="form-control" type="password" id="password" name="password" required value="<?php echo $password?>" <?php echo $passerror?>></div>
+					<div class="col-sm-6"><input class="form-control" type="password" id="password" name="password" <?php echo $passerror?>></div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-4 col-form-label" for="repass">Re-enter Password:</label>
 					<div class="col-sm-6">
-						<input class="form-control" type="password" id="repass" name="repassword" required value="<?php echo $password?>" <?php echo $passerror?>>
+						<input class="form-control" type="password" id="repass" name="repassword" <?php echo $passerror?>>
 						<span id="passerrmsg"><?php echo $passerrmsg; ?></span>
 					</div>
 				</div>

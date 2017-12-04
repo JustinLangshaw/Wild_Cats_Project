@@ -74,7 +74,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 				$reprtformcheck->close();			
 				
 				if($res != 0){ //email not in user & is in volunteerform
-					$query = $link->prepare("insert into SacFeralsUsers values('', ?, ?, ?, '0')");
+					$query = $link->prepare("insert into SacFeralsUsers values('', ?, ?, SHA1(?), '0')");
 					$query->bind_param("sss", $username, $email, $password);
 					$query->execute();
 					$query->close();
@@ -99,7 +99,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 		}
 		else
 		{
-			$msg="Error: Username must start and end with a letter. Allowed special characters: underscore, dot, dash. Make sure your email is valid.";
+			$msg="Error: Username must start with a letter and end with a letter or number. Allowed special characters: underscore, dot, dash. Make sure your email is valid.";
 			$fontcolor="red";
 		}
 	}
@@ -117,7 +117,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 							<font color="<?php echo $fontcolor?>" size=2.5><label id="error" name="error" ><?php echo $msg?></label></font>
 							<label class='form_label required'>Username</label>
 							<input type='username' class='form_input' placeholder='Enter your username or email' required='required' name='username'
-								pattern="(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[_.-]?[a-zA-Z0-9]+$" title="Must start and end with a letter. Allowed special characters: underscore, dot, dash">
+								pattern="(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[_.-]?[a-zA-Z0-9]+$" title="Must start with a letter and end with a letter or number. Allowed special characters: underscore, dot, dash">
 						</fieldset>
 						<fieldset class='form_field'>
 							<label class='form_label required' for="email">Email Address
