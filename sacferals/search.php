@@ -349,13 +349,12 @@
 			
 					$tdEditString.="<td><div style='text-align:Center'>
 						<form id='form1' name='form1' method='get' action='search.php'>
-						<select name='Status'>
-							<option value=''>Empty</option>
+						<select class='input-sm' name='Status'> 
 							<option value='Open'".$selectedOpen.">Open</option>
-							<option value='Assigned'".$selectedAssigned.">Assigned</option>
+							<option value='Contacted'".$selectedContacted.">Contacted</option>
+							<option value='In-Progress'".$selectedInProgress.">In-Progress</option>
+							<option value='Priority'".$selectedPriority.">Priority</option>
 							<option value='Closed'".$selectedClosed.">Closed</option>
-							<option value='Critical'".$selectedCritical.">Critical</option>
-							<option value='Kittens'".$selectedKittens.">Kittens!</option>
 						</select><br>
 						</form></div></td>";
 				}
@@ -672,21 +671,21 @@
 											$tdEditString.="<td>".$$selectedOption."</td>";
 										}
 										else if($selectedOption=="Status"){
-											if($Status=='') $selected='';
+											if($Status=='') $selectedOpen='selected';
 											else if($Status=="Open") $selectedOpen='selected';
-											else if($Status=="Assigned") $selectedAssigned='selected';
+											else if($Status=="Contacted") $selectedContacted='selected';
+											else if($Status=="In-Progress") $selectedInProgress='selected';
+											else if($Status=="Priority") $selectedPriority='selected';
 											else if($Status=="Closed") $selectedClosed='selected';
-											else if($Status=="Critical") $selectedCritical='selected';
-											else if($Status=="Kittens") $selectedKittens='selected';
 									
 											$tdEditString.="<td><div style='text-align:Center'>
 												<form id='form1' name='form1' method='get' action='search.php'>
-												<select name='Status' id='statusselect'>
+												<select class='input-sm' name='Status' id='statusselect'> 
 													<option value='Open'".$selectedOpen.">Open</option>
-													<option value='Assigned'".$selectedAssigned.">Assigned</option>
+													<option value='Contacted'".$selectedContacted.">Contacted</option>
+													<option value='In-Progress'".$selectedInProgress.">In-Progress</option>
+													<option value='Priority'".$selectedPriority.">Priority</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
-													<option value='Critical'".$selectedCritical.">Critical</option>
-													<option value='Kittens'".$selectedKittens.">Kittens!</option>
 												</select><br>
 												</form></div></td>";
 										}
@@ -712,10 +711,10 @@
 								{
 									if($Status=='') $selectedOpen='selected';
 									else if($Status=="Open") $selectedOpen='selected';
-									else if($Status=="Assigned") $selectedAssigned='selected';
+									else if($Status=="Contacted") $selectedContacted='selected';
+									else if($Status=="In-Progress") $selectedInProgress='selected';
+									else if($Status=="Priority") $selectedPriority='selected';
 									else if($Status=="Closed") $selectedClosed='selected';
-									else if($Status=="Critical") $selectedCritical='selected';
-									else if($Status=="Kittens") $selectedKittens='selected';
 									
 									print "
 									<td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber</td>
@@ -729,10 +728,10 @@
 											/*<li><div style='text-align:Center'>*/."<form id='form1' name='form1' method='get' action='search.php' width: 400px>
 												<select class='input-sm' name='Status' id='statusselect'> 
 													<option value='Open'".$selectedOpen.">Open</option>
-													<option value='Assigned'".$selectedAssigned.">Assigned</option>
+													<option value='Contacted'".$selectedContacted.">Contacted</option>
+													<option value='In-Progress'".$selectedInProgress.">In-Progress</option>
+													<option value='Priority'".$selectedPriority.">Priority</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
-													<option value='Critical'".$selectedCritical.">Critical</option>
-													<option value='Kittens'".$selectedKittens.">Kittens!</option>
 												</select><br>
 									</form>"./*</li></ul></div></div>*/"</div></td>
 									<td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
