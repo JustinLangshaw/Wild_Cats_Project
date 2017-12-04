@@ -129,13 +129,7 @@
 					<option value='FriendlyPet'>Friendly/Pet</option>
 					<option value='ColonySetting'>Colony Setting</option>
 					<option value='Comments'>Additional Comments</option>
-					<option value='ReqAssistance'>Require Assitance</option>
-					<option value='VolunteerResponding'>Volunteer Responding</option>
-					<option value='ResponseDate'>Date</option>
-					<option value='CustNeedOutcome'>Customer Need Outcome</option>
-					<option value='BeatTeamLeader'>Beat Team Leader</option>
-					<option value='Outcome'>Outcome</option>
-					<option value='CompletionDate'>Completion Date</option>
+					<option value='ReqAssistance'>Require Assitance</option>				
 					<option value='Lat'>Latitude</option>
 					<option value='Lng'>Longitude</option>
 				</select>
@@ -214,13 +208,7 @@
 							<option value='FriendlyPet'>Friendly/Pet</option>
 							<option value='ColonySetting'>Colony Setting</option>
 							<option value='Comments'>Additional Comments</option>
-							<option value='ReqAssistance'>Assist</option>
-							<option value='VolunteerResponding'>Volunteer Responding</option>
-							<option value='ResponseDate'>Date</option>
-							<option value='CustNeedOutcome'>Customer Need Outcome</option>
-							<option value='BeatTeamLeader'>Beat Team Leader</option>
-							<option value='Outcome'>Outcome</option>
-							<option value='CompletionDate'>Completion Date</option>
+							<option value='ReqAssistance'>Assist</option>				
 							<option value='Lat'>Latitude</option>
 							<option value='Lng'>Longitude</option>
 						</select>
@@ -633,13 +621,7 @@
 								<th><a>Friendly</a></th>
 								<th><a>Setting</a></th>
 								<th><a>Additional Comments</a></th>
-								<th><a>Assist</a></th>
-								<th><a>Responder</a></th>
-								<th><a>Date</a></th>
-								<th><a>Needs</a></th>
-								<th><a>Beat_Team_Leader</a></th>
-								<th><a>Outcome</a></th>
-								<th><a>Completion_Date</a></th>
+								<th><a>Assist</a></th>								
 								<th><a>Latitude</a></th>
 								<th><a>Longitude</a></th>
 							</tr>
@@ -772,13 +754,7 @@
 									<td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'></td>
 									<td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'></td>
 									<td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td>
-									<td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'></td>
-									<td><input class='form-control' type='text' name='VolunteerResponding' value='$VolunteerResponding'></td>
-									<td><input class='form-control' type='text' name='ResponseDate' value='$ResponseDate'></td>
-									<td><input class='form-control' type='text' name='CustNeedOutcome' value='$CustNeedOutcome'></td>
-									<td><input class='form-control' type='text' name='BeatTeamLeader' value='$BeatTeamLeader'></td>
-									<td><input class='form-control' type='text' name='Outcome' value='$Outcome'></td>
-									<td><input class='form-control' type='text' name='CompletionDate' value='$CompletionDate'></td>
+									<td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'></td>									
 									<td><input class='form-control' type='text' name='Lat' value='$Lat'></td>
 									<td><input class='form-control' type='text' name='Lng' value='$Lng'></td>
 								</tr>
@@ -832,13 +808,7 @@
 									<td>$FriendlyPet</td>
 									<td>$ColonySetting</td>
 									<td>$Comments</td>
-									<td>$ReqAssistance</td>
-									<td>$VolunteerResponding</td>
-									<td>$ResponseDate</td>
-									<td>$CustNeedOutcome</td>
-									<td>$BeatTeamLeader</td>
-									<td>$Outcome</td>
-									<td>$CompletionDate</td>
+									<td>$ReqAssistance</td>								
 									<td id='latCol'>$Lat</td>
 									<td id='lngCol'>$Lng</td>
 								</tr>
@@ -1141,13 +1111,7 @@
 							<th><a href='search.php?sort=FriendlyPet'>Friendly</a></th>
 							<th><a href='search.php?sort=ColonySetting'>Setting</a></th>
 							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>
-							<th><a href='search.php?sort=ReqAssistance'>Assist</a></th>
-							<th><a href='search.php?sort=VolunteerResponding'>Responder</a></th>
-							<th><a href='search.php?sort=ResponseDate'>Date</a></th>
-							<th><a href='search.php?sort=CustNeedOutcome'>Needs</a></th>
-							<th><a href='search.php?sort=BeatTeamLeader'>Beat_Team_Leader</a></th>
-							<th><a href='search.php?sort=Outcome'>Outcome</a></th>
-							<th><a href='search.php?sort=CompletionDate'>Completion_Date</a></th>
+							<th><a href='search.php?sort=ReqAssistance'>Assist</a></th>					
 							<th><a href='search.php?sort=Lat'>Latitude</a></th>
 							<th><a href='search.php?sort=Lng'>Longitude</a></th>
 
@@ -1166,7 +1130,6 @@
 						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
 						$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
-
 						$myArray[0]=$RecordNumber;
 						$myArray[1]=$DateAndTime;
 						$myArray[2]=$Responder;
@@ -1191,15 +1154,9 @@
 						$myArray[21]=$FriendlyPet;
 						$myArray[22]=$ColonySetting;
 						$myArray[23]=$Comments;
-						$myArray[24]=$ReqAssistance;
-						$myArray[25]=$VolunteerResponding;
-						$myArray[26]=$ResponseDate;
-						$myArray[27]=$CustNeedOutcome;
-						$myArray[28]=$BeatTeamLeader;
-						$myArray[29]=$Outcome;
-						$myArray[30]=$CompletionDate;
-						$myArray[31]=$Lat;
-						$myArray[32]=$Lng;
+						$myArray[24]=$ReqAssistance;				
+						$myArray[25]=$Lat;
+						$myArray[26]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="DateAndTime";
@@ -1225,15 +1182,9 @@
 						$myArray1[21]="FriendlyPet";
 						$myArray1[22]="ColonySetting";
 						$myArray1[23]="Comments";
-						$myArray1[24]="ReqAssistance";
-						$myArray1[25]="VolunteerResponding";
-						$myArray1[26]="ResponseDate";
-						$myArray1[27]="CustNeedOutcome";
-						$myArray1[28]="BeatTeamLeader";
-						$myArray1[29]="Outcome";
-						$myArray1[30]="CompletionDate";
-						$myArray1[31]="Lat";
-						$myArray1[32]="Lng";
+						$myArray1[24]="ReqAssistance";				
+						$myArray1[25]="Lat";
+						$myArray1[26]="Lng";
 						
 						print "
 						<tr id='$RecordNumber'>";
@@ -1307,13 +1258,7 @@
 							<td>$FriendlyPet</td>
 							<td>$ColonySetting</td>
 							<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>
-							<td>$ReqAssistance</td>
-							<td>$VolunteerResponding</td>
-							<td>$ResponseDate</td>
-							<td>$CustNeedOutcome</td>
-							<td>$BeatTeamLeader</td>
-							<td>$Outcome</td>
-							<td>$CompletionDate</td>
+							<td>$ReqAssistance</td>							
 							<td id='latCol'>$Lat</td>
 							<td id='lngCol'>$Lng</td>
 						</tr>
