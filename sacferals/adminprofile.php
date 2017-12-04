@@ -182,8 +182,8 @@
 				</div>
 				<div class="row">
 					<input class="btn btn-primary" type="submit" name="submitcannedquery" value="Search" tabindex='7'/>
-					<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
 					<input class='btn btn-success' type='submit' id="savecurrentquery" name='savecurrentquery' value="Save Current" />
+					&nbsp;&nbsp;&nbsp;<input class='btn btn-danger' type='submit' name='deletecannedquery' value='Delete'/>
 				</div> <!-- data-toggle="modal" data-target="#addnewqueryModal" -->
 			</form>
 		</div>
@@ -1363,7 +1363,11 @@
 	}
 ?>
 
-   		<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['volunteertotalrecords']; ?></b></span>
+   		<form id="resettable" method='get' action='adminprofile.php'>
+			<input class='btn btn-default' type='submit' value='Reset' name='RefreshTable'/>
+			<input class='btn btn-success' type='button' id='exportButton' onclick="tableToExcel('volunteerTable', 'Volunteers')" value='Export' />
+			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['volunteertotalrecords']; ?></b></span>
+		</form>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		</div> <!-- end maindiv -->
