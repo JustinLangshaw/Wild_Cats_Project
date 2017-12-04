@@ -1184,7 +1184,7 @@
 						$myArray1[23]="Comments";
 						$myArray1[24]="ReqAssistance";				
 						$myArray1[25]="Lat";
-						$myArray1[25]="Lng";
+						$myArray1[26]="Lng";
 						
 						print "
 						<tr id='$RecordNumber'>";
