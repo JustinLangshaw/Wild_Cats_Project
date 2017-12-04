@@ -354,6 +354,7 @@
 				else if($selectedOption=="Status"){
 					if($Status=='') $selected='';
 					else if($Status=="Open") $selectedOpen='selected';
+					else if($Status=="Assigned") $selectedAssigned='selected';
 					else if($Status=="Closed") $selectedClosed='selected';
 					else if($Status=="Critical") $selectedCritical='selected';
 					else if($Status=="Kittens") $selectedKittens='selected';
@@ -363,6 +364,7 @@
 						<select name='Status'>
 							<option value=''>Empty</option>
 							<option value='Open'".$selectedOpen.">Open</option>
+							<option value='Assigned'".$selectedAssigned.">Assigned</option>
 							<option value='Closed'".$selectedClosed.">Closed</option>
 							<option value='Critical'".$selectedCritical.">Critical</option>
 							<option value='Kittens'".$selectedKittens.">Kittens!</option>
@@ -690,6 +692,7 @@
 										else if($selectedOption=="Status"){
 											if($Status=='') $selected='';
 											else if($Status=="Open") $selectedOpen='selected';
+											else if($Status=="Assigned") $selectedAssigned='selected';
 											else if($Status=="Closed") $selectedClosed='selected';
 											else if($Status=="Critical") $selectedCritical='selected';
 											else if($Status=="Kittens") $selectedKittens='selected';
@@ -698,6 +701,7 @@
 												<form id='form1' name='form1' method='get' action='search.php'>
 												<select name='Status' id='statusselect'>
 													<option value='Open'".$selectedOpen.">Open</option>
+													<option value='Assigned'".$selectedAssigned.">Assigned</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
 													<option value='Critical'".$selectedCritical.">Critical</option>
 													<option value='Kittens'".$selectedKittens.">Kittens!</option>
@@ -726,6 +730,7 @@
 								{
 									if($Status=='') $selectedOpen='selected';
 									else if($Status=="Open") $selectedOpen='selected';
+									else if($Status=="Assigned") $selectedAssigned='selected';
 									else if($Status=="Closed") $selectedClosed='selected';
 									else if($Status=="Critical") $selectedCritical='selected';
 									else if($Status=="Kittens") $selectedKittens='selected';
@@ -742,6 +747,7 @@
 											/*<li><div style='text-align:Center'>*/."<form id='form1' name='form1' method='get' action='search.php' width: 400px>
 												<select class='input-sm' name='Status' id='statusselect'> 
 													<option value='Open'".$selectedOpen.">Open</option>
+													<option value='Assigned'".$selectedAssigned.">Assigned</option>
 													<option value='Closed'".$selectedClosed.">Closed</option>
 													<option value='Critical'".$selectedCritical.">Critical</option>
 													<option value='Kittens'".$selectedKittens.">Kittens!</option>
