@@ -22,6 +22,13 @@
 			border: 1px solid black;
 			background-color: #C2F7FE;
 		}
+		td{
+			max-width: 300px;
+			word-wrap: break-word;
+		}
+		textarea{
+			width: 90%;
+		}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="js/searchScript.js"></script> 
@@ -48,7 +55,7 @@
 		print"<b>Logged in as $Ausername </b> 
 				<h1>Form View</h1>";
 		
-		if($level == 1)
+		if($level == 1 || $level == 2) //admin and triage
 		{
 			
 			$query = "SELECT MAX( RecordNumber ) FROM ReportColonyForm";
@@ -163,6 +170,13 @@
 						
 						//////////////////////////////////////////////////////////////////////////////////////
 						// print table (happens first before input)
+							if($Status=='') $selectedOpen='selected';
+							else if($Status=="Open") $selectedOpen='selected';
+							else if($Status=="Contacted") $selectedContacted='selected';
+							else if($Status=="In-Progress") $selectedInProgress='selected';
+							else if($Status=="Priority") $selectedPriority='selected';
+							else if($Status=="Closed") $selectedClosed='selected';
+						
 							print "
 							<form method='post' action='form_view.php?&RecordNumber=$RecordNumber'>";
 							
@@ -170,39 +184,43 @@
 							 <br><label><input type='submit' name='recordEdit' value='Submit Edit'> <input type='submit' name='cancel' value='Cancel Edit'></label> ";
 							 
 								print "<table>
-								<tr><td><b>RecordNumber: </b></td><td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber </td>
-								<tr><td><b>Comments: </b></td><td><textarea class='form-control' name='Comments1' rows='4' value='$Comments1'>$Comments1</textarea></td> 
-								<tr><td><b>Responder: </b></td><td><input class='form-control' type='text' name='Responder' value='$Responder'> </td>
-								<tr><td><b>Status: </b></td><td><input class='form-control' type='text' name='Status' value='$Status'> </td>
-								<tr><td><b>DateAndTime: </b></td> <td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime </td>
-								<tr><td><b>FeedIfReturned: </b></td> <td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'> </td>
-								<tr><td><b>Full Name: </b></td> <td><input class='form-control' type='text' name='FullName' value='$FullName'> </td>
-								<tr><td><b>Email: </b></td><td><input class='form-control' type='text' name='Email' value='$Email'> </td>
-								<tr><td><b>Phone1: </b></td> <td><input class='form-control' type='text' name='Phone1' value='$Phone1'> </td>
-								<tr><td><b>Phone2: </b> <td><input class='form-control' type='text' name='Phone2' value='$Phone2'> </td>
-								<tr><td><b>Colony Address: </b></td> <td><input class='form-control' type='text' name='ColonyAddress' value='$ColonyAddress'> </td>
-								<tr><td><b>City: </b></td> <td><input class='form-control' type='text' name='City' value='$City'> </td>
-								<tr><td><b>County: </b></td> <td><input class='form-control' type='text' name='County' value='$County'> </td>
-								<tr><td><b>Zip Code: </b></td> <td><input class='form-control' type='text' name='ZipCode' value='$ZipCode'> </td>
-								<tr><td><b>Anyone Attempted: </b></td> <td><input class='form-control' type='text' name='AnyoneAttempted' value='$AnyoneAttempted'> </td>
-								<tr><td><b>Approximate Cats: </b></td> <td><input class='form-control' type='text' name='ApproximateCats' value='$ApproximateCats'> </td>
-								<tr><td><b>Kittens: </b></td> <td><input class='form-control' type='text' name='Kittens' value='$Kittens'> </td>
-								<tr><td><b>Colony Care Giver: </b></td> <td><input class='form-control' type='text' name='ColonyCareGiver' value='$ColonyCareGiver'> </td>
-								<tr><td><b>Feeder Description: </b> <td><textarea class='form-control' name='FeederDescription'  rows='4' value='$FeederDescription'>$FeederDescription</textarea></td> 
-								<tr><td><b>Injured: </b></td> <td><input class='form-control' type='text' name='Injured' value='$Injured'> </td>
-								<tr><td><b>Injury Description: </b></td> <td><textarea class='form-control' name='InjuryDescription'  rows='4' value='$InjuryDescription'>$InjuryDescription</textarea></td> 
-								<tr><td><b>Friendly Pet: </b></td> <td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'> </td>
-								<tr><td><b>Colony Setting: </b></td> <td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'> </td>
-								<tr><td><b>Comments: </b></td> <td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td> </td>
-								<tr><td><b>Req Assistance: </b> <td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'> </td>
-								<tr><td><b>Volunteer Responding: </b></td> <td><input class='form-control' type='text' name='VolunteerResponding' value='$VolunteerResponding'> </td>
-								<tr><td><b>Response Date: </b></td> <td><input class='form-control' type='text' name='ResponseDate' value='$ResponseDate'> </td>
-								<tr><td><b>Cust Need Outcome: </b></td> <td><input class='form-control' type='text' name='CustNeedOutcome' value='$CustNeedOutcome'> </td>
-								<tr><td><b>Beat Team Leader: </b></td> <td><input class='form-control' type='text' name='BeatTeamLeader' value='$BeatTeamLeader'> </td>
-								<tr><td><b>Outcome: </b></td> <td><input class='form-control' type='text' name='Outcome' value='$Outcome'> </td>
-								<tr><td><b>Completion Date: </b></td> <td><input class='form-control' type='text' name='CompletionDate' value='$CompletionDate'> </td>
-								<tr><td><b>Latitude: </b></td> <td><input class='form-control' type='text' name='Lat' value='$Lat'> </td>
-								<tr><td><b>Longitude: </b></td> <td><input class='form-control' type='text' name='Lng' value='$Lng'></td>
+								<tr><td><b>RecordNumber: </b></td><td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber </td></tr>
+								<tr><td><b>DateAndTime: </b></td> <td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime </td></tr>
+								<tr><td><b>Responder: </b></td><td><input class='form-control' type='text' name='Responder' value='$Responder'> </td></tr>
+								<tr><td><b>Comments: </b></td><td><textarea class='form-control' name='Comments1' rows='4' value='$Comments1'>$Comments1</textarea></td> </tr>
+								<tr><td><b>Status: </b></td>
+									<td><form id='form1' name='form1' method='get' action='search.php' width: 400px>
+												<select class='input-sm' name='Status' id='statusselect'> 
+													<option value='Open'".$selectedOpen.">Open</option>
+													<option value='Contacted'".$selectedContacted.">Contacted</option>
+													<option value='In-Progress'".$selectedInProgress.">In-Progress</option>
+													<option value='Priority'".$selectedPriority.">Priority</option>
+													<option value='Closed'".$selectedClosed.">Closed</option>
+												</select><br>
+									</form></td>
+								</tr>
+								<tr><td><b>FeedIfReturned: </b></td><td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'> </td>
+								<tr><td><b>Full Name: </b></td> <td><input class='form-control' type='text' name='FullName' value='$FullName'> </td></tr>
+								<tr><td><b>Email: </b></td><td><input class='form-control' type='text' name='Email' value='$Email'> </td></tr>
+								<tr><td><b>Phone1: </b></td> <td><input class='form-control' type='text' name='Phone1' value='$Phone1'> </td></tr>
+								<tr><td><b>Phone2: </b> <td><input class='form-control' type='text' name='Phone2' value='$Phone2'> </td></tr>
+								<tr><td><b>Colony Address: </b></td> <td><input class='form-control' type='text' name='ColonyAddress' value='$ColonyAddress'> </td></tr>
+								<tr><td><b>City: </b></td> <td><input class='form-control' type='text' name='City' value='$City'> </td></tr>
+								<tr><td><b>County: </b></td> <td><input class='form-control' type='text' name='County' value='$County'> </td></tr>
+								<tr><td><b>Zip Code: </b></td> <td><input class='form-control' type='text' name='ZipCode' value='$ZipCode'> </td></tr>
+								<tr><td><b>Anyone Attempted: </b></td> <td><input class='form-control' type='text' name='AnyoneAttempted' value='$AnyoneAttempted'> </td></tr>
+								<tr><td><b>Approximate Cats: </b></td> <td><input class='form-control' type='text' name='ApproximateCats' value='$ApproximateCats'> </td></tr>
+								<tr><td><b>Kittens: </b></td> <td><input class='form-control' type='text' name='Kittens' value='$Kittens'> </td></tr>
+								<tr><td><b>Colony Care Giver: </b></td> <td><input class='form-control' type='text' name='ColonyCareGiver' value='$ColonyCareGiver'> </td></tr>
+								<tr><td><b>Feeder Description: </b> <td><textarea class='form-control' name='FeederDescription'  rows='4' value='$FeederDescription'>$FeederDescription</textarea></td> </tr>
+								<tr><td><b>Injured: </b></td> <td><input class='form-control' type='text' name='Injured' value='$Injured'> </td></tr>
+								<tr><td><b>Injury Description: </b></td> <td><textarea class='form-control' name='InjuryDescription'  rows='4' value='$InjuryDescription'>$InjuryDescription</textarea></td> </tr>
+								<tr><td><b>Friendly Pet: </b></td> <td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'> </td></tr>
+								<tr><td><b>Colony Setting: </b></td> <td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'> </td></tr>
+								<tr><td><b>Comments: </b></td> <td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td> </td></tr>
+								<tr><td><b>Req Assistance: </b> <td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'> </td></tr>
+								<tr><td><b>Latitude: </b></td> <td><input class='form-control' type='text' name='Lat' value='$Lat'> </td></tr>
+								<tr><td><b>Longitude: </b></td> <td><input class='form-control' type='text' name='Lng' value='$Lng'></td></tr>
 							</table>";
 										
 							print "
@@ -292,11 +310,13 @@
 			{
 				print"<br><table>
 				<tr><td><b>RecordNumber: </b></td><td>$RecordNumber</td></tr>
-				<tr><td><b>Comments: </b></td><td>$Comments1</td></tr>
-				<tr><td><b>Responder: </b></td><td>$Responder</td></tr>
-				<tr><td><b>Status: </b></td><td>$Status</td></tr>
 				<tr><td><b>DateAndTime: </b></td><td> $DateAndTime</td></tr>
-				<tr><td><b>FeedIfReturned: </b></td><td> $FeedIfReturned</td></tr>
+				<tr><td><b>Responder: </b></td><td>$Responder</td></tr>
+				<tr><td><b>Comments: </b></td>
+					<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td></tr>
+				<tr><td><b>Status: </b></td><td>$Status</td></tr>
+				<tr><td><b>FeedIfReturned: </b></td>
+					<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td></tr>
 				<tr><td><b>Full Name: </b></td><td> $FullName</td></tr>
 				<tr><td><b>Email: </b></td><td> $Email</td></tr>
 				<tr><td><b>Phone1: </b></td><td> $Phone1</td></tr>
@@ -311,17 +331,13 @@
 				<tr><td><b>ColonyCareGiver: </b></td><td> $ColonyCareGiver</td></tr>
 				<tr><td><b>FeederDescription: </b></td><td> $FeederDescription</td></tr>
 				<tr><td><b>Injured: </b></td><td> $Injured</td></tr>
-				<tr><td><b>InjuryDescription: </b></td><td> $InjuryDescription</td></tr>
+				<tr><td><b>InjuryDescription: </b></td>
+					<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td></tr>
 				<tr><td><b>FriendlyPet: </b></td><td> $FriendlyPet</td></tr>
 				<tr><td><b>ColonySetting: </b></td><td> $ColonySetting</td></tr>
-				<tr><td><b>Comments: </b></td><td> $Comments</td></tr>
+				<tr><td><b>Comments: </b></td>
+					<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td></tr>
 				<tr><td><b>ReqAssitance: </b></td><td> $ReqAssitance</td></tr>
-				<tr><td><b>VolunteerResponding: </b></td><td> $VolunteerResponding</td></tr>
-				<tr><td><b>ResponseDate: </b></td><td> $ResponseDate</td></tr>
-				<tr><td><b>CustNeedOutcome: </b></td><td> $CustNeedOutcome</td></tr>
-				<tr><td><b>BeatTeamLeader: </b></td><td> $BeatTeamLeader</td></tr>
-				<tr><td><b>Outcome: </b></td><td> $Outcome</td></tr>
-				<tr><td><b>CompletionDate: </b></td><td> $CompletionDate</td></tr>
 				<tr><td><b>Latitude: </b></td><td> $Lat</td></tr>
 				<tr><td><b>Longitude: </b></td><td> $Lng</td></tr>
 				</table>
@@ -372,7 +388,7 @@
 					
 			
 		}
-		else if($level == 2)
+		else
 		{
 			print "you aren't supposed to be here.. STOP SNEAKING AROUND";
 		}
