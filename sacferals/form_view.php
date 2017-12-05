@@ -114,18 +114,18 @@
 					if($RecordNumber1MinusOne<$smallestRecord) //if you are at the bottom (first) record
 					{
 						print "
-						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
-						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>Back</a>
-						Next
+						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a> - 
+						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>BACK</a> - 
+						NEXT - 
 						Oldest Record
 						<br>(End of Records) <br>";
 					}
 					else if($RecordNumber1PlusOne>$largestRecord) //if you are at the top (latest) record
 					{
 						print "
-						Latest Record 
-						BACK 
-						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>Next</a>
+						Latest Record - 
+						BACK - 
+						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a> - 
 						<a href='form_view.php?&RecordNumber=$smallestRecord'>Oldest Record</a>
 						
 						<br>(Begining of Records)<br>";
@@ -133,9 +133,9 @@
 					else //somewhere in the middle
 					{
 						print "
-						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
-						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>BACK</a>
-						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a>
+						<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a> - 
+						<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>BACK</a> - 
+						<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a> - 
 						<a href='form_view.php?&RecordNumber=$smallestRecord'>Oldest Record</a>
 						<br><br>";
 					}
@@ -355,27 +355,27 @@
 			if($RecordNumber1MinusOne<$smallestRecord) //if you are at the bottom (first) record
 			{
 				print "<br>
-				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
-				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>Back</a>
-				Next
+				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a> - 
+				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>Back</a> - 
+				Next - 
 				Oldest Record
 				<br>(End of Records) <br>";
 			}
 			else if($RecordNumber1PlusOne>$largestRecord) //if you are at the top (latest) record
 			{
 				print "<br>
-				Latest Record
-				BACK 
-				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a>
-				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
+				Latest Record - 
+				BACK - 
+				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a> - 
+				<a href='form_view.php?&RecordNumber=$largestRecord'>Oldest Record</a>
 				<br>(Begining of Records)<br>";
 			}
 			else
 			{
 				print "<br>
-				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a>
-				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>BACK</a>
-				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a>
+				<a href='form_view.php?&RecordNumber=$largestRecord'>Latest Record</a> - 
+				<a href='form_view.php?&RecordNumber=$RecordNumber1PlusOne'>BACK</a> - 
+				<a href='form_view.php?&RecordNumber=$RecordNumber1MinusOne'>NEXT</a> - 
 				<a href='form_view.php?&RecordNumber=$smallestRecord'>Oldest Record</a>
 				<br><br>";
 			}
