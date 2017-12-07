@@ -466,7 +466,7 @@
 				$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', '".$_SESSION['querysearch']."')";
+					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', ".'"'.$_SESSION['querysearch'].'"'.")";
 					echo $savecannedqry;
 					mysqli_query($link, $savecannedqry);
 				}
