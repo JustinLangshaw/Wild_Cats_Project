@@ -408,7 +408,10 @@
 								$value="%".$value."%";
 							} 
 							if(strcasecmp($value,'null')==0 || $value=="''" || $value=='""'){
-								$condition="is null or ".$column." = ''";
+								if($condition=="=")
+									$condition="is null or ".$column." = ''";
+								else if($condition=="!=")
+									$condition="is not null and ".$column." <> ''";
 								$value="";
 							}
 							else $value="'".$value."'";
