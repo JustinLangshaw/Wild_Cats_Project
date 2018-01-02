@@ -153,7 +153,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 <!DOCTYPE html>
 <html lang="en">
 <head>	
-	<title>Report Colony/Caregiver Registration</title>
+	<title>Report Stray or Un-owned Cats</title>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
@@ -174,17 +174,19 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 		<label id='errorMsg'></label>
 	</div>
 
-	<h2> Report a Feral Cat Colony &amp; Get TNR Assistance </h2>
+	<h2> Report Stray or Un-owned Cats </h2>
 	<div id="form-wrapper">
 		<form method="post" action="reportform.php" id='reportform'>
 			<div class="form-row">
-				<p>Thank you for providing information about a feral cat colony 
-				   (a "colony" is a term used to describe a group of cats living together.)</p>
-				<p>Please answer the questions below to the best of your ability.  The more 
-				   information you provide, the more help we will be able to provide.  It's 
-				   important that we are able to get in contact with you regarding this request.  
-				   Without your name and contact information, it is unlikely we will be able to 
-				   assist the colony you are reporting.</p>
+				<p>Thank you for reporting these cats in your community. They are likely part of a cat colony. 
+				The term “colony" is used to describe a group of cats living together outdoors.</p>
+				<p>Please answer the questions below to the best of your ability. The more details you can provide, 
+				the better we can help determine the best way to proceed. It's important that we are able to contact 
+				you to follow-up on this request. Without your name and contact information this may not be possible.
+				Since most correspondence is by email, be sure to include an email address as well as a phone number.</p>
+				<p>Although we may provide assistance for people with physical challenges, we ask that you do all that 
+				you can to be actively involved in the TNR process. Our volunteers can offer guidance from start to finish 
+				and address any concerns you may have. We want you to succeed with gaining control of the cat population.</p>
 			</div>
 
 			<div class="form-row">
