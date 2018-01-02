@@ -67,7 +67,6 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	$settingcomment = preg_replace("!\s+!", ' ', $_POST['settingcomment']); //prepend to additional comments
 	$feedifreturned = $_POST['feedifreturned'];
 	$notfeedcomment = preg_replace("!\s+!", ' ', $_POST['notfeeddescription']); //prepend to additional comments
-	$reqassistance = $_POST['reqassistance'];
 	$comments = preg_replace("!\s+!", ' ', $_POST['comments']);
 	$lat = $_POST['lat'];
 	$lng = $_POST['lng'];
@@ -118,11 +117,11 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	{
 		if(preg_match($re, $first) && preg_match($re, $last))
 		{	//no need to check for duplicates
-			if(!$query = $link->prepare("insert into ReportColonyForm values('', '', 'Open', '', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+			if(!$query = $link->prepare("insert into ReportColonyForm values('', '', 'Open', '', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 				'', '', '', '', '', '', ?, ?)")){ echo "Failure to submit: Prepare statement failed. "; }
 			
-			if(!$query->bind_param("ssssssssssisssssssssdd", $feedifreturned[0], $fullname, $email, $phone1, $phone2,$colonystreet, $city, $county, $zipcode, $trapattempt[0], 
-				$numberofcats, $kittens[0],$caregiver[0], $feederdescription, $injured[0], $injurydescription, $friendlypet[0], $setting[0], $comments, $reqassistance, $lat, $lng))
+			if(!$query->bind_param("ssssssssssissssssssdd", $feedifreturned[0], $fullname, $email, $phone1, $phone2,$colonystreet, $city, $county, $zipcode, $trapattempt[0], 
+				$numberofcats, $kittens[0],$caregiver[0], $feederdescription, $injured[0], $injurydescription, $friendlypet[0], $setting[0], $comments, $lat, $lng))
 				{ echo "Failure to submit: Binding failed. "; }
 	
 			if(!$query->execute()){
@@ -391,13 +390,6 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 					<div class='form-group indent todisplay' id="settingdetails">
 						Please describe<br>
 						<textarea class="form-control" rows="4"  name="settingcomment"></textarea>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="form-check-label">Physical Limitations</label>
-					<div class="form-check">
-						<label><input type="checkbox" name="reqassistance" value="Yes"> Due to physical limitations, I require assistance with trapping.</input></label>
 					</div>
 				</div>
 				
