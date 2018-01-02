@@ -110,7 +110,6 @@
 					<option value='Responder'>Responder</option>
 					<option value='Comments1'>Comments</option>
 					<option value='Status'>Status</option>
-					<option value='FeedIfReturned'>Feed If Returned</option>
 					<option value='FullName'>Full Name</option>
 					<option value='Email'>Email</option>
 					<option value='Phone1'>Phone1</option>
@@ -119,7 +118,8 @@
 					<option value='City'>City</option>
 					<option value='County'>County</option>
 					<option value='ZipCode'>ZipCode</option>
-					<option value='AnyoneAttempted'>Trapping/ Eartip</option>
+					<option value='AnyoneAttempted'>Trap/ Tip</option>
+					<option value='FeedIfReturned'>Feed If Returned</option>
 					<option value='ApproximateCats'>Approximate Cats</option>
 					<option value='Kittens'>Kittens</option>
 					<option value='ColonyCareGiver'>Colony Caregiver</option>
@@ -128,8 +128,7 @@
 					<option value='InjuryDescription'>Injury Description</option>
 					<option value='FriendlyPet'>Friendly/Pet</option>
 					<option value='ColonySetting'>Colony Setting</option>
-					<option value='Comments'>Additional Comments</option>
-					<option value='ReqAssistance'>Require Assitance</option>				
+					<option value='Comments'>Additional Comments</option>			
 					<option value='Lat'>Latitude</option>
 					<option value='Lng'>Longitude</option>
 				</select>
@@ -189,7 +188,6 @@
 							<option value='Responder'>Responder</option>
 							<option value='Comments1'>Comments</option>
 							<option value='Status'>Status</option>
-							<option value='FeedIfReturned'>Feed If Returned</option>
 							<option value='FullName'>Full Name</option>
 							<option value='Email'>Email</option>
 							<option value='Phone1'>Phone1</option>
@@ -198,7 +196,8 @@
 							<option value='City'>City</option>
 							<option value='County'>County</option>
 							<option value='ZipCode'>ZipCode</option>
-							<option value='AnyoneAttempted'>Trapping/ Eartip</option>
+							<option value='AnyoneAttempted'>Trap/ Tip</option>
+							<option value='FeedIfReturned'>Feed If Returned</option>
 							<option value='ApproximateCats'>Approximate Cats</option>
 							<option value='Kittens'>Kittens</option>
 							<option value='ColonyCareGiver'>Colony Caregiver</option>
@@ -208,7 +207,6 @@
 							<option value='FriendlyPet'>Friendly/Pet</option>
 							<option value='ColonySetting'>Colony Setting</option>
 							<option value='Comments'>Additional Comments</option>
-							<option value='ReqAssistance'>Assist</option>				
 							<option value='Lat'>Latitude</option>
 							<option value='Lng'>Longitude</option>
 						</select>
@@ -317,17 +315,16 @@
 				if($selectedOption=="RecordNumber") $printvalue = "ID";
 				else if($selectedOption=="Comments1") $printvalue = "Comments";
 				else if($selectedOption=="DateAndTime") $printvalue = "Date/Time";
-				else if($selectedOption=="FeedIfReturned") $printvalue = "Will Feed";
+				else if($selectedOption=="FeedIfReturned") $printvalue = "Feed";
 				else if($selectedOption=="ColonyAddress") $printvalue = "Address";
 				else if($selectedOption=="ZipCode") $printvalue = "Zip";
-				else if($selectedOption=="AnyoneAttempted") $printvalue = "Trapping/ Eartip";
-				else if($selectedOption=="ApproximateCats") $printvalue = "# Cats";
+				else if($selectedOption=="AnyoneAttempted") $printvalue = "Trap/ Tip";
+				else if($selectedOption=="ApproximateCats") $printvalue = "#Cats";
 				else if($selectedOption=="ColonyCareGiver") $printvalue = "Caregiver";
 				else if($selectedOption=="FeederDescription" || $selectedOption=="InjuryDescription") $printvalue = "Description";
 				else if($selectedOption=="Injured") $printvalue = "Sick";
 				else if($selectedOption=="FriendlyPet") $printvalue = "Friendly";
 				else if($selectedOption=="ColonySetting") $printvalue = "Setting";
-				else if($selectedOption=="ReqAssistance") $printvalue = "Assist";
 				else if($selectedOption=="VolunteerResponding") $printvalue = "Responder";
 				else if($selectedOption=="ResponseDate") $printvalue = "Date";
 				else if($selectedOption=="CustNeedOutcome") $printvalue = "Needs";
@@ -548,7 +545,7 @@
 				$row = mysqli_fetch_row($result);
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
 						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
 
 					$sort = $_GET['sort']; //'sort' is magic sorting variable
@@ -604,7 +601,6 @@
 								<th><a>Responder</a></th>
 								<th><a>Comments</a></th>
 								<th><a>Status</a></th>
-								<th><a>Will Feed</a></th>
 								<th><a>FullName</a></th>
 								<th><a>Email</a></th>
 								<th><a>Phone1</a></th>
@@ -613,8 +609,9 @@
 								<th><a>City</a></th>
 								<th><a>County</a></th>
 								<th><a>Zip</a></th>
-								<th><a>Trapping/ Eartip</a></th>
-								<th><a># Cats</a></th>
+								<th><a>Trap/ Tip</a></th>
+								<th><a>Feed</a></th>
+								<th><a>#Cats</a></th>
 								<th><a>Kittens</a></th>
 								<th><a>Caregiver</a></th>
 								<th><a>Description</a></th>
@@ -622,8 +619,7 @@
 								<th><a>Description</a></th>
 								<th><a>Friendly</a></th>
 								<th><a>Setting</a></th>
-								<th><a>Additional Comments</a></th>
-								<th><a>Assist</a></th>								
+								<th><a>Additional Comments</a></th>						
 								<th><a>Latitude</a></th>
 								<th><a>Longitude</a></th>
 							</tr>
@@ -641,7 +637,7 @@
 						{
 							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
 							$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
@@ -737,7 +733,6 @@
 													<option value='Closed'".$selectedClosed.">Closed</option>
 												</select><br>
 									</form>"./*</li></ul></div></div>*/"</div></td>
-									<td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
 									<td><input class='form-control' type='text' name='FullName' value='$FullName'></td>
 									<td><input class='form-control' type='text' name='Email' value='$Email'></td>
 									<td><input class='form-control' type='text' name='Phone1' value='$Phone1'></td>
@@ -747,6 +742,7 @@
 									<td><input class='form-control' type='text' name='County' value='$County'></td>
 									<td><input class='form-control' type='text' name='ZipCode' value='$ZipCode'></td>
 									<td><input class='form-control' type='text' name='AnyoneAttempted' value='$AnyoneAttempted'></td>
+									<td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'></td>
 									<td><input class='form-control' type='text' name='ApproximateCats' value='$ApproximateCats'></td>
 									<td><input class='form-control' type='text' name='Kittens' value='$Kittens'></td>
 									<td><input class='form-control' type='text' name='ColonyCareGiver' value='$ColonyCareGiver'></td>
@@ -755,8 +751,7 @@
 									<td><textarea class='form-control' name='InjuryDescription'  rows='4' value='$InjuryDescription'>$InjuryDescription</textarea></td>
 									<td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'></td>
 									<td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'></td>
-									<td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td>
-									<td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'></td>									
+									<td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td>								
 									<td><input class='form-control' type='text' name='Lat' value='$Lat'></td>
 									<td><input class='form-control' type='text' name='Lng' value='$Lng'></td>
 								</tr>
@@ -791,7 +786,6 @@
 									<td>$Responder</td>
 									<td>$Comments1</td>
 									<td id='statusCol'>$Status</td>
-									<td>$FeedIfReturned</td>
 									<td>$FullName</td>
 									<td>$Email</td>
 									<td>$Phone1</td>
@@ -801,6 +795,7 @@
 									<td>$County</td>
 									<td id='zipCodeCol'>$ZipCode</td>
 									<td>$AnyoneAttempted</td>
+									<td>$FeedIfReturned</td>
 									<td>$ApproximateCats</td>
 									<td>$Kittens</td>
 									<td>$ColonyCareGiver</td>
@@ -809,8 +804,7 @@
 									<td>$InjuryDescription</td>
 									<td>$FriendlyPet</td>
 									<td>$ColonySetting</td>
-									<td>$Comments</td>
-									<td>$ReqAssistance</td>								
+									<td>$Comments</td>							
 									<td id='latCol'>$Lat</td>
 									<td id='lngCol'>$Lng</td>
 								</tr>
@@ -833,7 +827,6 @@
 				$Comments1 = $_POST['Comments1'];
 				$Responder = $_POST['Responder'];
 				$Status = $_POST['Status'];
-				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$FullName = $_POST['FullName'];
 				$RecordNumber1 = $_POST['RecordNumber'];
 				$DateAndTime = $_POST['DateAndTime'];
@@ -845,6 +838,7 @@
 				$County = $_POST['County'];
 				$ZipCode = $_POST['ZipCode'];
 				$AnyoneAttempted = $_POST['AnyoneAttempted'];
+				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$ApproximateCats = $_POST['ApproximateCats'];
 				$Kittens = $_POST['Kittens'];
 				$ColonyCareGiver = $_POST['ColonyCareGiver'];
@@ -854,7 +848,6 @@
 				$FriendlyPet = $_POST['FriendlyPet'];
 				$ColonySetting = $_POST['ColonySetting'];
 				$Comments = $_POST['Comments'];
-				$ReqAssistance = $_POST['ReqAssistance'];
 				$VolunteerResponding = $_POST['VolunteerResponding'];
 				$ResponseDate = $_POST['ResponseDate'];
 				$CustNeedOutcome = $_POST['CustNeedOutcome'];
@@ -954,14 +947,13 @@
 							BeatTeamLeader=?, 
 							Outcome=?, 
 							CompletionDate=?, 
-							FeedIfReturned=?, 
-							ReqAssistance=?, 
+							FeedIfReturned=?,
 							Lat=?, 
 							Lng=? 
 							where RecordNumber=?")) { echo "Update failed: Prepare failed. "; }
 							if(!$queryupdate->bind_param("ssssssssssssissssssssssssssssddi", $Comments1, $Responder, $Status, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, $City, $County, $ZipCode, $AnyoneAttempted, 
 							$ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription, $Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, 
-							$BeatTeamLeader, $Outcome, $CompletionDate, $FeedIfReturned, $ReqAssistance, $Lat, $Lng, $RecordNumber1)){ echo "Update failed: Binding failed. "; }
+							$BeatTeamLeader, $Outcome, $CompletionDate, $FeedIfReturned, $Lat, $Lng, $RecordNumber1)){ echo "Update failed: Binding failed. "; }
 							if(!$queryupdate->execute()){ 
 								echo "Update failed: Execute failed. "; 
 							}else{
@@ -1012,7 +1004,6 @@
 						FriendlyPet,
 						ColonySetting,
 						Comments,
-						ReqAssistance,
 						VolunteerResponding,
 						ResponseDate,
 						CustNeedOutcome,
@@ -1094,7 +1085,6 @@
 							<th><a href='search.php?sort=Responder'>Responder</a></th>
 							<th><a href='search.php?sort=Comments1'>Comments</a></th>
 							<th><a href='search.php?sort=Status'>Status</a></th>
-							<th><a href='search.php?sort=FeedIfReturned'>Will Feed</a></th>
 							<th><a href='search.php?sort=FullName'>FullName</a></th>
 							<th><a href='search.php?sort=Email'>Email</a></th>
 							<th><a href='search.php?sort=Phone1'>Phone1</a></th>
@@ -1103,8 +1093,9 @@
 							<th><a href='search.php?sort=City'>City</a></th>
 							<th><a href='search.php?sort=County'>County</a></th>
 							<th><a href='search.php?sort=ZipCode'>Zip</a></th>
-							<th><a href='search.php?sort=AnyoneAttempted'>Trapping/ Eartip</a></th>
-							<th><a href='search.php?sort=ApproximateCats'># Cats</a></th>
+							<th><a href='search.php?sort=AnyoneAttempted'>Trap/ Tip</a></th>
+							<th><a href='search.php?sort=FeedIfReturned'>Feed</a></th>
+							<th><a href='search.php?sort=ApproximateCats'>#Cats</a></th>
 							<th><a href='search.php?sort=Kittens'>Kittens</a></th>
 							<th><a href='search.php?sort=ColonyCareGiver'>Caregiver</a></th>
 							<th><a href='search.php?sort=FeederDescription'>Description</a></th>
@@ -1112,8 +1103,7 @@
 							<th><a href='search.php?sort=InjuryDescription'>Description</a></th>
 							<th><a href='search.php?sort=FriendlyPet'>Friendly</a></th>
 							<th><a href='search.php?sort=ColonySetting'>Setting</a></th>
-							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>
-							<th><a href='search.php?sort=ReqAssistance'>Assist</a></th>					
+							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>				
 							<th><a href='search.php?sort=Lat'>Latitude</a></th>
 							<th><a href='search.php?sort=Lng'>Longitude</a></th>
 
@@ -1129,7 +1119,7 @@
 					{
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
 						$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 						$myArray[0]=$RecordNumber;
@@ -1137,16 +1127,16 @@
 						$myArray[2]=$Responder;
 						$myArray[3]=$Comments1;
 						$myArray[4]=$Status;
-						$myArray[5]=$FeedIfReturned;
-						$myArray[6]=$FullName;
-						$myArray[7]=$Email;
-						$myArray[8]=$Phone1;
-						$myArray[9]=$Phone2;
-						$myArray[10]=$ColonyAddress;
-						$myArray[11]=$City;
-						$myArray[12]=$County;
-						$myArray[13]=$ZipCode;
-						$myArray[14]=$AnyoneAttempted;
+						$myArray[5]=$FullName;
+						$myArray[6]=$Email;
+						$myArray[7]=$Phone1;
+						$myArray[8]=$Phone2;
+						$myArray[9]=$ColonyAddress;
+						$myArray[10]=$City;
+						$myArray[11]=$County;
+						$myArray[12]=$ZipCode;
+						$myArray[13]=$AnyoneAttempted;
+						$myArray[14]=$FeedIfReturned;
 						$myArray[15]=$ApproximateCats;
 						$myArray[16]=$Kittens;
 						$myArray[17]=$ColonyCareGiver;
@@ -1155,26 +1145,25 @@
 						$myArray[20]=$InjuryDescription;
 						$myArray[21]=$FriendlyPet;
 						$myArray[22]=$ColonySetting;
-						$myArray[23]=$Comments;
-						$myArray[24]=$ReqAssistance;				
-						$myArray[25]=$Lat;
-						$myArray[26]=$Lng;
+						$myArray[23]=$Comments;				
+						$myArray[24]=$Lat;
+						$myArray[25]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="DateAndTime";
 						$myArray1[2]="Responder";
 						$myArray1[3]="Comments1";
 						$myArray1[4]="Status";
-						$myArray1[5]="FeedIfReturned";
-						$myArray1[6]="FullName";
-						$myArray1[7]="Email";
-						$myArray1[8]="Phone1";
-						$myArray1[9]="Phone2";
-						$myArray1[10]="ColonyAddress";
-						$myArray1[11]="City";
-						$myArray1[12]="County";
-						$myArray1[13]="ZipCode";
-						$myArray1[14]="AnyoneAttempted";
+						$myArray1[5]="FullName";
+						$myArray1[6]="Email";
+						$myArray1[7]="Phone1";
+						$myArray1[8]="Phone2";
+						$myArray1[9]="ColonyAddress";
+						$myArray1[10]="City";
+						$myArray1[11]="County";
+						$myArray1[12]="ZipCode";
+						$myArray1[13]="AnyoneAttempted";
+						$myArray1[14]="FeedIfReturned";
 						$myArray1[15]="ApproximateCats";
 						$myArray1[16]="Kittens";
 						$myArray1[17]="ColonyCareGiver";
@@ -1183,10 +1172,9 @@
 						$myArray1[20]="InjuryDescription";
 						$myArray1[21]="FriendlyPet";
 						$myArray1[22]="ColonySetting";
-						$myArray1[23]="Comments";
-						$myArray1[24]="ReqAssistance";				
-						$myArray1[25]="Lat";
-						$myArray1[26]="Lng";
+						$myArray1[23]="Comments";			
+						$myArray1[24]="Lat";
+						$myArray1[25]="Lng";
 						
 						print "
 						<tr id='$RecordNumber'>";
@@ -1241,7 +1229,6 @@
 							<td>$Responder</td>
 							<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>
 							<td id='statusCol'>$Status</td>
-							<td>$FeedIfReturned</td>
 							<td>$FullName</td>
 							<td>$Email</td>
 							<td>$Phone1</td>
@@ -1251,6 +1238,7 @@
 							<td>$County</td>
 							<td id='zipCodeCol'>$ZipCode</td>
 							<td>$AnyoneAttempted</td>
+							<td>$FeedIfReturned</td>
 							<td>$ApproximateCats</td>
 							<td>$Kittens</td>
 							<td>$ColonyCareGiver</td>
@@ -1259,8 +1247,7 @@
 							<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>
 							<td>$FriendlyPet</td>
 							<td>$ColonySetting</td>
-							<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>
-							<td>$ReqAssistance</td>							
+							<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>		
 							<td id='latCol'>$Lat</td>
 							<td id='lngCol'>$Lng</td>
 						</tr>
