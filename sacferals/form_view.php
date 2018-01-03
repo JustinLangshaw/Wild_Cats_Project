@@ -14,25 +14,13 @@
 
 <head>	
 	<title>Form View</title>
-	<style>
-		body {background-color: #B1C8CB;}
-		label {display: block;}
-		table, th, td 
-		{
-			border: 1px solid black;
-			background-color: #C2F7FE;
-		}
-		td{
-			max-width: 300px;
-			word-wrap: break-word;
-		}
-		textarea{
-			width: 90%;
-		}
-	</style>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="css/form_view.css">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="js/searchScript.js"></script> 
-	
 </head>
 <body>
 
@@ -106,7 +94,7 @@
 			{
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
 						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
 						
 				if($RecordNumber1==$RecordNumber)
@@ -164,7 +152,7 @@
 						$row = mysqli_fetch_row($result);
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 								$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-								$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
+								$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
 								$Outcome, $CompletionDate, $Lat, $Lng) = $row;
 
 							
@@ -185,8 +173,8 @@
 							 <br><label><input type='submit' name='recordEdit' value='Submit Edit'> <input type='submit' name='cancel' value='Cancel Edit'></label> ";
 							 
 								print "<table>
-								<tr><td><b>RecordNumber: </b></td><td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber </td></tr>
-								<tr><td><b>DateAndTime: </b></td> <td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime </td></tr>
+								<tr><td><b>ID: </b></td><td><input class='form-control' type='hidden' name='RecordNumber' value='$RecordNumber'>$RecordNumber </td></tr>
+								<tr><td><b>Date/Time: </b></td> <td><input class='form-control' type='hidden' name='DateAndTime' value='$DateAndTimes'>$DateAndTime </td></tr>
 								<tr><td><b>Responder: </b></td><td><input class='form-control' type='text' name='Responder' value='$Responder'> </td></tr>
 								<tr><td><b>Comments: </b></td><td><textarea class='form-control' name='Comments1' rows='4' value='$Comments1'>$Comments1</textarea></td> </tr>
 								<tr><td><b>Status: </b></td>
@@ -200,26 +188,25 @@
 												</select><br>
 									</form></td>
 								</tr>
-								<tr><td><b>FeedIfReturned: </b></td><td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'> </td>
 								<tr><td><b>Full Name: </b></td> <td><input class='form-control' type='text' name='FullName' value='$FullName'> </td></tr>
 								<tr><td><b>Email: </b></td><td><input class='form-control' type='text' name='Email' value='$Email'> </td></tr>
 								<tr><td><b>Phone1: </b></td> <td><input class='form-control' type='text' name='Phone1' value='$Phone1'> </td></tr>
 								<tr><td><b>Phone2: </b> <td><input class='form-control' type='text' name='Phone2' value='$Phone2'> </td></tr>
-								<tr><td><b>Colony Address: </b></td> <td><input class='form-control' type='text' name='ColonyAddress' value='$ColonyAddress'> </td></tr>
+								<tr><td><b>Address: </b></td> <td><input class='form-control' type='text' name='ColonyAddress' value='$ColonyAddress'> </td></tr>
 								<tr><td><b>City: </b></td> <td><input class='form-control' type='text' name='City' value='$City'> </td></tr>
 								<tr><td><b>County: </b></td> <td><input class='form-control' type='text' name='County' value='$County'> </td></tr>
-								<tr><td><b>Zip Code: </b></td> <td><input class='form-control' type='text' name='ZipCode' value='$ZipCode'> </td></tr>
-								<tr><td><b>Anyone Attempted: </b></td> <td><input class='form-control' type='text' name='AnyoneAttempted' value='$AnyoneAttempted'> </td></tr>
-								<tr><td><b>Approximate Cats: </b></td> <td><input class='form-control' type='text' name='ApproximateCats' value='$ApproximateCats'> </td></tr>
+								<tr><td><b>Zip: </b></td> <td><input class='form-control' type='text' name='ZipCode' value='$ZipCode'> </td></tr>
+								<tr><td><b>Trap/Tip: </b></td> <td><input class='form-control' type='text' name='AnyoneAttempted' value='$AnyoneAttempted'> </td></tr>
+								<tr><td><b>Feed: </b></td><td><input class='form-control' type='text' name='FeedIfReturned' value='$FeedIfReturned'> </td>
+								<tr><td><b>#Cats: </b></td> <td><input class='form-control' type='text' name='ApproximateCats' value='$ApproximateCats'> </td></tr>
 								<tr><td><b>Kittens: </b></td> <td><input class='form-control' type='text' name='Kittens' value='$Kittens'> </td></tr>
-								<tr><td><b>Colony Care Giver: </b></td> <td><input class='form-control' type='text' name='ColonyCareGiver' value='$ColonyCareGiver'> </td></tr>
-								<tr><td><b>Feeder Description: </b> <td><textarea class='form-control' name='FeederDescription'  rows='4' value='$FeederDescription'>$FeederDescription</textarea></td> </tr>
-								<tr><td><b>Injured: </b></td> <td><input class='form-control' type='text' name='Injured' value='$Injured'> </td></tr>
-								<tr><td><b>Injury Description: </b></td> <td><textarea class='form-control' name='InjuryDescription'  rows='4' value='$InjuryDescription'>$InjuryDescription</textarea></td> </tr>
-								<tr><td><b>Friendly Pet: </b></td> <td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'> </td></tr>
-								<tr><td><b>Colony Setting: </b></td> <td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'> </td></tr>
+								<tr><td><b>Caregiver: </b></td> <td><input class='form-control' type='text' name='ColonyCareGiver' value='$ColonyCareGiver'> </td></tr>
+								<tr><td><b>Description: </b> <td><textarea class='form-control' name='FeederDescription'  rows='4' value='$FeederDescription'>$FeederDescription</textarea></td> </tr>
+								<tr><td><b>Sick: </b></td> <td><input class='form-control' type='text' name='Injured' value='$Injured'> </td></tr>
+								<tr><td><b>Description: </b></td> <td><textarea class='form-control' name='InjuryDescription'  rows='4' value='$InjuryDescription'>$InjuryDescription</textarea></td> </tr>
+								<tr><td><b>Friendly: </b></td> <td><input class='form-control' type='text' name='FriendlyPet' value='$FriendlyPet'> </td></tr>
+								<tr><td><b>Setting: </b></td> <td><input class='form-control' type='text' name='ColonySetting' value='$ColonySetting'> </td></tr>
 								<tr><td><b>Comments: </b></td> <td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td> </td></tr>
-								<tr><td><b>Req Assistance: </b> <td><input class='form-control' type='text' name='ReqAssistance' value='$ReqAssistance'> </td></tr>
 								<tr><td><b>Latitude: </b></td> <td><input class='form-control' type='text' name='Lat' value='$Lat'> </td></tr>
 								<tr><td><b>Longitude: </b></td> <td><input class='form-control' type='text' name='Lng' value='$Lng'></td></tr>
 							</table>";
@@ -271,7 +258,6 @@
 				$FriendlyPet = $_POST['FriendlyPet'];
 				$ColonySetting = $_POST['ColonySetting'];
 				$Comments = $_POST['Comments'];
-				$ReqAssistance = $_POST['ReqAssistance'];
 				$VolunteerResponding = $_POST['VolunteerResponding'];
 				$ResponseDate = $_POST['ResponseDate'];
 				$CustNeedOutcome = $_POST['CustNeedOutcome'];
@@ -294,7 +280,7 @@
 						 ApproximateCats='$ApproximateCats', Kittens='$Kittens', ColonyCareGiver='$ColonyCareGiver', FeederDescription='$FeederDescription',
 						 Injured='$Injured', InjuryDescription='$InjuryDescription', FriendlyPet='$FriendlyPet', ColonySetting='$ColonySetting', Comments='$Comments',
 						 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
-						 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', ReqAssistance='$ReqAssistance', 
+						 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', 
 						 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
 
 					//echo $queryupdate;
@@ -310,35 +296,34 @@
 			if(!isset($_GET['editrow'])&& !(isset($_GET['del'])))
 			{
 				print"<br><table>
-				<tr><td><b>RecordNumber: </b></td><td>$RecordNumber</td></tr>
-				<tr><td><b>DateAndTime: </b></td><td> $DateAndTime</td></tr>
+				<tr><td><b>ID: </b></td><td>$RecordNumber</td></tr>
+				<tr><td><b>Date/Time: </b></td><td> $DateAndTime</td></tr>
 				<tr><td><b>Responder: </b></td><td>$Responder</td></tr>
 				<tr><td><b>Comments: </b></td>
 					<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td></tr>
 				<tr><td><b>Status: </b></td><td>$Status</td></tr>
-				<tr><td><b>FeedIfReturned: </b></td>
-					<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td></tr>
 				<tr><td><b>Full Name: </b></td><td> $FullName</td></tr>
 				<tr><td><b>Email: </b></td><td> $Email</td></tr>
 				<tr><td><b>Phone1: </b></td><td> $Phone1</td></tr>
 				<tr><td><b>Phone2: </b></td><td> $Phone2</td></tr>
-				<tr><td><b>ColonyAddress: </b></td><td> $ColonyAddress</td></tr>
+				<tr><td><b>Address: </b></td><td> $ColonyAddress</td></tr>
 				<tr><td><b>City: </b></td><td> $City</td></tr>
 				<tr><td><b>County: </b></td><td> $County</td></tr>
 				<tr><td><b>ZipCode: </b></td><td> $ZipCode</td></tr>
-				<tr><td><b>AnyoneAttempted: </b></td><td> $AnyoneAttempted</td></tr>
-				<tr><td><b>ApproximateCats: </b></td><td> $ApproximateCats</td></tr>
+				<tr><td><b>Trap/Tip: </b></td><td> $AnyoneAttempted</td></tr>
+				<tr><td><b>Feed: </b></td>
+					<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td></tr>
+				<tr><td><b>#Cats: </b></td><td> $ApproximateCats</td></tr>
 				<tr><td><b>Kittens: </b></td><td> $Kittens</td></tr>
-				<tr><td><b>ColonyCareGiver: </b></td><td> $ColonyCareGiver</td></tr>
-				<tr><td><b>FeederDescription: </b></td><td> $FeederDescription</td></tr>
-				<tr><td><b>Injured: </b></td><td> $Injured</td></tr>
-				<tr><td><b>InjuryDescription: </b></td>
+				<tr><td><b>Caregiver: </b></td><td> $ColonyCareGiver</td></tr>
+				<tr><td><b>Description: </b></td><td> $FeederDescription</td></tr>
+				<tr><td><b>Sick: </b></td><td> $Injured</td></tr>
+				<tr><td><b>Description: </b></td>
 					<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td></tr>
-				<tr><td><b>FriendlyPet: </b></td><td> $FriendlyPet</td></tr>
-				<tr><td><b>ColonySetting: </b></td><td> $ColonySetting</td></tr>
+				<tr><td><b>Friendly: </b></td><td> $FriendlyPet</td></tr>
+				<tr><td><b>Setting: </b></td><td> $ColonySetting</td></tr>
 				<tr><td><b>Comments: </b></td>
 					<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td></tr>
-				<tr><td><b>ReqAssitance: </b></td><td> $ReqAssitance</td></tr>
 				<tr><td><b>Latitude: </b></td><td> $Lat</td></tr>
 				<tr><td><b>Longitude: </b></td><td> $Lng</td></tr>
 				</table>
