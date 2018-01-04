@@ -28,11 +28,11 @@
 		$level = $_SESSION['level'];
 
 		//prevent page from appending same query to current query
-		$curr_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		/*$curr_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		if(strpos($curr_url,"?query")>0){
 			$cleared_url = strtok($curr_url, "?"); //remove get variables
 			header("Location: ".$cleared_url);
-		}
+		}*/
 
 		if($level == 1 || $level == 2)
 		{
@@ -103,7 +103,7 @@
 	<div class="row">
 		<div class="col-md-4">
 			<form id='form1' name='form1' method='get' action='search.php'>
-				<p id="columnselect">Note: Hold down ctrl or shift to select multiple columns</p>
+				<p id="columnselect"><small>Note: Hold down ctrl or shift to select multiple columns</small></p>
 				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
 					<option value='DateAndTime'>Date And Time</option>
@@ -134,7 +134,7 @@
 				</select>
 				<br>
 				<input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
-				<input class="btn btn-default" type='submit' name='Select All' value='Reset'/>
+				<input class="btn btn-default" type='submit' name='SelectAll' value='Reset'/>
 			</form>
 		</div>
 		<div class="col-md-8">
@@ -228,6 +228,8 @@
 				</div>
 				<div class="row">
 					<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
+					&nbsp;&nbsp;&nbsp;
+					<span id="columnselect"><small>Note: Press "Reset" to clear the query</small></span>
 				</div>
 			</form>
 		</div>
@@ -282,6 +284,11 @@
 	
 <?php		
 
+			if(isset($_GET['SelectAll'])) //reset all columns then set the variables
+			{
+				unset($_SESSION['selectedColumns']);
+			}
+
 			$thString="";
 			$tdString="";
 			$thEditString="";
@@ -290,73 +297,65 @@
 			//change selected columns only if unset
 			//if(!isset($_SESSION['selectedColumns'])){ 
 
-			if(count($_SESSION['selectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
+			/*if(count($_SESSION['selectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
 			{
 				$_GET['select2'] = $_SESSION['selectedColumns'];
-			}
+			}*/
 
-			if(count($_GET['select2']) >= 0)
+			if(isset($_GET['Submit']))//count($_GET['select2']) >= 0)
 			{
 				$_SESSION['selectedColumns'] = $_GET['select2'];
 			}
 
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				$thEditString.="<th><a>".$selectedOption."</a></th>";
-			}
-
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				$tdString.="<td>$".$selectedOption."</td>";
-			}
-
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				if($selectedOption=="RecordNumber") $printvalue = "ID";
-				else if($selectedOption=="Comments1") $printvalue = "Comments";
-				else if($selectedOption=="DateAndTime") $printvalue = "Date/Time";
-				else if($selectedOption=="FeedIfReturned") $printvalue = "Feed";
-				else if($selectedOption=="ColonyAddress") $printvalue = "Address";
-				else if($selectedOption=="ZipCode") $printvalue = "Zip";
-				else if($selectedOption=="AnyoneAttempted") $printvalue = "Trap/ Tip";
-				else if($selectedOption=="ApproximateCats") $printvalue = "#Cats";
-				else if($selectedOption=="ColonyCareGiver") $printvalue = "Caregiver";
-				else if($selectedOption=="FeederDescription" || $selectedOption=="InjuryDescription") $printvalue = "Description";
-				else if($selectedOption=="Injured") $printvalue = "Sick";
-				else if($selectedOption=="FriendlyPet") $printvalue = "Friendly";
-				else if($selectedOption=="ColonySetting") $printvalue = "Setting";
-				else if($selectedOption=="VolunteerResponding") $printvalue = "Responder";
-				else if($selectedOption=="ResponseDate") $printvalue = "Date";
-				else if($selectedOption=="CustNeedOutcome") $printvalue = "Needs";
-				else $printvalue = $selectedOption;
-				$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
-			}
-
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
-					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
-				else if($selectedOption=="Status"){
-					if($Status=='') $selected='';
-					else if($Status=="Open") $selectedOpen='selected';
-					else if($Status=="Assigned") $selectedAssigned='selected';
-					else if($Status=="Closed") $selectedClosed='selected';
-					else if($Status=="Critical") $selectedCritical='selected';
-					else if($Status=="Kittens") $selectedKittens='selected';
-			
-					$tdEditString.="<td><div style='text-align:Center'>
-						<form id='form1' name='form1' method='get' action='search.php'>
-						<select class='input-sm' name='Status'> 
-							<option value='Open'".$selectedOpen.">Open</option>
-							<option value='Contacted'".$selectedContacted.">Contacted</option>
-							<option value='In-Progress'".$selectedInProgress.">In-Progress</option>
-							<option value='Priority'".$selectedPriority.">Priority</option>
-							<option value='Closed'".$selectedClosed.">Closed</option>
-						</select><br>
-						</form></div></td>";
+			if(isset($_SESSION['selectedColumns'])){
+				foreach ($_SESSION['selectedColumns'] as $selectedOption)
+				{
+					$thEditString.="<th><a>".$selectedOption."</a></th>";
+					$tdString.="<td>$".$selectedOption."</td>";
+					
+					if($selectedOption=="RecordNumber") $printvalue = "ID";
+					else if($selectedOption=="Comments1") $printvalue = "Comments";
+					else if($selectedOption=="DateAndTime") $printvalue = "Date/Time";
+					else if($selectedOption=="FeedIfReturned") $printvalue = "Feed";
+					else if($selectedOption=="ColonyAddress") $printvalue = "Address";
+					else if($selectedOption=="ZipCode") $printvalue = "Zip";
+					else if($selectedOption=="AnyoneAttempted") $printvalue = "Trap/ Tip";
+					else if($selectedOption=="ApproximateCats") $printvalue = "#Cats";
+					else if($selectedOption=="ColonyCareGiver") $printvalue = "Caregiver";
+					else if($selectedOption=="FeederDescription" || $selectedOption=="InjuryDescription") $printvalue = "Description";
+					else if($selectedOption=="Injured") $printvalue = "Sick";
+					else if($selectedOption=="FriendlyPet") $printvalue = "Friendly";
+					else if($selectedOption=="ColonySetting") $printvalue = "Setting";
+					else if($selectedOption=="VolunteerResponding") $printvalue = "Responder";
+					else if($selectedOption=="ResponseDate") $printvalue = "Date";
+					else if($selectedOption=="CustNeedOutcome") $printvalue = "Needs";
+					else $printvalue = $selectedOption;
+					$thString.="<th><a href='search.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
+					
+					if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
+						$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
+					else if($selectedOption=="Status"){
+						if($Status=='') $selected='';
+						else if($Status=="Open") $selectedOpen='selected';
+						else if($Status=="Assigned") $selectedAssigned='selected';
+						else if($Status=="Closed") $selectedClosed='selected';
+						else if($Status=="Critical") $selectedCritical='selected';
+						else if($Status=="Kittens") $selectedKittens='selected';
+				
+						$tdEditString.="<td><div style='text-align:Center'>
+							<form id='form1' name='form1' method='get' action='search.php'>
+							<select class='input-sm' name='Status'> 
+								<option value='Open'".$selectedOpen.">Open</option>
+								<option value='Contacted'".$selectedContacted.">Contacted</option>
+								<option value='In-Progress'".$selectedInProgress.">In-Progress</option>
+								<option value='Priority'".$selectedPriority.">Priority</option>
+								<option value='Closed'".$selectedClosed.">Closed</option>
+							</select><br>
+							</form></div></td>";
+					}
+					else
+						$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
 				}
-				else
-					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
 			}
 
 			/*
@@ -421,7 +420,7 @@
 					$search = $search.")";
 					$r = mysqli_query($link, $search);
 					if(mysqli_num_rows($r)==0)
-						echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+						echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$search."</div>";
 					else $_SESSION['querysearch'] = $search;
 				}
 			}
@@ -433,7 +432,7 @@
 				$sea = "select * from CannedQueries where QueryName='".$cannedqueryname."'";
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0)
-					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$sea."</div>";
 				else {
 					$rw = mysqli_fetch_row($res);
 					$_SESSION['querysearch'] = $rw[2];
@@ -488,7 +487,7 @@
 				$cols = explode(" ",$wrttnqry);
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0 || (!(strcasecmp($cols[0],'select')) && $cols[3]!='ReportColonyForm'))
-					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$wrttnqry."</div>";
 				else $_SESSION['querysearch'] = $wrttnqry;
 			}
 			//manual query check for existance & then display modal to get name
@@ -527,11 +526,8 @@
 				}
 			}
 			
-			if(isset($_GET['Reset']))
-			{
-				unset($_SESSION['selectedColumns']);
-			}
-			if(isset($_GET['RefreshTable'])){ //nullify the query
+			
+			if(isset($_GET['RefreshTable'])){ //nullify the query 
 				unset($_SESSION['querysearch']);
 			}
 			
@@ -646,8 +642,8 @@
 
 								print "
 								<tr>
-									<td> <label><input type='submit' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
-										 <label><input type='submit' name='cancel' value='Cancel Edit' id='cancelEdit'></label> </td>";
+									<td> <label><input type='submit' class='form-control' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
+										 <label><input type='submit' class='form-control' name='cancel' value='Cancel Edit' id='cancelEdit'></label> </td>";
 
 
 								if($tdEditString != '')
@@ -663,7 +659,7 @@
 
 
 
-									foreach ($_GET['select2'] as $selectedOption)
+									foreach ($_SESSION['selectedColumns'] as $selectedOption)
 									{ 
 										if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 										{
@@ -688,15 +684,17 @@
 												</select><br>
 												</form></div></td>";
 										}
+										else if ($selectedOption=="Comments1" || $selectedOption=="FeederDescription" || $selectedOption=="InjuryDescription" || $selectedOption=="Comments")
+											$tdEditString.="<td><textarea class='form-control' name='".$selectedOption."'  rows='4' value='$selectedOption'>".$$selectedOption."</textarea></td>";
 										else
 										{
-											$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$$selectedOption."'></td>";
+											$tdEditString.="<td><input class='form-control' type='text' name='".$selectedOption."' value='".$$selectedOption."'></td>";
 										}
 										//echo $selectedOption."\n";
 									}
 
 
-									if(!in_array($RecordNumber, $_GET['select2']))
+									if(!in_array($RecordNumber, $_SESSION['selectedColumns']))
 									{
 
 										$tdEditString.="<input type='hidden' name='RecordNumber' value='".$RecordNumber1."' readonly>";
@@ -768,7 +766,7 @@
 								if($tdString != '')
 								{
 									$tdString = "";
-									foreach ($_GET['select2'] as $selectedOption)
+									foreach ($_SESSION['selectedColumns'] as $selectedOption)
 									{
 										$tdString.="<td>".$$selectedOption."</td>";
 										//echo $selectedOption."\n";
@@ -784,7 +782,7 @@
 									<td>$RecordNumber</td>
 									<td id='dateTimeCol'>$DateAndTime</td>
 									<td>$Responder</td>
-									<td>$Comments1</td>
+									<td><textarea class='form-control' value='$Comments1' rows='3' readonly>$Comments1</textarea></td>
 									<td id='statusCol'>$Status</td>
 									<td>$FullName</td>
 									<td>$Email</td>
@@ -799,12 +797,12 @@
 									<td>$ApproximateCats</td>
 									<td>$Kittens</td>
 									<td>$ColonyCareGiver</td>
-									<td>$FeederDescription</td>
+									<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>
 									<td>$Injured</td>
-									<td>$InjuryDescription</td>
+									<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>
 									<td>$FriendlyPet</td>
 									<td>$ColonySetting</td>
-									<td>$Comments</td>							
+									<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>		
 									<td id='latCol'>$Lat</td>
 									<td id='lngCol'>$Lng</td>
 								</tr>
@@ -867,13 +865,13 @@
 					//print  "count is : ".count($_GET['select2']);
 					//print_r($_GET['select2']);
 
-					if(count($_GET['select2']) !=0 )
+					if(count($_SESSION['selectedColumns']) !=0 )
 					{
 						/* Build $query*/
 
 						$query = "select * from ReportColonyForm where ";
 
-						foreach($_GET['select2'] as $selectedItem)
+						foreach($_SESSION['selectedColumns'] as $selectedItem)
 						{
 							$query.=$selectedItem." ='".$$selectedItem."'";
 							$query.=" and ";
@@ -892,7 +890,7 @@
 								//print "hi?";
 							}
 
-							foreach($_GET['select2'] as $selectedItem)
+							foreach($_SESSION['selectedColumns'] as $selectedItem)
 							{
 								if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
 								{
@@ -1180,9 +1178,9 @@
 						<tr id='$RecordNumber'>";
 
 							//$_GET['select2'] as RecordNumber
-							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number
+							foreach ($_SESSION['selectedColumns'] as $selectedOption)//only once every time.. record number
 							{
-								for ($i = 0; $i<29; $i++)
+								for ($i = 0; $i<26; $i++)
 								{
 									//if recordNumber == recordNumber
 									if ($myArray1[$i] == $selectedOption)
@@ -1196,7 +1194,7 @@
 							if($tdString != '')
 							{
 								$tdString = "";
-									foreach ($_GET['select2'] as $selectedOption)
+									foreach ($_SESSION['selectedColumns'] as $selectedOption)
 									{
 										switch($selectedOption){
 											case 'Status': $tdString.="<td = id='statusCol'>".$$selectedOption."</td>"; break;
