@@ -458,7 +458,7 @@
 					$search = $search.")";
 					$r = mysqli_query($link, $search);
 					if(mysqli_num_rows($r)==0)
-						echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+						echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$search."</div>";
 					else $_SESSION['volunteerquerysearch'] = $search;
 				}
 			}
@@ -470,7 +470,7 @@
 				$sea = "select * from CannedQueriesVolunteers where QueryName='".$cannedqueryname."'";
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0)
-					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$sea."</div>";
 				else {
 					$rw = mysqli_fetch_row($res);
 					$_SESSION['volunteerquerysearch'] = $rw[2];
@@ -492,7 +492,7 @@
 						echo "<div id='emptyquerymsg'><h3>This Canned Query already exists under the name \"".$rw[1]."\"</h3></div>";
 					}
 				} else {
-					echo "<div id='emptyquerymsg'><h3>No Query to save</h3></div>";
+					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$sea."</div>";
 				}
 			}
 			//canned query save
@@ -524,7 +524,7 @@
 				$cols = explode(" ",$wrttnqry);
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0 || (!(strcasecmp($cols[0],'select')) && $cols[3]!='VolunteerForm'))
-					echo "<div id='emptyquerymsg'><h3> EMPTY QUERY </h3></div>";
+					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$wrttnqry."</div>";
 				else $_SESSION['volunteerquerysearch'] = $wrttnqry;
 			}
 			//manual query check for existance & then display modal to get name
