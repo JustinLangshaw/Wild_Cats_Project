@@ -227,12 +227,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 				</div>
 				
 				
-				<label class="col-form-label">*Address of where cats are located
-					<div id="tooltip"><img src="images/blue_question_mark.png" alt="?"/>
-						<span class="tooltiptext">If you have any additional information,
-							indicate in the Additional Comments box at the very bottom of the form.</span>
-					</div>
-				</label>
+				<label class="col-form-label">*Address of where cats are located</label>
 				<span id="invalidAddr" type="hidden"></span>
 				<div class="well">
 					<div class="form-group row">
