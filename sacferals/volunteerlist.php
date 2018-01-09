@@ -27,11 +27,11 @@
 		$level = $_SESSION['level'];
 
 		//prevent page from appending same query to current query
-		$curr_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		/*$curr_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		if(strpos($curr_url,"?query")>0){
 			$cleared_url = strtok($curr_url, "?"); //remove get variables
 			header("Location: ".$cleared_url);
-		}
+		}*/
 
 		if($level == 1 || $level==2)
 		{
@@ -101,7 +101,7 @@
 	<div class="row">
 		<div class="col-md-4">
 			<form id='form1' name='form1' method='get' action='volunteerlist.php'>
-				<p id="columnselect">Note: Hold down ctrl or shift to select multiple columns</p>
+				<p id="columnselect"><small>Note: Hold down ctrl or shift to select multiple columns</small></p>
 				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
 					<option value='Comments'>Triage Comments</option>
@@ -145,7 +145,7 @@
 				</select>
 				<br>
 				<input class="btn btn-primary" type='submit' name='Submit' value='Submit' tabindex='2' />
-				<input class="btn btn-default" type='submit' name='Select All' value='Reset'/>
+				<input class="btn btn-default" type='submit' name='SelectAll' value='Reset'/>
 			</form>
 		</div>
 		<div class="col-md-8">
@@ -304,7 +304,11 @@
 		</div>
 	</div>
 
-<?php		
+<?php	
+			if(isset($_GET['SelectAll'])){
+				unset($_SESSION['volunteerselectedColumns']);
+			}
+
 			$thString="";
 			$tdString="";
 			$thEditString="";
@@ -313,72 +317,65 @@
 			//change selected columns only if unset
 			//if(!isset($_SESSION['volunteerselectedColumns'])){ 
 
-			if(count($_SESSION['volunteerselectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
+			/*if(count($_SESSION['volunteerselectedColumns']) > 0 && ( count($_GET['editrow']) != 0 || count($_POST['recordEdit']) != 0 ))
 			{
 				$_GET['select2'] = $_SESSION['volunteerselectedColumns'];
-			}
+			}*/
 
-			if(count($_GET['select2']) >= 0)
+			if(isset($_GET['Submit']))//count($_GET['select2']) >= 0)
 			{
 				$_SESSION['volunteerselectedColumns'] = $_GET['select2'];
 			}
 
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				$thEditString.="<th><a>".$selectedOption."</a></th>";
-			}
+			if(isset($_SESSION['volunteerselectedColumns'])){
+				foreach ($_SESSION['volunteerselectedColumns'] as $selectedOption)
+				{
+					$thEditString.="<th><a>".$selectedOption."</a></th>";
+					$tdString.="<td>$".$selectedOption."</td>";
+					
+					if($selectedOption=="RecordNumber") $printvalue = "ID";
+					else if($selectedOption=="Comments") $printvalue = "Triage Comments";
+					else if($selectedOption=="VolunteerStatus") $printvalue = "Volunteer Status";
+					else if($selectedOption=="DateAndTime") $printvalue = "Date Submitted";
+					else if($selectedOption=="WorkshopAttended") $printvalue = "Workshop Attended";
+					else if($selectedOption=="WorkshopDate") $printvalue = "Workshop Date";
+					else if($selectedOption=="DateActivated") $printvalue = "Date Activated";
+					else if($selectedOption=="FullName") $printvalue = "Full Name";
+					else if($selectedOption=="PreferedContact") $printvalue = "Prefered Contact";
+					else if($selectedOption=="contactemail") $printvalue = "Prefered Email";
+					else if($selectedOption=="contactphone1") $printvalue = "Prefered Phone1";
+					else if($selectedOption=="contactphone2") $printvalue = "Prefered Phone2";
+					else if($selectedOption=="TypeOfWork") $printvalue = "Type Of Work";
+					else if($selectedOption=="transporting") $printvalue = "Transporter";
+					else if($selectedOption=="helptrap") $printvalue = "Trapper";
+					else if($selectedOption=="helpeducate") $printvalue = "Educator";
+					else if($selectedOption=="usingphone") $printvalue = "Triage";
+					else if($selectedOption=="other") $printvalue = "Other";
+					else if($selectedOption=="OtherTasks") $printvalue = "Other Tasks Details";
+					else if($selectedOption=="PastWorkExp") $printvalue = "Past Experience";
+					else if($selectedOption=="ResponseDate") $printvalue = "Response Date";
+					else if($selectedOption=="EmailResponse") $printvalue = "Email Response";
+					else if($selectedOption=="BEATId") $printvalue = "BEAT ID";
+					else if($selectedOption=="BEATName") $printvalue = "BEAT Name";
+					else if($selectedOption=="BEATGeneralArea") $printvalue = "BEAT Gen. Area";
+					else if($selectedOption=="BEATZipCodes") $printvalue = "BEAT Zip Code";
+					else if($selectedOption=="BEATTrainDate") $printvalue = "BEAT Train Date";
+					else if($selectedOption=="BEATMembers") $printvalue = "BEAT Member";
+					else if($selectedOption=="BEATMembersPhone") $printvalue = "BEAT Member Phone";
+					else if($selectedOption=="BEATMemberEmails") $printvalue = "BEAT Member Email";
+					else if($selectedOption=="BEATType") $printvalue = "BEAT Type";
+					else if($selectedOption=="BEATNotes") $printvalue = "BEAT Notes";
+					else if($selectedOption=="BEATStatus") $printvalue = "BEAT Status";
+					else if($selectedOption=="TriageBEATNotes") $printvalue = "BEAT Triage Notes";
+					else $printvalue = $selectedOption;
+					$thString.="<th><a href='volunteerlist.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
+					
+					if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
+						$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
+					else
+						$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
 
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				$tdString.="<td>$".$selectedOption."</td>";
-			}
-
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				if($selectedOption=="RecordNumber") $printvalue = "ID";
-				else if($selectedOption=="Comments") $printvalue = "Triage Comments";
-				else if($selectedOption=="VolunteerStatus") $printvalue = "Volunteer Status";
-				else if($selectedOption=="DateAndTime") $printvalue = "Date Submitted";
-				else if($selectedOption=="WorkshopAttended") $printvalue = "Workshop Attended";
-				else if($selectedOption=="WorkshopDate") $printvalue = "Workshop Date";
-				else if($selectedOption=="DateActivated") $printvalue = "Date Activated";
-				else if($selectedOption=="PreferedContact") $printvalue = "Prefered Contact";
-				else if($selectedOption=="contactemail") $printvalue = "Prefered Email";
-				else if($selectedOption=="contactphone1") $printvalue = "Prefered Phone1";
-				else if($selectedOption=="contactphone2") $printvalue = "Prefered Phone2";
-				else if($selectedOption=="TypeOfWork") $printvalue = "Type Of Work";
-				else if($selectedOption=="transporting") $printvalue = "Transporter";
-				else if($selectedOption=="helptrap") $printvalue = "Trapper";
-				else if($selectedOption=="helpeducate") $printvalue = "Educator";
-				else if($selectedOption=="usingphone") $printvalue = "Triage";
-				else if($selectedOption=="other") $printvalue = "Other";
-				else if($selectedOption=="OtherTasks") $printvalue = "Other Tasks Details";
-				else if($selectedOption=="PastWorkExp") $printvalue = "Past Experience";
-				else if($selectedOption=="ResponseDate") $printvalue = "Response Date";
-				else if($selectedOption=="EmailResponse") $printvalue = "Email Response";
-				else if($selectedOption=="BEATId") $printvalue = "BEAT ID";
-				else if($selectedOption=="BEATName") $printvalue = "BEAT Name";
-				else if($selectedOption=="BEATGeneralArea") $printvalue = "BEAT Gen. Area";
-				else if($selectedOption=="BEATZipCodes") $printvalue = "BEAT Zip Code";
-				else if($selectedOption=="BEATTrainDate") $printvalue = "BEAT Train Date";
-				else if($selectedOption=="BEATMembers") $printvalue = "BEAT Member";
-				else if($selectedOption=="BEATMembersPhone") $printvalue = "BEAT Member Phone";
-				else if($selectedOption=="BEATMemberEmails") $printvalue = "BEAT Member Email";
-				else if($selectedOption=="BEATType") $printvalue = "BEAT Type";
-				else if($selectedOption=="BEATNotes") $printvalue = "BEAT Notes";
-				else if($selectedOption=="BEATStatus") $printvalue = "BEAT Status";
-				else if($selectedOption=="TriageBEATNotes") $printvalue = "BEAT Triage Notes";
-				else $printvalue = $selectedOption;
-				$thString.="<th><a href='volunteerlist.php?sort=".$selectedOption."'>".$printvalue."</a></th>";
-			}
-
-			foreach ($_GET['select2'] as $selectedOption)
-			{
-				if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
-					$tdEditString.="<td><input type='hidden' name='".$selectedOption."' value='$".$selectedOption."'>$".$selectedOption."</td>";
-				else
-					$tdEditString.="<td><input type='text' name='".$selectedOption."' value='".$selectedOption."'>$".$selectedOption."</td>";
-
+				}
 			}
 
 			/*
@@ -548,9 +545,6 @@
 				}
 			}
 			
-			if(isset($_GET['Reset'])){
-				unset($_SESSION['volunteerselectedColumns']);
-			}
 			if(isset($_GET['RefreshTable'])){ //nullify the query
 				unset($_SESSION['volunteerquerysearch']);
 			}
@@ -689,7 +683,7 @@
 
 
 
-									foreach ($_GET['select2'] as $selectedOption)
+									foreach ($_SESSION['volunteerselectedColumns'] as $selectedOption)
 									{ 
 										if($selectedOption=="RecordNumber" || $selectedOption=="DateAndTime" )
 										{
@@ -703,7 +697,7 @@
 									}
 
 
-									if(!in_array($RecordNumber, $_GET['select2']))
+									if(!in_array($RecordNumber, $_SESSION['volunteerselectedColumns']))
 									{
 										$tdEditString.="<input type='hidden' name='RecordNumber' value='".$RecordNumber1."' readonly>";
 									}
@@ -763,7 +757,7 @@
 								if($tdString != '')
 								{
 									$tdString = "";
-									foreach ($_GET['select2'] as $selectedOption)
+									foreach ($_SESSION['volunteerselectedColumns'] as $selectedOption)
 									{
 										$tdString.="<td>".$$selectedOption."</td>";
 										//echo $selectedOption."\n";
@@ -880,12 +874,12 @@
 				{
 					//print  "count is : ".count($_GET['select2']);
 					//print_r($_GET['select2']);
-					if(count($_GET['select2']) !=0 )
+					if(count($_SESSION['volunteerselectedColumns']) !=0 )
 					{
 						/* Build $query*/						
 						$query = "select * from VolunteerForm where ";
 
-						foreach($_GET['select2'] as $selectedItem)
+						foreach($_SESSION['volunteerselectedColumns'] as $selectedItem)
 						{
 							$query.=$selectedItem." ='".$$selectedItem."'";
 							$query.=" and ";
@@ -899,12 +893,12 @@
 						{
 							$queryupdate = " update VolunteerForm set ";
 
-							if(count($_GET['select2'] == 0))
+							if(count($_SESSION['volunteerselectedColumns'] == 0))
 							{
 								//print "hi?";
 							}
 
-							foreach($_GET['select2'] as $selectedItem)
+							foreach($_SESSION['volunteerselectedColumns'] as $selectedItem)
 							{
 								if($selectedItem == "RecordNumber" || $selectedItem == "DateAndTime")
 								{
@@ -1176,9 +1170,9 @@
 						$myArray[38]="WorkshopDate";
 
 							//$_GET['select2'] as RecordNumber
-							foreach ($_GET['select2'] as $selectedOption)//only once every time.. record number
+							foreach ($_SESSION['volunteerselectedColumns'] as $selectedOption)//only once every time.. record number
 							{
-								for ($i = 0; $i<29; $i++)
+								for ($i = 0; $i<39; $i++)
 								{
 									//if recordNumber == recordNumber
 									if ($myArray1[$i] == $selectedOption)
@@ -1194,7 +1188,7 @@
 							if($tdString != '')
 							{
 								$tdString = "";
-									foreach ($_GET['select2'] as $selectedOption)
+									foreach ($_SESSION['volunteerselectedColumns'] as $selectedOption)
 									{
 										switch($selectedOption){
 											case 'DateAndTime': $tdString.="<td id='dateTimeCol'>".$$selectedOption."</td>"; break;
