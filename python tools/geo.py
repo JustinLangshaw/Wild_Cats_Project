@@ -21,7 +21,7 @@ rows = 44
 wb2 = xlrd.open_workbook(filename)
 sheet1 = wb2.sheet_by_name(sheet)
 
-#Loops through each rows in excel
+#Loops through each row in excel
 for x in range(0, rows):
     try:
         #Read address informations from file
