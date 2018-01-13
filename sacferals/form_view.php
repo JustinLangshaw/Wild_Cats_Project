@@ -94,8 +94,8 @@
 			{
 				list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $Lat, $Lng) = $row;
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, 
+						$CustNeedOutcome, $BeatTeamLeader, $Outcome, $CompletionDate, $Lat, $Lng) = $row;
 						
 				if($RecordNumber1==$RecordNumber)
 				{
@@ -151,9 +151,9 @@
 						$result = mysqli_query($link, $query);
 						$row = mysqli_fetch_row($result);
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
-								$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-								$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-								$Outcome, $CompletionDate, $Lat, $Lng) = $row;
+						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, 
+						$CustNeedOutcome, $BeatTeamLeader, $Outcome, $CompletionDate, $Lat, $Lng) = $row;
 
 							
 						
@@ -282,7 +282,6 @@
 						 VolunteerResponding='$VolunteerResponding', ResponseDate='$ResponseDate', CustNeedOutcome='$CustNeedOutcome',
 						 BeatTeamLeader='$BeatTeamLeader', Outcome='$Outcome', CompletionDate='$CompletionDate', FeedIfReturned='$FeedIfReturned', 
 						 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
-
 					//echo $queryupdate;
 					mysqli_query($link, $queryupdate);
 					print "<span id='recupdate'><h2>Record was updated</h2></span>";
