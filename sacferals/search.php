@@ -633,7 +633,7 @@
 						{
 							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, 
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, 
 						$CustNeedOutcome, $BeatTeamLeader, $Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
@@ -1116,7 +1116,7 @@
 					{						
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $ReqAssistance, $VolunteerResponding, $ResponseDate, 
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, 
 						$CustNeedOutcome, $BeatTeamLeader, $Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 						$myArray[0]=$RecordNumber;
@@ -1143,15 +1143,14 @@
 						$myArray[21]=$FriendlyPet;
 						$myArray[22]=$ColonySetting;
 						$myArray[23]=$Comments;										
-						$myArray[24]=$ReqAssistance;
-						$myArray[25]=$VolunteerResponding;
-						$myArray[26]=$ResponseDate;
-						$myArray[27]=$CustNeedOutcome;
-						$myArray[28]=$BeatTeamLeader;
-						$myArray[29]=$Outcome;
-						$myArray[30]=$CompletionDate;
-						$myArray[31]=$Lat;
-						$myArray[32]=$Lng;
+						$myArray[24]=$VolunteerResponding;
+						$myArray[25]=$ResponseDate;
+						$myArray[26]=$CustNeedOutcome;
+						$myArray[27]=$BeatTeamLeader;
+						$myArray[28]=$Outcome;
+						$myArray[29]=$CompletionDate;
+						$myArray[30]=$Lat;
+						$myArray[31]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="DateAndTime";
@@ -1177,15 +1176,14 @@
 						$myArray1[21]="FriendlyPet";
 						$myArray1[22]="ColonySetting";
 						$myArray1[23]="Comments";									
-						$myArray1[24]="ReqAssistance";
-						$myArray1[25]="VolunteerResponding";
-						$myArray1[26]="ResponseDate";
-						$myArray1[27]="CustNeedOutcome";
-						$myArray1[28]="BeatTeamLeader";
-						$myArray1[29]="Outcome";
-						$myArray1[30]="CompletionDate";
-						$myArray1[31]="Lat";
-						$myArray1[32]="Lng";
+						$myArray1[24]="VolunteerResponding";
+						$myArray1[25]="ResponseDate";
+						$myArray1[26]="CustNeedOutcome";
+						$myArray1[27]="BeatTeamLeader";
+						$myArray1[28]="Outcome";
+						$myArray1[29]="CompletionDate";
+						$myArray1[30]="Lat";
+						$myArray1[31]="Lng";
 												
 						print "
 						<tr id='$RecordNumber'>";
