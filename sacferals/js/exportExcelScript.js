@@ -24,14 +24,20 @@ var tableToExcel = (function() {
 	
 	//Insert html table in Excel format
     if (!table.nodeType) table = document.getElementById(table)
-    var ctx = {worksheet: name || 'Worksheet', table: excelTitle+table.innerHTML}
+	var tableBody = table.innerHTML;	
+
+	//<textarea> was causeing textboxes to show up when enable editing in excel
+	tableBody = tableBody.replace(/<\/textarea>/g, "");  //remove </textarea>
+	tableBody = tableBody.replace(/<textarea(.|\n)*?">/g, "");  //remove<textarea...>		
+    var ctx = {worksheet: name || 'Worksheet', table: excelTitle+tableBody}
 		
 	//Name Excel file
 	today = monthName[mm] + '_' + dd + '_' + yyyy;
 	var link = document.createElement("a");
-                    link.download = name+"_"+today+".xls";
-                    link.href = uri + base64(format(template, ctx));
-                    link.click();
+	document.body.appendChild(link);
+		link.download = name+"_"+today+".xls";
+		link.href = uri + base64(format(template, ctx));
+		link.click();
   }
 })()
 
