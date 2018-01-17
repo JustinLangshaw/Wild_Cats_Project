@@ -7,9 +7,9 @@ import re
 
 #Fill parameters and use after using Excel macro to populate statuses
 #Excel file must be an older version to work with xlutils(.xls)
-filename = "E:\\GitHub\\Wild_Cats_Project\\python tools\\TestReport4.xls"
+filename = "E:\\Drive\\Fall 17\\CSc 191\\5.xls"
 sheetName = "Open Reports"
-rows = 45
+rows = 201
 statusCol = 3
 triageCmtCol = 1
 book = xlrd.open_workbook(filename, formatting_info=True)
@@ -22,10 +22,10 @@ for row in range(1,rows):
 
     #If status is "Open" and Triage Comments are present, then status is "Contacted"
     if((statusVal == "Open") & (triageCmtVal != "")):
-        print(row)
+        print("Open --> Contacted @ row: {0}".format(row))
         # Change status to Contacted in file
         wb = copy(open_workbook(filename))
-        ws = wb.get_sheet(sheet)
+        ws = wb.get_sheet(sheetName)
         # ws.write(row, col, value)
         ws.write(row, statusCol, "Contacted")
         wb.save(filename)

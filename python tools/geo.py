@@ -6,23 +6,26 @@ from xlutils.copy import copy
 from xlrd import *
 import xlrd
 import re
+import time
 
 #Fill parameters
 #Excel file must be an older version to work with xlutils(.xls)
-filename = "E:\\Drive\\Fall 17\\CSc 191\\TestReport3.xls"
+filename = "E:\\Drive\\Fall 17\\CSc 191\\5.xls"
 sheet = "Open Reports"
 latCol = 31
 lngCol = 32
 streetCol = 10
 cityCol = 11
 zipCol = 13
-rows = 44
+rows = 201
 
 wb2 = xlrd.open_workbook(filename)
 sheet1 = wb2.sheet_by_name(sheet)
 
 #Loops through each row in excel
-for x in range(0, rows):
+#for x in range(0, rows):
+x = 0
+while (x < rows):
     try:
         #Read address informations from file
         street = sheet1.cell(1+x,streetCol).value
@@ -60,6 +63,7 @@ for x in range(0, rows):
                 ws.write(1+x, latCol, lat)
                 ws.write(1+x, lngCol, lng)
                 wb.save(filename)
+
             else:
                 print("     Criterial not met. ")
                 print("     Google status: {0}".format(status))
@@ -68,10 +72,12 @@ for x in range(0, rows):
 
                 #If geocode is over query limit, try the address again
                 if (status == 'OVER_QUERY_LIMIT'):
-                    x = x - 1
+                    x -= 2
+                    time.sleep(5)
         else:
             print("     Bad street format. ")
     except ValueError:
         print("     Non-numeric data found in the excel file. ")
     print(" ")
+    x += 1
 
