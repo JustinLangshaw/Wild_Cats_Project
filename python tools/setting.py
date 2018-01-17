@@ -6,9 +6,9 @@ import xlrd
 
 #Fill parameters
 #Excel file must be an older version to work with xlutils(.xls)
-filename = "E:\\Drive\\Fall 17\\CSc 191\\TestReport4.xls"
+filename = "E:\\Drive\\Fall 17\\CSc 191\\5.xls"
 sheetName = "Open Reports"
-rows = 45
+rows = 199
 settingCol = 22
 addCmtCol = 23
 
