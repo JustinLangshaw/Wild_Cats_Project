@@ -632,9 +632,9 @@
 						while($row = mysqli_fetch_row($result))
 						{
 							list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
-							$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-							$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-							$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
+						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, 
+						$CustNeedOutcome, $BeatTeamLeader, $Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																			// then printed in one table row
 
 							if($RecordNumber1==$RecordNumber)
@@ -797,9 +797,9 @@
 									<td>$ApproximateCats</td>
 									<td>$Kittens</td>
 									<td>$ColonyCareGiver</td>
-									<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>
+									<td><textarea class='form-control' value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>
 									<td>$Injured</td>
-									<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>
+									<td><textarea class='form-control' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>
 									<td>$FriendlyPet</td>
 									<td>$ColonySetting</td>
 									<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>		
@@ -825,6 +825,7 @@
 				$Comments1 = $_POST['Comments1'];
 				$Responder = $_POST['Responder'];
 				$Status = $_POST['Status'];
+				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$FullName = $_POST['FullName'];
 				$RecordNumber1 = $_POST['RecordNumber'];
 				$DateAndTime = $_POST['DateAndTime'];
@@ -836,7 +837,6 @@
 				$County = $_POST['County'];
 				$ZipCode = $_POST['ZipCode'];
 				$AnyoneAttempted = $_POST['AnyoneAttempted'];
-				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$ApproximateCats = $_POST['ApproximateCats'];
 				$Kittens = $_POST['Kittens'];
 				$ColonyCareGiver = $_POST['ColonyCareGiver'];
@@ -949,7 +949,7 @@
 							Lat=?, 
 							Lng=? 
 							where RecordNumber=?")) { echo "Update failed: Prepare failed. "; }
-							if(!$queryupdate->bind_param("ssssssssssssissssssssssssssssddi", $Comments1, $Responder, $Status, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, $City, $County, $ZipCode, $AnyoneAttempted, 
+							if(!$queryupdate->bind_param("ssssssssssssisssssssssssssssddi", $Comments1, $Responder, $Status, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, $City, $County, $ZipCode, $AnyoneAttempted, 
 							$ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription, $Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, 
 							$BeatTeamLeader, $Outcome, $CompletionDate, $FeedIfReturned, $Lat, $Lng, $RecordNumber1)){ echo "Update failed: Binding failed. "; }
 							if(!$queryupdate->execute()){ 
@@ -1100,11 +1100,10 @@
 							<th><a href='search.php?sort=Injured'>Sick</a></th>
 							<th><a href='search.php?sort=InjuryDescription'>Description</a></th>
 							<th><a href='search.php?sort=FriendlyPet'>Friendly</a></th>
-							<th><a href='search.php?sort=ColonySetting'>Setting</a></th>
-							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>				
+							<th><a href='search.php?sort=ColonySetting'>Setting</a></th>																				
+							<th><a href='search.php?sort=Comments'>Additional Comments</a></th>		
 							<th><a href='search.php?sort=Lat'>Latitude</a></th>
-							<th><a href='search.php?sort=Lng'>Longitude</a></th>
-
+							<th><a href='search.php?sort=Lng'>Longitude</a></th>														
 						</tr>";
 						}
 					print"
@@ -1114,11 +1113,11 @@
 
 					//while the next row (set by query) exists?
 					while($row = mysqli_fetch_row($result))
-					{
+					{						
 						list($Comments1, $Responder, $Status, $RecordNumber, $DateAndTime, $FeedIfReturned, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress,
 						$City, $County, $ZipCode, $AnyoneAttempted, $ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription,
-						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, $BeatTeamLeader,
-						$Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
+						$Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, 
+						$CustNeedOutcome, $BeatTeamLeader, $Outcome, $CompletionDate, $Lat, $Lng) = $row; // variables are set to current row
 																		// then printed in one table row
 						$myArray[0]=$RecordNumber;
 						$myArray[1]=$DateAndTime;
@@ -1143,9 +1142,15 @@
 						$myArray[20]=$InjuryDescription;
 						$myArray[21]=$FriendlyPet;
 						$myArray[22]=$ColonySetting;
-						$myArray[23]=$Comments;				
-						$myArray[24]=$Lat;
-						$myArray[25]=$Lng;
+						$myArray[23]=$Comments;										
+						$myArray[24]=$VolunteerResponding;
+						$myArray[25]=$ResponseDate;
+						$myArray[26]=$CustNeedOutcome;
+						$myArray[27]=$BeatTeamLeader;
+						$myArray[28]=$Outcome;
+						$myArray[29]=$CompletionDate;
+						$myArray[30]=$Lat;
+						$myArray[31]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="DateAndTime";
@@ -1170,10 +1175,16 @@
 						$myArray1[20]="InjuryDescription";
 						$myArray1[21]="FriendlyPet";
 						$myArray1[22]="ColonySetting";
-						$myArray1[23]="Comments";			
-						$myArray1[24]="Lat";
-						$myArray1[25]="Lng";
-						
+						$myArray1[23]="Comments";									
+						$myArray1[24]="VolunteerResponding";
+						$myArray1[25]="ResponseDate";
+						$myArray1[26]="CustNeedOutcome";
+						$myArray1[27]="BeatTeamLeader";
+						$myArray1[28]="Outcome";
+						$myArray1[29]="CompletionDate";
+						$myArray1[30]="Lat";
+						$myArray1[31]="Lng";
+												
 						print "
 						<tr id='$RecordNumber'>";
 
@@ -1203,8 +1214,8 @@
 											case 'ColonyAddress': $tdString.="<td = id='addressCol'>".$$selectedOption."</td>"; break;
 											case 'City': $tdString.="<td = id='cityCol'>".$$selectedOption."</td>"; break;
 											case 'ZipCode': $tdString.="<td = id='zipCodeCol'>".$$selectedOption."</td>"; break;
-											case 'FeederDescription': $tdString.="<td><textarea class='form-control' name='FeederDescription'  value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>"; break;
-											case 'InjuryDescription': $tdString.="<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>"; break;
+											case 'FeederDescription': $tdString.="<td><textarea class='form-control' name='FeederDescription' value='$FeederDescription' rows='3' readonly>$FeederDescription</textarea></td>"; break;
+											case 'InjuryDescription': $tdString.="<td><textarea class='form-control' name='InjuryDescription' value='$InjuryDescription' rows='3' readonly>$InjuryDescription</textarea></td>"; break;											
 											case 'Comments': $tdString.="<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>"; break;
 											case 'Lat': $tdString.="<td = id='latCol'>".$$selectedOption."</td>"; break;
 											case 'Lng': $tdString.="<td = id='lngCol'>".$$selectedOption."</td>"; break;											
