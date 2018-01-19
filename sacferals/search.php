@@ -118,7 +118,7 @@
 					<option value='City'>City</option>
 					<option value='County'>County</option>
 					<option value='ZipCode'>ZipCode</option>
-					<option value='AnyoneAttempted'>Trap/ Tip</option>
+					<option value='AnyoneAttempted'>Trap/Tip</option>
 					<option value='FeedIfReturned'>Feed If Returned</option>
 					<option value='ApproximateCats'>Approximate Cats</option>
 					<option value='Kittens'>Kittens</option>
@@ -196,7 +196,7 @@
 							<option value='City'>City</option>
 							<option value='County'>County</option>
 							<option value='ZipCode'>ZipCode</option>
-							<option value='AnyoneAttempted'>Trap/ Tip</option>
+							<option value='AnyoneAttempted'>Trap/Tip</option>
 							<option value='FeedIfReturned'>Feed If Returned</option>
 							<option value='ApproximateCats'>Approximate Cats</option>
 							<option value='Kittens'>Kittens</option>
@@ -551,7 +551,7 @@
 					}
 				if(isset($_SESSION['querysearch'])){
 					//query search
-					$s = mysqli_query($link, $_SESSION['querysearch']);
+					$s = mysqli_query($link, $_SESSION['querysearch']."order by $sort desc");
 					if (mysqli_num_rows($s)!=0) $result = $s;
 				}
 				else{
@@ -586,7 +586,7 @@
 							if($thString != '')
 							{
 								print $thString;
-								print"</tr></thead>";
+								print"<th> </th></tr></thead>";
 								//print"(getEditRow is set header)";
 							}
 							else
@@ -618,6 +618,8 @@
 								<th><a>Additional Comments</a></th>						
 								<th><a>Latitude</a></th>
 								<th><a>Longitude</a></th>
+							
+								<th> </th>
 							</tr>
 						</thead>
 						";
@@ -752,6 +754,9 @@
 									<td><textarea class='form-control' name='Comments'  rows='4' value='$Comments'>$Comments</textarea></td>								
 									<td><input class='form-control' type='text' name='Lat' value='$Lat'></td>
 									<td><input class='form-control' type='text' name='Lng' value='$Lng'></td>
+
+									<td> <label><input type='submit' class='form-control' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
+										 <label><input type='submit' class='form-control' name='cancel' value='Cancel Edit' id='cancelEdit'></label> </td>
 								</tr>
 								";
 								}
@@ -772,7 +777,7 @@
 										//echo $selectedOption."\n";
 									}
 									print $tdString;
-									print"</tr>";
+									print"<td></td></tr>";
 									//$tdString = " ";
 									//print"(un editable getEditRow is set Body )";
 								}
@@ -805,6 +810,8 @@
 									<td><textarea class='form-control' value='$Comments' rows='3' readonly>$Comments</textarea></td>		
 									<td id='latCol'>$Lat</td>
 									<td id='lngCol'>$Lng</td>
+								
+									<td></td>
 								</tr>
 								";
 								}
@@ -825,7 +832,6 @@
 				$Comments1 = $_POST['Comments1'];
 				$Responder = $_POST['Responder'];
 				$Status = $_POST['Status'];
-				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$FullName = $_POST['FullName'];
 				$RecordNumber1 = $_POST['RecordNumber'];
 				$DateAndTime = $_POST['DateAndTime'];
@@ -837,6 +843,7 @@
 				$County = $_POST['County'];
 				$ZipCode = $_POST['ZipCode'];
 				$AnyoneAttempted = $_POST['AnyoneAttempted'];
+				$FeedIfReturned = $_POST['FeedIfReturned'];
 				$ApproximateCats = $_POST['ApproximateCats'];
 				$Kittens = $_POST['Kittens'];
 				$ColonyCareGiver = $_POST['ColonyCareGiver'];
@@ -949,7 +956,7 @@
 							Lat=?, 
 							Lng=? 
 							where RecordNumber=?")) { echo "Update failed: Prepare failed. "; }
-							if(!$queryupdate->bind_param("ssssssssssssisssssssssssssssddi", $Comments1, $Responder, $Status, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, $City, $County, $ZipCode, $AnyoneAttempted, 
+							if(!$queryupdate->bind_param("sssssssssssssissssssssssssssddi", $Comments1, $Responder, $Status, $FullName, $Email, $Phone1, $Phone2, $ColonyAddress, $City, $County, $ZipCode, $AnyoneAttempted, 
 							$ApproximateCats, $Kittens, $ColonyCareGiver, $FeederDescription, $Injured, $InjuryDescription, $FriendlyPet, $ColonySetting, $Comments, $VolunteerResponding, $ResponseDate, $CustNeedOutcome, 
 							$BeatTeamLeader, $Outcome, $CompletionDate, $FeedIfReturned, $Lat, $Lng, $RecordNumber1)){ echo "Update failed: Binding failed. "; }
 							if(!$queryupdate->execute()){ 
@@ -1028,7 +1035,7 @@
 
 			if(isset($_SESSION['querysearch'])){
 				//query search
-				$s = mysqli_query($link, $_SESSION['querysearch']);
+				$s = mysqli_query($link, $_SESSION['querysearch']."order by $sort desc");
 				if (mysqli_num_rows($s)!=0)
 					$result = $s;
 			}
@@ -1056,7 +1063,7 @@
 					<div class='col-xs-6 col-sm-6 col-md-6' style='padding-left:7px; padding-right:7px;'>
 						<button class='btn btn-success' id='editrowbtn' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
 						<button class='btn btn-info' id='formviewbtn' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
-						<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' id='copyrow' onclick='copyFunction2()' disabled='true'>Copy</button>
+						<button class='btn' id='copyrowbtn' style='background-color:gold; color:black; margin-bottom:2px' onclick='copyFunction2()' disabled='true'>Copy</button>
 						&nbsp;&nbsp;&nbsp;<button class='btn btn-danger' id='deleterowbtn' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
 					</div>
 					<div class='col-xs-6 col-sm-6 col-md-6' style='text-align:right; padding-right:5px; padding-left:7px;'>
@@ -1142,15 +1149,9 @@
 						$myArray[20]=$InjuryDescription;
 						$myArray[21]=$FriendlyPet;
 						$myArray[22]=$ColonySetting;
-						$myArray[23]=$Comments;										
-						$myArray[24]=$VolunteerResponding;
-						$myArray[25]=$ResponseDate;
-						$myArray[26]=$CustNeedOutcome;
-						$myArray[27]=$BeatTeamLeader;
-						$myArray[28]=$Outcome;
-						$myArray[29]=$CompletionDate;
-						$myArray[30]=$Lat;
-						$myArray[31]=$Lng;
+						$myArray[23]=$Comments;				
+						$myArray[24]=$Lat;
+						$myArray[25]=$Lng;
 
 						$myArray1[0]="RecordNumber";
 						$myArray1[1]="DateAndTime";
@@ -1175,16 +1176,10 @@
 						$myArray1[20]="InjuryDescription";
 						$myArray1[21]="FriendlyPet";
 						$myArray1[22]="ColonySetting";
-						$myArray1[23]="Comments";									
-						$myArray1[24]="VolunteerResponding";
-						$myArray1[25]="ResponseDate";
-						$myArray1[26]="CustNeedOutcome";
-						$myArray1[27]="BeatTeamLeader";
-						$myArray1[28]="Outcome";
-						$myArray1[29]="CompletionDate";
-						$myArray1[30]="Lat";
-						$myArray1[31]="Lng";
-												
+						$myArray1[23]="Comments";			
+						$myArray1[24]="Lat";
+						$myArray1[25]="Lng";
+						
 						print "
 						<tr id='$RecordNumber'>";
 
@@ -1296,6 +1291,12 @@
 			<input class='btn btn-success' type='button' id='exportButton' onclick="tableToExcel('reportTable', 'Reports')" value='Export' />
 			<span id="ttlrecs"><b>Total Records: <?php echo $_SESSION['totalrecords']; ?></b></span>
 		</form>
+		<div class="pull-right">
+			<button class='btn btn-success' id='editrowbtn2' style='margin-bottom:2px' onclick='editFunction()' disabled='true'>Edit</button>
+			<button class='btn btn-info' id='formviewbtn2' style='margin-bottom:2px' onclick='formviewFunction()' disabled='true'>Form View</button>
+			<button class='btn' id='copyrowbtn2' style='background-color:gold; color:black; margin-bottom:2px' onclick='copyFunction2()' disabled='true'>Copy</button>
+			&nbsp;&nbsp;&nbsp;<button class='btn btn-danger' id='deleterowbtn2' style='margin-bottom:2px' onclick='deleteFunction()' class='confirmation' disabled='true'>Delete</button>
+		</div>
 		</div> <!-- end div class='col-sm'12' -->
 		</div> <!-- end div class='row' -->
 		<hr>
@@ -1331,25 +1332,35 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$('table tbody tr').click(function(){
-		if($(this).attr('selected')=='selected'){
-			$(this).attr('selected',false);
-		}
-		else $(this).attr('selected',true);
-		
-		if($('[selected="selected"]')[0]!=null){
-			$('#editrowbtn').attr("disabled",false);
-			$('#deleterowbtn').attr("disabled",false);
-			$('#formviewbtn').attr("disabled",false);
-			$('#copyrowbtn').attr("disabled",false);
-		}
-		else {
-			$('#editrowbtn').attr("disabled",true);
-			$('#deleterowbtn').attr("disabled",true);
-			$('#formviewbtn').attr("disabled",true);
-			$('#copyrowbtn').attr("disabled",true);
-		}
-	});
+	if(!(window.location.href.toString().includes("search.php?editrow=yes"))){
+		$('table tbody tr').click(function(){
+			if($(this).attr('selected')=='selected'){
+				$(this).attr('selected',false);
+			}
+			else $(this).attr('selected',true);
+			
+			if($('[selected="selected"]')[0]!=null){
+				$('#editrowbtn').attr("disabled",false);
+				$('#deleterowbtn').attr("disabled",false);
+				$('#formviewbtn').attr("disabled",false);
+				$('#copyrowbtn').attr("disabled",false);
+				$('#editrowbtn2').attr("disabled",false);
+				$('#deleterowbtn2').attr("disabled",false);
+				$('#formviewbtn2').attr("disabled",false);
+				$('#copyrowbtn2').attr("disabled",false);
+			}
+			else {
+				$('#editrowbtn').attr("disabled",true);
+				$('#deleterowbtn').attr("disabled",true);
+				$('#formviewbtn').attr("disabled",true);
+				$('#copyrowbtn').attr("disabled",true);
+				$('#editrowbtn2').attr("disabled",true);
+				$('#deleterowbtn2').attr("disabled",true);
+				$('#formviewbtn2').attr("disabled",true);
+				$('#copyrowbtn2').attr("disabled",true);
+			}
+		});
+	}
 });
 </script>
 
