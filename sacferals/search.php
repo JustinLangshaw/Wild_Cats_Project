@@ -703,7 +703,9 @@
 									}
 
 									print $tdEditString;
-									print"</tr>";
+									print"<td>	<label><input type='submit' class='form-control' id='recordEdit' name='recordEdit' value='Submit Edit'></label>
+										 	  	<label><input type='submit' class='form-control' name='cancel' value='Cancel Edit' id='cancelEdit'></label></td>
+										</tr>";
 									//print"(editable geteditRow is set Body)";
 								}
 								else
