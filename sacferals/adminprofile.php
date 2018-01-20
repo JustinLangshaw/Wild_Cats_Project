@@ -102,7 +102,10 @@
 	<div class="row">
 		<div class="col-md-4">
 			<form id='form1' name='form1' method='get' action='adminprofile.php'>
-				<p id="columnselect"><small>Note: Hold down ctrl or shift to select multiple columns</small></p>
+				<div>
+					<p id="columnselect"><small>Note: Hold down ctrl or shift to select multiple columns to display in table. Click 'Reset' to get full table.</small></p>
+					<label><b>Column Selector</b></label>
+				</div>
 				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
 					<option value='RecordNumber'>ID</option>
 					<option value='Comments'>Triage Comments</option>
