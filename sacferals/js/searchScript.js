@@ -26,9 +26,9 @@ $(document).ready(function ()
 });
 
 function copyFunction(el){ //copy single row
-	//combine all cells into singe string
-	var str=el.cells[1].innerHTML;
-	for(var i=2; i<(el.cells.length)-2; i++){
+	//combine all cells into single string
+	var str=el.cells[0].innerHTML;
+	for(var i=1; i<(el.cells.length); i++){
 		col = el.cells[i];
 		if($(col).find("textarea").length){
 			if($(col).find("textarea").val()!='')
@@ -47,8 +47,8 @@ function copyFunction2(){ //copy multiple rows, each separated by a semicolon
 	var table = document.getElementsByTagName("tbody");
 	for(var j=0, row; row=table[0].rows[j]; j++){
 		if($(row).attr("selected")=="selected"){
-			str=str+row.cells[1].innerHTML;
-			for(var i=2; i<(row.cells.length)-2; i++){
+			str=str+row.cells[0].innerHTML;
+			for(var i=1; i<(row.cells.length); i++){
 				col = row.cells[i];
 				if($(col).find("textarea").length){
 					if($(col).find("textarea").val()!='')
