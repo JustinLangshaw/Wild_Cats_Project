@@ -49,54 +49,55 @@ except Exception:
 for x in range(1, 44):
         try:
             example = activeSheet.cell(x, 15).value
+            originalValue = example
             totalSearched += 1
             #See if it is a acceptable number. e.g. 5
             if type(example) == float:
                 #Is it outside the acceptable range?
                 if 0 > example or example > 100:
                     print x + 1, " | Fail: Out of Range, appending to comments"
-                    newComment = "<FLAG> No. Cats: (Out of Bounds) " + activeSheet.cell(x, 23).value
+                    newComment = "<FLAG> No. Cats: " + example + " (Out of Bounds) | " + activeSheet.cell(x, 23).value
                     savetoWorkbook(filename, sheet, x, 15, example, newComment)
             #See if the cell is empty
             elif not any(activeSheet.cell(x, 15).value):
                 print x + 1, " | Corrected. Empty Field, Appended Null to Comments"
                 totalAppends += 1
                 totalCorrections += 1
-                newComment = "<FLAG> No. Cats: (Null) " + example + "  " + activeSheet.cell(x, 23).value
+                newComment = "<FLAG> No. Cats: " + example + " (Null) | " + activeSheet.cell(x, 23).value
                 savetoWorkbook(filename, sheet, x, 15, None, newComment)
             #See if it is a string of some kind
             elif isinstance(example, basestring):
-                try: 
+                #Append whatever is in the No. of Cats. into commends to preserve information.
+                try:
                     #Attempt to make it into a number and check range. E.g. five to 5 or fifteen to 15
                     example = w2n.word_to_num(str(example))
                     if 0 < example and example < 100:
                         totalCorrections += 1
-                        print x + 1, " | Corrected"
-                        wb = copy(open_workbook(filename))
-                        ws = wb.get_sheet(sheet)
-                        ws.write(x, 15, example)
-                        wb.save(filename)
-                        savetoWorkbook(filename, sheet, x, 15, int(example), activeSheet.cell(x, 23).value)
+                        print x + 1, " | Corrected and appending original to comments"
+                        newComment = "<FLAG> No. Cats: " + originalValue + "  " + activeSheet.cell(x, 23).value
+                        savetoWorkbook(filename, sheet, x, 15, int(example), newComment)
                     else:
                         print x + 1, " | Appending to comments"
                         totalAppends += 1
-                        newComment = "<FLAG> No. Cats: " + example + "  " + activeSheet.cell(x, 23).value
+                        newComment = "<FLAG> No. Cats: " + originalValue + " | " + activeSheet.cell(x, 23).value
                         savetoWorkbook(filename, sheet, x, 15, int(example), newComment)
                 except ValueError:
                     #This must be some combination of letters and numbers. E.g. 3 + 5
-                    #Extract Digits, note, they are unicode.
+                    #Extract Digits. Note, they are unicode.
                     digits = re.findall(r'\d+', example)
                     if len(digits) == 0:
                     #Plain String Found, no digits. E.g. Unknown, Don't Know
                         print x + 1, " |  No digits found. Appending and Correcting."
                         totalAppends += 1
                         totalCorrections += 1
-                        newComment = "<FLAG> No. Cats: " + example + "  " + activeSheet.cell(x, 23).value
+                        newComment = "<FLAG> No. Cats: " + originalValue + "  " + activeSheet.cell(x, 23).value
                         savetoWorkbook(filename, sheet, x, 15, None, newComment)
                     elif len(digits) == 1:
                         totalCorrections += 1
-                        print x + 1, " | Corrected"
-                        savetoWorkbook(filename, sheet, x, 15, int(digits[0]), activeSheet.cell(x, 23).value)
+                        print x + 1, " | Corrected and appending original to comments"
+                        newComment = "<FLAG> No. Cats: " + originalValue + " | " + activeSheet.cell(x, 23).value
+                        totalAppends += 1
+                        savetoWorkbook(filename, sheet, x, 15, int(digits[0]),newComment)
                     #Two Digits found
                     elif len(digits) == 2:
                         #Range Detected, average between the two and append to comment.
@@ -106,29 +107,30 @@ for x in range(1, 44):
                             average /= 2
                             totalAppends += 1
                             totalCorrections += 1
-                            newComment = "<FLAG> No. Cats: " + digits[0] + " - " + digits[1] + "   "  + "  " + activeSheet.cell(x, 23).value
+                            newComment = "<FLAG> No. Cats: " + originalValue + " | " + activeSheet.cell(x, 23).value
                             savetoWorkbook(filename, sheet, x, 15, average, newComment)
                         elif any(re.findall(r'\+|and|plus|includ', example)):
                             if any(re.findall(r'kitten|cub', example)):
+                                #Detect kitten keyword.
                                 print x + 1, " | ", digits, " Two Numbers Found with: +, and, includes, including, kitten, kittens. Might be range. Averaging and appending"
                                 average = int(digits[0]) + int(digits[1])
                                 totalAppends += 1
                                 totalCorrections += 1
-                                newComment = "<FLAG> Kittens! No. Cats: " + digits[0] + " - " + digits[1] + "   "  + "  " + activeSheet.cell(x, 23).value
+                                newComment = "<FLAG> Kittens! No. Cats: " + originalValue  + " | " + activeSheet.cell(x, 23).value
                                 savetoWorkbook(filename, sheet, x, 15, average, newComment)
                             else:
                                 print x + 1, " | ", digits, " Two Numbers Found with: +, and, includes, including. Might be range. Averaging and appending"
                                 average = int(digits[0]) + int(digits[1])
                                 totalAppends += 1
                                 totalCorrections += 1
-                                newComment = "<FLAG>No. Cats: " + digits[0] + " + " + digits[1] + "   "  + "  " + activeSheet.cell(x, 23).value
+                                newComment = "<FLAG>No. Cats: " + originalValue + " | " + activeSheet.cell(x, 23).value
                                 savetoWorkbook(filename, sheet, x, 15, average, newComment)
                     else:
                         print x + 1, " | ", digits, " Multiple digits found. Manual Inspection Required."
                         totalErrors += 1;
                         totalAppends += 1
                         totalCorrections += 1
-                        newComment = "<FLAG> No. Cats: Multiple Digits Found Inspection Required   " + activeSheet.cell(x, 23).value
+                        newComment = "<FLAG> No. Cats: Multiple Digits Found Inspection Required. | " + activeSheet.cell(x, 23).value
                         wb = copy(open_workbook(filename))
                         ws = wb.get_sheet(sheet)
                         ws.write(x, 15, digits)
@@ -136,7 +138,7 @@ for x in range(1, 44):
                         wb.save(filename)
         except Exception:
             #This gets thrown if there are ANY thrown exceptions regarding loading, saving, and performing operations with cells.
-            print x + 1, " | (!!) Exception thrown, requires manual inspection. Corrections might not have saved."
+            print x + 1, " | (!!) Exception thrown, requires manual inspection. Corrections might not have been saved."
             totalErrors += 1;
 print "\n\nFiltering Complete!"
 print "Search for <FLAG> to see each comment that was altered during the run of this script."
