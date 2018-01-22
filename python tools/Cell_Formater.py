@@ -57,14 +57,14 @@ for x in range(1, 44):
                 if 0 > example or example > 100:
                     print x + 1, " | Fail: Out of Range, appending to comments"
                     totalAppends += 1
-                    newComment = "<FLAG> No. Cats: " + example + " (Out of Bounds [1,99]) | " + activeSheet.cell(x, 23).value
-                    savetoWorkbook(filename, sheet, x, 15, example, newComment)
+                    newComment = "<FLAG> No. Cats: Out of range [1,99] | " + activeSheet.cell(x, 23).value
+                    savetoWorkbook(filename, sheet, x, 15, activeSheet.cell(x, 15).value, newComment)
             #See if the cell is empty
             elif not any(activeSheet.cell(x, 15).value):
                 print x + 1, " | Corrected. Empty Field, Appended Null to Comments"
                 totalAppends += 1
                 totalCorrections += 1
-                newComment = "<FLAG> No. Cats: " + example + " (Null) | " + activeSheet.cell(x, 23).value
+                newComment = "<FLAG> No. Cats: " + originalValue + " (Null) | " + activeSheet.cell(x, 23).value
                 savetoWorkbook(filename, sheet, x, 15, None, newComment)
             #See if it is a string of some kind
             elif isinstance(example, basestring):
@@ -75,13 +75,13 @@ for x in range(1, 44):
                     if 0 < example and example < 100:
                         totalCorrections += 1
                         print x + 1, " | Corrected and appending original to comments"
-                        newComment = "<FLAG> No. Cats: " + originalValue + "  " + activeSheet.cell(x, 23).value
+                        newComment = "<FLAG> No. Cats: " + originalValue + " | " + activeSheet.cell(x, 23).value
                         totalAppends += 1
                         savetoWorkbook(filename, sheet, x, 15, int(example), newComment)
                     else:
-                        print x + 1, " | Appending to comments"
+                        print x + 1, " | Corrected but out of range, adding flag"
                         totalAppends += 1
-                        newComment = "<FLAG> No. Cats: " + originalValue + " (Out of Range [1,99]) | " + activeSheet.cell(x, 23).value
+                        newComment = "<FLAG> No. Cats: Out of range [1,99] | " + activeSheet.cell(x, 23).value
                         savetoWorkbook(filename, sheet, x, 15, int(example), newComment)
                 except ValueError:
                     #This must be some combination of letters and numbers. E.g. 3 + 5
