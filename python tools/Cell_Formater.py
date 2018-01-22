@@ -56,7 +56,8 @@ for x in range(1, 44):
                 #Is it outside the acceptable range?
                 if 0 > example or example > 100:
                     print x + 1, " | Fail: Out of Range, appending to comments"
-                    newComment = "<FLAG> No. Cats: " + example + " (Out of Bounds) | " + activeSheet.cell(x, 23).value
+                    totalAppends += 1
+                    newComment = "<FLAG> No. Cats: " + example + " (Out of Bounds [1,99]) | " + activeSheet.cell(x, 23).value
                     savetoWorkbook(filename, sheet, x, 15, example, newComment)
             #See if the cell is empty
             elif not any(activeSheet.cell(x, 15).value):
@@ -75,11 +76,12 @@ for x in range(1, 44):
                         totalCorrections += 1
                         print x + 1, " | Corrected and appending original to comments"
                         newComment = "<FLAG> No. Cats: " + originalValue + "  " + activeSheet.cell(x, 23).value
+                        totalAppends += 1
                         savetoWorkbook(filename, sheet, x, 15, int(example), newComment)
                     else:
                         print x + 1, " | Appending to comments"
                         totalAppends += 1
-                        newComment = "<FLAG> No. Cats: " + originalValue + " | " + activeSheet.cell(x, 23).value
+                        newComment = "<FLAG> No. Cats: " + originalValue + " (Out of Range [1,99]) | " + activeSheet.cell(x, 23).value
                         savetoWorkbook(filename, sheet, x, 15, int(example), newComment)
                 except ValueError:
                     #This must be some combination of letters and numbers. E.g. 3 + 5
