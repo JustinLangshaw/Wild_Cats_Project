@@ -98,7 +98,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 	//if user passes re test
 	if(preg_match($re, $fullname) )
 	{	//display current table	
-		if(!$querycheck = $link->prepare("select * from VolunteerForm where Email=?")){ echo "Failure to verify: Prepare statement failed. "; }
+		if(!$querycheck = $link->prepare("select * from sacferals.VolunteerForm where Email=?")){ echo "Failure to verify: Prepare statement failed. "; }
 		if(!$querycheck->bind_param("s", $email)){ echo "Failure to verify: Binding failed. "; }
 		if(!$querycheck->execute()){ echo "Failure to verify: Execute failed. "; }
 		$querycheck->store_result();
@@ -112,8 +112,8 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		if (isset($_POST['typeofwork'])) {
 			if($resultcheck == 0)// magically check if this made a duplicate row
 			{	//if not process the insert query				
-				if(!$query = $link->prepare("insert into VolunteerForm values('', '', 'Inactive', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-					?, ?, ?, ?, ?, ?, ?, ?, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')"))
+				if(!$query = $link->prepare("insert into sacferals.VolunteerForm values(NULL, '', 'Inactive', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+					?, ?, ?, ?, ?, ?, ?, ?, '', '', '', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '')"))
 					{ echo "Failure to submit: Prepare statement failed. "; }
 				if(!$query->bind_param("ssssssiiisiiiiiiss", $fullname, $completeaddress, $email, $phone1, $phone2, $preferedcontact,
 					$contactemail, $contactphone1, $contactphone2, $typeofworkstring, $transporting, $helptrap, $helpeducate, 
@@ -121,6 +121,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 					{ echo "Failure to submit: Binding failed. "; }
 				if(!$query->execute()){ 
 					echo "Failure to submit: Execute failed. ";
+					echo $query->error;
 				}else{
 					echo "<script type='text/javascript'> document.location = 'formsubmitted.php'; </script>";
 				}
