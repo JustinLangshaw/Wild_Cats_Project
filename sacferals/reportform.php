@@ -41,8 +41,7 @@ function formatPhone(phoneId) {
 
 <?php
 
-if(isset($_POST['submitcolony'])) //this processes after user submits data.
-{
+if($_SERVER['REQUEST_METHOD']=="POST"){	//this processes after user submits data.
 	$fullname = $_POST['fullname'];
 	$email = $_POST['email'];
 	$phone1 = $_POST['phone1'];
@@ -110,14 +109,14 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 	
 	//re's need updating for all fields. or we can use javascript (better)
 	$re = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
-	list($first, $last) = split(" ", $fullname, 2);
+	list($first, $last) = explode(" ", $fullname);
 	
 	//if user passes re test
 	if(!$error)
 	{
 		if(preg_match($re, $first) && preg_match($re, $last))
 		{	//no need to check for duplicates
-			if(!$query = $link->prepare("insert into ReportColonyForm values('', '', 'Open', '', Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+			if(!$query = $link->prepare("insert into ReportColonyForm values('', '', 'Open', NULL, Now(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 				'', '', '', '', '', '', ?, ?)")){ echo "Failure to submit: Prepare statement failed. "; }
 			
 			if(!$query->bind_param("ssssssssssissssssssdd", $feedifreturned[0], $fullname, $email, $phone1, $phone2,$colonystreet, $city, $county, $zipcode, $trapattempt[0], 
