@@ -234,7 +234,7 @@ if(isset($_POST['submitcolony'])) //this processes after user submits data.
 						<label class="col-xs-2 col-sm-2 col-md-2 col-lg-1 col-form-label" for="colonystreet">*Street</label>
 						<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
 							<input class="form-control" type="text" name="colonystreet" placeholder="1234 Sesame St"
-								pattern="[0-9]{1,3}.?[0-9]{0,3}(\s[a-zA-Z0-9]{2,30})*" title="Enter street# and street name" id="colonystreet" required>
+								pattern="[0-9]{1,3}.?[0-9]{0,3}(\s[a-zA-Z0-9.]{2,30})*" title="Enter street# and street name" id="colonystreet" required>
 						</div>
 						<label class="col-xs-2 col-sm-2 col-md-1 col-lg-1 col-form-label" for="state">State</label>
 						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
