@@ -219,6 +219,7 @@ function formatPhone(phoneId) {
 
 	//not logged in
 	if($_SESSION['authenticate234252432341'] != 'validuser09821'){
+		header("Location: userprofile.php"); //redirect to login page
 		print "<h1>you aren't supposed to be here.. STOP SNEAKING AROUND</h1><br><br>";
 		print "<a href='userprofile.php'>Back to Login page</a>";
 	}

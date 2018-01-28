@@ -48,24 +48,29 @@ if($_SERVER['REQUEST_METHOD']=="POST"){	//this processes after user submits data
 	$phone2 = $_POST['phone2'];	
 	
 	$caregiver = $_POST['caregiver'];
-	$feederdescription = preg_replace("!\s+!", ' ', $_POST['feederdescription']);
+	if($caregiver[0]=='No') //only add description if correct choice
+		$feederdescription = preg_replace("!\s+!", ' ', $_POST['feederdescription']);
 	$colonystreet = $_POST['colonystreet'];
 	$city = $_POST['city'];
 	$county = $_POST['county'];
 	$zipcode = $_POST['zipcode'];
 	$addrcomment = preg_replace("!\s+!", ' ', $_POST['addrcomment']); //prepend to additional comments
 	$trapattempt = $_POST['trapattempt'];
-	$trapcomment = preg_replace("!\s+!", ' ', $_POST['trapcomment']); //prepend to additional comments
+	if($trapattempt[0]=='Yes')
+		$trapcomment = preg_replace("!\s+!", ' ', $_POST['trapcomment']); //prepend to additional comments
 	$numberofcats = $_POST['numberofcats'];
 	$kittens = $_POST['kittens'];
-	$kittenscomment = preg_replace("!\s+!", ' ', $_POST['kittenscomment']); //prepend to additional comments
+	if($kittens[0]=='Yes')
+		$kittenscomment = preg_replace("!\s+!", ' ', $_POST['kittenscomment']); //prepend to additional comments
 	$injured = $_POST['recentlyinjured'];
-	$injurydescription = preg_replace("!\s+!", ' ', $_POST['injurydescription']);
+	if($injured[0]=='Yes')
+		$injurydescription = preg_replace("!\s+!", ' ', $_POST['injurydescription']);
 	$friendlypet = $_POST['friendlypet'];
 	$setting = $_POST['setting'];
 	$settingcomment = preg_replace("!\s+!", ' ', $_POST['settingcomment']); //prepend to additional comments
 	$feedifreturned = $_POST['feedifreturned'];
-	$notfeedcomment = preg_replace("!\s+!", ' ', $_POST['notfeeddescription']); //prepend to additional comments
+	if($feedifreturned[0]=='No')
+		$notfeedcomment = preg_replace("!\s+!", ' ', $_POST['notfeeddescription']); //prepend to additional comments
 	$comments = preg_replace("!\s+!", ' ', $_POST['comments']);
 	$lat = $_POST['lat'];
 	$lng = $_POST['lng'];

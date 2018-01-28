@@ -488,7 +488,7 @@
 				$sea = 'select * from CannedQueriesVolunteers where QueryString="'.$_SESSION['volunteerquerysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', ".'"'.$_SESSION['volunteerquerysearch'].'"'.")";
+					$savecannedqry = "insert into CannedQueriesVolunteers values(NULL, '".$qryname."', ".'"'.$_SESSION['volunteerquerysearch'].'"'.")";
 					mysqli_query($link, $savecannedqry);
 				}
 			}
@@ -543,7 +543,7 @@
 				$wrttnqry = "select * from CannedQueriesVolunteers where QueryString='".$_SESSION['volunteerquerytosave']."'";
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0){
-					$savewrttnqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', '".$_SESSION['volunteerquerytosave']."')";
+					$savewrttnqry = "insert into CannedQueriesVolunteers values(NULL, '".$qryname."', '".$_SESSION['volunteerquerytosave']."')";
 					mysqli_query($link, $savewrttnqry);
 				}
 			}
