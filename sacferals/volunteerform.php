@@ -86,7 +86,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		if($typeofwork[$y] == 'helpeducate'){ $helpeducate=1; }
 		if($typeofwork[$y] == 'usingphone'){ $usingphone=1; }
 		if($typeofwork[$y] == 'helpingclinic'){ $helpingclinic=1; }
-		if($typeofwork[$y] == 'Yes'){ $other=1; }	
+		if($typeofwork[$y] == 'other'){ $other=1; }	
 	}
 
 	$othertasks = $_POST['othertasks'];
@@ -237,7 +237,7 @@ if(isset($_POST['submit'])) //this processes after user submits data.
 		<div class="form-check">
 			<label><input type="checkbox" name="typeofwork[]" value="helpingclinic"> Helping at feral spay/neuter clinics</label></div>
 		<div class="form-check">
-			<label><input type="checkbox" name="typeofwork[]" value="Yes" onClick="displayForm(this)"> Other</input></label>
+			<label><input type="checkbox" name="typeofwork[]" value="other" onClick="displayForm(this)"> Other</input></label>
 		</div>
 		<div class='form-group indent todisplay' id="othertasks">
 			Enter the type of work you would like to volunteer for<br>
