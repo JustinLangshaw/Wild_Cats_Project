@@ -468,8 +468,7 @@
 				$sea = 'select * from CannedQueries where QueryString="'.$_SESSION['querysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueries values('', '".$qryname."', ".'"'.$_SESSION['querysearch'].'"'.")";
-					echo $savecannedqry;
+					$savecannedqry = "insert into CannedQueries values(NULL, '".$qryname."', ".'"'.$_SESSION['querysearch'].'"'.")";
 					mysqli_query($link, $savecannedqry);
 				}
 			}
@@ -524,7 +523,7 @@
 				$wrttnqry = "select * from CannedQueries where QueryString='".$_SESSION['querytosave']."'";
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0){
-					$savewrttnqry = "insert into CannedQueries values('', '".$qryname."', '".$_SESSION['querytosave']."')";
+					$savewrttnqry = "insert into CannedQueries values(NULL, '".$qryname."', '".$_SESSION['querytosave']."')";
 					mysqli_query($link, $savewrttnqry);
 				}
 			}
