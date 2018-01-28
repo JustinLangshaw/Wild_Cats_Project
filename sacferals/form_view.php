@@ -41,6 +41,7 @@
 		$smallestRecord;
 		
 		print"<b>Logged in as $Ausername </b> 
+				<a style='float: right' href='https://www.latlong.net/'' target='_blank'>LatLong</a>
 				<h1>Form View</h1>";
 		
 		if($level == 1 || $level == 2) //admin and triage
