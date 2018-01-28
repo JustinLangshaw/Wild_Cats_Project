@@ -78,10 +78,10 @@
 						<a class="dropdown-toggle" data-toggle="dropdown">Useful Links
 							<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="https://www.catstats.org/" target="_blank">CatStats Website</a></li>
+							<li><a href="https://www.catstats.org/Sacramento" target="_blank">CatStats</a></li>
 							<li><a href="https://www.gmail.com" target="_blank">Gmail</a></li>
-							<li><a href="https://www.latlong.net/" target="_blank">Latitude/Longitude Finder</a></li>
-							<li><a href="http://assessorparcelviewer.saccounty.net/JSViewer/assessor.html" target="_blank">Sacramento County Assessor Parcel Viewer</a></li>
+							<li><a href="https://www.latlong.net/" target="_blank">LatLong</a></li>
+							<li><a href="http://assessorparcelviewer.saccounty.net/JSViewer/assessor.html" target="_blank">Assessor Parcel Viewer</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
@@ -506,7 +506,7 @@
 				$sea = 'select * from CannedQueriesVolunteers where QueryString="'.$_SESSION['volunteerquerysearch'].'"';
 				$res = mysqli_query($link, $sea);
 				if(mysqli_num_rows($res)==0){
-					$savecannedqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', ".'"'.$_SESSION['volunteerquerysearch'].'"'.")";
+					$savecannedqry = "insert into CannedQueriesVolunteers values(NULL, '".$qryname."', ".'"'.$_SESSION['volunteerquerysearch'].'"'.")";
 					mysqli_query($link, $savecannedqry);
 				}
 			}
@@ -561,7 +561,7 @@
 				$wrttnqry = "select * from CannedQueriesVolunteers where QueryString='".$_SESSION['volunteerquerytosave']."'";
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
 				if(mysqli_num_rows($wrttnqryres)==0){
-					$savewrttnqry = "insert into CannedQueriesVolunteers values('', '".$qryname."', '".$_SESSION['volunteerquerytosave']."')";
+					$savewrttnqry = "insert into CannedQueriesVolunteers values(NULL, '".$qryname."', '".$_SESSION['volunteerquerytosave']."')";
 					mysqli_query($link, $savewrttnqry);
 				}
 			}
