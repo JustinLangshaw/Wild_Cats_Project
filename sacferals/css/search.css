@@ -88,8 +88,8 @@ table {
 tbody {
 	overflow-y: auto;
 }
-.row textarea{
-	max-width: 100%;
+textarea{
+	min-width: 100px;
 	overflow-x: hidden;
 }
 th {
@@ -154,4 +154,43 @@ tr[selected="selected"] #statusselect{
 .btn-primary.btn-outline:hover,
 .btn-danger.btn-outline:hover{
 	color: #fff;
+}
+
+/*tooltip*/
+#tooltip {
+	position: relative;
+	display: inline-block;
+	margin: 0;
+}
+#tooltip .tooltiptext {
+	visibility: hidden;
+	width: 290px;
+	/*white-space: nowrap;*/
+	background-color: gainsboro; /*very light gray*/
+	text-align: left;
+	border-radius: 5px;
+	padding: 10px 15px;
+	font-size: 13px;
+	font-weight: normal !important;
+	font-family: verdana;
+	
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+	top: -50%;
+	left: 155%;
+	
+}
+#tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 8px;
+	right: 100%; 
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent gainsboro transparent transparent;
+}
+#tooltip:hover .tooltiptext {
+	visibility: visible;
 }
