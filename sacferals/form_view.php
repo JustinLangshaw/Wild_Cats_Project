@@ -234,38 +234,38 @@
 			if(isset($_POST['recordEdit']))
 			{
 				//echo "In the recordEdit IF loop!!";
-				$Comments1 = mysql_real_escape_string($_POST['Comments1']);
-				$Responder = mysql_real_escape_string($_POST['Responder']);
-				$Status = mysql_real_escape_string($_POST['Status']);
-				$FeedIfReturned = mysql_real_escape_string($_POST['FeedIfReturned']);
-				$FullName = mysql_real_escape_string($_POST['FullName']);
-				$RecordNumber1 = mysql_real_escape_string($_POST['RecordNumber']);
-				$DateAndTime = mysql_real_escape_string($_POST['DateAndTime']);
-				$Email = mysql_real_escape_string($_POST['Email']);
-				$Phone1 = mysql_real_escape_string($_POST['Phone1']);
-				$Phone2 = mysql_real_escape_string($_POST['Phone2']);
-				$ColonyAddress = mysql_real_escape_string($_POST['ColonyAddress']);
-				$City = mysql_real_escape_string($_POST['City']);
-				$County = mysql_real_escape_string($_POST['County']);
-				$ZipCode = mysql_real_escape_string($_POST['ZipCode']);
-				$AnyoneAttempted = mysql_real_escape_string($_POST['AnyoneAttempted']);
-				$ApproximateCats = mysql_real_escape_string($_POST['ApproximateCats']);
-				$Kittens = mysql_real_escape_string($_POST['Kittens']);
-				$ColonyCareGiver = mysql_real_escape_string($_POST['ColonyCareGiver']);
-				$FeederDescription = mysql_real_escape_string($_POST['FeederDescription']);
-				$Injured = mysql_real_escape_string($_POST['Injured']);
-				$InjuryDescription = mysql_real_escape_string($_POST['InjuryDescription']);
-				$FriendlyPet = mysql_real_escape_string($_POST['FriendlyPet']);
-				$ColonySetting = mysql_real_escape_string($_POST['ColonySetting']);
-				$Comments = mysql_real_escape_string($_POST['Comments']);
-				$VolunteerResponding = mysql_real_escape_string($_POST['VolunteerResponding']);
-				$ResponseDate = mysql_real_escape_string($_POST['ResponseDate']);
-				$CustNeedOutcome = mysql_real_escape_string($_POST['CustNeedOutcome']);
-				$BeatTeamLeader = mysql_real_escape_string($_POST['BeatTeamLeader']);
-				$Outcome = mysql_real_escape_string($_POST['Outcome']);
-				$CompletionDate = mysql_real_escape_string($_POST['CompletionDate']);
-				$Lat = mysql_real_escape_string($_POST['Lat']);
-				$Lng = mysql_real_escape_string($_POST['Lng']);
+				$Comments1 = mysqli_real_escape_string($link, $_POST['Comments1']);
+				$Responder = mysqli_real_escape_string($link, $_POST['Responder']);
+				$Status = mysqli_real_escape_string($link, $_POST['Status']);
+				$FeedIfReturned = mysqli_real_escape_string($link, $_POST['FeedIfReturned']);
+				$FullName = mysqli_real_escape_string($link, $_POST['FullName']);
+				$RecordNumber1 = mysqli_real_escape_string($link, $_POST['RecordNumber']);
+				$DateAndTime = mysqli_real_escape_string($link, $_POST['DateAndTime']);
+				$Email = mysqli_real_escape_string($link, $_POST['Email']);
+				$Phone1 = mysqli_real_escape_string($link, $_POST['Phone1']);
+				$Phone2 = mysqli_real_escape_string($link, $_POST['Phone2']);
+				$ColonyAddress = mysqli_real_escape_string($link, $_POST['ColonyAddress']);
+				$City = mysqli_real_escape_string($link, $_POST['City']);
+				$County = mysqli_real_escape_string($link, $_POST['County']);
+				$ZipCode = mysqli_real_escape_string($link, $_POST['ZipCode']);
+				$AnyoneAttempted = mysqli_real_escape_string($link, $_POST['AnyoneAttempted']);
+				$ApproximateCats = mysqli_real_escape_string($link, $_POST['ApproximateCats']);
+				$Kittens = mysqli_real_escape_string($link, $_POST['Kittens']);
+				$ColonyCareGiver = mysqli_real_escape_string($link, $_POST['ColonyCareGiver']);
+				$FeederDescription = mysqli_real_escape_string($link, $_POST['FeederDescription']);
+				$Injured = mysqli_real_escape_string($link, $_POST['Injured']);
+				$InjuryDescription = mysqli_real_escape_string($link, $_POST['InjuryDescription']);
+				$FriendlyPet = mysqli_real_escape_string($link, $_POST['FriendlyPet']);
+				$ColonySetting = mysqli_real_escape_string($link, $_POST['ColonySetting']);
+				$Comments = mysqli_real_escape_string($link, $_POST['Comments']);
+				$VolunteerResponding = mysqli_real_escape_string($link, $_POST['VolunteerResponding']);
+				$ResponseDate = mysqli_real_escape_string($link, $_POST['ResponseDate']);
+				$CustNeedOutcome = mysqli_real_escape_string($link, $_POST['CustNeedOutcome']);
+				$BeatTeamLeader = mysqli_real_escape_string($link, $_POST['BeatTeamLeader']);
+				$Outcome = mysqli_real_escape_string($link, $_POST['Outcome']);
+				$CompletionDate = mysqli_real_escape_string($link, $_POST['CompletionDate']);
+				$Lat = mysqli_real_escape_string($link, $_POST['Lat']);
+				$Lng = mysqli_real_escape_string($link, $_POST['Lng']);
 
 				
 				$query = "select * from ReportColonyForm where RecordNumber='$RecordNumber1'";
@@ -284,6 +284,7 @@
 						 Lat='$Lat', Lng='$Lng' where RecordNumber='$RecordNumber1'";
 					//echo $queryupdate;
 					mysqli_query($link, $queryupdate);
+					
 					print "<span id='recupdate'><h2>Record was updated</h2></span>";
 				}
 
