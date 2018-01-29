@@ -132,6 +132,7 @@
 					print "
 					<br>
 					<a style='background-color:lightgreen;' href='form_view.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
+					&nbsp;&nbsp;&nbsp;
 					<a style='background-color:#ff8080;' href='form_view.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 					
 					</br>";
 					
@@ -334,6 +335,7 @@
 			print"
 			<br>
 			<a style='background-color:lightgreen;' href='form_view.php?editrow=yes&RecordNumber=$RecordNumber'>Edit</a> 
+			&nbsp;&nbsp;&nbsp;
 			<a style='background-color:#ff8080;' href='form_view.php?del=yes&RecordNumber=$RecordNumber'  class='confirmation'>Delete</a> 
 			</br>
 			";	
