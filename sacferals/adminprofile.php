@@ -103,7 +103,7 @@
 		<div class="col-md-4">
 			<form id='form1' name='form1' method='get' action='adminprofile.php'>
 				<div>
-					<p id="columnselect"><small>Note: Hold down ctrl or shift to select multiple columns to display in table. Click 'Reset' to get full table.</small></p>
+					<p id="columnselect"><small>Note: Hold down ctrl or shift to select multiple columns to display in table.<br> Click 'Reset' to get full table.</small></p>
 					<label><b>Column Selector</b></label>
 				</div>
 				<select class="input-sm" id="colsel" name='select2[]' size='8' multiple='multiple' tabindex='1'>
@@ -152,9 +152,11 @@
 				<input class="btn btn-default" type='submit' name='SelectAll' value='Reset'/>
 			</form>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-8"> <!-- Manual Query -->
 			<form id='writtenqueryform' name='writtenquery' method='get' action='adminprofile.php'>
-				<div class="row"><b>Manual Query</b></div>
+				<label><b>Manual Query</b></label>
+				&nbsp;&nbsp;&nbsp;
+				<span style="color: darkgray;"><small>(Do not include semicolon)</small></span>
 				<div class="row">
 					<textarea class="form-control" id="manquery" name="manquery" rows="6" placeholder="Enter your Query" required ></textarea>
 					<br>
@@ -192,9 +194,17 @@
 		</div>
 		<div class="col-md-8"> <!-- Custom Query -->
 			<form id="queryform" method='get' action='adminprofile.php'>
-				<label><b>Custom Query</b></label>
+				<label><b>Custom Query</b>
+					<div id="tooltip"><img src="images/info.png" alt="i"/>
+						<span class="tooltiptext">
+							<b>Run</b> - run a new query<br>
+							<b>Append</b> - add onto current query<br>
+							<b>Reset</b> - clear query
+						</span>
+					</div>
+				</label>
 				&nbsp;&nbsp;&nbsp;
-				<span style="color: darkgray;"><small>(Enter null for empty value)</small></span>
+				<span style="color: darkgray;"><small>(Enter null for empty value. Exclude quotes for integers.)</small></span>
 				<div class="row" id="cqrow">
 					<div id="blueprint">
 						<select class="input-sm" id="query" name="query[]" tabindex='3'>
@@ -255,9 +265,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<input class="btn btn-primary" type="submit" name="submitquery" value="Search" tabindex='7'/>
-					&nbsp;&nbsp;&nbsp;
-					<span id="columnselect"><small>Note: Press "Reset" to clear the query</small></span>
+					<input class="btn btn-primary" type="submit" name="runquery" value="Run" tabindex='7'/>
+					<input class="btn btn-primary" type="submit" name="submitquery" value="Append" tabindex='8'/>
+					<!--&nbsp;&nbsp;&nbsp;
+					<span id="columnselect"><small>Note: Press "Reset" to clear the query</small></span>-->
 				</div>
 			</form>
 		</div>
@@ -422,7 +433,48 @@
 			<input type='checkbox' name='searchtables[]' value='EmergencyC4CCVouchers' class='checkdisplay4' > EmergencyC4CCVouchers
 			<div class='todisplay'>"; */
 
-			//custom query builder search
+			//custom query builder search - overwrite current
+			if(isset($_GET['runquery'])){
+				$value = $_GET['queryvalue'][0];
+				if($value!=NULL) {
+					$search = "select * from VolunteerForm where (";
+					$andor="";
+					$i=0;
+					foreach($_GET['queryvalue'] as $value){
+						if($value!=NULL){
+							$column = $_GET['query'][$i];
+							$condition = $_GET['condition'][$i];
+							if($condition=='contains'){
+								$condition="like";
+								$value="'%".str_replace("'","",str_replace('"',"",$value))."%'";
+							}
+							else if($condition=='!contains'){
+								$condition="not like";
+								$value="'%".str_replace("'","",str_replace('"',"",$value))."%'";
+							} 
+							if(strcasecmp($value,'null')==0 || $value=="''" || $value=='""'){
+								if($condition=="=")
+									$condition="is null or ".$column." = ''";
+								else if($condition=="!=")
+									$condition="is not null and ".$column." <> ''";
+								$value="";
+							}
+							//else $value="'".$value."'";
+							
+							if($andor != "") $andor=" ".$andor." "; //dont include extra spaces
+							$search = $search.$andor.$column." ".$condition." ".$value;		
+						}
+						$andor = $_GET['andor'][$i];
+						$i++;
+					}
+					$search = $search.")";
+					$r = mysqli_query($link, $search);
+					if(mysqli_num_rows($r)==0)
+						echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$search."</div>";
+					else $_SESSION['volunteerquerysearch'] = $search;
+				}
+			}
+			//custom query builder search - append
 			if(isset($_GET['submitquery'])){
 				//unset($_SESSION['volunteerquerysearch']); //refresh variable
 				//mysql: contains == like -> column like '%value%'
@@ -437,12 +489,12 @@
 							$column = $_GET['query'][$i];
 							$condition = $_GET['condition'][$i];
 							if($condition=='contains'){
-								$condition=" like ";
-								$value="%".$value."%";
+								$condition="like";
+								$value="'%".str_replace("'","",str_replace('"',"",$value))."%'";
 							}
 							else if($condition=='!contains'){
-								$condition=" not like ";
-								$value="%".$value."%";
+								$condition="not like";
+								$value="'%".str_replace("'","",str_replace('"',"",$value))."%'";
 							} 
 							if(strcasecmp($value,'null')==0 || $value=="''" || $value=='""'){
 								if($condition=="=")
@@ -451,9 +503,10 @@
 									$condition="is not null and ".$column." <> ''";
 								$value="";
 							}
-							else $value="'".$value."'";
+							//else $value="'".$value."'";
 							
-							$search = $search." ".$andor." ".$column." ".$condition." ".$value;	
+							if($andor != "") $andor=" ".$andor." ";
+							$search = $search.$andor.$column." ".$condition." ".$value;
 						}
 						$andor = $_GET['andor'][$i];
 						$i++;
@@ -467,7 +520,7 @@
 			}
 			//canned query search
 			if(isset($_GET['submitcannedquery'])){
-				unset($_SESSION['volunteerquerysearch']); //refresh variable
+				//unset($_SESSION['volunteerquerysearch']); //refresh variable
 				$cannedqueryname = $_GET['cannedquery'][0];
 				
 				$sea = "select * from CannedQueriesVolunteers where QueryName='".$cannedqueryname."'";
@@ -476,7 +529,10 @@
 					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$sea."</div>";
 				else {
 					$rw = mysqli_fetch_row($res);
-					$_SESSION['volunteerquerysearch'] = $rw[2];
+					$haha = mysqli_query($link, $rw[2]); //check if legal query
+					if(mysqli_num_rows($haha)!=0)
+						$_SESSION['volunteerquerysearch'] = $rw[2];
+					else echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$rw[2]."</div>";
 				}
 			}
 			//canned query check for existance & then display modal
@@ -522,11 +578,11 @@
 			}
 			//manual query run
 			if(isset($_GET['runwrittenqry'])){
-				unset($_SESSION['volunteerquerysearch']); //refresh variable
+				//unset($_SESSION['volunteerquerysearch']); //refresh variable
 				$wrttnqry = $_GET['manquery'];
 				$cols = explode(" ",$wrttnqry);
 				$wrttnqryres = mysqli_query($link, $wrttnqry);
-				if(mysqli_num_rows($wrttnqryres)==0 || (!(strcasecmp($cols[0],'select')) && $cols[3]!='VolunteerForm'))
+				if(mysqli_num_rows($wrttnqryres)==0 || ((strcasecmp($cols[0],'select'))!=0 && $cols[3]!='VolunteerForm'))
 					echo "<div id='emptyquerymsg'><h3> Error </h3> Query: ".$wrttnqry."</div>";
 				else $_SESSION['volunteerquerysearch'] = $wrttnqry;
 			}
@@ -594,7 +650,7 @@
 					}
 				if(isset($_SESSION['volunteerquerysearch'])){
 					//query search
-					$s = mysqli_query($link, $_SESSION['volunteerquerysearch']);
+					$s = mysqli_query($link, $_SESSION['volunteerquerysearch']." order by $sort desc");
 					if (mysqli_num_rows($s)!=0) $result = $s;
 				}
 				else{
@@ -891,48 +947,48 @@
 			if(isset($_POST['recordEdit']))
 			{
 				//echo "In the recordEdit IF loop!!";
-				$RecordNumber1 = mysql_real_escape_string($_POST['RecordNumber']);
-				$Comments = mysql_real_escape_string($_POST['Comments']);
-				$VolunteerStatus = mysql_real_escape_string($_POST['VolunteerStatus']);
-				$DateAndTime = mysql_real_escape_string($_POST['DateAndTime']);
-				$WorkshopAttended = mysql_real_escape_string($_POST['WorkshopAttended']);
-				$WorkshopDate = mysql_real_escape_string($_POST['WorkshopDate']);
-				$DateActivated = mysql_real_escape_string($_POST['DateActivated']);
-				$FullName = mysql_real_escape_string($_POST['FullName']);
-				$Address = mysql_real_escape_string($_POST['Address']);
-				$Email = mysql_real_escape_string($_POST['Email']);
-				$Phone1 = mysql_real_escape_string($_POST['Phone1']);
-				$Phone2 = mysql_real_escape_string($_POST['Phone2']);
-				$PreferedContact = mysql_real_escape_string($_POST['PreferedContact']);
-				$contactemail = mysql_real_escape_string($_POST['contactemail']);
-				$contactphone1 = mysql_real_escape_string($_POST['contactphone1']);
-				$contactphone2 = mysql_real_escape_string($_POST['contactphone2']);
-				$TypeOfWork = mysql_real_escape_string($_POST['TypeOfWork']);
-				$transporting = mysql_real_escape_string($_POST['transporting']);
-				$helptrap = mysql_real_escape_string($_POST['helptrap']);
-				$helpeducate = mysql_real_escape_string($_POST['helpeducate']);
-				$usingphone = mysql_real_escape_string($_POST['usingphone']);
-				$helpclinic = mysql_real_escape_string($_POST['helpclinic']);
-				$other = mysql_real_escape_string($_POST['other']);					
-				$OtherTasks = mysql_real_escape_string($_POST['OtherTasks']);
-				$PastWorkExp = mysql_real_escape_string($_POST['PastWorkExp']);						
-				$UnknownNameColumn = mysql_real_escape_string($_POST['UnknownNameColumn']);
-				$ResponseDate = mysql_real_escape_string($_POST['ResponseDate']);
-				$EmailResponse = mysql_real_escape_string($_POST['EmailResponse']);
-				$BEATId = mysql_real_escape_string($_POST['BEATId']);
-				$BEATName = mysql_real_escape_string($_POST['BEATName']);
-				$BEATGeneralArea = mysql_real_escape_string($_POST['BEATGeneralArea']);
-				$BEATZipCodes = mysql_real_escape_string($_POST['BEATZipCodes']);
-				$BEATTrainDate = mysql_real_escape_string($_POST['BEATTrainDate']);
-				$BEATMembers = mysql_real_escape_string($_POST['BEATMembers']);
-				$BEATMembersPhone = mysql_real_escape_string($_POST['BEATMembersPhone']);
-				$BEATMemberEmails = mysql_real_escape_string($_POST['BEATMemberEmails']);
-				$BEATType = mysql_real_escape_string($_POST['BEATType']);
-				$BEATNotes = mysql_real_escape_string($_POST['BEATNotes']);
-				$BEATStatus = mysql_real_escape_string($_POST['BEATStatus']);
-				$TriageBEATNotes = mysql_real_escape_string($_POST['TriageBEATNotes']);
-				$WorkshopAttended = mysql_real_escape_string($_POST['WorkshopAttended']);
-				$WorkshopDate = mysql_real_escape_string($_POST['WorkshopDate']);
+				$RecordNumber1 = mysqli_real_escape_string($link, $_POST['RecordNumber']);
+				$Comments = mysqli_real_escape_string($link, $_POST['Comments']);
+				$VolunteerStatus = mysqli_real_escape_string($link, $_POST['VolunteerStatus']);
+				$DateAndTime = mysqli_real_escape_string($link, $_POST['DateAndTime']);
+				$WorkshopAttended = mysqli_real_escape_string($link, $_POST['WorkshopAttended']);
+				$WorkshopDate = mysqli_real_escape_string($link, $_POST['WorkshopDate']);
+				$DateActivated = mysqli_real_escape_string($link, $_POST['DateActivated']);
+				$FullName = mysqli_real_escape_string($link, $_POST['FullName']);
+				$Address = mysqli_real_escape_string($link, $_POST['Address']);
+				$Email = mysqli_real_escape_string($link, $_POST['Email']);
+				$Phone1 = mysqli_real_escape_string($link, $_POST['Phone1']);
+				$Phone2 = mysqli_real_escape_string($link, $_POST['Phone2']);
+				$PreferedContact = mysqli_real_escape_string($link, $_POST['PreferedContact']);
+				$contactemail = mysqli_real_escape_string($link, $_POST['contactemail']);
+				$contactphone1 = mysqli_real_escape_string($link, $_POST['contactphone1']);
+				$contactphone2 = mysqli_real_escape_string($link, $_POST['contactphone2']);
+				$TypeOfWork = mysqli_real_escape_string($link, $_POST['TypeOfWork']);
+				$transporting = mysqli_real_escape_string($link, $_POST['transporting']);
+				$helptrap = mysqli_real_escape_string($link, $_POST['helptrap']);
+				$helpeducate = mysqli_real_escape_string($link, $_POST['helpeducate']);
+				$usingphone = mysqli_real_escape_string($link, $_POST['usingphone']);
+				$helpclinic = mysqli_real_escape_string($link, $_POST['helpclinic']);
+				$other = mysqli_real_escape_string($link, $_POST['other']);					
+				$OtherTasks = mysqli_real_escape_string($link, $_POST['OtherTasks']);
+				$PastWorkExp = mysqli_real_escape_string($link, $_POST['PastWorkExp']);						
+				$UnknownNameColumn = mysqli_real_escape_string($link, $_POST['UnknownNameColumn']);
+				$ResponseDate = mysqli_real_escape_string($link, $_POST['ResponseDate']);
+				$EmailResponse = mysqli_real_escape_string($link, $_POST['EmailResponse']);
+				$BEATId = mysqli_real_escape_string($link, $_POST['BEATId']);
+				$BEATName = mysqli_real_escape_string($link, $_POST['BEATName']);
+				$BEATGeneralArea = mysqli_real_escape_string($link, $_POST['BEATGeneralArea']);
+				$BEATZipCodes = mysqli_real_escape_string($link, $_POST['BEATZipCodes']);
+				$BEATTrainDate = mysqli_real_escape_string($link, $_POST['BEATTrainDate']);
+				$BEATMembers = mysqli_real_escape_string($link, $_POST['BEATMembers']);
+				$BEATMembersPhone = mysqli_real_escape_string($link, $_POST['BEATMembersPhone']);
+				$BEATMemberEmails = mysqli_real_escape_string($link, $_POST['BEATMemberEmails']);
+				$BEATType = mysqli_real_escape_string($link, $_POST['BEATType']);
+				$BEATNotes = mysqli_real_escape_string($link, $_POST['BEATNotes']);
+				$BEATStatus = mysqli_real_escape_string($link, $_POST['BEATStatus']);
+				$TriageBEATNotes = mysqli_real_escape_string($link, $_POST['TriageBEATNotes']);
+				$WorkshopAttended = mysqli_real_escape_string($link, $_POST['WorkshopAttended']);
+				$WorkshopDate = mysqli_real_escape_string($link, $_POST['WorkshopDate']);
 
 				$reName = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
 				if(true) //preg_match($reName, $FullName) &&
@@ -1018,7 +1074,6 @@
 								 helptrap='$helptrap', 
 								 helpeducate='$helpeducate', 
 								 usingphone='$usingphone', 
-								 helpingclinic='$helpingclinic', 
 								 other='$other', 
 								 OtherTasks='$OtherTasks', 
 								 PastWorkExp='$PastWorkExp', 
@@ -1041,6 +1096,7 @@
 								 WorkshopAttended='$WorkshopAttended',
 								 WorkshopDate='$WorkshopDate'
 								 where RecordNumber='$RecordNumber1'";
+								 
 								 								
 							mysqli_query($link, $queryupdate);
 							
@@ -1094,7 +1150,7 @@
 
 			if(isset($_SESSION['volunteerquerysearch'])){
 				//query search
-				$s = mysqli_query($link, $_SESSION['volunteerquerysearch']);
+				$s = mysqli_query($link, $_SESSION['volunteerquerysearch']." order by $sort desc");
 				if (mysqli_num_rows($s)!=0)
 					$result = $s;
 			}
