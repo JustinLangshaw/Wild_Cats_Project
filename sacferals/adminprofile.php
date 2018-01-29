@@ -947,48 +947,48 @@
 			if(isset($_POST['recordEdit']))
 			{
 				//echo "In the recordEdit IF loop!!";
-				$RecordNumber1 = mysql_real_escape_string($_POST['RecordNumber']);
-				$Comments = mysql_real_escape_string($_POST['Comments']);
-				$VolunteerStatus = mysql_real_escape_string($_POST['VolunteerStatus']);
-				$DateAndTime = mysql_real_escape_string($_POST['DateAndTime']);
-				$WorkshopAttended = mysql_real_escape_string($_POST['WorkshopAttended']);
-				$WorkshopDate = mysql_real_escape_string($_POST['WorkshopDate']);
-				$DateActivated = mysql_real_escape_string($_POST['DateActivated']);
-				$FullName = mysql_real_escape_string($_POST['FullName']);
-				$Address = mysql_real_escape_string($_POST['Address']);
-				$Email = mysql_real_escape_string($_POST['Email']);
-				$Phone1 = mysql_real_escape_string($_POST['Phone1']);
-				$Phone2 = mysql_real_escape_string($_POST['Phone2']);
-				$PreferedContact = mysql_real_escape_string($_POST['PreferedContact']);
-				$contactemail = mysql_real_escape_string($_POST['contactemail']);
-				$contactphone1 = mysql_real_escape_string($_POST['contactphone1']);
-				$contactphone2 = mysql_real_escape_string($_POST['contactphone2']);
-				$TypeOfWork = mysql_real_escape_string($_POST['TypeOfWork']);
-				$transporting = mysql_real_escape_string($_POST['transporting']);
-				$helptrap = mysql_real_escape_string($_POST['helptrap']);
-				$helpeducate = mysql_real_escape_string($_POST['helpeducate']);
-				$usingphone = mysql_real_escape_string($_POST['usingphone']);
-				$helpclinic = mysql_real_escape_string($_POST['helpclinic']);
-				$other = mysql_real_escape_string($_POST['other']);					
-				$OtherTasks = mysql_real_escape_string($_POST['OtherTasks']);
-				$PastWorkExp = mysql_real_escape_string($_POST['PastWorkExp']);						
-				$UnknownNameColumn = mysql_real_escape_string($_POST['UnknownNameColumn']);
-				$ResponseDate = mysql_real_escape_string($_POST['ResponseDate']);
-				$EmailResponse = mysql_real_escape_string($_POST['EmailResponse']);
-				$BEATId = mysql_real_escape_string($_POST['BEATId']);
-				$BEATName = mysql_real_escape_string($_POST['BEATName']);
-				$BEATGeneralArea = mysql_real_escape_string($_POST['BEATGeneralArea']);
-				$BEATZipCodes = mysql_real_escape_string($_POST['BEATZipCodes']);
-				$BEATTrainDate = mysql_real_escape_string($_POST['BEATTrainDate']);
-				$BEATMembers = mysql_real_escape_string($_POST['BEATMembers']);
-				$BEATMembersPhone = mysql_real_escape_string($_POST['BEATMembersPhone']);
-				$BEATMemberEmails = mysql_real_escape_string($_POST['BEATMemberEmails']);
-				$BEATType = mysql_real_escape_string($_POST['BEATType']);
-				$BEATNotes = mysql_real_escape_string($_POST['BEATNotes']);
-				$BEATStatus = mysql_real_escape_string($_POST['BEATStatus']);
-				$TriageBEATNotes = mysql_real_escape_string($_POST['TriageBEATNotes']);
-				$WorkshopAttended = mysql_real_escape_string($_POST['WorkshopAttended']);
-				$WorkshopDate = mysql_real_escape_string($_POST['WorkshopDate']);
+				$RecordNumber1 = mysqli_real_escape_string($link, $_POST['RecordNumber']);
+				$Comments = mysqli_real_escape_string($link, $_POST['Comments']);
+				$VolunteerStatus = mysqli_real_escape_string($link, $_POST['VolunteerStatus']);
+				$DateAndTime = mysqli_real_escape_string($link, $_POST['DateAndTime']);
+				$WorkshopAttended = mysqli_real_escape_string($link, $_POST['WorkshopAttended']);
+				$WorkshopDate = mysqli_real_escape_string($link, $_POST['WorkshopDate']);
+				$DateActivated = mysqli_real_escape_string($link, $_POST['DateActivated']);
+				$FullName = mysqli_real_escape_string($link, $_POST['FullName']);
+				$Address = mysqli_real_escape_string($link, $_POST['Address']);
+				$Email = mysqli_real_escape_string($link, $_POST['Email']);
+				$Phone1 = mysqli_real_escape_string($link, $_POST['Phone1']);
+				$Phone2 = mysqli_real_escape_string($link, $_POST['Phone2']);
+				$PreferedContact = mysqli_real_escape_string($link, $_POST['PreferedContact']);
+				$contactemail = mysqli_real_escape_string($link, $_POST['contactemail']);
+				$contactphone1 = mysqli_real_escape_string($link, $_POST['contactphone1']);
+				$contactphone2 = mysqli_real_escape_string($link, $_POST['contactphone2']);
+				$TypeOfWork = mysqli_real_escape_string($link, $_POST['TypeOfWork']);
+				$transporting = mysqli_real_escape_string($link, $_POST['transporting']);
+				$helptrap = mysqli_real_escape_string($link, $_POST['helptrap']);
+				$helpeducate = mysqli_real_escape_string($link, $_POST['helpeducate']);
+				$usingphone = mysqli_real_escape_string($link, $_POST['usingphone']);
+				$helpclinic = mysqli_real_escape_string($link, $_POST['helpclinic']);
+				$other = mysqli_real_escape_string($link, $_POST['other']);					
+				$OtherTasks = mysqli_real_escape_string($link, $_POST['OtherTasks']);
+				$PastWorkExp = mysqli_real_escape_string($link, $_POST['PastWorkExp']);						
+				$UnknownNameColumn = mysqli_real_escape_string($link, $_POST['UnknownNameColumn']);
+				$ResponseDate = mysqli_real_escape_string($link, $_POST['ResponseDate']);
+				$EmailResponse = mysqli_real_escape_string($link, $_POST['EmailResponse']);
+				$BEATId = mysqli_real_escape_string($link, $_POST['BEATId']);
+				$BEATName = mysqli_real_escape_string($link, $_POST['BEATName']);
+				$BEATGeneralArea = mysqli_real_escape_string($link, $_POST['BEATGeneralArea']);
+				$BEATZipCodes = mysqli_real_escape_string($link, $_POST['BEATZipCodes']);
+				$BEATTrainDate = mysqli_real_escape_string($link, $_POST['BEATTrainDate']);
+				$BEATMembers = mysqli_real_escape_string($link, $_POST['BEATMembers']);
+				$BEATMembersPhone = mysqli_real_escape_string($link, $_POST['BEATMembersPhone']);
+				$BEATMemberEmails = mysqli_real_escape_string($link, $_POST['BEATMemberEmails']);
+				$BEATType = mysqli_real_escape_string($link, $_POST['BEATType']);
+				$BEATNotes = mysqli_real_escape_string($link, $_POST['BEATNotes']);
+				$BEATStatus = mysqli_real_escape_string($link, $_POST['BEATStatus']);
+				$TriageBEATNotes = mysqli_real_escape_string($link, $_POST['TriageBEATNotes']);
+				$WorkshopAttended = mysqli_real_escape_string($link, $_POST['WorkshopAttended']);
+				$WorkshopDate = mysqli_real_escape_string($link, $_POST['WorkshopDate']);
 
 				$reName = "/^[a-zA-Z]+(([\'\- ][a-zA-Z])?[a-zA-Z]*)*$/";
 				if(true) //preg_match($reName, $FullName) &&
@@ -1074,7 +1074,6 @@
 								 helptrap='$helptrap', 
 								 helpeducate='$helpeducate', 
 								 usingphone='$usingphone', 
-								 helpingclinic='$helpingclinic', 
 								 other='$other', 
 								 OtherTasks='$OtherTasks', 
 								 PastWorkExp='$PastWorkExp', 
@@ -1097,6 +1096,7 @@
 								 WorkshopAttended='$WorkshopAttended',
 								 WorkshopDate='$WorkshopDate'
 								 where RecordNumber='$RecordNumber1'";
+								 
 								 								
 							mysqli_query($link, $queryupdate);
 							
