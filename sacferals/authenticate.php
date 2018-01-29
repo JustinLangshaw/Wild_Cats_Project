@@ -1,8 +1,8 @@
 <?php
-$host = "athena";
-$user = "";
-$pass = "";
-$db = "";
+$host = "35.197.48.29:3306";
+$user = "sacferals_user";
+$pass = "sacferals_db";
+$db = "sacferals";
 
 function connectdb($host, $user, $pass, $db)
 {

@@ -74,7 +74,7 @@ if(isset($_POST['register'])) //this processes after user submits data.
 				$reprtformcheck->close();			
 				
 				if($res != 0){ //email not in user & is in volunteerform
-					$query = $link->prepare("insert into SacFeralsUsers values('', ?, ?, SHA1(?), '0')");
+					$query = $link->prepare("insert into SacFeralsUsers values(NULL, ?, ?, SHA1(?), '0')");
 					$query->bind_param("sss", $username, $email, $password);
 					$query->execute();
 					$query->close();
